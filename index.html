@@ -979,9 +979,18 @@ function markDone(){if(curShare!==null)doneSet.add(curShare);stopTimer();}
 function skipPerson(){stopTimer();}
 
 // ═══ BOOT ═══
+const DEFAULT_CFG = {
+  apiKey: "AIzaSyCF0csqjoJQmWlX0AHV4mNc4Yc-8TYrRAo",
+  authDomain: "train-the-trainer-game.firebaseapp.com",
+  databaseURL: "https://train-the-trainer-game-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "train-the-trainer-game"
+};
+
 window.addEventListener('load',()=>{
-  const cfg=getCfg();
-  if(cfg&&initFB(cfg)){
+  // Auto-save default config if not set
+  if(!getCfg()) localStorage.setItem('fb_cfg', JSON.stringify(DEFAULT_CFG));
+  const cfg = getCfg();
+  if(cfg && initFB(cfg)){
     show('s-land');
   } else {
     show('s-setup');
