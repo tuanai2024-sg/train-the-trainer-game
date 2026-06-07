@@ -882,30 +882,36 @@ function refreshDash(){
 }
 
 function renderDash(data){
-  const done=Object.keys(data).length;
-  const total=CLASS.length;
+  // Merge: CLASS members (pending or done) + extra people from Firebase not in CLASS
+  const extraNames = Object.keys(data).filter(n => !CLASS.includes(n));
+  const allNames = [...CLASS, ...extraNames];
+
+  const done = allNames.filter(n => !!data[n]).length;
+  const total = allNames.length;
+
   $('f-prog-txt').textContent=`${done} / ${total}`;
-  $('f-prog').style.width=(done/total*100)+'%';
+  $('f-prog').style.width=total>0?(done/total*100)+'%':'0%';
   $('f-sub').textContent=
     done===0?'Chờ học viên hoàn thành...':
     done===total?'✅ Tất cả đã hoàn thành!':
     `${done} đã xong · ${total-done} đang chờ`;
 
-  const list = CLASS.filter(n=>
-    filterMode==='all'    ? true :
-    filterMode==='done'   ? !!data[n] :
+  const list = allNames.filter(n=>
+    filterMode==='all'  ? true :
+    filterMode==='done' ? !!data[n] :
     !data[n]
   );
 
   $('f-grid').innerHTML=list.map(name=>{
     const r=data[name];
     const a=r?animalById(r.animalId):{e:'⏳',n:''};
+    const isExtra=!CLASS.includes(name);
     const cls=r?'done':'pending';
     const dotCls=r?'dot-g':'dot-gray';
     const statusTxt=r?a.n:'Chưa hoàn thành';
-    return`<div class="pc ${cls}" onclick="${r?'openModal(\''+name+'\')':''}">
+    return`<div class="pc ${cls}" onclick="${r?'openModal(\''+name+'\')':''}" style="${isExtra?'border-color:#6366f1;':''}" >
       <div class="pc-e">${a.e}</div>
-      <div class="pc-n">${name}</div>
+      <div class="pc-n">${name}${isExtra?' <span style="font-size:.6rem;background:#eef2ff;color:#6366f1;padding:1px 5px;border-radius:999px;font-weight:700;">mới</span>':''}</div>
       <div class="pc-s"><span class="dot ${dotCls}"></span>${statusTxt}</div>
     </div>`;
   }).join('');
@@ -945,7 +951,9 @@ function renderShareGrid(){
     const raw=snap.val()||{};
     const data={};
     Object.values(raw).forEach(r=>{if(r&&r.name)data[r.name]=r});
-    $('share-grid').innerHTML=CLASS.map((name,i)=>{
+    const extraNames=Object.keys(data).filter(n=>!CLASS.includes(n));
+    const allNames=[...CLASS,...extraNames];
+    $('share-grid').innerHTML=allNames.map((name,i)=>{
       const r=data[name];
       const a=r?animalById(r.animalId):{e:'❓',n:'Chưa chọn'};
       const isDone=doneSet.has(i);
