@@ -457,6 +457,13 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
       <div class="card-label">Chọn tên của bạn</div>
       <div class="name-grid" id="name-grid"></div>
     </div>
+    <div class="card" style="margin-top:8px">
+      <div class="card-label">Hoặc nhập tên khác</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="finput" id="custom-name-input" placeholder="Nhập tên của bạn..." style="flex:1"
+          oninput="onCustomName(this.value)" onkeydown="if(event.key==='Enter')goToPick()"/>
+      </div>
+    </div>
     <button class="btn btn-primary mt" id="btn-to-pick" onclick="goToPick()" disabled>Tiếp theo →</button>
   </div>
 </div>
@@ -785,7 +792,18 @@ function pickName(el,name){
   document.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
   myName=name;
+  // Clear custom input when picking from list
+  const ci=$('custom-name-input');
+  if(ci)ci.value='';
   $('btn-to-pick').disabled=false;
+}
+
+function onCustomName(val){
+  const name=val.trim();
+  // Deselect list items when typing custom name
+  document.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('sel'));
+  myName=name||null;
+  $('btn-to-pick').disabled=!name;
 }
 
 function goToPick(){
