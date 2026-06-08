@@ -4,8 +4,6 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Chọn Hình · Train the Trainer</title>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <style>
 /* ─── Design tokens ─── */
 :root{
@@ -390,34 +388,6 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 <div id="toast"></div>
 
 <!-- ══════════════════════════════════
-     SETUP OVERLAY (Firebase config)
-══════════════════════════════════ -->
-<div class="s" id="s-setup">
-  <div class="setup-box">
-    <div style="font-size:2rem;margin-bottom:12px">🔥</div>
-    <h2>Kết nối Firebase</h2>
-    <p class="setup-sub">Cần thiết để đồng bộ dữ liệu real-time giữa tất cả thiết bị</p>
-
-    <div style="margin-bottom:16px">
-      <div class="setup-step"><div class="ss-num">1</div><span>Vào <a href="https://console.firebase.google.com" target="_blank" style="color:var(--violet);font-weight:600">console.firebase.google.com</a> → Tạo project mới</span></div>
-      <div class="setup-step"><div class="ss-num">2</div><span><b>Build → Realtime Database → Create Database</b> → chọn <i>Start in test mode</i></span></div>
-      <div class="setup-step"><div class="ss-num">3</div><span>⚙️ <b>Project Settings → Your apps → Web (&lt;/&gt;)</b> → copy config bên dưới</span></div>
-    </div>
-
-    <span class="flabel">API Key</span>
-    <input class="finput" id="fb-key" placeholder="AIzaSy..."/>
-    <span class="flabel">Auth Domain</span>
-    <input class="finput" id="fb-auth" placeholder="your-project.firebaseapp.com"/>
-    <span class="flabel">Database URL</span>
-    <input class="finput" id="fb-db" placeholder="https://your-project-default-rtdb.firebasedatabase.app"/>
-    <span class="flabel">Project ID</span>
-    <input class="finput" id="fb-pid" placeholder="your-project-id"/>
-
-    <button class="btn btn-violet mt" onclick="saveFirebase()">🔗 Kết nối & Lưu</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
      LANDING
 ══════════════════════════════════ -->
 <div class="s" id="s-land">
@@ -437,7 +407,6 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
       <span class="mb-sub">Chọn con vật &amp; chia sẻ câu chuyện</span>
     </button>
   </div>
-  <button onclick="showSetup()" style="background:none;border:none;color:rgba(255,255,255,.3);font-size:0.72rem;margin-top:28px;cursor:pointer">⚙ Firebase settings</button>
 </div>
 
 <!-- ══════════════════════════════════
@@ -683,7 +652,6 @@ const $ = id => document.getElementById(id);
 const animalById = id => ANIMALS.find(a=>a.id===id)||{e:'❓',n:'?'};
 
 // ═══ STATE ═══
-let db        = null;
 let myName    = null;
 let selAnimal = null;
 let doneSet   = new Set();
@@ -691,7 +659,8 @@ let curShare  = null;
 let timerInt  = null;
 let timerSec  = 0;
 let filterMode= 'all';
-let fbListeners = [];
+let pollInt   = null;
+let lastData  = {};
 
 // ═══ UTILS ═══
 function show(id){
@@ -705,94 +674,64 @@ function toast(m,d=2400){
   clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),d);
 }
 
-// ═══ FIREBASE ═══
-function getCfg(){try{return JSON.parse(localStorage.getItem('fb_cfg')||'null')}catch{return null}}
-
-function initFB(cfg){
+// ═══ API (polling – no Firebase) ═══
+async function apiGet(){
   try{
-    if(firebase.apps.length)firebase.apps.forEach(a=>a.delete());
-    firebase.initializeApp(cfg);
-    db=firebase.database();
-    return true;
-  }catch(e){console.error(e);return false}
+    const r=await fetch('/api/state');
+    if(!r.ok)return{};
+    return await r.json();
+  }catch{return{}}
 }
 
-function saveFirebase(){
-  const cfg={
-    apiKey:$('fb-key').value.trim(),
-    authDomain:$('fb-auth').value.trim(),
-    databaseURL:$('fb-db').value.trim(),
-    projectId:$('fb-pid').value.trim(),
-  };
-  if(!cfg.apiKey||!cfg.databaseURL){toast('⚠️ Điền đủ thông tin');return}
-  localStorage.setItem('fb_cfg',JSON.stringify(cfg));
-  if(initFB(cfg)){
-    db.ref('.info/connected').once('value',()=>{
-      toast('✅ Kết nối thành công!');
-      setTimeout(()=>show('s-land'),800);
+async function apiPost(data){
+  try{
+    await fetch('/api/state',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
     });
-  } else toast('❌ Lỗi – kiểm tra lại config');
+    return true;
+  }catch{return false}
 }
 
-function showSetup(){show('s-setup')}
-
-// ═══ FIREBASE DATA ═══
-function saveResult(name,data){
-  if(!db)return;
-  db.ref('results/'+encodeKey(name)).set(data);
+async function apiReset(){
+  try{await fetch('/api/state',{method:'DELETE'});return true}catch{return false}
 }
 
-function encodeKey(s){return s.replace(/[.#$/\[\]]/g,'_')}
-
-function onResults(cb){
-  if(!db)return;
-  const ref=db.ref('results');
-  const fn=ref.on('value',snap=>{
-    const raw=snap.val()||{};
-    // map encoded keys back
-    const out={};
-    Object.values(raw).forEach(r=>{if(r&&r.name)out[r.name]=r});
-    cb(out);
-  });
-  fbListeners.push(()=>ref.off('value',fn));
+// ═══ POLLING ═══
+function startPolling(cb){
+  stopPolling();
+  const tick=async()=>{const d=await apiGet();lastData=d;cb(d)};
+  tick();
+  pollInt=setInterval(tick,2000);
 }
 
-function offResults(){fbListeners.forEach(f=>f());fbListeners=[]}
-
-function clearAll(){
-  if(!confirm('Xoá toàn bộ kết quả?'))return;
-  if(db)db.ref('results').remove();
-  doneSet=new Set();curShare=null;stopTimer();
-  refreshDash();toast('Đã xoá');
+function stopPolling(){
+  if(pollInt){clearInterval(pollInt);pollInt=null}
 }
 
 // ═══ LANDING / MODE ═══
 function enterFacilitator(){
   show('s-f-dash');
-  refreshDash();
-  offResults();
-  onResults(data=>renderDash(data));
+  startPolling(data=>renderDash(data));
 }
 
 // ═══ PARTICIPANT ═══
-function buildNames(){
-  if(!db){$('name-grid').innerHTML='<p style="color:var(--muted);font-size:.85rem">Chưa kết nối Firebase</p>';return}
-  db.ref('results').once('value',snap=>{
-    const raw=snap.val()||{};
-    const done=new Set(Object.values(raw).map(r=>r&&r.name).filter(Boolean));
-    $('name-grid').innerHTML=CLASS.map(n=>{
-      const taken=done.has(n);
-      const attr=taken?'disabled':'onclick="pickName(this,\''+n+'\')"';
-      return`<button class="name-btn ${taken?'taken':''}" ${attr}>${n}${taken?' ✓':''}</button>`;
-    }).join('');
-  });
+async function buildNames(){
+  $('name-grid').innerHTML='<p style="color:var(--muted);font-size:.85rem;padding:8px">Đang tải...</p>';
+  const data=await apiGet();
+  const done=new Set(Object.keys(data));
+  $('name-grid').innerHTML=CLASS.map(n=>{
+    const taken=done.has(n);
+    const attr=taken?'disabled':'onclick="pickName(this,\''+n+'\')"';
+    return`<button class="name-btn ${taken?'taken':''}" ${attr}>${n}${taken?' ✓':''}</button>`;
+  }).join('');
 }
 
 function pickName(el,name){
   document.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
   myName=name;
-  // Clear custom input when picking from list
   const ci=$('custom-name-input');
   if(ci)ci.value='';
   $('btn-to-pick').disabled=false;
@@ -800,7 +739,6 @@ function pickName(el,name){
 
 function onCustomName(val){
   const name=val.trim();
-  // Deselect list items when typing custom name
   document.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('sel'));
   myName=name||null;
   $('btn-to-pick').disabled=!name;
@@ -841,10 +779,9 @@ function goToForm(){
   show('s-p-form');
 }
 
-function submitParticipant(){
+async function submitParticipant(){
   const q1=$('q1').value.trim(),q2=$('q2').value.trim(),q3=$('q3').value.trim();
-  const data={name:myName,animalId:selAnimal.id,q1,q2,q3,ts:Date.now()};
-  saveResult(myName,data);
+  await apiPost({name:myName,animalId:selAnimal.id,q1,q2,q3});
 
   $('done-e').textContent=selAnimal.e;
   $('done-an').textContent=selAnimal.n;
@@ -871,23 +808,17 @@ function copyMe(){
 }
 
 // ═══ FACILITATOR DASHBOARD ═══
-function refreshDash(){
-  if(!db)return;
-  db.ref('results').once('value',snap=>{
-    const raw=snap.val()||{};
-    const data={};
-    Object.values(raw).forEach(r=>{if(r&&r.name)data[r.name]=r});
-    renderDash(data);
-  });
+async function refreshDash(){
+  const data=await apiGet();
+  lastData=data;
+  renderDash(data);
 }
 
 function renderDash(data){
-  // Merge: CLASS members (pending or done) + extra people from Firebase not in CLASS
-  const extraNames = Object.keys(data).filter(n => !CLASS.includes(n));
-  const allNames = [...CLASS, ...extraNames];
-
-  const done = allNames.filter(n => !!data[n]).length;
-  const total = allNames.length;
+  const extraNames=Object.keys(data).filter(n=>!CLASS.includes(n));
+  const allNames=[...CLASS,...extraNames];
+  const done=allNames.filter(n=>!!data[n]).length;
+  const total=allNames.length;
 
   $('f-prog-txt').textContent=`${done} / ${total}`;
   $('f-prog').style.width=total>0?(done/total*100)+'%':'0%';
@@ -896,7 +827,7 @@ function renderDash(data){
     done===total?'✅ Tất cả đã hoàn thành!':
     `${done} đã xong · ${total-done} đang chờ`;
 
-  const list = allNames.filter(n=>
+  const list=allNames.filter(n=>
     filterMode==='all'  ? true :
     filterMode==='done' ? !!data[n] :
     !data[n]
@@ -909,7 +840,7 @@ function renderDash(data){
     const cls=r?'done':'pending';
     const dotCls=r?'dot-g':'dot-gray';
     const statusTxt=r?a.n:'Chưa hoàn thành';
-    return`<div class="pc ${cls}" onclick="${r?'openModal(\''+name+'\')':''}" style="${isExtra?'border-color:#6366f1;':''}" >
+    return`<div class="pc ${cls}" onclick="${r?'openModal(\''+name+'\')':''}" style="${isExtra?'border-color:#6366f1;':''}">
       <div class="pc-e">${a.e}</div>
       <div class="pc-n">${name}${isExtra?' <span style="font-size:.6rem;background:#eef2ff;color:#6366f1;padding:1px 5px;border-radius:999px;font-weight:700;">mới</span>':''}</div>
       <div class="pc-s"><span class="dot ${dotCls}"></span>${statusTxt}</div>
@@ -924,20 +855,18 @@ function filterTab(mode){
 }
 
 function openModal(name){
-  if(!db)return;
-  db.ref('results/'+encodeKey(name)).once('value',snap=>{
-    const r=snap.val();if(!r)return;
-    const a=animalById(r.animalId);
-    $('m-emoji').textContent=a.e;
-    $('m-name').textContent=name;
-    $('m-animal').textContent=a.e+' '+a.n;
-    let html='';
-    if(r.q1)html+=`<div class="ans-block"><div class="ab-q">Tại sao chọn</div><div class="ab-a">${r.q1}</div></div>`;
-    if(r.q2)html+=`<div class="ans-block"><div class="ab-q">Phản ánh bản thân</div><div class="ab-a">${r.q2}</div></div>`;
-    if(r.q3)html+=`<div class="ans-block"><div class="ab-q">Kỳ vọng</div><div class="ab-a">${r.q3}</div></div>`;
-    $('m-answers').innerHTML=html||'<p style="color:var(--muted);font-style:italic">Chưa ghi câu trả lời</p>';
-    $('modal-bg').classList.add('on');
-  });
+  const r=lastData[name];
+  if(!r)return;
+  const a=animalById(r.animalId);
+  $('m-emoji').textContent=a.e;
+  $('m-name').textContent=name;
+  $('m-animal').textContent=a.e+' '+a.n;
+  let html='';
+  if(r.q1)html+=`<div class="ans-block"><div class="ab-q">Tại sao chọn</div><div class="ab-a">${r.q1}</div></div>`;
+  if(r.q2)html+=`<div class="ans-block"><div class="ab-q">Phản ánh bản thân</div><div class="ab-a">${r.q2}</div></div>`;
+  if(r.q3)html+=`<div class="ans-block"><div class="ab-q">Kỳ vọng</div><div class="ab-a">${r.q3}</div></div>`;
+  $('m-answers').innerHTML=html||'<p style="color:var(--muted);font-style:italic">Chưa ghi câu trả lời</p>';
+  $('modal-bg').classList.add('on');
 }
 
 function closeModal(e){
@@ -946,28 +875,23 @@ function closeModal(e){
 
 // ═══ SHARING TIMER ═══
 function renderShareGrid(){
-  if(!db){$('share-grid').innerHTML='';return}
-  db.ref('results').once('value',snap=>{
-    const raw=snap.val()||{};
-    const data={};
-    Object.values(raw).forEach(r=>{if(r&&r.name)data[r.name]=r});
-    const extraNames=Object.keys(data).filter(n=>!CLASS.includes(n));
-    const allNames=[...CLASS,...extraNames];
-    $('share-grid').innerHTML=allNames.map((name,i)=>{
-      const r=data[name];
-      const a=r?animalById(r.animalId):{e:'❓',n:'Chưa chọn'};
-      const isDone=doneSet.has(i);
-      const isAct=curShare===i;
-      const cls=isDone?'done':isAct?'sharing':'';
-      const dotCls=isDone?'dot-g':isAct?'dot-o':'dot-gray';
-      const sTxt=isDone?'✅ Xong':isAct?'🎤 Đang chia sẻ':r?'':'Chưa hoàn thành';
-      return`<div class="pc ${cls}" onclick="${isDone?'':'startTimer('+i+',\''+name+'\',\''+(r?r.animalId:'')+'\')'}" >
-        <div class="pc-e">${a.e}</div>
-        <div class="pc-n">${name}</div>
-        <div class="pc-s"><span class="dot ${dotCls}"></span>${sTxt||a.n}</div>
-      </div>`;
-    }).join('');
-  });
+  const data=lastData||{};
+  const extraNames=Object.keys(data).filter(n=>!CLASS.includes(n));
+  const allNames=[...CLASS,...extraNames];
+  $('share-grid').innerHTML=allNames.map((name,i)=>{
+    const r=data[name];
+    const a=r?animalById(r.animalId):{e:'❓',n:'Chưa chọn'};
+    const isDone=doneSet.has(i);
+    const isAct=curShare===i;
+    const cls=isDone?'done':isAct?'sharing':'';
+    const dotCls=isDone?'dot-g':isAct?'dot-o':'dot-gray';
+    const sTxt=isDone?'✅ Xong':isAct?'🎤 Đang chia sẻ':r?'':'Chưa hoàn thành';
+    return`<div class="pc ${cls}" onclick="${isDone?'':'startTimer('+i+',\''+name+'\',\''+(r?r.animalId:'')+'\')'}" >
+      <div class="pc-e">${a.e}</div>
+      <div class="pc-n">${name}</div>
+      <div class="pc-s"><span class="dot ${dotCls}"></span>${sTxt||a.n}</div>
+    </div>`;
+  }).join('');
 }
 
 function startTimer(idx,name,animalId){
@@ -1004,28 +928,18 @@ function stopTimer(){
 function markDone(){if(curShare!==null)doneSet.add(curShare);stopTimer();}
 function skipPerson(){stopTimer();}
 
-// ═══ BOOT ═══
-window.addEventListener('load', async () => {
-  // Try saved config first
-  let cfg = getCfg();
+async function clearAll(){
+  if(!confirm('Xoá toàn bộ kết quả?'))return;
+  await apiReset();
+  lastData={};
+  doneSet=new Set();curShare=null;stopTimer();
+  renderDash({});
+  toast('Đã xoá');
+}
 
-  // If not saved, fetch from /api/config (Vercel env vars)
-  if (!cfg) {
-    try {
-      const res = await fetch('/api/config');
-      const data = await res.json();
-      if (data.apiKey) {
-        localStorage.setItem('fb_cfg', JSON.stringify(data));
-        cfg = data;
-      }
-    } catch(e) {}
-  }
-
-  if (cfg && initFB(cfg)) {
-    show('s-land');
-  } else {
-    show('s-setup');
-  }
+// ═══ BOOT – không cần Firebase ═══
+window.addEventListener('load',()=>{
+  show('s-land');
 });
 </script>
 </body>
