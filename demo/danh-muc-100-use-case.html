@@ -1,0 +1,1404 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Danh mục 100 use case AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tờ trình HĐQT mô phỏng: 100 đề xuất AI, một ngân sách, so sánh cách chọn theo cảm tính với tối ưu hoá có điều chỉnh rủi ro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --ink:#0f1b2d; --ink2:#3d4959; --muted:#677184; --line:#dfe3ea; --grid:#e8ebf0; --axis:#c3c9d2;
+  --s1:#2a78d6; --s2:#eb6834; --other:#c9cfd8; --otherInk:#8b93a0; --navy:#0f2342; --hl:#e8f1fc; --chip:#edf0f4;
+  --good:#0ca30c; --goodText:#006300; --warn:#fab219; --crit:#d03b3b; --critText:#b22a2a; --onAccent:#ffffff;
+  --shadow:0 10px 30px rgba(15,27,45,.12);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b1017; --surface:#141a23; --ink:#eef1f5; --ink2:#c3c9d2; --muted:#8f98a6; --line:#262e3a; --grid:#212834; --axis:#3a4350;
+  --s1:#3987e5; --s2:#d95926; --other:#3a4350; --otherInk:#7e8897; --navy:#0d1a2e; --hl:#15263c; --chip:#1b2330;
+  --goodText:#0ca30c; --critText:#e66767; --shadow:0 10px 30px rgba(0,0,0,.45); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1017; --surface:#141a23; --ink:#eef1f5; --ink2:#c3c9d2; --muted:#8f98a6; --line:#262e3a; --grid:#212834; --axis:#3a4350;
+  --s1:#3987e5; --s2:#d95926; --other:#3a4350; --otherInk:#7e8897; --navy:#0d1a2e; --hl:#15263c; --chip:#1b2330;
+  --goodText:#0ca30c; --critText:#e66767; --shadow:0 10px 30px rgba(0,0,0,.45); color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
+.in{max-width:1220px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;color:var(--ink)}
+h1{font-size:clamp(30px,4.6vw,50px);line-height:1.06;letter-spacing:-.028em;font-weight:800;margin:10px 0 14px;max-width:19ch}
+h2{font-size:clamp(21px,2.5vw,27px);line-height:1.2;letter-spacing:-.016em;font-weight:700;margin:0 0 6px}
+h3{font-size:16px;line-height:1.3;font-weight:700;margin:0 0 6px}
+p{margin:0 0 10px}
+.num{font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--s1);outline-offset:2px;border-radius:4px}
+.muted{color:var(--muted)}
+.sm{font-size:13px}
+.xs{font-size:12px}
+
+/* hero */
+.hero{background:var(--surface);border-bottom:1px solid var(--line);padding-block:30px 26px}
+.doc{font-size:13px;color:var(--muted);margin:0;max-width:70ch}
+.doc b{color:var(--ink2);font-weight:600}
+.lede{font-size:17px;color:var(--ink2);max-width:64ch;margin-bottom:18px}
+.lede b{color:var(--ink);font-weight:700}
+.scale{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 20px}
+.scale .lbl{font-size:13px;color:var(--muted);font-weight:600;margin-right:4px}
+.seg{display:inline-flex;flex-wrap:wrap;background:var(--chip);border-radius:10px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:600;color:var(--ink2)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(15,27,45,.12)}
+.scale .note{font-size:13px;color:var(--muted);flex-basis:100%}
+.answer{border-top:2px solid var(--ink);padding-top:14px;margin-bottom:22px;max-width:880px}
+.answer h3{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.answer p{font-size:18px;line-height:1.5;margin:0;color:var(--ink)}
+.answer p b{font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:14px 16px 14px 0;min-width:0}
+.stat+.stat{padding-left:16px;border-left:1px solid var(--line)}
+.stat .k{font-size:13px;color:var(--muted);font-weight:600}
+.stat .v{font-size:clamp(22px,2.6vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:4px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .d{font-size:13px;color:var(--ink2)}
+.stat .d .up{color:var(--goodText);font-weight:700}
+.stat .d .dn{color:var(--critText);font-weight:700}
+.stress{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--ink);background:color-mix(in srgb,var(--warn) 22%,transparent);border-radius:6px;padding:4px 10px}
+.steps{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.steps li{display:flex;gap:10px;align-items:flex-start;min-width:0}
+.steps .n{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;border:1.5px solid var(--axis);color:var(--muted)}
+.steps li.done .n{background:var(--s1);border-color:var(--s1);color:var(--onAccent)}
+.steps li.cur .n{border-color:var(--s1);color:var(--s1)}
+.steps b{display:block;font-size:14px}
+.steps span{display:block;font-size:12.5px;color:var(--muted);line-height:1.4}
+
+/* control bar */
+.ctrlbar{background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:20}
+@media (min-width:980px){.ctrlbar{position:sticky;top:env(safe-area-inset-top,0px)}}
+.ctrls{display:grid;grid-template-columns:1.7fr 1.05fr .8fr 1.15fr 1fr auto;gap:10px 18px;align-items:end;padding-block:10px}
+.ctl{min-width:0}
+.ctl label,.ctl .lab{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 8px;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:3px}
+.ctl label span{white-space:nowrap}
+.ctl output{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ctl input[type=range]{width:100%;accent-color:var(--s1);margin:4px 0 0}
+.ctl select{width:100%;font:inherit;font-size:13px;font-weight:600;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.ctl.stressc label{color:var(--ink2)}
+.btn{border:0;border-radius:10px;padding:11px 18px;font-weight:700;font-size:14px;background:var(--s1);color:var(--onAccent);white-space:nowrap}
+.btn:hover{filter:brightness(1.06)}
+.btn[disabled]{background:var(--chip);color:var(--muted);cursor:default;filter:none}
+.btn.ghost{background:transparent;color:var(--ink2);border:1px solid var(--line)}
+.btnrow{display:flex;gap:8px;align-items:center}
+.linkbtn{border:0;background:none;padding:0;color:var(--s1);font-weight:600;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+
+/* sections */
+main{padding-block:8px 40px}
+section{padding-block:40px 6px}
+section+section{border-top:1px solid var(--line)}
+.sh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 24px;margin-bottom:16px}
+.sh p{max-width:68ch;color:var(--ink2);margin:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.ptitle{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline;margin-bottom:8px}
+.ptitle h3{margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink2);margin:2px 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
+.sw.f1{background:var(--s1)}
+.sw.r2{border:2.5px solid var(--s2)}
+.sw.o{background:var(--other)}
+.sw.x{border:1.5px dashed var(--otherInk)}
+.sw.l1{width:18px;height:3px;border-radius:2px;background:var(--s1)}
+.sw.l2{width:18px;height:0;border-radius:0;border-top:3px dashed var(--s2)}
+.box{position:relative;width:100%}
+.box svg{display:block;width:100%;height:auto;overflow:visible}
+.filters{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;color:var(--ink2)}
+.chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.filters select{font:inherit;font-size:13px;font-weight:600;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+
+/* svg */
+.ax text,.axt{fill:var(--muted);font-size:11px;font-family:inherit}
+.axtitle{fill:var(--muted);font-size:11.5px;font-weight:600}
+.gl{stroke:var(--grid);stroke-width:1}
+.zero{stroke:var(--axis);stroke-width:1.2}
+.quad{stroke:var(--axis);stroke-width:1;stroke-dasharray:3 4}
+.qlab{fill:var(--muted);font-size:12px;font-weight:600;opacity:.85}
+.dot{fill:var(--other);stroke:var(--surface);stroke-width:1.5;transition:fill .45s ease,opacity .3s ease,transform .8s cubic-bezier(.2,.7,.2,1),stroke .3s;cursor:pointer}
+.dot.opt{fill:var(--s1)}
+.dot.int{stroke:var(--s2);stroke-width:2.6}
+.dot.ex{fill:transparent;stroke:var(--otherInk);stroke-width:1.2;stroke-dasharray:2.5 2.5}
+.dot.dim{opacity:.12}
+.dot.hov{stroke:var(--ink);stroke-width:2.4}
+.noanim .dot{transition:none}
+.dlab{fill:var(--ink2);font-size:11.5px;font-weight:600;paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round;pointer-events:none}
+.ln{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.ln1{stroke:var(--s1)}
+.ln2{stroke:var(--s2);stroke-dasharray:6 4}
+.mk1{fill:var(--s1);stroke:var(--surface);stroke-width:2}
+.mk2{fill:var(--s2);stroke:var(--surface);stroke-width:2}
+.elab{font-size:12px;font-weight:700;fill:var(--ink)}
+.alab{font-size:11.5px;fill:var(--ink2);font-weight:600;paint-order:stroke;stroke:var(--surface);stroke-width:3px}
+.xh{stroke:var(--axis);stroke-width:1}
+.bar{fill:var(--s1)}
+.bar.neg{fill:var(--crit)}
+.bar.h{opacity:.75}
+.pline{stroke:var(--ink2);stroke-width:1;stroke-dasharray:3 3}
+.plab{fill:var(--ink2);font-size:11px;font-weight:700}
+
+/* tooltip */
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.45;max-width:280px}
+.tip b{display:block;font-size:13.5px;margin-bottom:2px}
+.tip .r{display:flex;justify-content:space-between;gap:14px}
+.tip .r span:last-child{font-weight:700;font-variant-numeric:tabular-nums}
+.tip .st{margin-top:6px;font-weight:600;color:var(--ink2)}
+
+/* verdict */
+.verdict h3{font-size:17px}
+.cmp{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0 12px}
+.cmp th,.cmp td{padding:6px 0;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.cmp th:first-child,.cmp td:first-child{text-align:left;color:var(--ink2);font-weight:500}
+.cmp thead th{font-size:12px;color:var(--muted);font-weight:600}
+.cmp td.w{font-weight:700;color:var(--ink)}
+.ins{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.ins li{font-size:13.5px;color:var(--ink2);padding-left:14px;position:relative}
+.ins li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--axis)}
+.ins li b{color:var(--ink)}
+.cta{display:grid;gap:12px}
+.cta p{font-size:14px;color:var(--ink2)}
+
+/* questions */
+.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px}
+.q{padding:16px 0;border-top:1px solid var(--line);min-width:0}
+.q h3{font-size:15px;color:var(--ink2);font-weight:600}
+.q .a{font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.25;margin:4px 0 6px}
+.q p{font-size:13.5px;color:var(--ink2);margin:0}
+
+/* domains */
+.dom{display:grid;gap:8px}
+.drow{display:grid;grid-template-columns:170px minmax(0,1fr) 120px;gap:12px;align-items:center;font-size:13.5px}
+.drow .nm{font-weight:600;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:18px}
+.track .pool{position:absolute;left:0;top:0;bottom:0;background:var(--other);border-radius:4px;transition:width .5s ease}
+.track .fill{position:absolute;left:0;top:0;bottom:0;background:var(--s1);border-radius:4px;transition:width .5s ease}
+.track .tick{position:absolute;top:-3px;bottom:-3px;width:0;border-left:3px solid var(--s2);transition:left .5s ease}
+.drow .vv{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.drow .vv small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+
+/* waves */
+.waves{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr) 34px minmax(0,1fr);align-items:stretch}
+.wave{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.wave .wt{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.wave .wt b{font-size:16px}
+.wave .wm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0 12px;border-block:1px solid var(--line);padding-block:8px}
+.wave .wm div{font-size:12px;color:var(--muted)}
+.wave .wm b{display:block;font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
+.wl{display:flex;flex-wrap:wrap;gap:6px}
+.wl button{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:3px 8px;font-size:12px;color:var(--ink2);text-align:left}
+.wl button:hover{border-color:var(--s1);color:var(--ink)}
+.gate{display:flex;align-items:center;justify-content:center;position:relative}
+.gate::before{content:"";position:absolute;left:4px;right:4px;top:50%;border-top:1.5px dashed var(--axis)}
+.gate span{position:relative;writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);padding:6px 0}
+.gatenote{font-size:13px;color:var(--ink2);margin-top:12px;max-width:80ch}
+
+/* before after */
+.ba{width:100%;border-collapse:collapse;font-size:13.5px}
+.ba th,.ba td{padding:9px 10px 9px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ba thead th{font-size:12px;color:var(--muted);font-weight:600}
+.ba td.v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ba td.n{font-weight:600}
+.ba .bf{color:var(--muted)}
+.ba tr.kpi td{font-weight:700}
+.ba tr.kpi td.bf{font-weight:600}
+.gl2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.gl2 ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:13.5px;color:var(--ink2)}
+.gl2 b{color:var(--ink)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:980px}
+.tbl th,.tbl td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.tbl th{position:sticky;top:0;background:var(--surface);font-size:12px;color:var(--muted);font-weight:600}
+.tbl th button{border:0;background:none;padding:0;font:inherit;color:inherit;font-weight:600}
+.tbl th button[aria-sort]::after{content:" ↓"}
+.tbl th button[aria-sort="ascending"]::after{content:" ↑"}
+.tbl td.r,.tbl th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl td.nm{white-space:normal;min-width:240px}
+.tbl td.nm button{border:0;background:none;padding:0;text-align:left;font-weight:600;color:var(--ink)}
+.tbl td.nm button:hover{color:var(--s1);text-decoration:underline}
+.tbl tr.sel td{background:var(--hl)}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 8px;background:var(--chip);color:var(--ink2)}
+.pill.o{background:var(--s1);color:var(--onAccent)}
+.pill.i{background:transparent;border:2px solid var(--s2);color:var(--ink);padding:0 7px}
+.pill.lk{background:var(--ink);color:var(--surface)}
+.neg{color:var(--critText)}
+.tblwrap{max-height:640px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+
+/* resolution */
+.reso{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;max-width:900px;position:relative}
+.reso .rh{font-size:13px;color:var(--muted);margin-bottom:4px}
+.reso h3{font-size:19px}
+.reso ol{margin:10px 0 18px;padding-left:22px;display:grid;gap:8px;color:var(--ink2)}
+.reso ol b{color:var(--ink)}
+.stamp{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--goodText);color:var(--goodText);border-radius:8px;padding:8px 14px;font-weight:800;font-size:15px;transform:rotate(-2deg)}
+.blocked{color:var(--critText);font-weight:600;font-size:14px}
+
+/* drawer */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--surface);border-left:1px solid var(--line);box-shadow:var(--shadow);z-index:50;overflow-y:auto;padding:calc(18px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 20px}
+.drawer .close{position:sticky;top:0;float:right;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600}
+.drawer .tag{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+.drawer .tag span{font-size:12px;font-weight:600;background:var(--chip);border-radius:6px;padding:3px 8px;color:var(--ink2)}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin-bottom:16px}
+.kv div{font-size:12px;color:var(--muted)}
+.kv b{display:block;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums}
+.bfaf{display:grid;gap:8px;margin-bottom:14px}
+.bfaf div{border-radius:10px;padding:10px 12px;font-size:14px}
+.bfaf .b0{background:var(--chip);color:var(--ink2)}
+.bfaf .b1{background:var(--hl);color:var(--ink)}
+.bfaf small{display:block;font-size:11.5px;font-weight:700;color:var(--muted);margin-bottom:2px}
+.dl{display:grid;gap:10px;margin-bottom:16px;font-size:14px}
+.dl small{display:block;font-size:12px;font-weight:600;color:var(--muted)}
+.why{font-size:14px;border-top:1px solid var(--line);padding-top:12px;margin-bottom:12px}
+.lock{display:grid;gap:6px}
+.scrim{position:fixed;inset:0;background:rgba(8,14,24,.35);z-index:45}
+
+footer{border-top:1px solid var(--line);padding-block:24px 36px;font-size:13px;color:var(--muted)}
+footer a{color:var(--s1);font-weight:600}
+.ass{columns:2;column-gap:32px;font-size:13.5px;color:var(--ink2);padding-left:18px;margin:0}
+.ass li{margin-bottom:8px;break-inside:avoid}
+
+@media (max-width:1100px){
+  .ctrls{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ctrls .btnrow{grid-column:1/-1}
+  .mapgrid{grid-template-columns:minmax(0,1fr)}
+  .qs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat:nth-child(3){padding-left:0;border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ctrls{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g2,.gl2{grid-template-columns:minmax(0,1fr)}
+  .qs{grid-template-columns:minmax(0,1fr)}
+  .waves{grid-template-columns:minmax(0,1fr)}
+  .gate{height:34px}
+  .gate::before{left:50%;right:auto;top:4px;bottom:4px;border-top:0;border-left:1.5px dashed var(--axis)}
+  .gate span{writing-mode:horizontal-tb;transform:none;padding:0 8px}
+  .drow{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"nm vv" "tr tr";gap:4px 8px;font-size:13px}
+  .drow .nm{grid-area:nm}.drow .vv{grid-area:vv}.drow .track{grid-area:tr}
+  .drow .vv small{display:inline;margin-left:4px}
+  .ass{columns:1}
+  .answer p{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<header class="hero">
+  <div class="in">
+    <p class="doc"><b>Tờ trình Hội đồng quản trị, quý IV/2026.</b> Vertex là doanh nghiệp mô phỏng; 100 đề xuất, mọi con số và nghị quyết trên trang này là giả định minh hoạ.</p>
+    <h1>100 đề xuất AI, một ngân sách. HĐQT chọn cái nào?</h1>
+    <p class="lede" id="lede"></p>
+    <div class="scale">
+      <span class="lbl" id="scaleLbl">Quy mô doanh thu</span>
+      <div class="seg" role="group" aria-labelledby="scaleLbl" id="scaleSeg">
+        <button type="button" data-p="s" aria-pressed="true">10.000 tỷ đồng</button>
+        <button type="button" data-p="m" aria-pressed="false">100.000 tỷ đồng</button>
+        <button type="button" data-p="l" aria-pressed="false">1.000 tỷ USD</button>
+      </div>
+      <span class="note" id="scaleNote"></span>
+    </div>
+    <div class="answer" aria-live="polite">
+      <h3>Đề nghị của Ban điều hành</h3>
+      <p id="answer"></p>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div id="stressBadge"></div>
+    <ol class="steps" id="steps"></ol>
+  </div>
+</header>
+
+<div class="ctrlbar">
+  <div class="in ctrls">
+    <div class="ctl"><label for="cBudget"><span>Ngân sách AI</span> <output id="oBudget"></output></label><input type="range" id="cBudget"></div>
+    <div class="ctl"><label for="cRisk">Khẩu vị rủi ro</label>
+      <select id="cRisk">
+        <option value="2">Thận trọng, đến 2/5</option>
+        <option value="3" selected>Cân bằng, đến 3/5</option>
+        <option value="4">Chủ động, đến 4/5</option>
+        <option value="5">Táo bạo, mọi mức</option>
+      </select></div>
+    <div class="ctl"><label for="cHz">Chân trời đánh giá</label>
+      <select id="cHz"><option value="3" selected>3 năm</option><option value="5">5 năm</option></select></div>
+    <div class="ctl stressc"><label for="cR"><span>Giá trị đạt</span> <output id="oR"></output></label><input type="range" id="cR" min="40" max="120" step="5" value="100"></div>
+    <div class="ctl stressc"><label for="cD"><span>Triển khai trễ</span> <output id="oD"></output></label><input type="range" id="cD" min="0" max="6" step="1" value="0"></div>
+    <div class="btnrow"><button type="button" class="btn" id="bOpt">Để máy tối ưu</button><button type="button" class="linkbtn" id="bReset">Đặt lại</button></div>
+  </div>
+</div>
+
+<main class="in">
+  <section id="sMap" aria-labelledby="hMap">
+    <div class="sh">
+      <div><h2 id="hMap">Bản đồ 100 đề xuất</h2>
+      <p>Mỗi chấm là một đề xuất. Càng sang phải càng chắc thành công, càng lên cao càng nhiều tiền mỗi năm, chấm càng to càng tốn vốn. Bấm vào một chấm để xem chi tiết và quyết định riêng cho đề xuất đó.</p></div>
+    </div>
+    <div class="filters">
+      <div class="chips" role="group" aria-label="Lọc theo đòn bẩy giá trị" id="levChips"></div>
+      <select id="domSel" aria-label="Lọc theo mảng"></select>
+    </div>
+    <div class="mapgrid">
+      <div class="panel">
+        <div class="legend" id="mapLegend">
+          <span><i class="sw f1"></i>Máy chọn</span>
+          <span><i class="sw r2"></i>Cảm tính chọn</span>
+          <span><i class="sw o"></i>Chưa chọn</span>
+          <span><i class="sw x"></i>Vượt khẩu vị rủi ro</span>
+          <span class="muted">Kích thước chấm là vốn đầu tư</span>
+        </div>
+        <div class="box" id="mapBox"></div>
+      </div>
+      <aside class="panel verdict" id="verdict" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section id="sCash" aria-labelledby="hCash">
+    <div class="sh"><div><h2 id="hCash">Tiền ra, tiền về, và độ chắc chắn</h2>
+      <p>Bên trái là dòng tiền cộng dồn theo tháng: đáy của đường là số vốn tối đa phải chịu, hoàn vốn là tháng mà từ đó trở đi đường không còn xuống dưới số 0. Bên phải là 2.000 kịch bản mô phỏng cho cùng danh mục: đề xuất nào cũng có thể thất bại, trễ, hoặc đạt ít hơn kế hoạch.</p></div></div>
+    <div class="g2">
+      <div class="panel">
+        <div class="ptitle"><h3>Dòng tiền cộng dồn</h3><span class="xs muted" id="jUnit"></span></div>
+        <div class="legend" id="jLegend"></div>
+        <div class="box" id="jBox"></div>
+        <p class="xs" id="jCap" style="color:var(--ink2);margin:8px 0 0"></p>
+      </div>
+      <div class="panel">
+        <div class="ptitle"><h3 id="mcTitle">Phân bố NPV qua 2.000 kịch bản</h3><span class="xs muted" id="mcUnit"></span></div>
+        <p class="sm" id="mcText" style="color:var(--ink2);margin-bottom:6px"></p>
+        <div class="box" id="mcBox"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sQ" aria-labelledby="hQ">
+    <div class="sh"><div><h2 id="hQ">Sáu câu hỏi khó nhất của HĐQT</h2>
+      <p>Câu trả lời tự cập nhật theo ngân sách, khẩu vị rủi ro và kịch bản thử đang chọn.</p></div></div>
+    <div class="qs" id="qs"></div>
+  </section>
+
+  <section id="sDom" aria-labelledby="hDom">
+    <div class="sh"><div><h2 id="hDom">Giá trị nằm ở đâu</h2>
+      <p>Nền xám là toàn bộ giá trị kỳ vọng các khối đã đề xuất. Thanh xanh là phần danh mục của máy giữ lại, vạch cam là phần cách chọn theo cảm tính giữ lại.</p></div>
+      <div class="legend"><span><i class="sw f1" style="border-radius:3px"></i>Máy chọn</span><span><i class="sw" style="border-left:3px solid var(--s2);border-radius:0;width:3px"></i>Cảm tính chọn</span><span><i class="sw o" style="border-radius:3px"></i>Tổng đề xuất</span></div></div>
+    <div class="panel"><div class="dom" id="dom"></div></div>
+  </section>
+
+  <section id="sWave" aria-labelledby="hWave">
+    <div class="sh"><div><h2 id="hWave">Lộ trình ba đợt, giải ngân theo cổng</h2>
+      <p>Tổ chức không thể đổi hàng chục quy trình cùng lúc. Mỗi đợt 6 tháng chỉ khởi động được một số đề xuất; máy xếp đề xuất tạo nhiều giá trị nhất trên mỗi đồng vốn lên trước. HĐQT chỉ giải ngân Đợt 1, tiền cho đợt sau mở khi đợt trước chứng minh được giá trị.</p></div>
+      <div class="scale" style="margin:0"><span class="lbl" id="capLbl">Năng lực khởi động mỗi đợt</span>
+        <div class="seg" role="group" aria-labelledby="capLbl" id="capSeg">
+          <button type="button" data-cap="8" aria-pressed="false">8</button>
+          <button type="button" data-cap="12" aria-pressed="true">12</button>
+          <button type="button" data-cap="20" aria-pressed="false">20</button>
+          <button type="button" data-cap="999" aria-pressed="false">Không giới hạn</button></div></div></div>
+    <div class="waves" id="waves"></div>
+    <p class="gatenote">Cổng giải ngân: Giám đốc tài chính xác nhận đợt trước đạt tối thiểu 70% giá trị kế hoạch, đo so với đường cơ sở đã khoá trước khi triển khai. Người đề xuất không tự chấm điểm đề xuất của mình.</p>
+  </section>
+
+  <section id="sBA" aria-labelledby="hBA">
+    <div class="sh"><div><h2 id="hBA">Trước và sau, được và mất</h2>
+      <p>Những gì HĐQT sẽ thấy thay đổi nếu duyệt danh mục đang chọn, và những gì phải chấp nhận đổi lại.</p></div></div>
+    <div class="panel tw"><table class="ba" id="baTable"></table></div>
+    <div class="gl2">
+      <div class="panel"><h3>Được</h3><ul id="gain"></ul></div>
+      <div class="panel"><h3>Đánh đổi</h3><ul id="cost"></ul></div>
+    </div>
+  </section>
+
+  <section id="sTable" aria-labelledby="hTable">
+    <div class="sh"><div><h2 id="hTable">Toàn bộ 100 đề xuất</h2>
+      <p>Bấm tiêu đề cột để sắp xếp, bấm tên để mở chi tiết. NPV đã nhân xác suất thành công, trừ vốn và chi phí chạy, tính như thể đề xuất khởi động ngay tháng 1 trong chân trời đang chọn.</p></div>
+      <label class="sm" style="display:flex;gap:6px;align-items:center;font-weight:600;color:var(--ink2)"><input type="checkbox" id="onlySel"> Chỉ hiện đề xuất được chọn</label></div>
+    <div class="tblwrap"><table class="tbl" id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+  </section>
+
+  <section id="sReso" aria-labelledby="hReso">
+    <div class="sh"><div><h2 id="hReso">Nghị quyết</h2>
+      <p>Văn bản tự soạn từ danh mục và các điều kiện đang chọn. Đây là nghị quyết mô phỏng phục vụ đào tạo.</p></div></div>
+    <div class="reso" id="reso"></div>
+  </section>
+
+  <section id="sAss" aria-labelledby="hAss">
+    <div class="sh"><div><h2 id="hAss">Giả định và cách tính</h2></div></div>
+    <ul class="ass">
+      <li>Vertex là doanh nghiệp mô phỏng. 100 đề xuất và mọi con số là giả định minh hoạ, không phải dữ liệu của doanh nghiệp thật.</li>
+      <li>Giá trị là EBITDA tăng thêm hoặc tổn thất tránh được mỗi năm khi chạy đủ, tính theo điểm cơ bản trên doanh thu. Giá trị tăng dần trong 9 tháng sau khi chạy.</li>
+      <li>Vốn lưu động giải phóng được tính một lần vào dòng tiền. Không cộng thêm lãi vay tiết kiệm để tránh đếm hai lần.</li>
+      <li>Vốn đầu tư đã gồm dữ liệu, tích hợp, đào tạo và quản trị thay đổi (bằng 1,3 lần phần công nghệ). Chi phí chạy hằng năm 12 đến 25% vốn tuỳ kỹ thuật, agent cao nhất.</li>
+      <li>Xác suất thành công bằng 35% cộng 10% cho mỗi bậc khả thi (1 đến 5), cộng hoặc trừ 0,5% cho mỗi tháng ra tiền ngắn hơn hoặc dài hơn 10 tháng, giới hạn trong 45 đến 95%.</li>
+      <li>Thất bại được phát hiện ở cổng giữa kỳ xây: tốn một nửa vốn, không có giá trị.</li>
+      <li>Vốn tăng chậm hơn doanh thu: nhân hệ số (doanh thu chia 10.000 tỷ đồng) mũ −0,15. Tỷ giá 26.000 đồng một USD chỉ dùng cho hệ số này.</li>
+      <li>Nền tảng dữ liệu chung nâng xác suất thành công thêm 12 điểm và rút 2 tháng cho các đề xuất có mức khả thi từ 3 trở xuống.</li>
+      <li>Chiết khấu 12% một năm. Không tính giá trị sau chân trời đánh giá, nên đề xuất ra tiền chậm bị thiệt ở chân trời 3 năm.</li>
+      <li>Mô phỏng 2.000 kịch bản: mỗi đề xuất thành công hay thất bại theo xác suất của nó, đạt 60 đến 130% giá trị, trễ 0 đến 3 tháng, cộng một cú sốc chung 75 đến 115% cho cả danh mục.</li>
+      <li>Năng lực triển khai: mỗi đợt 6 tháng khởi động tối đa 12 đề xuất (chỉnh được ở phần lộ trình). Đề xuất ở đợt sau khởi động muộn hơn 6 tháng, dòng tiền tính đúng độ trễ đó. Cột NPV trong bảng là NPV nếu làm ngay từ tháng 1.</li>
+      <li>Chọn theo cảm tính: xếp đề xuất theo con số giá trị tiêu đề, chọn lần lượt đến khi hết ngân sách, vẫn tôn trọng khẩu vị rủi ro, rồi khởi động theo đúng thứ tự đó.</li>
+      <li>Máy tối ưu: bài toán cái túi giải bằng quy hoạch động, tối đa NPV kỳ vọng trong ngân sách và khẩu vị rủi ro, thử cả hai phương án có và không có nền tảng dữ liệu chung; sau đó xếp đợt theo giá trị trên mỗi đồng vốn và bỏ đề xuất nào đến lượt thì không còn NPV dương.</li>
+      <li>Biên EBITDA trước khi làm giả định là 10% doanh thu.</li>
+    </ul>
+  </section>
+</main>
+
+<footer><div class="in">Trang mô phỏng phục vụ đào tạo, ERX Supply Chain Community. Xem 10 agent tài chính chạy từng bài toán: <a href="https://tuanai2024-sg.github.io/train-the-trainer-game/demo/" target="_blank" rel="noopener">Phiên họp HĐQT Vertex</a>.</div></footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dwTitle"></aside>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+/* ===== 100 use case. Số liệu là giả định minh hoạ cho doanh nghiệp mô phỏng =====
+   [mảng, tên, đòn bẩy, kỹ thuật, giá trị bps/năm, vốn bps (ở quy mô 10.000 tỷ), khả thi 1-5, rủi ro 1-5, tháng ra tiền, vốn lưu động bps một lần, trước, sau, đánh đổi] */
+const DOM = ['Tài chính', 'Mua hàng', 'Vận tải', 'Kho', 'Kế hoạch', 'Thương mại', 'Nhân sự', 'Rủi ro và tuân thủ', 'Bền vững', 'Dữ liệu và công nghệ'];
+const OWN = ['Giám đốc tài chính', 'Giám đốc mua hàng', 'Giám đốc vận hành', 'Giám đốc vận hành', 'Giám đốc chuỗi cung ứng', 'Giám đốc thương mại', 'Giám đốc nhân sự', 'Giám đốc rủi ro', 'Giám đốc phát triển bền vững', 'Giám đốc công nghệ'];
+const LEV = { C: 'Chi phí', R: 'Doanh thu', W: 'Vốn lưu động', K: 'Rủi ro' };
+const TEC = { O: 'Tối ưu hoá', M: 'Học máy dự báo', A: 'Agent AI', B: 'Phát hiện bất thường', S: 'Mô phỏng', V: 'Thị giác máy', P: 'Nền tảng dữ liệu' };
+const OPEXR = { O: .13, M: .17, A: .25, B: .15, S: .13, V: .19, P: .15 };
+const MEAS = {
+  C: 'Chi phí thực so với đường cơ sở 12 tháng đã khoá, chuẩn hoá theo sản lượng',
+  R: 'Biên đóng góp tăng thêm so với nhóm đối chứng không dùng AI',
+  W: 'Số ngày vốn lưu động so với đường cơ sở, quy ra tiền một lần',
+  K: 'Tổn thất tránh được bằng tần suất nhân mức thiệt hại, kiểm toán nội bộ xác nhận',
+};
+const CTRL = {
+  O: 'Người phụ trách duyệt phương án trước khi chạy thật',
+  M: 'Đo sai số hằng tháng, có ngưỡng dừng mô hình',
+  A: 'Agent chỉ đề xuất, người có thẩm quyền ký',
+  B: 'Mọi cảnh báo có người xem trong 24 giờ',
+  S: 'Giả định đầu vào được Finance ký trước khi dùng',
+  V: 'Hình ảnh chỉ dùng đúng mục đích đã công bố',
+  P: 'Mỗi bảng dữ liệu có chủ sở hữu và định nghĩa',
+};
+const RAW = [
+  [0, 'Đối soát ngân hàng tự động', 'C', 'A', 2.0, 1.5, 5, 1, 3, 0, 'Kế toán khớp tay từng dòng sao kê mỗi sáng', 'Agent khớp theo 4 lớp quy tắc, người chỉ xem phần lệch', 'Phải chuẩn hoá mã tham chiếu với từng ngân hàng'],
+  [0, 'Rút ngắn đóng sổ cuối tháng', 'C', 'A', 2.5, 3.0, 4, 2, 6, 0, 'Đóng sổ mất 8 ngày làm việc', 'Đóng sổ trong 4 ngày, bút toán trích trước do agent đề xuất', 'Kiểm soát nội bộ phải viết lại cho các bước tự động'],
+  [0, 'Dự báo dòng tiền 13 tuần', 'W', 'M', 0.8, 1.5, 4, 2, 4, 4, 'Dự báo dòng tiền bằng bảng tính, lệch khoảng 20%', 'Mô hình học hành vi thu chi, lệch còn khoảng 7%', 'Cần 24 tháng lịch sử thu chi sạch'],
+  [0, 'Thu hồi công nợ theo xác suất trả', 'W', 'M', 3.0, 2.0, 4, 2, 4, 10, 'Gọi khách theo số nợ lớn nhất', 'Gọi theo số tiền thu thêm kỳ vọng', 'Một số khách lớn được gọi ít hơn, cần kịch bản giữ quan hệ'],
+  [0, 'Kiểm soát hoá đơn trước thanh toán', 'K', 'B', 3.5, 1.2, 5, 1, 3, 0, 'Kiểm mẫu khoảng 5% hoá đơn', 'Quét 100% hoá đơn, chặn trùng và chia nhỏ', 'Báo động giả phải có người xem trong 24 giờ'],
+  [0, 'Tối ưu kỳ hạn thanh toán nhà cung cấp', 'W', 'O', 0.6, 1.5, 4, 3, 5, 12.5, 'Trả sớm hay đúng hạn tuỳ thói quen từng người', 'Lịch trả tối ưu giữa chiết khấu trả sớm và vốn lưu động', 'Nhà cung cấp nhỏ có thể phản ứng khi kỳ hạn bị kéo dài'],
+  [0, 'Giải thích chênh lệch ngân sách tự động', 'C', 'A', 1.2, 1.0, 5, 1, 2, 0, 'Phân tích chênh lệch xong 3 ngày sau đóng sổ', 'Bản giải thích theo động lực có sau 2 giờ', 'Người duyệt phải kiểm lời giải thích, không chỉ con số'],
+  [0, 'Hợp nhất và loại trừ giao dịch nội bộ', 'C', 'A', 1.0, 2.0, 3, 2, 8, 0, 'Loại trừ nội bộ bằng tay giữa nhiều pháp nhân', 'Khớp nội bộ tự động, chỉ đẩy phần lệch lên người', 'Phụ thuộc việc chuẩn hoá hệ thống tài khoản'],
+  [0, 'Hồ sơ thuế và chuyển giá liên tục', 'K', 'A', 2.5, 2.5, 3, 4, 9, 0, 'Hồ sơ chuyển giá soạn tay vào cuối năm', 'Hồ sơ cập nhật hằng quý, dữ liệu so sánh tự gom', 'Chuyên gia thuế phải ký, máy không được kết luận'],
+  [0, 'Tối ưu phòng ngừa rủi ro tỷ giá', 'K', 'O', 4.0, 2.5, 3, 3, 8, 0, 'Phòng ngừa theo một tỷ lệ cố định', 'Tỷ lệ phòng ngừa theo dòng tiền dự báo từng đồng tiền', 'Kết quả phụ thuộc chất lượng dự báo dòng tiền'],
+
+  [1, 'Phân loại và phân tích chi tiêu', 'C', 'M', 4.0, 2.5, 4, 1, 5, 0, 'Chi tiêu nằm rải rác ở nhiều hệ thống', 'Một bức tranh chi tiêu, 98% giao dịch được phân loại', 'Cần người duy trì cây danh mục chi tiêu'],
+  [1, 'Giá mục tiêu theo chỉ số nguyên liệu', 'C', 'M', 6.0, 2.0, 3, 2, 6, 0, 'Đàm phán giá theo kinh nghiệm người mua', 'Giá mục tiêu theo chỉ số hàng hoá và công thức minh bạch', 'Nhà cung cấp chiến lược cần được giải thích công thức'],
+  [1, 'Cảnh báo sớm rủi ro nhà cung cấp', 'K', 'M', 3.0, 2.0, 3, 2, 6, 0, 'Đánh giá nhà cung cấp mỗi năm một lần', 'Cảnh báo hằng tuần từ giao hàng, tài chính và tin tức', 'Tin tức sai có thể gây báo động giả'],
+  [1, 'Phân bổ đơn hàng cho nhiều nhà cung cấp', 'C', 'O', 5.0, 3.0, 3, 3, 8, 0, 'Chia đơn theo thói quen', 'Phân bổ tối ưu theo giá, năng lực và rủi ro', 'Ít nhà cung cấp hơn thì rủi ro tập trung cao hơn'],
+  [1, 'Agent soạn yêu cầu và so sánh báo giá', 'C', 'A', 2.5, 1.5, 4, 2, 4, 0, 'Soạn yêu cầu báo giá và so sánh mất 5 ngày', 'Agent soạn và chuẩn hoá báo giá trong 1 ngày', 'Điều khoản ngoài giá vẫn cần người đọc kỹ'],
+  [1, 'Đòi quyền lợi theo điều khoản hợp đồng', 'C', 'A', 2.0, 1.5, 4, 3, 5, 0, 'Điều khoản phạt và chiết khấu bị quên', 'Agent trích điều khoản, nhắc quyền lợi chưa đòi', 'Có thể đọc sai điều khoản, pháp chế phải xác nhận'],
+  [1, 'Chặn chi tiêu ngoài hợp đồng', 'C', 'B', 4.5, 1.5, 4, 2, 4, 0, 'Khoảng 18% chi tiêu nằm ngoài hợp đồng khung', 'Đơn mua ngoài hợp đồng bị chặn và chuyển về hợp đồng khung', 'Người dùng nội bộ thấy chậm hơn lúc đầu'],
+  [1, 'Thu hồi chiết khấu sản lượng', 'C', 'B', 3.0, 1.0, 4, 1, 3, 0, 'Chiết khấu sản lượng đến hạn không ai theo dõi', 'Tự tính và gửi yêu cầu chiết khấu đến hạn', 'Số liệu sản lượng phải khớp với nhà cung cấp'],
+  [1, 'Dự báo giá nguyên liệu đầu vào', 'C', 'M', 5.5, 2.5, 2, 4, 9, 0, 'Mua theo giá giao ngay', 'Khung mua theo dự báo và kịch bản giá', 'Dự báo dễ sai khi thị trường biến động mạnh'],
+  [1, 'So sánh tổng chi phí sở hữu', 'C', 'S', 2.0, 2.0, 3, 2, 8, 0, 'So giá mua, bỏ qua chi phí lỗi và giao trễ', 'So tổng chi phí sở hữu của từng nhà cung cấp', 'Tốn công thu thập các chi phí ẩn'],
+
+  [2, 'Tối ưu tuyến giao hàng hằng ngày', 'C', 'O', 6.0, 3.0, 4, 2, 5, 0, 'Điều phối viên xếp tuyến theo kinh nghiệm', 'Tuyến tối ưu mỗi đêm, quãng đường giảm 12 đến 18%', 'Tài xế cần thời gian để tin tuyến mới'],
+  [2, 'Ghép đơn chiều về cho xe rỗng', 'R', 'O', 4.0, 2.0, 4, 2, 4, 0, 'Khoảng 35% chuyến chiều về chạy rỗng', 'Ghép đơn chiều về, chuyến rỗng còn khoảng 20%', 'Ràng buộc giờ giao có thể làm trễ chuyến chính'],
+  [2, 'Xếp hàng lên xe tối ưu', 'C', 'O', 2.5, 1.0, 5, 1, 3, 0, 'Xếp kiện theo cảm giác của tổ bốc xếp', 'Xếp tối ưu thể tích, bớt xe mỗi ngày', 'Phải tôn trọng thứ tự dỡ hàng theo điểm giao'],
+  [2, 'Đấu thầu cước theo tuyến', 'C', 'O', 5.0, 2.0, 4, 2, 5, 0, 'Giao hàng cho hãng vận tải quen', 'Đấu thầu theo tuyến, chọn theo giá và độ tin cậy', 'Quan hệ với hãng quen có thể bị ảnh hưởng'],
+  [2, 'Dự báo giờ đến cho khách', 'R', 'M', 2.0, 2.5, 3, 2, 7, 0, 'Khách gọi tổng đài hỏi hàng đang ở đâu', 'Giờ đến chính xác trong khoảng 20 phút, tự báo khách', 'Báo sai giờ đến làm mất niềm tin nhanh hơn không báo'],
+  [2, 'Kiểm toán hoá đơn cước vận tải', 'C', 'B', 2.5, 1.0, 5, 1, 3, 0, 'Trả cước theo hoá đơn hãng gửi', 'Đối chiếu cước với hợp đồng và dữ liệu GPS', 'Tranh chấp với hãng tăng trong giai đoạn đầu'],
+  [2, 'Tiết kiệm nhiên liệu theo hành vi lái', 'C', 'M', 3.0, 3.5, 3, 3, 8, 0, 'Không đo hành vi lái xe', 'Chấm điểm lái, nhiên liệu giảm 6 đến 8%', 'Tài xế lo bị giám sát, cần thoả thuận với công đoàn'],
+  [2, 'Bảo dưỡng dự đoán đội xe', 'C', 'M', 2.0, 2.5, 3, 2, 8, 0, 'Bảo dưỡng theo lịch hoặc khi xe đã hỏng', 'Bảo dưỡng theo nguy cơ hỏng của từng xe', 'Cần dữ liệu cảm biến đủ dài'],
+  [2, 'Thiết kế lại mạng lưới kho', 'C', 'O', 9.0, 8.0, 3, 3, 18, 0, 'Mở kho theo đề xuất của từng vùng', 'So hết các phương án mạng lưới trước khi quyết', 'Quyết định khó đảo ngược, cần nhiều kịch bản nhu cầu'],
+  [2, 'Khung giờ giao chặng cuối động', 'R', 'O', 3.5, 4.0, 2, 3, 12, 0, 'Khung giờ giao cố định cho mọi khu vực', 'Khung giờ theo mật độ đơn, giá giao theo khung', 'Vận hành phức tạp hơn cho đội giao hàng'],
+
+  [3, 'Xếp ca kho theo sản lượng', 'C', 'O', 3.0, 1.0, 5, 2, 3, 0, 'Ca cố định, thừa người giờ thấp điểm', 'Ca theo nhu cầu từng khung 4 tiếng', 'Nhân viên cần lịch ổn định và báo trước'],
+  [3, 'Bố trí vị trí hàng trong kho', 'C', 'O', 2.5, 1.5, 4, 2, 5, 0, 'Hàng bán chạy để xa cửa xuất', 'Hàng chạy nhanh gần cửa, quãng đi nhặt giảm 25%', 'Phải sắp xếp lại kho, gián đoạn vài tuần'],
+  [3, 'Gom đơn và tối ưu đường nhặt hàng', 'C', 'O', 3.0, 2.0, 4, 1, 5, 0, 'Nhặt từng đơn một', 'Gom đơn theo đợt, đường đi ngắn nhất', 'Đơn gấp cần luồng ưu tiên riêng'],
+  [3, 'Kiểm đếm tồn kho bằng thị giác máy', 'K', 'V', 2.0, 6.0, 2, 3, 12, 0, 'Kiểm kê tay mỗi quý, đóng kho 2 ngày', 'Camera và thiết bị bay đếm liên tục', 'Đầu tư phần cứng lớn, cần quy định về hình ảnh nhân viên'],
+  [3, 'Dự báo nhân lực mùa cao điểm', 'C', 'M', 1.5, 1.0, 4, 1, 4, 0, 'Thuê thời vụ theo số năm trước', 'Thuê theo dự báo từng tuần', 'Nhà cung cấp lao động phải cam kết linh hoạt'],
+  [3, 'Phát hiện hao hụt và thất thoát', 'K', 'B', 2.5, 1.5, 4, 2, 4, 0, 'Hao hụt chỉ lộ ra khi kiểm kê', 'Cảnh báo bất thường theo ca và khu vực', 'Cần quy trình điều tra công bằng'],
+  [3, 'Đặt lịch cửa nhập xuất', 'C', 'O', 1.5, 1.5, 4, 1, 4, 0, 'Xe chờ cửa khoảng 2 giờ', 'Đặt lịch cửa, chờ dưới 30 phút', 'Nhà vận tải phải dùng hệ thống đặt lịch'],
+  [3, 'Xuất hàng theo hạn dùng', 'C', 'M', 2.0, 1.0, 4, 1, 3, 0, 'Hàng cận hạn bị huỷ', 'Xuất theo hạn dùng, đẩy hàng cận hạn sớm', 'Hàng cận hạn bán với giá thấp hơn'],
+  [3, 'Phân loại hàng trả về nhanh', 'W', 'V', 1.0, 3.0, 3, 2, 9, 2.5, 'Hàng trả về chờ phân loại khoảng 10 ngày', 'Phân loại trong 48 giờ, hoàn kho nhanh', 'Ca khó vẫn cần người đánh giá tình trạng hàng'],
+  [3, 'Mô hình kho số để thử trước', 'C', 'S', 2.0, 5.0, 2, 2, 14, 0, 'Thay đổi bố trí kho bằng cách làm thử thật', 'Thử trên mô hình số trước khi làm', 'Mô hình phải được cập nhật, nếu không sẽ sai dần'],
+
+  [4, 'Dự báo nhu cầu theo mặt hàng và kho', 'R', 'M', 8.0, 4.0, 3, 2, 8, 7.5, 'Dự báo theo trung bình 3 tháng', 'Dự báo học mùa vụ và khuyến mãi, sai số giảm khoảng 30%', 'Hàng mới chưa có lịch sử, cần quy tắc riêng'],
+  [4, 'Tồn kho an toàn đa cấp', 'W', 'O', 1.5, 2.5, 3, 2, 7, 20, 'Tồn an toàn cố định 2 tuần cho mọi mặt hàng', 'Tồn theo mức phục vụ mục tiêu của từng mặt hàng', 'Một số mặt hàng có mức phục vụ thấp hơn, có chủ đích'],
+  [4, 'Kế hoạch kinh doanh tích hợp tài chính', 'R', 'S', 6.0, 5.0, 2, 3, 14, 0, 'Kế hoạch bán hàng và kế hoạch tài chính lệch nhau', 'Một con số chung, cân theo lợi nhuận', 'Cần kỷ luật họp và người chủ trì cấp cao'],
+  [4, 'Lập lịch sản xuất tối ưu', 'C', 'O', 5.0, 3.5, 3, 2, 9, 0, 'Lịch sản xuất làm bằng bảng tính', 'Lịch tối ưu theo thời gian đổi khuôn và đơn gấp', 'Đổi lịch phút chót làm người vận hành mệt'],
+  [4, 'Dự báo hàng mới ra mắt', 'R', 'M', 3.0, 2.0, 2, 3, 9, 0, 'Đặt hàng mới theo cảm tính', 'Dự báo theo các sản phẩm tương tự', 'Sai số vẫn lớn, nên mua theo nhiều đợt nhỏ'],
+  [4, 'Phân bổ hàng khi thiếu nguồn', 'R', 'O', 4.0, 1.5, 4, 3, 5, 0, 'Ai nói to hơn được nhiều hàng hơn', 'Phân bổ theo biên lợi nhuận và cam kết với khách', 'Một số khách nhận ít hơn, cần giải thích'],
+  [4, 'Cảnh báo gián đoạn chuỗi cung ứng', 'K', 'A', 4.5, 2.0, 3, 2, 6, 0, 'Biết gián đoạn khi hàng không về', 'Cảnh báo sớm 2 đến 3 tuần từ tin tức và dữ liệu cảng', 'Nhiều cảnh báo nhỏ gây nhiễu'],
+  [4, 'Tối ưu lô mua vật tư', 'W', 'O', 1.0, 1.5, 4, 1, 5, 9, 'Mua vật tư theo lô cố định', 'Lô mua tối ưu theo chi phí đặt hàng và lưu kho', 'Tần suất đặt hàng tăng'],
+  [4, 'Mô phỏng kịch bản chuỗi cung ứng', 'K', 'S', 3.0, 2.5, 3, 2, 8, 0, 'Kịch bản tính tay khi khủng hoảng đã đến', 'Có sẵn 20 kịch bản mô phỏng', 'Kết quả chỉ tốt bằng giả định đầu vào'],
+  [4, 'Giải phóng tồn kho chậm luân chuyển', 'W', 'M', 1.0, 1.0, 4, 2, 3, 11, 'Hàng chậm nằm kho 18 tháng', 'Đề xuất thanh lý, chuyển kho hoặc đổi giá', 'Chấp nhận ghi nhận lỗ một lần'],
+
+  [5, 'Định giá động theo độ co giãn', 'R', 'M', 14.0, 5.0, 2, 5, 12, 0, 'Giá theo bảng giá năm', 'Giá theo độ co giãn và giá đối thủ', 'Rủi ro phản ứng của khách và cơ quan cạnh tranh'],
+  [5, 'Tối ưu chương trình khuyến mãi', 'R', 'M', 10.0, 4.0, 3, 3, 9, 0, 'Khoảng 40% chương trình khuyến mãi lỗ', 'Chỉ chạy chương trình có lãi gia tăng', 'Đội bán hàng mất một phần công cụ quen dùng'],
+  [5, 'Chặn rò rỉ chiết khấu', 'R', 'B', 5.0, 1.5, 4, 2, 4, 0, 'Chiết khấu ngoài chính sách không ai thấy', 'Cảnh báo theo từng đơn và từng người duyệt', 'Đội bán hàng thấy bị kiểm soát chặt hơn'],
+  [5, 'Dự đoán khách hàng rời bỏ', 'R', 'M', 4.0, 2.5, 3, 2, 7, 0, 'Biết khách rời bỏ khi khách đã đi', 'Can thiệp sớm với khách có nguy cơ cao', 'Ưu đãi giữ khách có thể bị lạm dụng'],
+  [5, 'Gợi ý bán kèm cho đội bán hàng', 'R', 'M', 4.5, 3.0, 3, 2, 8, 0, 'Bán theo thói quen', 'Gợi ý sản phẩm đi kèm theo từng khách', 'Gợi ý sai làm đội bán hàng mất niềm tin'],
+  [5, 'Agent chăm sóc khách hàng', 'C', 'A', 3.0, 3.0, 3, 3, 7, 0, 'Tổng đài trả lời các câu hỏi lặp lại', 'Agent giải quyết khoảng 60% câu hỏi, người xử lý ca khó', 'Trả lời sai về chính sách sẽ gây khiếu nại'],
+  [5, 'Hạn mức tín dụng khách doanh nghiệp', 'K', 'M', 3.5, 2.0, 3, 3, 6, 0, 'Hạn mức cấp theo quen biết', 'Hạn mức theo điểm rủi ro cập nhật hằng tháng', 'Khách lâu năm có thể bị giảm hạn mức'],
+  [5, 'Tinh gọn danh mục mặt hàng', 'R', 'O', 4.0, 1.5, 3, 3, 6, 0, 'Giữ mặt hàng kém vì sợ mất khách', 'Cắt mặt hàng kém, giữ mặt hàng kéo doanh thu', 'Một số khách mất mặt hàng quen'],
+  [5, 'Lợi nhuận theo khách hàng và kênh', 'R', 'S', 3.5, 2.0, 3, 2, 7, 0, 'Biết doanh thu, không biết lãi theo khách', 'Lãi sau chi phí phục vụ của từng khách và kênh', 'Cách phân bổ chi phí sẽ gây tranh cãi nội bộ'],
+  [5, 'Agent soạn hồ sơ thầu', 'R', 'A', 3.0, 1.5, 4, 3, 4, 0, 'Hồ sơ thầu mất 2 tuần', 'Bản nháp trong 2 ngày, người hoàn thiện', 'Một cam kết sai trong hồ sơ thầu rất đắt'],
+
+  [6, 'Cảnh báo nghỉ việc nhân sự chủ chốt', 'K', 'M', 1.5, 1.0, 3, 4, 6, 0, 'Biết khi đơn nghỉ việc đã nằm trên bàn', 'Cảnh báo sớm để kịp giữ người', 'Nhạy cảm về quyền riêng tư của nhân viên'],
+  [6, 'Định biên theo khối lượng công việc', 'C', 'S', 4.0, 2.0, 3, 3, 8, 0, 'Định biên bằng năm trước cộng 5%', 'Định biên theo khối lượng công việc dự báo', 'Có thể chỉ ra dư thừa, cần lộ trình nhân văn'],
+  [6, 'Trợ lý chính sách nhân sự', 'C', 'A', 1.0, 0.8, 5, 2, 3, 0, 'Phòng nhân sự trả lời câu hỏi lặp lại', 'Trợ lý trả lời cả ngày đêm, có trích nguồn', 'Trả lời sai về phúc lợi sẽ gây khiếu nại'],
+  [6, 'Sàng lọc hồ sơ tuyển dụng', 'C', 'M', 1.0, 1.0, 4, 5, 5, 0, 'Đọc tay hàng trăm hồ sơ cho mỗi vị trí', 'Xếp hạng hồ sơ có kiểm tra thiên lệch', 'Rủi ro thiên lệch, cần kiểm định độc lập'],
+  [6, 'Lộ trình học kỹ năng AI theo vai trò', 'C', 'A', 1.5, 2.0, 4, 1, 6, 0, 'Đào tạo giống nhau cho mọi người', 'Lộ trình riêng theo vai trò', 'Tốn thời gian làm việc của người học'],
+  [6, 'Kiểm tra bảng lương trước khi chi', 'K', 'B', 1.0, 0.8, 5, 1, 3, 0, 'Sai lương chỉ lộ ra khi nhân viên phản ánh', 'Quét bất thường trước mỗi kỳ chi lương', 'Dữ liệu chấm công phải sạch'],
+  [6, 'Tối ưu gói phúc lợi', 'C', 'M', 1.5, 1.0, 3, 3, 6, 0, 'Mọi người cùng một gói phúc lợi', 'Gói theo mức sử dụng thực tế', 'Thay đổi phúc lợi dễ gây phản ứng'],
+  [6, 'An toàn lao động bằng camera', 'K', 'V', 2.0, 4.0, 3, 3, 9, 0, 'Tai nạn được báo sau khi đã xảy ra', 'Cảnh báo vi phạm an toàn ngay lúc xảy ra', 'Camera gây cảm giác bị giám sát'],
+  [6, 'Đo năng suất theo hoạt động', 'C', 'M', 3.0, 2.0, 3, 5, 6, 0, 'Năng suất đo theo cảm nhận của quản lý', 'Năng suất đo theo dữ liệu công việc', 'Dễ biến thành giám sát vi mô'],
+  [6, 'Agent hỗ trợ nhân viên mới', 'C', 'A', 1.0, 1.0, 4, 1, 4, 0, 'Nhân viên mới mất 3 tháng để quen việc', 'Rút còn khoảng 6 tuần', 'Nội dung phải được cập nhật liên tục'],
+
+  [7, 'Giám sát giao dịch gian lận', 'K', 'B', 3.0, 2.0, 4, 2, 5, 0, 'Gian lận lộ ra sau đợt kiểm toán', 'Phát hiện trong ngày', 'Báo động giả tốn công điều tra'],
+  [7, 'Kiểm soát nội bộ liên tục', 'K', 'A', 2.5, 2.5, 3, 2, 8, 0, 'Kiểm soát kiểm mẫu vào cuối kỳ', 'Kiểm 100% giao dịch liên tục', 'Vai trò của kiểm toán phải được định nghĩa lại'],
+  [7, 'Theo dõi văn bản pháp quy mới', 'K', 'A', 1.5, 1.0, 4, 2, 3, 0, 'Văn bản mới được phát hiện chậm', 'Tóm tắt và giao người chịu trách nhiệm trong ngày', 'Diễn giải pháp lý phải do luật sư kết luận'],
+  [7, 'Sàng lọc đối tác và danh sách trừng phạt', 'K', 'M', 2.0, 1.0, 4, 2, 3, 0, 'Kiểm tay danh sách đối tác', 'Sàng lọc tự động ngay khi tạo đối tác', 'Trùng tên có thể gây chặn nhầm'],
+  [7, 'Kho điều khoản hợp đồng tra cứu được', 'K', 'A', 2.0, 2.0, 3, 3, 6, 0, 'Không biết điều khoản nào đang có hiệu lực', 'Mọi điều khoản tra cứu được trong vài giây', 'Bảo mật hợp đồng khi đưa vào mô hình'],
+  [7, 'Dự phòng nợ theo xác suất vỡ nợ', 'K', 'M', 2.5, 1.5, 3, 3, 7, 0, 'Dự phòng theo tuổi nợ', 'Dự phòng theo xác suất vỡ nợ của từng khách', 'Đổi phương pháp dự phòng cần kiểm toán đồng ý'],
+  [7, 'Kiểm tra chi phí công tác và thẻ', 'K', 'B', 1.0, 0.6, 5, 1, 2, 0, 'Kiểm mẫu khoảng 10% chứng từ', 'Quét 100%, chỉ xem chứng từ bất thường', 'Nhân viên có thể thấy bị nghi ngờ'],
+  [7, 'Quản trị rủi ro mô hình AI', 'K', 'B', 1.5, 1.5, 4, 1, 4, 0, 'Không ai kiểm mô hình sau khi đưa vào chạy', 'Danh mục mô hình, đo độ trôi hằng tháng', 'Thêm một lớp thủ tục cho đội AI'],
+  [7, 'Phân loại và che dữ liệu nhạy cảm', 'K', 'M', 1.5, 2.0, 3, 2, 6, 0, 'Dữ liệu nhạy cảm nằm rải rác', 'Tự phân loại và che dữ liệu nhạy cảm', 'Một số truy cập hợp lệ bị chặn nhầm'],
+  [7, 'Kiểm toán nội bộ theo rủi ro', 'C', 'A', 1.5, 1.5, 4, 2, 5, 0, 'Kiểm toán theo kế hoạch năm', 'Chọn mẫu theo rủi ro, agent chuẩn bị hồ sơ', 'Kiểm toán viên cần thêm kỹ năng dữ liệu'],
+
+  [8, 'Đo phát thải chuỗi cung ứng', 'K', 'M', 1.0, 2.5, 2, 2, 10, 0, 'Phát thải ước theo hệ số chung', 'Đo theo hoạt động thực của từng nhà cung cấp', 'Dữ liệu nhà cung cấp khó thu thập'],
+  [8, 'Tối ưu năng lượng nhà máy và kho', 'C', 'O', 3.0, 3.0, 3, 2, 8, 0, 'Điện dùng theo lịch cố định', 'Chạy thiết bị theo giá điện từng khung giờ', 'Có thể ảnh hưởng nhiệt độ vận hành'],
+  [8, 'Soạn báo cáo phát triển bền vững', 'C', 'A', 0.8, 1.0, 4, 3, 4, 0, 'Báo cáo soạn tay trong 3 tháng', 'Dữ liệu tự gom, bản nháp trong 2 tuần', 'Nếu không kiểm chứng sẽ có rủi ro tô vẽ thành tích xanh'],
+  [8, 'Tối ưu kích thước bao bì', 'C', 'O', 2.5, 2.0, 3, 2, 9, 0, 'Bao bì thừa khoảng 20% thể tích', 'Kích thước bao bì tối ưu theo sản phẩm', 'Bao bì mới phải thử độ bền'],
+  [8, 'Tuyến đường cân bằng chi phí và phát thải', 'C', 'O', 1.0, 1.0, 4, 1, 4, 0, 'Tuyến chỉ tối ưu theo quãng đường', 'Tuyến cân quãng đường, thời gian và CO₂', 'Chi phí có thể tăng nhẹ ở một số tuyến'],
+  [8, 'Thu hồi và bán lại sản phẩm', 'R', 'M', 2.0, 2.5, 2, 2, 12, 0, 'Hàng lỗi bị huỷ', 'Tái chế hoặc bán lại theo giá trị còn lại', 'Cần kênh bán thứ cấp'],
+  [8, 'Giám sát nước thải và chất thải', 'K', 'B', 1.0, 2.5, 3, 1, 8, 0, 'Đo thủ công mỗi tháng', 'Cảm biến cảnh báo khi vượt ngưỡng', 'Chi phí lắp đặt cảm biến'],
+  [8, 'Chấm điểm bền vững nhà cung cấp', 'K', 'M', 1.0, 1.5, 2, 2, 9, 0, 'Dựa vào bản tự khai của nhà cung cấp', 'Chấm điểm từ dữ liệu độc lập', 'Nhà cung cấp nhỏ khó đáp ứng'],
+  [8, 'Giá carbon nội bộ cho quyết định đầu tư', 'K', 'S', 1.5, 0.8, 3, 2, 5, 0, 'Đầu tư không tính chi phí carbon', 'Mỗi dự án có giá carbon nội bộ', 'Một số dự án đang có lãi sẽ trở thành không lãi'],
+  [8, 'Lộ trình điện hoá đội xe', 'C', 'O', 3.5, 4.0, 3, 3, 15, 0, 'Mua xe điện theo phong trào', 'Điện hoá theo những tuyến phù hợp trước', 'Vốn đầu tư ban đầu cao'],
+
+  [9, 'Nền tảng dữ liệu chung', 'C', 'P', 1.5, 8.0, 4, 2, 9, 0, 'Mỗi phòng một con số', 'Một nguồn số liệu, mỗi bảng có chủ', 'Đầu tư nền tảng, giá trị đến gián tiếp qua các đề xuất khác'],
+  [9, 'Quản trị dữ liệu chủ', 'C', 'M', 1.5, 3.0, 3, 2, 9, 0, 'Một khách hàng có nhiều mã khác nhau', 'Mỗi khách hàng, mỗi mặt hàng chỉ một mã', 'Dọn dữ liệu cũ mất nhiều tháng'],
+  [9, 'Hỏi dữ liệu bằng tiếng Việt', 'C', 'A', 2.0, 2.0, 3, 3, 5, 0, 'Chờ bộ phận công nghệ viết báo cáo 2 tuần', 'Hỏi bằng tiếng Việt, có số trong vài phút', 'Câu hỏi mơ hồ cho số sai nếu thiếu định nghĩa chung'],
+  [9, 'Agent tự động hoá quy trình', 'C', 'A', 5.0, 3.5, 3, 3, 6, 0, 'Nhập liệu tay giữa các hệ thống', 'Agent chuyển dữ liệu, người duyệt ngoại lệ', 'Hệ thống cũ đổi giao diện có thể làm agent hỏng'],
+  [9, 'Trợ lý lập trình cho đội công nghệ', 'C', 'A', 2.0, 1.0, 5, 2, 2, 0, 'Một tính năng mới mất khoảng 6 tuần', 'Rút 30 đến 40% thời gian phát triển', 'Mã kém chất lượng nếu bỏ qua bước rà soát'],
+  [9, 'Giám sát vận hành hệ thống', 'K', 'B', 1.5, 2.0, 4, 1, 5, 0, 'Sự cố được phát hiện khi người dùng báo', 'Phát hiện dấu hiệu trước khi hệ thống sập', 'Báo động nhiễu trong thời gian đầu'],
+  [9, 'Phát hiện xâm nhập theo hành vi', 'K', 'B', 3.0, 3.0, 3, 2, 6, 0, 'Đội an ninh đọc nhật ký thủ công', 'Phát hiện xâm nhập theo hành vi bất thường', 'Có thể chặn nhầm người dùng hợp lệ'],
+  [9, 'Tối ưu chi phí điện toán đám mây', 'C', 'O', 2.0, 0.8, 5, 1, 2, 0, 'Hoá đơn đám mây tăng khoảng 40% mỗi năm', 'Tự tắt và đổi gói theo tải thực', 'Cần kỷ luật gắn nhãn chi phí'],
+  [9, 'Kho tri thức nội bộ có trích nguồn', 'C', 'A', 2.0, 2.0, 4, 3, 5, 0, 'Tri thức nằm trong đầu người cũ', 'Tra cứu có nguồn trong vài giây', 'Tài liệu cũ sai vẫn được trả lời rất tự tin'],
+  [9, 'Kiểm định chất lượng dữ liệu tự động', 'K', 'B', 1.0, 1.0, 4, 1, 4, 0, 'Dữ liệu sai bị phát hiện ở báo cáo HĐQT', 'Kiểm tự động trước khi số vào báo cáo', 'Thêm một bước trong đường ống dữ liệu'],
+];
+const UC = RAW.map((a, i) => ({ id: i + 1, d: a[0], name: a[1], lev: a[2], tec: a[3], v: a[4], c: a[5], f: a[6], r: a[7], t: a[8], wc: a[9], before: a[10], after: a[11], trade: a[12] }));
+const ENABLER = 91;
+
+/* ===== mô hình tài chính: dòng tiền từng use case, tối ưu danh mục, mô phỏng Monte Carlo ===== */
+const PRESETS = {
+  s: { label: '10.000 tỷ đồng', rev: 10000, cur: 'VND', ratio: 1, b: [30, 300, 120] },
+  m: { label: '100.000 tỷ đồng', rev: 100000, cur: 'VND', ratio: 10, b: [15, 220, 90] },
+  l: { label: '1.000 tỷ USD', rev: 1e12, cur: 'USD', ratio: 2600, b: [8, 120, 45] },
+};
+const DF = Math.pow(1.12, 1 / 12);
+const EBITDA0 = 10, COSTX = 1.3, RAMP = 9, BOOSTP = 0.12, BOOSTT = 2;
+
+function ctxOf(st) { const P = PRESETS[st.preset]; return { P, rev: P.rev, s: Math.pow(P.ratio, -0.15), H: st.hz * 12 }; }
+function pOf(u, boosted) {
+  let p = 0.35 + 0.1 * u.f + 0.005 * (10 - u.t), t = u.t;
+  if (boosted && u.id !== ENABLER && u.f <= 3) { p += BOOSTP; t = Math.max(2, t - BOOSTT); }
+  return { p: Math.max(0.45, Math.min(0.95, p)), t };
+}
+function evalItem(u, C, boosted, R, D) {
+  const H = C.H, { p, t } = pOf(u, boosted);
+  const cap = u.c * COSTX * C.s / 1e4 * C.rev, val = u.v / 1e4 * C.rev, wc = u.wc / 1e4 * C.rev, opex = cap * OPEXR[u.tec];
+  const ev = new Float64Array(H + 1), wv = new Float64Array(H + 1), half = Math.ceil(t / 2);
+  let PVv = 0, PVc = 0, PVf = 0, E = 0;
+  for (let k = 1; k <= H; k++) {
+    let v = 0, c = 0, f = 0; const s = k - D;
+    if (s >= 1 && s <= t) { c = cap / t; if (s <= half) f = cap / t; }
+    if (s > t) { c = opex / 12; v = val / 12 * Math.min(1, (s - t) / RAMP); if (s <= t + 6) { v += wc / 6; wv[k] = p * R * wc / 6; } }
+    const df = Math.pow(DF, -k);
+    PVv += v * df; PVc += c * df; PVf += f * df;
+    ev[k] = p * R * v - (p * c + (1 - p) * f);
+    E += ev[k] * df;
+  }
+  return { u, p, t, cap, val, wc, opex, ev, wv, E, PVv, PVc, PVf, evYr: p * val };
+}
+function wOf(u, C) { return Math.ceil(u.c * COSTX * C.s * 10 - 1e-9); } // đơn vị 0,1 điểm cơ bản doanh thu
+
+function optimize(st, useLocks) {
+  const C = ctxOf(st), B = Math.round(st.budget * 10);
+  const lk = id => useLocks ? st.locks[id] : undefined;
+  const en = UC[ENABLER - 1], enL = lk(ENABLER);
+  const runs = [];
+  for (const boosted of [false, true]) {
+    if (boosted && (enL === 'out' || (en.r > st.appetite && enL !== 'in'))) continue;
+    if (!boosted && enL === 'in') continue;
+    const ev = UC.map(u => evalItem(u, C, boosted, 1, 0));
+    let used = 0; const forced = [], cand = [];
+    UC.forEach((u, i) => {
+      if (u.id === ENABLER) { if (boosted) { forced.push(i); used += wOf(u, C); } return; }
+      const L = lk(u.id);
+      if (L === 'in') { forced.push(i); used += wOf(u, C); return; }
+      if (L === 'out' || u.r > st.appetite || ev[i].E <= 0) return;
+      cand.push(i);
+    });
+    const E0 = forced.reduce((a, i) => a + ev[i].E, 0), capU = B - used;
+    if (capU < 0) { runs.push({ sel: forced, E: E0, boosted, over: true, used }); continue; }
+    const W1 = capU + 1, dp = new Float64Array(W1), keep = new Uint8Array(cand.length * W1);
+    cand.forEach((i, j) => {
+      const w = wOf(UC[i], C), v = ev[i].E;
+      for (let b = capU; b >= w; b--) { const nv = dp[b - w] + v; if (nv > dp[b]) { dp[b] = nv; keep[j * W1 + b] = 1; } }
+    });
+    let b = capU; const pick = [];
+    for (let j = cand.length - 1; j >= 0; j--) if (keep[j * W1 + b]) { pick.push(cand[j]); b -= wOf(UC[cand[j]], C); }
+    runs.push({ sel: forced.concat(pick), E: E0 + dp[capU], boosted, over: false, used: B - b });
+  }
+  const ok = runs.filter(r => !r.over);
+  const pool = ok.length ? ok : runs;
+  return pool.reduce((a, r) => (r.E > a.E ? r : a), pool[0]);
+}
+
+function intuition(st) {
+  const C = ctxOf(st), B = Math.round(st.budget * 10);
+  const order = UC.map((u, i) => i).filter(i => UC[i].r <= st.appetite).sort((a, b) => UC[b].v - UC[a].v || UC[a].c - UC[b].c);
+  const sel = []; let used = 0;
+  for (const i of order) { const w = wOf(UC[i], C); if (used + w <= B) { sel.push(i); used += w; } }
+  return sel;
+}
+
+function evalSel(st, sel, R, D, off) {
+  const C = ctxOf(st), H = C.H, boosted = sel.some(i => UC[i].id === ENABLER);
+  const items = sel.map(i => Object.assign(evalItem(UC[i], C, boosted, R, D + (off ? off[i] || 0 : 0)), { off: off ? off[i] || 0 : 0 }));
+  const flow = new Float64Array(H + 1), cum = new Float64Array(H + 1);
+  items.forEach(it => { for (let k = 1; k <= H; k++) flow[k] += it.ev[k]; });
+  for (let k = 1; k <= H; k++) cum[k] = cum[k - 1] + flow[k];
+  let trough = 0, troughM = 0;
+  for (let k = 1; k <= H; k++) if (cum[k] < trough) { trough = cum[k]; troughM = k; }
+  let pb = null;
+  for (let k = H; k >= 1 && cum[k] >= 0; k--) pb = k; /* hoàn vốn: từ tháng này trở đi dòng tiền cộng dồn không âm nữa */
+  const cumX = new Float64Array(H + 1); let tx = 0, txM = 0, pbX = null;
+  for (let k = 1; k <= H; k++) { let w = 0; items.forEach(it => { w += it.wv[k]; }); cumX[k] = cumX[k - 1] + flow[k] - w; if (cumX[k] < tx) { tx = cumX[k]; txM = k; } }
+  for (let k = H; k >= 1 && cumX[k] >= 0; k--) pbX = k;
+  const S = f => items.reduce((a, it) => a + f(it), 0);
+  return {
+    items, boosted, cum, trough, troughM, pb, pbX, troughX: tx, n: items.length,
+    npv: S(it => it.E), capex: S(it => it.cap), valYr: S(it => it.p * R * it.val), opexYr: S(it => it.p * it.opex),
+    wc: S(it => it.p * R * it.wc), ebitda: S(it => (it.u.lev === 'W' ? 0 : it.p * R * it.val)),
+    benefit: S(it => it.p * R * it.PVv), cost: S(it => it.p * it.PVc + (1 - it.p) * it.PVf),
+  };
+}
+
+function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function tri(r, a, c, b) { const u = r(), F = (c - a) / (b - a); return u < F ? a + Math.sqrt(u * (b - a) * (c - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - c)); }
+function monteCarlo(st, sel, R, D, N, off) {
+  const C = ctxOf(st), boosted = sel.some(i => UC[i].id === ENABLER);
+  const pre = sel.map(i => [0, 1, 2, 3].map(d => evalItem(UC[i], C, boosted, 1, D + d + (off ? off[i] || 0 : 0))));
+  const r = rng(20261031), out = new Float64Array(N);
+  for (let s = 0; s < N; s++) {
+    const g = tri(r, .75, 1, 1.15); let npv = 0;
+    for (let j = 0; j < pre.length; j++) {
+      const x = r(), it = pre[j][x < .4 ? 0 : x < .7 ? 1 : x < .9 ? 2 : 3];
+      if (r() < it.p) npv += tri(r, .6, 1, 1.3) * g * R * it.PVv - it.PVc; else npv -= it.PVf;
+    }
+    out[s] = npv;
+  }
+  out.sort();
+  const q = f => out[Math.min(N - 1, Math.floor(f * N))];
+  let neg = 0; for (let s = 0; s < N; s++) if (out[s] < 0) neg++;
+  return { out, p10: q(.1), p50: q(.5), p90: q(.9), loss: neg / N };
+}
+
+/* năng lực triển khai: mỗi đợt 6 tháng chỉ khởi động tối đa st.cap đề xuất */
+function sequence(st, sel, prio) {
+  const order = sel.slice().sort((a, b) => (UC[b].id === ENABLER) - (UC[a].id === ENABLER) || prio(b) - prio(a) || a - b);
+  const off = {}; order.forEach((i, k) => { off[i] = 6 * Math.floor(k / st.cap); });
+  return off;
+}
+function planOpt(st, useLocks) {
+  const r = optimize(st, useLocks), C = ctxOf(st);
+  const e0 = {}; r.sel.forEach(i => { e0[i] = evalItem(UC[i], C, r.boosted, 1, 0); });
+  const prio = i => e0[i].E / Math.max(1e-9, e0[i].cap);
+  let sel = r.sel.slice(), off = sequence(st, sel, prio), dropped = [];
+  for (let it = 0; it < 6 && !r.over; it++) {
+    const drop = sel.filter(i => UC[i].id !== ENABLER && (!useLocks || st.locks[UC[i].id] !== 'in') && evalItem(UC[i], C, r.boosted, 1, off[i]).E <= 0);
+    if (!drop.length) break;
+    dropped = dropped.concat(drop);
+    sel = sel.filter(i => !drop.includes(i));
+    off = sequence(st, sel, prio);
+  }
+  const E = sel.reduce((a, i) => a + evalItem(UC[i], C, r.boosted, 1, off[i]).E, 0);
+  return { sel, off, E, boosted: r.boosted, over: r.over, dropped };
+}
+function planInt(st) {
+  const sel = intuition(st);
+  return { sel, off: sequence(st, sel, i => UC[i].v) };
+}
+
+/* ===== giao diện: trạng thái HĐQT, biểu đồ SVG, bảng, nghị quyết mô phỏng ===== */
+(function () {
+  'use strict';
+  const $ = s => document.querySelector(s);
+  const NS = 'http://www.w3.org/2000/svg';
+  const RM = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const DEF = { appetite: 3, hz: 3, R: 1, delay: 0, cap: 12 };
+  const st = { preset: 's', budget: PRESETS.s.b[2], appetite: 3, hz: 3, R: 1, delay: 0, cap: 12, locks: {}, optRun: false, voted: false, stressTouched: false, lev: 'all', dom: -1, onlySel: false, sort: { k: 'E', dir: -1 } };
+  let V = {};
+
+  /* ---------- định dạng ---------- */
+  const nf = (x, d) => new Intl.NumberFormat('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x);
+  function money(x) {
+    const P = PRESETS[st.preset], sg = x < -1e-9 ? '−' : '', a = Math.abs(x);
+    if (a < 1e-9) return P.cur === 'USD' ? '0 USD' : '0 đồng';
+    if (P.cur === 'USD') {
+      if (a >= 1e9) return sg + nf(a / 1e9, a >= 1e11 ? 0 : 1) + ' tỷ USD';
+      if (a >= 1e6) return sg + nf(a / 1e6, 0) + ' triệu USD';
+      return sg + nf(a / 1e3, 0) + ' nghìn USD';
+    }
+    if (a >= 100) return sg + nf(a, 0) + ' tỷ đồng';
+    if (a >= 1) return sg + nf(a, 1) + ' tỷ đồng';
+    return sg + nf(a * 1000, 0) + ' triệu đồng';
+  }
+  const signed = x => (x > 0 ? '+' : '') + money(x);
+  const pct = (x, d = 0) => nf(x * 100, d) + '%';
+  const axDiv = () => (PRESETS[st.preset].cur === 'USD' ? 1e9 : 1);
+  const axUnit = () => (PRESETS[st.preset].cur === 'USD' ? 'tỷ USD' : 'tỷ đồng');
+  const monthTxt = m => (m == null ? 'chưa hoàn vốn trong ' + st.hz + ' năm' : 'tháng ' + m);
+  const lossTxt = x => (x < 0.001 ? 'dưới 0,1%' : pct(x, 1));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function nice(lo, hi, n) {
+    const span = (hi - lo) || 1, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw))), e = raw / mag;
+    const step = (e >= 7.5 ? 10 : e >= 3.5 ? 5 : e >= 1.5 ? 2 : 1) * mag;
+    const a = Math.floor(lo / step + 1e-9) * step, b = Math.ceil(hi / step - 1e-9) * step, t = [];
+    for (let v = a; v <= b + step * 1e-6; v += step) t.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+    return { lo: a, hi: b, step, t, d: step < 0.1 ? 2 : step < 1 ? 1 : 0 };
+  }
+  function el(tag, attrs, parent, text) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  const jit = id => ((((id * 7919) % 13) - 6) / 6) * 1.6;
+  const short = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
+
+  /* ---------- tính toán ---------- */
+  function compute() {
+    const C = ctxOf(st);
+    V.C = C;
+    V.pi = planInt(st); V.int = V.pi.sel;
+    V.opt = st.optRun ? planOpt(st, true) : null;
+    V.free = st.optRun && Object.keys(st.locks).length ? planOpt(st, false) : null;
+    V.eInt = evalSel(st, V.int, st.R, st.delay, V.pi.off);
+    V.eOpt = V.opt ? evalSel(st, V.opt.sel, st.R, st.delay, V.opt.off) : null;
+    V.mInt = monteCarlo(st, V.int, st.R, st.delay, 2000, V.pi.off);
+    V.mOpt = V.opt ? monteCarlo(st, V.opt.sel, st.R, st.delay, 2000, V.opt.off) : null;
+    V.dropped = new Set(V.opt ? V.opt.dropped.map(i => UC[i].id) : []);
+    V.sInt = new Set(V.int.map(i => UC[i].id));
+    V.sOpt = V.opt ? new Set(V.opt.sel.map(i => UC[i].id)) : new Set();
+    const boost = !!(V.opt && V.opt.boosted);
+    V.items = UC.map(u => evalItem(u, C, boost, 1, 0));
+    V.base = UC.map(u => evalItem(u, C, false, 1, 0));
+    V.main = V.opt ? { sel: V.opt.sel, off: V.opt.off, e: V.eOpt, m: V.mOpt, set: V.sOpt, label: 'máy tối ưu' } : { sel: V.int, off: V.pi.off, e: V.eInt, m: V.mInt, set: V.sInt, label: 'chọn theo cảm tính' };
+    V.half = evalSel(st, V.main.sel, 0.5, st.delay, V.main.off);
+    V.halfInt = evalSel(st, V.int, 0.5, st.delay, V.pi.off);
+    V.wave = {}; V.main.e.items.forEach(it => { V.wave[it.u.id] = Math.min(2, it.off / 6); });
+    V.bud = st.budget / 1e4 * C.rev;
+    V.capAll = UC.reduce((a, u) => a + u.c * COSTX * C.s / 1e4 * C.rev, 0);
+    V.valAll = UC.reduce((a, u) => a + u.v / 1e4 * C.rev, 0);
+    V.waves = waves(V.main.e.items);
+  }
+  function waves(items) {
+    const W = [[], [], []];
+    items.forEach(it => W[Math.min(2, it.off / 6)].push(it));
+    return W.map(a => ({ items: a.sort((x, y) => y.E - x.E), cap: a.reduce((s, it) => s + it.cap, 0), val: a.reduce((s, it) => s + it.p * st.R * it.val, 0) }));
+  }
+  const stressed = () => st.R !== 1 || st.delay > 0;
+
+  /* ---------- hero ---------- */
+  function renderHero() {
+    const P = PRESETS[st.preset], e = V.main.e, m = V.main.m;
+    $('#lede').innerHTML = `Các khối trình lên <b>100 đề xuất AI</b>, tổng vốn xin <b>${money(V.capAll)}</b>, hứa hẹn <b>${money(V.valAll)} mỗi năm</b> nếu mọi đề xuất đều thành công. Ngân sách HĐQT đặt ra là <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Câu hỏi không còn là AI có đáng làm hay không, mà là làm cái nào, khi nào, và ai chịu trách nhiệm.`;
+    $('#scaleNote').textContent = `Ở quy mô này, mỗi đồng chi cho danh mục ${V.main.label} tạo ra ${nf(e.benefit / e.cost, 1)} đồng giá trị hiện tại trong ${st.hz} năm. Vốn tăng chậm hơn doanh thu nên doanh nghiệp càng lớn, tỷ suất càng cao.`;
+    document.querySelectorAll('#scaleSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === st.preset)));
+    const pre = stressed() ? `Trong kịch bản thử (giá trị đạt ${nf(st.R * 100, 0)}% kế hoạch, trễ ${st.delay} tháng): ` : '';
+    if (!V.opt) {
+      $('#answer').innerHTML = `${pre}Nếu chọn như thường lệ, lấy con số lớn nhất cho đến khi hết tiền, HĐQT duyệt <b>${e.n} đề xuất</b>, dùng ${money(e.capex)}, NPV ${st.hz} năm kỳ vọng <b>${money(e.npv)}</b>, hoàn vốn ${monthTxt(e.pb)}, xác suất lỗ ${lossTxt(m.loss)}. Ban điều hành chưa đề nghị danh mục này: cần để máy tối ưu trên cùng ngân sách trước khi quyết.`;
+    } else if (V.opt.over) {
+      $('#answer').innerHTML = `Các quyết định ép giữ của HĐQT đang vượt ngân sách. Nới ngân sách hoặc bỏ bớt quyết định ép trước khi biểu quyết.`;
+    } else {
+      const ei = V.eInt, unused = V.bud - e.capex, w1 = V.waves[0];
+      const cmp = ei.npv > 0 ? `gấp ${nf(e.npv / ei.npv, 1)} lần cách chọn theo cảm tính` : `trong khi cách chọn theo cảm tính cho ${money(ei.npv)}`;
+      $('#answer').innerHTML = `${pre}Duyệt <b>${e.n} đề xuất</b> với ${money(e.capex)}${unused > V.bud * 0.05 ? `, để lại ${money(unused)} vì năng lực triển khai, không phải tiền, mới là giới hạn` : ''}. NPV ${st.hz} năm kỳ vọng <b>${money(e.npv)}</b>, ${cmp}; hoàn vốn ${monthTxt(e.pb)}; xác suất lỗ ${lossTxt(m.loss)}. Hôm nay chỉ giải ngân Đợt 1: <b>${w1.items.length} đề xuất, ${money(w1.cap)}</b>.`;
+    }
+    const ei = V.eInt, opt = !!V.opt;
+    const dl = (a, b, better) => { const d = a - b; if (Math.abs(d) < 1e-9) return 'bằng cách chọn theo cảm tính'; const good = better === 'hi' ? d > 0 : d < 0; return `<span class="${good ? 'up' : 'dn'}">${signed(d)}</span> so với cảm tính`; };
+    const S = [
+      { k: `NPV kỳ vọng ${st.hz} năm`, v: money(e.npv), d: opt ? dl(e.npv, ei.npv, 'hi') : 'Cách chọn thường lệ' },
+      { k: 'Giá trị kỳ vọng mỗi năm', v: money(e.valYr), d: `+${nf(e.ebitda / V.C.rev * 100, 2)} điểm biên EBITDA` },
+      { k: 'Vốn đầu tư', v: money(e.capex), d: `${e.n} đề xuất, ${nf(e.capex / V.C.rev * 100, 2)}% doanh thu` },
+      { k: 'Hoàn vốn tiền mặt', v: e.pb == null ? 'Chưa hoàn vốn' : 'Tháng ' + e.pb, d: `Không tính vốn lưu động: ${e.pbX == null ? 'chưa hoàn vốn' : 'tháng ' + e.pbX}` },
+    ];
+    $('#stats').innerHTML = S.map(s => `<div class="stat"><div class="k">${s.k}</div><div class="v num">${s.v}</div><div class="d">${s.d}</div></div>`).join('');
+    $('#stressBadge').innerHTML = stressed() ? `<span class="stress">Đang thử sức chịu đựng: giá trị đạt ${nf(st.R * 100, 0)}% kế hoạch, triển khai trễ ${st.delay} tháng</span>` : '';
+    const done = [true, st.optRun, st.stressTouched, st.voted];
+    const cur = done.indexOf(false);
+    const STEPS = [
+      ['Xem cách chọn thường lệ', 'Con số lớn nhất được chọn trước, đến khi hết tiền.'],
+      ['Để máy tối ưu', 'Cùng ngân sách, xét xác suất thành công và lúc ra tiền.'],
+      ['Thử sức chịu đựng', 'Kéo giá trị đạt được xuống, cho triển khai trễ.'],
+      ['Biểu quyết', 'Nghị quyết có điều kiện, giải ngân theo cổng.'],
+    ];
+    $('#steps').innerHTML = STEPS.map((s, i) => `<li class="${done[i] ? 'done' : i === cur ? 'cur' : ''}"><span class="n">${done[i] ? '✓' : i + 1}</span><div><b>${s[0]}</b><span>${s[1]}</span></div></li>`).join('');
+  }
+
+  /* ---------- thanh điều khiển ---------- */
+  function syncControls() {
+    const P = PRESETS[st.preset], b = $('#cBudget');
+    b.min = P.b[0]; b.max = P.b[1]; b.step = 1; b.value = st.budget;
+    $('#oBudget').textContent = `${money(V.bud)} (${nf(st.budget / 100, 2)}%)`;
+    $('#cRisk').value = String(st.appetite);
+    $('#cHz').value = String(st.hz);
+    $('#cR').value = Math.round(st.R * 100); $('#oR').textContent = nf(st.R * 100, 0) + '% kế hoạch';
+    $('#cD').value = st.delay; $('#oD').textContent = st.delay + ' tháng';
+    const bo = $('#bOpt');
+    bo.disabled = st.optRun;
+    bo.textContent = st.optRun ? 'Đã tối ưu, tự cập nhật' : 'Để máy tối ưu';
+  }
+
+  /* ---------- tooltip ---------- */
+  const tip = $('#tip');
+  function showTip(html, x, y) {
+    tip.innerHTML = html; tip.hidden = false;
+    const r = tip.getBoundingClientRect(), vw = innerWidth, vh = innerHeight;
+    let left = x + 14, top = y + 14;
+    if (left + r.width > vw - 8) left = x - r.width - 14;
+    if (top + r.height > vh - 8) top = y - r.height - 14;
+    tip.style.left = Math.max(8, left) + 'px'; tip.style.top = Math.max(8, top) + 'px';
+  }
+  function hideTip() { tip.hidden = true; if (hovDot) { hovDot.classList.remove('hov'); hovDot = null; } }
+  function statusTxt(id) {
+    const o = V.sOpt.has(id), i = V.sInt.has(id), L = st.locks[id];
+    if (!st.optRun) return i ? 'Cảm tính chọn' : 'Cảm tính không chọn';
+    const ms = L === 'in' ? 'HĐQT ép giữ' : L === 'out' ? 'HĐQT đã loại' : o ? 'Máy chọn' : 'Máy không chọn';
+    return ms + (i ? ', cảm tính chọn' : ', cảm tính không chọn');
+  }
+  function itemTip(id) {
+    const u = UC[id - 1], it = V.items[id - 1];
+    return `<b>${esc(u.name)}</b><div class="xs muted" style="margin-bottom:6px">${DOM[u.d]}, ${LEV[u.lev].toLowerCase()}, ${TEC[u.tec].toLowerCase()}</div>
+      <div class="r"><span>Giá trị kỳ vọng mỗi năm</span><span>${money(it.evYr)}</span></div>
+      <div class="r"><span>Vốn đầu tư</span><span>${money(it.cap)}</span></div>
+      <div class="r"><span>Xác suất thành công</span><span>${pct(it.p)}</span></div>
+      <div class="r"><span>Rủi ro</span><span>${u.r}/5</span></div>
+      <div class="r"><span>Ra tiền sau</span><span>${it.t} tháng</span></div>
+      <div class="r"><span>NPV kỳ vọng nếu làm ngay</span><span>${money(it.E)}</span></div>
+      <div class="st">${statusTxt(id)}</div>`;
+  }
+
+  /* ---------- bản đồ ---------- */
+  const dotEls = {}; let mapPts = [], hovDot = null;
+  const matches = u => (st.lev === 'all' || u.lev === st.lev) && (st.dom < 0 || u.d === st.dom);
+  function drawMap() {
+    const box = $('#mapBox');
+    const W = Math.max(300, Math.round(box.clientWidth)), H = Math.round(Math.max(340, Math.min(540, W * 0.6)));
+    let svg = box.querySelector('svg');
+    if (!svg) {
+      svg = el('svg', { role: 'img' }, box);
+      el('g', { class: 'ax' }, svg); el('g', { class: 'quadg' }, svg); el('g', { class: 'dots' }, svg); el('g', { class: 'labs' }, svg);
+      const g = svg.querySelector('.dots');
+      UC.slice().sort((a, b) => b.c - a.c).forEach(u => { dotEls[u.id] = el('circle', { class: 'dot', cx: 0, cy: 0, r: 4 }, g); });
+      svg.addEventListener('pointermove', mapMove);
+      svg.addEventListener('pointerleave', hideTip);
+      svg.addEventListener('click', e => { const p = nearest(e); if (p) openDrawer(p.u.id); });
+    }
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+    svg.setAttribute('aria-label', `Bản đồ 100 đề xuất theo xác suất thành công và giá trị kỳ vọng mỗi năm. Máy chọn ${V.sOpt.size}, cảm tính chọn ${V.sInt.size}. Bảng đầy đủ ở phần Toàn bộ 100 đề xuất.`);
+    const narrow = W < 560, m = { l: narrow ? 46 : 60, r: 14, t: 16, b: 46 };
+    const pts = V.items.map(it => ({ u: it.u, xv: Math.min(98.5, it.p * 100 + jit(it.u.id)), yv: it.evYr, cap: it.cap }));
+    const sy0 = nice(0, Math.max(...pts.map(p => p.yv)) / axDiv() * 1.04, 5), ymax = sy0.hi * axDiv();
+    const X = x => m.l + (x - 45) / 55 * (W - m.l - m.r), Y = y => H - m.b - y / ymax * (H - m.t - m.b);
+    const ax = svg.querySelector('.ax'); ax.innerHTML = '';
+    sy0.t.forEach(t => { const y = Y(t * axDiv()); el('line', { class: t === 0 ? 'zero' : 'gl', x1: m.l, x2: W - m.r, y1: y, y2: y }, ax); el('text', { x: m.l - 8, y: y + 4, 'text-anchor': 'end', class: 'num' }, ax, nf(t, sy0.d)); });
+    [50, 60, 70, 80, 90, 100].forEach(t => { const x = X(t); el('line', { class: 'gl', x1: x, x2: x, y1: m.t, y2: H - m.b }, ax); el('text', { x, y: H - m.b + 16, 'text-anchor': 'middle' }, ax, t + '%'); });
+    el('text', { x: (m.l + W - m.r) / 2, y: H - 6, 'text-anchor': 'middle', class: 'axtitle' }, ax, 'Xác suất thành công');
+    el('text', { x: 12, y: (m.t + H - m.b) / 2, transform: `rotate(-90 12 ${(m.t + H - m.b) / 2})`, 'text-anchor': 'middle', class: 'axtitle' }, ax, `Giá trị kỳ vọng mỗi năm, ${axUnit()}`);
+    const q = svg.querySelector('.quadg'); q.innerHTML = '';
+    const qx = X(72), qy = Y(ymax * 0.4);
+    el('line', { class: 'quad', x1: qx, x2: qx, y1: m.t, y2: H - m.b }, q);
+    el('line', { class: 'quad', x1: m.l, x2: W - m.r, y1: qy, y2: qy }, q);
+    el('text', { class: 'qlab', x: W - m.r - 8, y: m.t + 14, 'text-anchor': 'end' }, q, 'Làm ngay');
+    el('text', { class: 'qlab', x: m.l + 8, y: m.t + 14 }, q, 'Đặt cược lớn');
+    el('text', { class: 'qlab', x: W - m.r - 8, y: H - m.b - 10, 'text-anchor': 'end' }, q, 'Thắng nhanh');
+    el('text', { class: 'qlab', x: m.l + 8, y: H - m.b - 10 }, q, 'Xem lại');
+    const maxCap = Math.max(...pts.map(p => p.cap)), rmax = narrow ? 13 : 21;
+    const pos = pts.map(p => ({ x: X(p.xv), x0: X(p.xv), y: Y(p.yv), r: Math.max(3.5, Math.sqrt(p.cap / maxCap) * rmax) }));
+    const lim = (W - m.l - m.r) * 0.035;
+    for (let it = 0; it < 40; it++) {
+      let moved = false;
+      for (let a = 0; a < pos.length; a++) for (let b = a + 1; b < pos.length; b++) {
+        const A = pos[a], Bq = pos[b], dy = A.y - Bq.y, need = A.r + Bq.r + 1;
+        if (Math.abs(dy) >= need) continue;
+        const dx = A.x - Bq.x, gap = Math.sqrt(need * need - dy * dy) - Math.abs(dx);
+        if (gap <= 0.2) continue;
+        const sgn = dx === 0 ? (a % 2 ? 1 : -1) : Math.sign(dx), sh = gap / 2 * 0.6;
+        A.x = Math.max(A.x0 - lim, Math.min(A.x0 + lim, A.x + sgn * sh));
+        Bq.x = Math.max(Bq.x0 - lim, Math.min(Bq.x0 + lim, Bq.x - sgn * sh));
+        moved = true;
+      }
+      if (!moved) break;
+    }
+    mapPts = pts.map((p, k) => {
+      const u = p.u, x = Math.max(m.l + 2, Math.min(W - m.r - 2, pos[k].x)), y = pos[k].y, r = pos[k].r;
+      const o = V.sOpt.has(u.id), i = V.sInt.has(u.id), ex = u.r > st.appetite && st.locks[u.id] !== 'in' && !o && !i;
+      const c = dotEls[u.id];
+      c.setAttribute('r', r.toFixed(1));
+      c.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
+      c.setAttribute('class', 'dot' + (o ? ' opt' : '') + (i ? ' int' : '') + (ex ? ' ex' : '') + (matches(u) ? '' : ' dim') + (hovDot === c ? ' hov' : ''));
+      return { u, x, y, r, vis: matches(u) };
+    });
+    const labs = svg.querySelector('.labs'); labs.innerHTML = '';
+    const placed = [];
+    mapPts.filter(p => p.vis).sort((a, b) => V.items[b.u.id - 1].evYr - V.items[a.u.id - 1].evYr).slice(0, narrow ? 3 : 6).forEach(p => {
+      const txt = short(p.u.name, narrow ? 20 : 28), w = txt.length * 6.4, h = 14;
+      let x = p.x + p.r + 5, anchor = 'start';
+      if (x + w > W - m.r) { x = p.x - p.r - 5; anchor = 'end'; }
+      const hit = (bx, by) => placed.some(b => !(bx + w < b.x || b.x + b.w < bx || by + h < b.y || b.y + b.h < by)) ||
+        mapPts.some(q => q !== p && q.r > 5 && q.x + q.r > bx && q.x - q.r < bx + w && q.y + q.r > by + 2 && q.y - q.r < by + h - 2);
+      let bx = anchor === 'start' ? x : x - w, by = p.y - h / 2;
+      if (hit(bx, by)) { anchor = anchor === 'start' ? 'end' : 'start'; x = anchor === 'start' ? p.x + p.r + 5 : p.x - p.r - 5; bx = anchor === 'start' ? x : x - w; if (bx < m.l || bx + w > W - m.r || hit(bx, by)) return; }
+      placed.push({ x: bx, y: by, w, h });
+      el('text', { class: 'dlab', x, y: p.y + 4, 'text-anchor': anchor }, labs, txt);
+    });
+  }
+  function nearest(e) {
+    const svg = $('#mapBox svg'), r = svg.getBoundingClientRect(), sc = r.width / svg.viewBox.baseVal.width;
+    const x = (e.clientX - r.left) / sc, y = (e.clientY - r.top) / sc;
+    let best = null, bd = 1e9;
+    mapPts.forEach(p => { if (!p.vis) return; const d = Math.hypot(p.x - x, p.y - y) - p.r; if (d < bd) { bd = d; best = p; } });
+    return bd < 14 ? best : null;
+  }
+  function mapMove(e) {
+    const p = nearest(e);
+    if (!p) { hideTip(); return; }
+    const c = dotEls[p.u.id];
+    if (hovDot !== c) { if (hovDot) hovDot.classList.remove('hov'); hovDot = c; c.classList.add('hov'); }
+    showTip(itemTip(p.u.id), e.clientX, e.clientY);
+  }
+
+  /* ---------- verdict ---------- */
+  function renderVerdict() {
+    const ei = V.eInt, mi = V.mInt, box = $('#verdict');
+    if (!V.opt) {
+      box.innerHTML = `<h3>Cách chọn thường lệ</h3><p class="sm" style="color:var(--ink2)">Xếp đề xuất theo con số giá trị tiêu đề, chọn lần lượt cho đến khi hết ngân sách. Các chấm có viền cam trên bản đồ.</p>
+        <table class="cmp"><tbody>
+        <tr><td>Số đề xuất</td><td class="w">${ei.n}</td></tr>
+        <tr><td>Vốn dùng</td><td class="w">${money(ei.capex)}</td></tr>
+        <tr><td>NPV ${st.hz} năm kỳ vọng</td><td class="w">${money(ei.npv)}</td></tr>
+        <tr><td>Hoàn vốn</td><td class="w">${ei.pb == null ? 'Chưa' : 'Tháng ' + ei.pb}</td></tr>
+        <tr><td>Xác suất lỗ</td><td class="w">${lossTxt(mi.loss)}</td></tr></tbody></table>
+        <div class="cta"><p>Cùng ngân sách, máy sẽ xét thêm xác suất thành công, thời điểm ra tiền và chi phí chạy của từng đề xuất, rồi giải bài toán chọn tập con tốt nhất.</p><button type="button" class="btn" data-act="opt">Để máy tối ưu</button></div>`;
+      return;
+    }
+    const eo = V.eOpt, mo = V.mOpt;
+    const row = (k, a, b, better, fa, fb) => { const wa = better(a, b) < 0, wb = better(a, b) > 0; return `<tr><td>${k}</td><td class="${wa ? 'w' : ''}">${fa}</td><td class="${wb ? 'w' : ''}">${fb}</td></tr>`; };
+    const hi = (a, b) => Math.sign(b - a), lo = (a, b) => Math.sign(a - b);
+    const pbv = x => (x == null ? 999 : x);
+    let html = `<h3>Máy so với cảm tính</h3><p class="sm" style="color:var(--ink2)">Cùng ngân sách ${money(V.bud)}, cùng khẩu vị rủi ro.</p>
+      <table class="cmp"><thead><tr><th></th><th>Cảm tính</th><th>Máy</th></tr></thead><tbody>
+      ${row('Số đề xuất', ei.n, eo.n, () => 0, ei.n, eo.n)}
+      ${row('Vốn dùng', ei.capex, eo.capex, () => 0, money(ei.capex), money(eo.capex))}
+      ${row(`NPV ${st.hz} năm`, ei.npv, eo.npv, hi, money(ei.npv), money(eo.npv))}
+      ${row('Hoàn vốn', pbv(ei.pb), pbv(eo.pb), lo, ei.pb == null ? 'Chưa' : 'Tháng ' + ei.pb, eo.pb == null ? 'Chưa' : 'Tháng ' + eo.pb)}
+      ${row('Xác suất lỗ', mi.loss, mo.loss, lo, lossTxt(mi.loss), lossTxt(mo.loss))}
+      </tbody></table><ul class="ins">`;
+    const dropped = V.int.filter(i => !V.sOpt.has(UC[i].id)).sort((a, b) => UC[b].v - UC[a].v);
+    const added = V.opt.sel.filter(i => !V.sInt.has(UC[i].id));
+    const why = i => { const it = V.items[i]; return it.E <= 0 ? `ra tiền sau ${it.t} tháng` : it.p < 0.65 ? `chỉ ${pct(it.p)} khả năng thành công` : 'mỗi đồng vốn tạo ra ít hơn'; };
+    if (dropped.length) html += `<li>Máy bỏ <b>${dropped.length} đề xuất có con số lớn</b> mà cảm tính chọn, như ${dropped.slice(0, 2).map(i => `${esc(UC[i].name.toLowerCase())} (${why(i)})`).join(' và ')}.</li>`;
+    if (added.length) { const em = {}; eo.items.forEach(it => { em[it.u.id] = it; }); const q = added.filter(i => em[UC[i].id] && em[UC[i].id].t + em[UC[i].id].off <= 6).length; html += `<li>Máy thêm <b>${added.length} đề xuất nhỏ hơn</b>, ${q} trong số đó ra tiền trong 6 tháng đầu.</li>`; }
+    const en = V.base[ENABLER - 1];
+    if (V.opt.boosted) {
+      const nb = V.opt.sel.filter(i => UC[i].id !== ENABLER && UC[i].f <= 3).length;
+      html += `<li>Máy chọn <b>nền tảng dữ liệu chung</b> dù tự nó có NPV ${money(en.E)}: nó nâng xác suất thành công của ${nb} đề xuất khác trong danh mục. Trên bản đồ, các chấm đó dịch sang phải.</li>`;
+    } else if (st.locks[ENABLER] !== 'out') {
+      html += `<li>Ở mức ngân sách này, máy chưa chọn nền tảng dữ liệu chung: tiền dành cho nó tạo ra ít hơn các đề xuất ra tiền nhanh. Nới ngân sách để thấy máy đổi ý.</li>`;
+    }
+    const unused = V.bud - eo.capex;
+    if (V.dropped.size) html += `<li>Máy không khởi động <b>${V.dropped.size} đề xuất</b> dù đủ tiền: mỗi đợt 6 tháng chỉ khởi động được ${st.cap >= 999 ? 'không giới hạn' : st.cap} đề xuất, đến lượt chúng thì không còn kịp tạo giá trị trong ${st.hz} năm.</li>`;
+    if (unused > V.bud * 0.05) html += `<li>Máy để lại <b>${money(unused)}</b> ngân sách. Muốn dùng hết, HĐQT phải mua thêm năng lực triển khai hoặc kéo dài chân trời, không phải thêm tiền.</li>`;
+    if (V.free) html += `<li>${priceTxt()}</li>`;
+    html += '</ul>';
+    box.innerHTML = html;
+  }
+
+  function priceTxt() {
+    const price = V.free.E - V.opt.E;
+    if (price > Math.abs(V.free.E) * 0.002) return `Quyết định riêng của HĐQT đang tốn <b>${money(price)}</b> NPV kỳ vọng so với để máy tự chọn.`;
+    if (price < -Math.abs(V.free.E) * 0.002) return `Quyết định riêng của HĐQT làm NPV kỳ vọng tăng <b>${money(-price)}</b>, đổi lại danh mục nhận rủi ro vượt khẩu vị đã đặt.`;
+    return 'Quyết định riêng của HĐQT không làm thay đổi NPV kỳ vọng của danh mục.';
+  }
+
+  /* ---------- dòng tiền cộng dồn ---------- */
+  let jState = null;
+  function drawJ() {
+    const box = $('#jBox'), W = Math.max(300, Math.round(box.clientWidth)), narrow = W < 520, H = narrow ? 270 : 310;
+    const m = { l: narrow ? 46 : 58, r: narrow ? 12 : 92, t: 18, b: 36 };
+    const ser = [];
+    if (V.eOpt) ser.push({ c: 1, name: 'Máy tối ưu', e: V.eOpt });
+    ser.push({ c: 2, name: 'Cảm tính', e: V.eInt });
+    $('#jLegend').innerHTML = ser.map(s => `<span><i class="sw l${s.c}"></i>${s.name}</span>`).join('');
+    $('#jUnit').textContent = axUnit() + ', theo tháng';
+    const Hm = V.C.H, dv = axDiv();
+    let lo = 0, hi = 0; ser.forEach(s => s.e.cum.forEach(v => { lo = Math.min(lo, v / dv); hi = Math.max(hi, v / dv); }));
+    const sc = nice(lo, hi, 5);
+    const X = k => m.l + k / Hm * (W - m.l - m.r), Y = v => H - m.b - (v / dv - sc.lo) / (sc.hi - sc.lo) * (H - m.t - m.b);
+    box.innerHTML = '';
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': `Dòng tiền cộng dồn ${st.hz * 12} tháng. ` + ser.map(s => `${s.name}: hoàn vốn ${monthTxt(s.e.pb)}, cần vốn tối đa ${money(-s.e.trough)}.`).join(' ') }, box);
+    const ax = el('g', { class: 'ax' }, svg);
+    sc.t.forEach(t => { const y = Y(t * dv); el('line', { class: t === 0 ? 'zero' : 'gl', x1: m.l, x2: W - m.r, y1: y, y2: y }, ax); el('text', { x: m.l - 8, y: y + 4, 'text-anchor': 'end', class: 'num' }, ax, nf(t, sc.d)); });
+    const stepM = Hm > 36 ? 12 : 6;
+    for (let k = 0; k <= Hm; k += stepM) el('text', { x: X(k), y: H - m.b + 16, 'text-anchor': 'middle' }, ax, String(k));
+    el('text', { x: (m.l + W - m.r) / 2, y: H - 4, 'text-anchor': 'middle', class: 'axtitle' }, ax, 'Tháng');
+    ser.slice().reverse().forEach(s => {
+      let d = ''; for (let k = 0; k <= Hm; k++) d += (k ? 'L' : 'M') + X(k).toFixed(1) + ',' + Y(s.e.cum[k]).toFixed(1);
+      el('path', { d, class: 'ln ln' + s.c }, svg);
+    });
+    const ann = el('g', {}, svg);
+    ser.forEach((s, idx) => {
+      const e = s.e;
+      if (e.pb != null) {
+        const x = X(e.pb), y = Y(e.cum[e.pb]);
+        el('circle', { cx: x, cy: y, r: 4.5, class: 'mk' + s.c }, ann);
+        const lab = 'Hoàn vốn tháng ' + e.pb, lw = lab.length * 6.3;
+        let lx = x + (idx ? 7 : -7), anc = idx ? 'start' : 'end';
+        if (anc === 'start' && lx + lw > W - 4) { lx = x - 7; anc = 'end'; }
+        if (anc === 'end' && lx - lw < m.l) { lx = x + 7; anc = 'start'; }
+        el('text', { x: lx, y: y + (idx ? 18 : -10), 'text-anchor': anc, class: 'alab' }, ann, lab);
+      }
+      if (idx === 0 && e.troughM) {
+        const x = X(e.troughM), y = Y(e.trough);
+        el('circle', { cx: x, cy: y, r: 3.5, class: 'mk' + s.c }, ann);
+      }
+      if (!narrow) {
+        const y = Y(e.cum[Hm]);
+        const y2 = ser.length > 1 && idx === 1 && Math.abs(Y(ser[0].e.cum[Hm]) - y) < 16 ? y + 16 : y;
+        el('text', { x: W - m.r + 6, y: y2 + 4, class: 'elab' }, ann, s.name);
+      }
+    });
+    const xh = el('line', { class: 'xh', x1: 0, x2: 0, y1: m.t, y2: H - m.b, visibility: 'hidden' }, svg);
+    const ov = el('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: 'transparent' }, svg);
+    jState = { X, ser, Hm, m, W, H };
+    $('#jCap').innerHTML = ser.map(s => `<b>${s.name}:</b> cần vốn tối đa ${money(-s.e.trough)} ở tháng ${s.e.troughM}, hoàn vốn ${monthTxt(s.e.pb)} (không tính vốn lưu động: ${monthTxt(s.e.pbX)}).`).join(' ');
+    ov.addEventListener('pointermove', e => {
+      const r = svg.getBoundingClientRect(), sc2 = r.width / W, x = (e.clientX - r.left) / sc2;
+      const k = Math.max(0, Math.min(Hm, Math.round((x - m.l) / (W - m.l - m.r) * Hm)));
+      xh.setAttribute('x1', X(k)); xh.setAttribute('x2', X(k)); xh.setAttribute('visibility', 'visible');
+      showTip(`<b>Tháng ${k}</b>` + ser.map(s => `<div class="r"><span>${s.name}</span><span>${money(s.e.cum[k])}</span></div>`).join(''), e.clientX, e.clientY);
+    });
+    ov.addEventListener('pointerleave', () => { xh.setAttribute('visibility', 'hidden'); hideTip(); });
+  }
+
+  /* ---------- Monte Carlo ---------- */
+  function drawMC() {
+    const box = $('#mcBox'), W = Math.max(300, Math.round(box.clientWidth)), narrow = W < 520, H = narrow ? 250 : 286;
+    const M = V.main.m, out = M.out, N = out.length, dv = axDiv();
+    $('#mcTitle').textContent = `Phân bố NPV ${st.hz} năm, danh mục ${V.main.label}`;
+    $('#mcUnit').textContent = axUnit();
+    const cmpTxt = V.opt ? ` Cách chọn theo cảm tính: xác suất lỗ ${lossTxt(V.mInt.loss)}, 10% kịch bản xấu nhất dưới ${money(V.mInt.p10)}.` : '';
+    $('#mcText').innerHTML = `80% kịch bản nằm trong khoảng <b>${money(M.p10)}</b> đến <b>${money(M.p90)}</b>. Xác suất lỗ <b>${lossTxt(M.loss)}</b>.${cmpTxt}`;
+    const m = { l: narrow ? 40 : 50, r: 12, t: 30, b: 36 };
+    const lo = out[0] / dv, hi = out[N - 1] / dv, sx = nice(Math.min(lo, 0), Math.max(hi, 0), narrow ? 4 : 6);
+    const nb = narrow ? 18 : 28, bw = (hi - lo) / nb || 1, cnt = new Array(nb).fill(0);
+    for (let i = 0; i < N; i++) cnt[Math.min(nb - 1, Math.floor((out[i] / dv - lo) / bw))]++;
+    const sy = nice(0, Math.max(...cnt), 4);
+    const X = v => m.l + (v - sx.lo) / (sx.hi - sx.lo) * (W - m.l - m.r), Y = c => H - m.b - c / sy.hi * (H - m.t - m.b);
+    box.innerHTML = '';
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': `Phân bố NPV qua ${N} kịch bản: P10 ${money(M.p10)}, P50 ${money(M.p50)}, P90 ${money(M.p90)}, xác suất lỗ ${pct(M.loss, 1)}.` }, box);
+    const ax = el('g', { class: 'ax' }, svg);
+    sy.t.forEach(t => { const y = Y(t); el('line', { class: t === 0 ? 'zero' : 'gl', x1: m.l, x2: W - m.r, y1: y, y2: y }, ax); el('text', { x: m.l - 8, y: y + 4, 'text-anchor': 'end', class: 'num' }, ax, nf(t, 0)); });
+    sx.t.forEach(t => el('text', { x: X(t), y: H - m.b + 16, 'text-anchor': 'middle', class: 'num' }, ax, nf(t, sx.d)));
+    el('text', { x: (m.l + W - m.r) / 2, y: H - 4, 'text-anchor': 'middle', class: 'axtitle' }, ax, `NPV ${st.hz} năm, ${axUnit()}`);
+    el('text', { x: m.l, y: 12, class: 'axtitle' }, ax, 'Số kịch bản');
+    const bars = el('g', {}, svg);
+    cnt.forEach((c, i) => {
+      if (!c) return;
+      const a = lo + i * bw, b = a + bw, x0 = X(a) + 1, x1 = X(b) - 1, y = Y(c);
+      const r = el('rect', { x: x0, y, width: Math.max(1, x1 - x0), height: Y(0) - y, rx: 2, class: 'bar' + ((a + b) / 2 < 0 ? ' neg' : '') }, bars);
+      r.addEventListener('pointermove', e => { r.classList.add('h'); showTip(`<b>${c} kịch bản</b><div class="r"><span>NPV từ</span><span>${money(a * dv)}</span></div><div class="r"><span>đến</span><span>${money(b * dv)}</span></div>${(a + b) / 2 < 0 ? '<div class="st">Vùng lỗ</div>' : ''}`, e.clientX, e.clientY); });
+      r.addEventListener('pointerleave', () => { r.classList.remove('h'); hideTip(); });
+    });
+    if (sx.lo < 0 && sx.hi > 0) el('line', { class: 'zero', x1: X(0), x2: X(0), y1: m.t - 6, y2: H - m.b }, svg);
+    const P = [['P10', M.p10], ['P50', M.p50], ['P90', M.p90]];
+    let lastX = -1e9, row = 0;
+    P.forEach(([k, v]) => {
+      const x = X(v / dv);
+      el('line', { class: 'pline', x1: x, x2: x, y1: m.t - 4, y2: H - m.b }, svg);
+      row = x - lastX < 34 ? row + 1 : 0; lastX = x;
+      el('text', { class: 'plab', x, y: m.t - 8 - row * 11, 'text-anchor': 'middle' }, svg, k);
+    });
+  }
+
+  /* ---------- sáu câu hỏi ---------- */
+  function renderQs() {
+    const e = V.main.e, M = V.main.m, h = V.half, items = e.items.slice().sort((a, b) => b.p * b.val - a.p * a.val);
+    const tot = items.reduce((s, it) => s + it.p * it.val, 0) || 1;
+    const top5 = items.slice(0, 5).reduce((s, it) => s + it.p * it.val, 0) / tot;
+    const byDom = new Array(10).fill(0); items.forEach(it => byDom[it.u.d] += it.p * it.val);
+    const td = byDom.indexOf(Math.max(...byDom));
+    const own = {}; items.forEach(it => own[OWN[it.u.d]] = (own[OWN[it.u.d]] || 0) + 1);
+    const ow = Object.entries(own).sort((a, b) => b[1] - a[1]);
+    const minT = items.length ? Math.min(...items.map(it => it.t + it.off)) + st.delay + 1 : 0;
+    const halfCmp = V.opt ? ` Cách chọn theo cảm tính trong cùng kịch bản: ${money(V.halfInt.npv)}.` : '';
+    const Q = [
+      ['Nếu chỉ đạt một nửa giá trị kế hoạch?', `NPV ${money(h.npv)}`, `Hoàn vốn ${monthTxt(h.pb)}.${halfCmp}`],
+      ['Bao lâu thì thấy tiền về?', e.pb == null ? 'Chưa hoàn vốn' : `Hoàn vốn tháng ${e.pb}`, `Vốn phải chịu tối đa ${money(-e.trough)} ở tháng ${e.troughM}. Nếu không tính vốn lưu động giải phóng, hoàn vốn ${monthTxt(e.pbX)}.`],
+      ['Xác suất mất tiền là bao nhiêu?', lossTxt(M.loss), `Trong 2.000 kịch bản, 10% xấu nhất cho NPV dưới ${money(M.p10)}. Mô phỏng đã tính cả cú sốc chung đánh vào toàn danh mục.`],
+      ['Tiền tập trung ở đâu?', `5 đề xuất chiếm ${pct(top5)}`, items.length ? `Mảng đóng góp nhiều nhất là ${DOM[td].toLowerCase()} (${pct(byDom[td] / tot)}). Đề xuất lớn nhất: ${esc(items[0].u.name.toLowerCase())}.` : ''],
+      ['Mỗi tháng chần chừ mất bao nhiêu?', money(e.valYr / 12), `Đó là giá trị một tháng khi danh mục chạy đủ. Chờ thêm một quý để “nghiên cứu thêm” tốn khoảng ${money(e.valYr / 4)}.`],
+      ['Ai chịu trách nhiệm từng đồng?', `${ow.length} giám đốc ký cam kết`, ow.length ? `Nhiều nhất: ${ow[0][0].toLowerCase()} (${ow[0][1]} đề xuất)${ow[1] ? `, ${ow[1][0].toLowerCase()} (${ow[1][1]})` : ''}. Finance đo giá trị cho cả ${e.n} đề xuất trên một sổ chung.` : ''],
+    ];
+    $('#qs').innerHTML = Q.map(q => `<div class="q"><h3>${q[0]}</h3><div class="a num">${q[1]}</div><p>${q[2]}</p></div>`).join('');
+  }
+
+  /* ---------- theo mảng ---------- */
+  function renderDom() {
+    const pool = new Array(10).fill(0), o = new Array(10).fill(0), i2 = new Array(10).fill(0);
+    V.items.forEach(it => { pool[it.u.d] += it.evYr; if (V.sOpt.has(it.u.id)) o[it.u.d] += it.evYr; if (V.sInt.has(it.u.id)) i2[it.u.d] += it.evYr; });
+    const mx = Math.max(...pool);
+    $('#dom').innerHTML = DOM.map((d, k) => {
+      const main = V.opt ? o[k] : i2[k];
+      return `<div class="drow" data-k="${k}"><div class="nm" title="${d}">${d}</div><div class="track"><div class="pool" style="width:${(pool[k] / mx * 100).toFixed(2)}%"></div><div class="fill" style="width:${(V.opt ? o[k] / mx * 100 : 0).toFixed(2)}%"></div><div class="tick" style="left:calc(${(i2[k] / mx * 100).toFixed(2)}% - 1.5px)"></div></div><div class="vv">${money(main)}<small>trên ${money(pool[k])}</small></div></div>`;
+    }).join('');
+    document.querySelectorAll('#dom .drow').forEach(r => {
+      const k = +r.dataset.k;
+      r.addEventListener('pointermove', e => showTip(`<b>${DOM[k]}</b><div class="r"><span>Tổng đề xuất</span><span>${money(pool[k])}</span></div><div class="r"><span>Máy chọn</span><span>${V.opt ? money(o[k]) : 'chưa chạy'}</span></div><div class="r"><span>Cảm tính chọn</span><span>${money(i2[k])}</span></div><div class="st">Giá trị kỳ vọng mỗi năm</div>`, e.clientX, e.clientY));
+      r.addEventListener('pointerleave', hideTip);
+    });
+  }
+
+  /* ---------- lộ trình ---------- */
+  function renderWaves() {
+    const L = [['Đợt 1', 'Khởi động tháng ' + (1 + st.delay)], ['Đợt 2', 'Khởi động tháng ' + (7 + st.delay)], ['Đợt 3 trở đi', 'Khởi động từ tháng ' + (13 + st.delay)]];
+    document.querySelectorAll('#capSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.cap === st.cap)));
+    const parts = V.waves.map((w, k) => `<div class="wave"><div class="wt"><b>${L[k][0]}</b><span class="xs muted">${L[k][1]}</span></div>
+      <div class="wm"><div>Đề xuất<b>${w.items.length}</b></div><div>Vốn<b>${money(w.cap)}</b></div><div>Giá trị mỗi năm<b>${money(w.val)}</b></div></div>
+      <div class="wl">${w.items.map(it => `<button type="button" data-id="${it.u.id}">${esc(short(it.u.name, 34))}</button>`).join('') || (k === 2 ? `<span class="sm muted">Không có đề xuất nào đáng khởi động từ tháng 13: không còn kịp tạo giá trị trong ${st.hz} năm.</span>` : '<span class="sm muted">Không có đề xuất</span>')}</div></div>`);
+    $('#waves').innerHTML = parts[0] + '<div class="gate"><span>Cổng 1</span></div>' + parts[1] + '<div class="gate"><span>Cổng 2</span></div>' + parts[2];
+  }
+
+  /* ---------- trước và sau ---------- */
+  function renderBA() {
+    const e = V.main.e, rev = V.C.rev, n = e.n;
+    const top = e.items.slice().sort((a, b) => b.p * b.val - a.p * a.val).slice(0, 8);
+    $('#baTable').innerHTML = `<thead><tr><th>Chỉ số hoặc quy trình</th><th>Trước</th><th>Sau</th><th style="text-align:right">Giá trị mỗi năm</th></tr></thead><tbody>
+      <tr class="kpi"><td class="n">Biên EBITDA</td><td class="bf">${nf(EBITDA0, 1)}%</td><td>${nf(EBITDA0 + e.ebitda / rev * 100, 1)}%</td><td class="v">${money(e.ebitda)}</td></tr>
+      <tr class="kpi"><td class="n">Vốn lưu động giải phóng</td><td class="bf">Không có</td><td>${money(e.wc)}</td><td class="v">một lần</td></tr>
+      <tr class="kpi"><td class="n">Quy trình chạy bằng agent hoặc mô hình</td><td class="bf">0</td><td>${n}</td><td class="v"></td></tr>
+      <tr class="kpi"><td class="n">Chi phí chạy mới</td><td class="bf">0</td><td>${money(e.opexYr)} mỗi năm</td><td class="v neg">${money(-e.opexYr)}</td></tr>
+      ${top.map(it => `<tr><td class="n">${esc(it.u.name)}</td><td class="bf">${esc(it.u.before)}</td><td>${esc(it.u.after)}</td><td class="v">${money(it.p * st.R * it.val)}</td></tr>`).join('')}</tbody>`;
+    const lvK = e.items.filter(it => it.u.lev === 'K').reduce((s, it) => s + it.p * st.R * it.val, 0);
+    const posLeft = V.items.filter(it => it.E > 0 && it.u.r <= st.appetite && !V.main.set.has(it.u.id));
+    const exc = V.items.filter(it => it.u.r > st.appetite && !V.main.set.has(it.u.id));
+    const in6 = e.items.filter(it => it.off === 0);
+    const dc = {}; in6.forEach(it => dc[it.u.d] = (dc[it.u.d] || 0) + 1);
+    const dmax = Object.entries(dc).sort((a, b) => b[1] - a[1])[0];
+    const risky = e.items.filter(it => it.u.r >= 3).length;
+    const tot = e.items.reduce((s, it) => s + it.p * it.val, 0) || 1;
+    const top5 = e.items.slice().sort((a, b) => b.p * b.val - a.p * a.val).slice(0, 5).reduce((s, it) => s + it.p * it.val, 0) / tot;
+    $('#gain').innerHTML = [
+      `<b>${money(e.npv)}</b> NPV kỳ vọng trong ${st.hz} năm, ${money(e.valYr)} giá trị mỗi năm khi chạy đủ.`,
+      `<b>${money(e.wc)}</b> vốn lưu động giải phóng một lần, giảm nhu cầu vay ngắn hạn.`,
+      `<b>${money(lvK)}</b> tổn thất tránh được mỗi năm từ các đề xuất kiểm soát rủi ro.`,
+      `Mỗi đồng chi tạo ra <b>${nf(e.benefit / e.cost, 1)} đồng</b> giá trị hiện tại.`,
+    ].map(s => `<li>${s}</li>`).join('');
+    $('#cost').innerHTML = [
+      posLeft.length ? `Bỏ lại <b>${posLeft.length} đề xuất có NPV dương nếu làm ngay</b>, tổng ${money(posLeft.reduce((s, it) => s + it.E, 0))}, vì ${V.bud - e.capex > V.bud * 0.05 ? 'năng lực triển khai không đủ để khởi động kịp' : 'hết ngân sách hoặc năng lực triển khai'}.` : 'Không bỏ lại đề xuất nào có NPV dương trong khẩu vị rủi ro.',
+      exc.length ? `Gác <b>${exc.length} đề xuất vượt khẩu vị rủi ro</b>, giá trị kỳ vọng ${money(exc.reduce((s, it) => s + it.evYr, 0))} mỗi năm.` : 'Khẩu vị rủi ro hiện tại không loại đề xuất nào.',
+      `Chi phí chạy <b>${money(e.opexYr)} mỗi năm</b> sau khi xây xong: agent và mô hình không miễn phí.`,
+      in6.length ? `Tải thay đổi: <b>${in6.length} quy trình</b> đổi cách làm trong 6 tháng đầu, nhiều nhất ở mảng ${DOM[dmax[0]].toLowerCase()} (${dmax[1]}). Tổng cộng ${e.n} quy trình trong ${Math.max(1, ...e.items.map(it => it.off / 6 + 1))} đợt.` : 'Không có quy trình nào đổi trong 6 tháng đầu.',
+      `Tập trung: 5 đề xuất lớn nhất chiếm <b>${pct(top5)}</b> giá trị.`,
+      `<b>${risky} đề xuất</b> có rủi ro từ 3/5 trở lên cần thẩm định mô hình độc lập.`,
+    ].map(s => `<li>${s}</li>`).join('');
+  }
+
+  /* ---------- bảng 100 ---------- */
+  const COLS = [
+    ['id', '#', 'r'], ['name', 'Đề xuất', ''], ['d', 'Mảng', ''], ['lev', 'Đòn bẩy', ''], ['tec', 'Kỹ thuật', ''],
+    ['ev', 'Giá trị kỳ vọng mỗi năm', 'r'], ['cap', 'Vốn', 'r'], ['p', 'Thành công', 'r'], ['r', 'Rủi ro', 'r'], ['t', 'Ra tiền', 'r'], ['E', 'NPV nếu làm ngay', 'r'], ['o', 'Máy', ''], ['w', 'Đợt', ''], ['i', 'Cảm tính', ''],
+  ];
+  function key(it, k) {
+    const u = it.u;
+    switch (k) {
+      case 'id': return u.id; case 'name': return u.name; case 'd': return DOM[u.d]; case 'lev': return LEV[u.lev]; case 'tec': return TEC[u.tec];
+      case 'ev': return it.evYr; case 'cap': return it.cap; case 'p': return it.p; case 'r': return u.r; case 't': return it.t; case 'E': return it.E;
+      case 'o': return st.locks[u.id] === 'in' ? 3 : V.sOpt.has(u.id) ? 2 : st.locks[u.id] === 'out' ? 0 : 1; case 'i': return V.sInt.has(u.id) ? 1 : 0; case 'w': return V.main.set.has(u.id) ? V.wave[u.id] : 9;
+    }
+  }
+  function renderTable() {
+    $('#thead').innerHTML = '<tr>' + COLS.map(c => `<th class="${c[2]}"><button type="button" data-k="${c[0]}"${st.sort.k === c[0] ? ` aria-sort="${st.sort.dir > 0 ? 'ascending' : 'descending'}"` : ''}>${c[1]}</button></th>`).join('') + '</tr>';
+    let rows = V.items.filter(it => matches(it.u) && (!st.onlySel || V.sOpt.has(it.u.id) || V.sInt.has(it.u.id)));
+    const k = st.sort.k, dir = st.sort.dir;
+    rows.sort((a, b) => { const x = key(a, k), y = key(b, k); return (typeof x === 'string' ? x.localeCompare(y, 'vi') : x - y) * dir || a.u.id - b.u.id; });
+    $('#tbody').innerHTML = rows.map(it => {
+      const u = it.u, L = st.locks[u.id];
+      const oc = !st.optRun ? '<span class="muted">chưa chạy</span>' : L === 'in' ? '<span class="pill lk">Ép giữ</span>' : L === 'out' ? '<span class="pill">Đã loại</span>' : V.sOpt.has(u.id) ? '<span class="pill o">Chọn</span>' : V.dropped.has(u.id) ? '<span class="muted">Hết năng lực</span>' : '';
+      return `<tr class="${V.main.set.has(u.id) ? 'sel' : ''}"><td class="r">${u.id}</td><td class="nm"><button type="button" data-id="${u.id}">${esc(u.name)}</button></td><td>${DOM[u.d]}</td><td>${LEV[u.lev]}</td><td>${TEC[u.tec]}</td>
+        <td class="r">${money(it.evYr)}</td><td class="r">${money(it.cap)}</td><td class="r">${pct(it.p)}</td><td class="r">${u.r}/5</td><td class="r">${it.t} tháng</td><td class="r ${it.E < 0 ? 'neg' : ''}">${money(it.E)}</td><td>${oc}</td><td>${V.main.set.has(u.id) ? 'Đợt ' + (V.wave[u.id] + 1) : ''}</td><td>${V.sInt.has(u.id) ? '<span class="pill i">Chọn</span>' : ''}</td></tr>`;
+    }).join('') || `<tr><td colspan="14" class="muted">Không có đề xuất nào khớp bộ lọc. Chọn lại đòn bẩy hoặc mảng.</td></tr>`;
+  }
+
+  /* ---------- nghị quyết ---------- */
+  function renderReso() {
+    const box = $('#reso');
+    const head = `<div class="rh">Nghị quyết số 07/2026/NQ-HĐQT (mô phỏng)</div><h3>Về danh mục đầu tư AI giai đoạn 2027–${2026 + st.hz}</h3>`;
+    if (!V.opt) { box.innerHTML = head + `<p style="color:var(--ink2)">Chưa có danh mục đề nghị. Ban điều hành cần chạy tối ưu trên cùng ngân sách trước khi HĐQT biểu quyết.</p><button type="button" class="btn" data-act="opt">Để máy tối ưu</button>`; return; }
+    if (V.opt.over) { box.innerHTML = head + `<p class="blocked">Các quyết định ép giữ đang vượt ngân sách ${money(V.bud)}. Nới ngân sách hoặc bỏ bớt quyết định ép trước khi biểu quyết.</p>`; return; }
+    const e = V.eOpt, M = V.mOpt, w = V.waves, rev = V.C.rev, unused = V.bud - e.capex;
+    const risky = e.items.filter(it => it.u.r >= 3).length;
+    const art = [];
+    art.push(`Phê duyệt danh mục AI gồm <b>${e.n} đề xuất</b>, tổng vốn <b>${money(e.capex)}</b> (${nf(e.capex / rev * 100, 2)}% doanh thu), triển khai ${w.filter(x => x.items.length).length > 1 ? 'theo ' + w.filter(x => x.items.length).length + ' đợt' : 'trong một đợt'}.`);
+    const later = [[w[1], 'Đợt 2', 7], [w[2], 'Đợt 3 trở đi', 13]].filter(x => x[0].items.length).map(x => `${x[1]} (${x[0].items.length} đề xuất, ${money(x[0].cap)}, khởi động tháng ${x[2] + st.delay})`);
+    art.push(`Giải ngân ngay Đợt 1: <b>${w[0].items.length} đề xuất, ${money(w[0].cap)}</b>.` + (later.length ? ` ${later.join(' và ')} chỉ giải ngân khi Giám đốc tài chính xác nhận đợt trước đạt tối thiểu 70% giá trị kế hoạch.` : ''));
+    if (risky) art.push(`<b>${risky} đề xuất</b> có mức rủi ro từ 3/5 trở lên phải qua thẩm định mô hình độc lập trước khi chạy thật.`);
+    const lk = Object.entries(st.locks);
+    if (lk.length && V.free) {
+      const over = lk.filter(([id, v]) => v === 'in' && UC[id - 1].r > st.appetite).map(([id]) => UC[id - 1].name.toLowerCase());
+      art.push(`Ghi nhận ${lk.length} quyết định riêng của HĐQT (ép giữ hoặc loại). ${priceTxt()} Người đề xuất quyết định ép báo cáo riêng kết quả mỗi quý.` + (over.length ? ` Đề xuất ${over.join(', ')} vượt khẩu vị rủi ro, được giữ theo quyết định riêng và phải có phương án dừng.` : ''));
+    }
+    if (M.loss > 0.1 || V.half.npv < 0 || e.pb == null || e.pb > 24) art.push(`Kịch bản thử cho thấy rủi ro đáng kể (xác suất lỗ ${lossTxt(M.loss)}, hoàn vốn ${monthTxt(e.pb)}). Ban điều hành trình phương án giảm rủi ro trong 30 ngày, trước khi giải ngân Đợt 2.`);
+    if (unused > V.bud * 0.05) art.push(`Giữ lại <b>${money(unused)}</b> ngân sách chưa phân bổ. Giao Ban điều hành trình phương án nâng năng lực triển khai trong 90 ngày; phần ngân sách này chỉ mở khi năng lực tăng.`);
+    art.push(`Giám đốc tài chính lập báo cáo hiện thực hoá giá trị hằng quý. Mọi con số giá trị phải đối chiếu được với sổ cái và đường cơ sở đã khoá.`);
+    box.innerHTML = head + `<p style="color:var(--ink2);margin-bottom:0">Hội đồng quản trị Vertex (mô phỏng) quyết nghị:</p><ol>${art.map(a => `<li>${a}</li>`).join('')}</ol>` +
+      (st.voted ? `<div class="stamp" role="status">✓ Đã thông qua (mô phỏng)</div><p class="xs muted" style="margin-top:10px">Nghị quyết chỉ có giá trị trong buổi đào tạo. Đổi bất kỳ điều kiện nào ở trên sẽ huỷ kết quả biểu quyết.</p>` : `<button type="button" class="btn" id="bVote">Biểu quyết thông qua (mô phỏng)</button>`);
+  }
+
+  /* ---------- ngăn chi tiết ---------- */
+  let dwId = null, lastFocus = null;
+  function openDrawer(id) {
+    hideTip();
+    if (dwId == null) lastFocus = document.activeElement;
+    dwId = id; renderDrawer();
+    $('#drawer').hidden = false; $('#scrim').hidden = false;
+    $('#drawer .close').focus();
+  }
+  function closeDrawer() {
+    $('#drawer').hidden = true; $('#scrim').hidden = true; dwId = null;
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function renderDrawer() {
+    if (dwId == null) return;
+    const id = dwId, u = UC[id - 1], it = V.items[id - 1], L = st.locks[id];
+    let mo;
+    if (!st.optRun) mo = 'chưa chạy';
+    else if (L === 'in') mo = 'HĐQT ép giữ';
+    else if (L === 'out') mo = 'HĐQT đã loại';
+    else if (V.sOpt.has(id)) mo = (id === ENABLER ? 'chọn, vì nó nâng xác suất thành công của các đề xuất khác' : 'chọn') + `, khởi động ở đợt ${V.wave[id] + 1}`;
+    else if (V.dropped.has(id)) mo = `không khởi động: NPV dương nếu làm ngay, nhưng năng lực triển khai đẩy nó sang đợt sau, khi đó không còn kịp tạo giá trị trong ${st.hz} năm`;
+    else if (u.r > st.appetite) mo = 'không chọn, vì vượt khẩu vị rủi ro';
+    else if (it.E <= 0) mo = `không chọn, vì NPV kỳ vọng ${st.hz} năm âm: ra tiền sau ${it.t} tháng, xác suất thành công ${pct(it.p)}`;
+    else mo = 'không chọn: NPV dương nhưng mỗi đồng vốn tạo ra ít hơn các đề xuất được chọn';
+    const io = V.sInt.has(id) ? 'chọn, vì con số giá trị tiêu đề lớn' : u.r > st.appetite ? 'không chọn, vượt khẩu vị rủi ro' : 'không chọn, hết ngân sách trước khi đến lượt';
+    const nb = UC.filter(x => x.id !== ENABLER && x.f <= 3).length;
+    $('#drawer').innerHTML = `<button type="button" class="close">Đóng</button>
+      <p class="xs muted" style="margin:0">Đề xuất ${id} trên 100</p>
+      <h3 id="dwTitle" style="font-size:21px;margin-top:4px">${esc(u.name)}</h3>
+      <div class="tag"><span>${DOM[u.d]}</span><span>${LEV[u.lev]}</span><span>${TEC[u.tec]}</span><span>Chủ sở hữu: ${OWN[u.d].toLowerCase()}</span></div>
+      <div class="kv">
+        <div>Giá trị mỗi năm nếu thành công<b>${money(it.val * 0.6)} đến ${money(it.val * 1.3)}</b></div>
+        <div>Xác suất thành công<b>${pct(it.p)}</b></div>
+        <div>Vốn đầu tư<b>${money(it.cap)}</b></div>
+        <div>Chi phí chạy mỗi năm<b>${money(it.opex)}</b></div>
+        <div>Ra tiền sau<b>${it.t} tháng</b></div>
+        <div>NPV kỳ vọng nếu làm ngay<b class="${it.E < 0 ? 'neg' : ''}">${money(it.E)}</b></div>
+        ${u.wc ? `<div>Vốn lưu động giải phóng<b>${money(it.wc)}</b></div>` : ''}
+        <div>Mức rủi ro<b>${u.r}/5</b></div>
+      </div>
+      <div class="bfaf"><div class="b0"><small>Trước</small>${esc(u.before)}</div><div class="b1"><small>Sau</small>${esc(u.after)}</div></div>
+      <div class="dl">
+        <div><small>Đánh đổi</small>${esc(u.trade)}</div>
+        <div><small>Người trong vòng kiểm soát</small>${CTRL[u.tec]}</div>
+        <div><small>Finance đo giá trị thế nào</small>${MEAS[u.lev]}</div>
+        ${id === ENABLER ? `<div><small>Vì sao máy quan tâm</small>Tự nó có NPV âm, nhưng nâng xác suất thành công thêm 12 điểm cho ${nb} đề xuất có mức khả thi thấp.</div>` : ''}
+      </div>
+      <div class="why"><b>Máy:</b> ${mo}. <br><b>Cảm tính:</b> ${io}.</div>
+      ${st.optRun ? `<div class="lock"><div class="xs muted" style="font-weight:600">Quyết định riêng của HĐQT</div>
+        <div class="seg" role="group" aria-label="Quyết định riêng cho đề xuất này">
+          <button type="button" data-lk="in" aria-pressed="${L === 'in'}">Ép giữ</button>
+          <button type="button" data-lk="auto" aria-pressed="${!L}">Để máy quyết</button>
+          <button type="button" data-lk="out" aria-pressed="${L === 'out'}">Loại</button></div>
+        <p class="xs muted" style="margin:4px 0 0">Máy tối ưu lại phần còn lại và báo giá của quyết định này.</p>
+        ${V.free ? `<p class="sm" style="margin-top:8px">${priceTxt()}</p>` : ''}</div>`
+        : `<p class="sm" style="color:var(--ink2)">Bấm “Để máy tối ưu” để HĐQT có thể ép giữ hoặc loại riêng đề xuất này.</p>`}`;
+  }
+
+  /* ---------- vòng cập nhật ---------- */
+  let raf = 0;
+  function schedule(changed) { if (changed !== false) st.voted = false; if (raf) return; raf = requestAnimationFrame(() => { raf = 0; update(); }); }
+  function update() {
+    compute(); syncControls(); renderHero(); drawMap(); renderVerdict(); drawJ(); drawMC(); renderQs(); renderDom(); renderWaves(); renderBA(); renderTable(); renderReso(); renderDrawer();
+  }
+  function runOpt() {
+    if (st.optRun) return;
+    st.optRun = true; st.voted = false;
+    compute();
+    if (!RM) {
+      const order = V.opt.sel.slice().sort((a, b) => V.items[b].evYr - V.items[a].evYr);
+      order.forEach((i, k) => { dotEls[UC[i].id].style.transitionDelay = (k * 16) + 'ms'; });
+      setTimeout(() => Object.values(dotEls).forEach(c => { c.style.transitionDelay = ''; }), 2400);
+    }
+    syncControls(); renderHero(); drawMap(); renderVerdict(); drawJ(); drawMC(); renderQs(); renderDom(); renderWaves(); renderBA(); renderTable(); renderReso(); renderDrawer();
+    const mp = $('#sMap').getBoundingClientRect();
+    if (mp.top > innerHeight * 0.6 || mp.bottom < 0) $('#sMap').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  /* ---------- sự kiện ---------- */
+  function initFilters() {
+    const levs = [['all', 'Tất cả']].concat(Object.entries(LEV));
+    $('#levChips').innerHTML = levs.map(([k, l]) => `<button type="button" data-lev="${k}" aria-pressed="${st.lev === k}">${l}</button>`).join('');
+    $('#domSel').innerHTML = '<option value="-1">Tất cả 10 mảng</option>' + DOM.map((d, i) => `<option value="${i}">${d}</option>`).join('');
+  }
+  function bind() {
+    $('#cBudget').addEventListener('input', e => { st.budget = +e.target.value; schedule(); });
+    $('#cRisk').addEventListener('change', e => { st.appetite = +e.target.value; schedule(); });
+    $('#cHz').addEventListener('change', e => { st.hz = +e.target.value; schedule(); });
+    $('#cR').addEventListener('input', e => { st.R = +e.target.value / 100; st.stressTouched = true; schedule(); });
+    $('#cD').addEventListener('input', e => { st.delay = +e.target.value; st.stressTouched = true; schedule(); });
+    $('#bOpt').addEventListener('click', runOpt);
+    $('#bReset').addEventListener('click', () => { Object.assign(st, DEF, { budget: PRESETS[st.preset].b[2], locks: {}, optRun: false, voted: false, stressTouched: false }); closeDrawer(); schedule(); });
+    $('#scaleSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.p === st.preset) return; st.preset = b.dataset.p; st.budget = PRESETS[st.preset].b[2]; schedule(); });
+    $('#levChips').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.lev = b.dataset.lev; document.querySelectorAll('#levChips button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); schedule(false); });
+    $('#domSel').addEventListener('change', e => { st.dom = +e.target.value; schedule(false); });
+    $('#capSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.cap = +b.dataset.cap; schedule(); });
+    $('#onlySel').addEventListener('change', e => { st.onlySel = e.target.checked; renderTable(); });
+    $('#thead').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k; st.sort = { k, dir: st.sort.k === k ? -st.sort.dir : (['name', 'd', 'lev', 'tec', 'id', 'r', 't', 'w'].includes(k) ? 1 : -1) }; renderTable(); });
+    document.addEventListener('click', e => {
+      const a = e.target.closest('[data-act="opt"]'); if (a) { runOpt(); return; }
+      const idb = e.target.closest('#tbody button[data-id], #waves button[data-id]'); if (idb) { openDrawer(+idb.dataset.id); return; }
+      if (e.target.closest('#bVote')) { st.voted = true; renderReso(); renderHero(); return; }
+    });
+    $('#drawer').addEventListener('click', e => {
+      if (e.target.closest('.close')) { closeDrawer(); return; }
+      const b = e.target.closest('button[data-lk]'); if (!b || dwId == null) return;
+      if (b.dataset.lk === 'auto') delete st.locks[dwId]; else st.locks[dwId] = b.dataset.lk;
+      schedule();
+    });
+    $('#scrim').addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && dwId != null) closeDrawer(); });
+    let rt = 0;
+    const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { const b = $('#mapBox'); b.classList.add('noanim'); drawMap(); drawJ(); drawMC(); requestAnimationFrame(() => b.classList.remove('noanim')); }, 60); });
+    ['#mapBox', '#jBox', '#mcBox'].forEach(s => ro.observe($(s)));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { drawMap(); drawJ(); drawMC(); });
+  }
+
+  initFilters(); bind(); update();
+  window.__board = { st, V: () => V, runOpt, update };
+})();
+
+</script>
+</body>
+</html>
