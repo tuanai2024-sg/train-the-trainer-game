@@ -307,6 +307,45 @@ footer a{color:var(--s1);font-weight:600}
   .ass{columns:1}
   .answer p{font-size:16px}
 }
+/* ---------- đối đầu trước và sau ---------- */
+.face{display:grid;grid-template-columns:minmax(0,1fr) 170px minmax(0,1fr);align-items:stretch;margin:4px 0 14px}
+.fside{border-radius:18px;padding:18px 22px;min-width:0;display:flex;flex-direction:column}
+.f0{background:var(--chip)}
+.f1{background:var(--surface);border:2px dashed var(--axis)}
+.face.open .f1{background:var(--hl);border:2px solid var(--s1);box-shadow:0 12px 32px color-mix(in srgb,var(--s1) 18%,transparent)}
+.ftag{align-self:flex-start;font-size:12px;font-weight:800;border-radius:6px;padding:3px 10px}
+.f0 .ftag{background:color-mix(in srgb,var(--s2) 22%,transparent);color:var(--ink)}
+.f1 .ftag{background:var(--s1);color:var(--onAccent)}
+.ftxt{font-size:14.5px;line-height:1.45;color:var(--ink2);margin:10px 0 12px;flex:1}
+.fbig .fl{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.fbig .fv{display:block;font-size:clamp(32px,4.4vw,54px);font-weight:800;letter-spacing:-.025em;line-height:1.06;font-variant-numeric:tabular-nums;color:var(--ink2);overflow-wrap:anywhere}
+.f1 .fbig .fv{color:var(--muted)}
+.face.open .f1 .fbig .fv{color:var(--s1)}
+.frows{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:14px 0 0;border-top:1px solid var(--line);padding-top:12px;font-size:13.5px}
+.frows dt{color:var(--muted)}
+.frows dd{margin:0;text-align:right;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.frows dd i{font-style:normal;font-weight:700;font-size:12px;margin-left:6px}
+.frows dd i.up{color:var(--goodText)}.frows dd i.dn{color:var(--critText)}
+.fmid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;text-align:center}
+.fmid .arr{font-size:44px;line-height:1;font-weight:800;color:var(--s1)}
+.fdelta{font-size:21px;font-weight:800;padding:6px 14px;border-radius:999px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fdelta.up{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--goodText)}
+.fdelta.dn{background:color-mix(in srgb,var(--s2) 20%,transparent);color:var(--critText)}
+.fdelta.q{background:var(--chip);color:var(--muted)}
+.fsub{font-size:12px;color:var(--muted)}
+.face.open .fdelta{animation:fpop .55s ease}
+@keyframes fpop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+.fcta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 22px}
+.btn.big{font-size:16px;padding:14px 24px;border-radius:12px}
+.ftick{margin:0;font-size:14px;color:var(--ink2);max-width:62ch}
+.ftick b{color:var(--critText)}
+@media (max-width:760px){
+  .face{grid-template-columns:minmax(0,1fr)}
+  .fmid{flex-direction:row;flex-wrap:wrap;padding:10px 0}
+  .fmid .arr{transform:rotate(90deg);font-size:34px}
+  .btn.big{white-space:normal;text-align:left}
+  .frows dd i{display:block;margin-left:0}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -317,6 +356,22 @@ footer a{color:var(--s1);font-weight:600}
     <p class="doc"><b>Tờ trình Hội đồng quản trị, quý IV/2026.</b> Vertex là doanh nghiệp mô phỏng; 100 đề xuất, mọi con số và nghị quyết trên trang này là giả định minh hoạ.</p>
     <h1>100 đề xuất AI, một ngân sách. HĐQT chọn cái nào?</h1>
     <p class="lede" id="lede"></p>
+    <div class="face" id="face" aria-live="polite">
+      <div class="fside f0">
+        <span class="ftag">Trước: chọn theo cảm tính</span>
+        <p class="ftxt">Lấy đề xuất có con số lớn nhất trước, đến khi hết ngân sách.</p>
+        <div class="fbig"><span class="fl" id="fBigL0"></span><span class="fv" id="fBig0"></span></div>
+        <dl class="frows" id="fRows0"></dl>
+      </div>
+      <div class="fmid" id="fMid"></div>
+      <div class="fside f1">
+        <span class="ftag">Sau: máy tối ưu</span>
+        <p class="ftxt">Cùng ngân sách. Xét xác suất thành công, lúc ra tiền và năng lực triển khai từng đợt.</p>
+        <div class="fbig"><span class="fl" id="fBigL1"></span><span class="fv" id="fBig1"></span></div>
+        <dl class="frows" id="fRows1"></dl>
+      </div>
+    </div>
+    <div class="fcta"><button type="button" class="btn big" id="bOpt2">Để máy tối ưu trên cùng ngân sách</button><p class="ftick" id="fTick"></p></div>
     <div class="scale">
       <span class="lbl" id="scaleLbl">Quy mô doanh thu</span>
       <div class="seg" role="group" aria-labelledby="scaleLbl" id="scaleSeg">
@@ -844,7 +899,43 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
   const stressed = () => st.R !== 1 || st.delay > 0;
 
   /* ---------- hero ---------- */
+  let faceAnim = false, ftw = 0;
+  const fTok = /[−-]?\d{1,3}(?:\.\d{3})*(?:,\d+)?/;
+  const fVal = t => parseFloat(t.replace('−', '-').replace(/\./g, '').replace(',', '.'));
+  function fTween(el, toStr) {
+    const m = String(toStr).match(fTok); if (!m || RM) { el.textContent = toStr; return; }
+    const dec = (m[0].split(',')[1] || '').length, to = fVal(m[0]), id = ++ftw, t0 = performance.now();
+    const step = now => { if (id !== ftw) return; const k = Math.min(1, (now - t0) / 1300), v = to * (1 - Math.pow(1 - k, 3)); el.textContent = String(toStr).replace(fTok, (v < 0 ? '−' : '') + nf(Math.abs(v), dec)); if (k < 1) requestAnimationFrame(step); else el.textContent = toStr; };
+    requestAnimationFrame(step);
+  }
+  function renderFace() {
+    const ei = V.eInt, mi = V.mInt, opt = V.opt && !V.opt.over, eo = opt ? V.eOpt : null, mo = opt ? V.mOpt : null;
+    const L = `NPV kỳ vọng ${st.hz} năm`;
+    $('#fBigL0').textContent = L; $('#fBigL1').textContent = L;
+    $('#fBig0').textContent = money(ei.npv);
+    const rows = (e, m) => [['Xác suất lỗ', lossTxt(m.loss)], ['Hoàn vốn tiền mặt', e.pb == null ? 'chưa hoàn vốn' : 'tháng ' + e.pb], ['10% kịch bản xấu nhất', 'dưới ' + money(m.p10)], ['Vốn dùng', `${money(e.capex)}, ${e.n} đề xuất`]];
+    const r0 = rows(ei, mi);
+    $('#fRows0').innerHTML = r0.map(r => `<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('');
+    if (opt) {
+      const r1 = rows(eo, mo), dLoss = (mo.loss - mi.loss) * 100, dPb = (ei.pb == null ? st.hz * 12 + 1 : ei.pb) - (eo.pb == null ? st.hz * 12 + 1 : eo.pb), dP10 = mo.p10 - mi.p10;
+      const tags = [Math.abs(dLoss) >= 0.05 ? `<i class="${dLoss < 0 ? 'up' : 'dn'}">${dLoss < 0 ? '−' : '+'}${nf(Math.abs(dLoss), 1)} điểm</i>` : '', dPb ? `<i class="${dPb > 0 ? 'up' : 'dn'}">${dPb > 0 ? 'sớm' : 'muộn'} ${Math.abs(dPb)} tháng</i>` : '', Math.abs(dP10) > 1e-9 ? `<i class="${dP10 > 0 ? 'up' : 'dn'}">${signed(dP10)}</i>` : '', ''];
+      $('#fRows1').innerHTML = r1.map((r, i) => `<dt>${r[0]}</dt><dd>${esc(r[1])}${tags[i]}</dd>`).join('');
+      $('#fBig1').textContent = money(eo.npv);
+      const ratio = ei.npv > 0 ? eo.npv / ei.npv : null, up = eo.npv >= ei.npv;
+      $('#fMid').innerHTML = `<span class="arr" aria-hidden="true">→</span><span class="fdelta ${up ? 'up' : 'dn'}">${ratio && ratio >= 1.15 ? 'gấp ' + nf(ratio, 1) + ' lần' : signed(eo.npv - ei.npv)}</span><span class="fsub">${signed(eo.npv - ei.npv)} NPV, cùng ${money(V.bud)}</span>`;
+      $('#fTick').innerHTML = up ? `Giữ cách chọn cũ, công ty bỏ lại khoảng <b>${money((eo.npv - ei.npv) / (st.hz * 12))}</b> giá trị hiện tại mỗi tháng trong ${st.hz} năm.` : 'Danh mục máy chọn thấp hơn vì các quyết định ép giữ của HĐQT.';
+      if (faceAnim) { fTween($('#fBig1'), money(eo.npv)); faceAnim = false; }
+    } else {
+      $('#fRows1').innerHTML = r0.map(r => `<dt>${r[0]}</dt><dd>?</dd>`).join('');
+      $('#fBig1').textContent = V.opt && V.opt.over ? 'Vượt ngân sách' : '?';
+      $('#fMid').innerHTML = `<span class="arr" aria-hidden="true">→</span><span class="fdelta q">?</span><span class="fsub">cùng ${money(V.bud)} ngân sách</span>`;
+      $('#fTick').innerHTML = V.opt && V.opt.over ? 'Các quyết định ép giữ đang vượt ngân sách; nới ngân sách hoặc bỏ bớt trước khi so.' : `Cùng ${money(V.bud)}, cùng 100 đề xuất. Máy có tìm được danh mục tốt hơn cách chọn quen thuộc không?`;
+    }
+    $('#face').classList.toggle('open', !!opt);
+    const b2 = $('#bOpt2'); b2.textContent = st.optRun ? 'Xem 100 chấm trên bản đồ' : 'Để máy tối ưu trên cùng ngân sách';
+  }
   function renderHero() {
+    renderFace();
     const P = PRESETS[st.preset], e = V.main.e, m = V.main.m;
     $('#lede').innerHTML = `Các khối trình lên <b>100 đề xuất AI</b>, tổng vốn xin <b>${money(V.capAll)}</b>, hứa hẹn <b>${money(V.valAll)} mỗi năm</b> nếu mọi đề xuất đều thành công. Ngân sách HĐQT đặt ra là <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Câu hỏi không còn là AI có đáng làm hay không, mà là làm cái nào, khi nào, và ai chịu trách nhiệm. Mỗi đề xuất có <a href="#sIndex">một trang chạy thử riêng</a>.`;
     $('#scaleNote').textContent = `Ở quy mô này, mỗi đồng chi cho danh mục ${V.main.label} tạo ra ${nf(e.benefit / e.cost, 1)} đồng giá trị hiện tại trong ${st.hz} năm. Vốn tăng chậm hơn doanh thu nên doanh nghiệp càng lớn, tỷ suất càng cao.`;
@@ -1373,7 +1464,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
   }
   function runOpt() {
     if (st.optRun) return;
-    st.optRun = true; st.voted = false;
+    st.optRun = true; st.voted = false; faceAnim = true;
     compute();
     if (!RM) {
       const order = V.opt.sel.slice().sort((a, b) => V.items[b].evYr - V.items[a].evYr);
@@ -1398,6 +1489,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     $('#cR').addEventListener('input', e => { st.R = +e.target.value / 100; st.stressTouched = true; schedule(); });
     $('#cD').addEventListener('input', e => { st.delay = +e.target.value; st.stressTouched = true; schedule(); });
     $('#bOpt').addEventListener('click', runOpt);
+    $('#bOpt2').addEventListener('click', () => { if (st.optRun) $('#sMap').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); else runOpt(); });
     $('#bReset').addEventListener('click', () => { Object.assign(st, DEF, { budget: PRESETS[st.preset].b[2], locks: {}, optRun: false, voted: false, stressTouched: false }); closeDrawer(); schedule(); });
     $('#scaleSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.p === st.preset) return; st.preset = b.dataset.p; st.budget = PRESETS[st.preset].b[2]; schedule(); });
     $('#levChips').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.lev = b.dataset.lev; document.querySelectorAll('#levChips button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); schedule(false); });
