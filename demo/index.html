@@ -1,0 +1,417 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body><title>Phiên họp HĐQT Vertex</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: a board-paper document — agenda header, three "tờ trình" sections (conflict → prediction → live run → decision), then the vote and resolution. */
+:root {
+  --bg: #FFFFFF; --paper: #F3F5F7; --tint: #EAF0FF; --line: #D5DAE0;
+  --ink: #051C2C; --ink2: #4A5560; --mute: #7A8590;
+  --accent: #2251FF; --good: #00857C; --goodbg: #E6F4F2; --bad: #C8102E; --badbg: #FCEEF0; --warn: #B26B00;
+  --navy: #051C2C; --onnavy: #FFFFFF; --onnavy2: #C9D3DD; --cyan: #00A9F4;
+  --font: 'Montserrat', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --r: 4px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1620; --paper: #13212D; --tint: #16264A; --line: #26384A;
+  --ink: #EEF2F6; --ink2: #B3BFCB; --mute: #8495A6;
+  --accent: #6E8BFF; --good: #33C2B5; --goodbg: #10302E; --bad: #FF6B7F; --badbg: #3A1820; --warn: #F0B04A;
+  --navy: #020B12; --onnavy: #FFFFFF; --onnavy2: #A9B8C6; --cyan: #3CC4FF; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0B1620; --paper: #13212D; --tint: #16264A; --line: #26384A;
+  --ink: #EEF2F6; --ink2: #B3BFCB; --mute: #8495A6;
+  --accent: #6E8BFF; --good: #33C2B5; --goodbg: #10302E; --bad: #FF6B7F; --badbg: #3A1820; --warn: #F0B04A;
+  --navy: #020B12; --onnavy: #FFFFFF; --onnavy2: #A9B8C6; --cyan: #3CC4FF; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1100px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { text-wrap: balance; margin: 0; line-height: 1.2; }
+p { margin: 0; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* hero */
+.hero { background: var(--navy); color: var(--onnavy); }
+.hero .wrap { padding-block: 44px 40px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: end; }
+.clock { font-size: clamp(56px, 10vw, 112px); font-weight: 700; letter-spacing: -0.02em; color: var(--cyan); line-height: 1; }
+.hero h1 { font-size: clamp(26px, 3.4vw, 40px); font-weight: 800; margin-top: 14px; }
+.hero .lede { color: var(--onnavy2); font-size: 18px; margin-top: 14px; max-width: 58ch; }
+.hero .meta { color: var(--onnavy2); font-size: 13px; margin-top: 22px; }
+.agenda { border-left: 1px solid rgba(255,255,255,.18); padding-left: 24px; display: grid; gap: 14px; }
+.agenda .lbl { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--onnavy2); }
+.agenda a { color: var(--onnavy); text-decoration: none; display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: baseline; }
+.agenda a b { color: var(--cyan); font-size: 15px; }
+.agenda a span { font-weight: 600; }
+.agenda a em { font-style: normal; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 99px; border: 1px solid rgba(255,255,255,.3); color: var(--onnavy2); white-space: nowrap; }
+.agenda a em.ok { background: var(--good); border-color: var(--good); color: #fff; }
+.agenda a em.no { background: var(--bad); border-color: var(--bad); color: #fff; }
+
+/* sections */
+section.paper { padding-block: 56px 24px; border-bottom: 1px solid var(--line); }
+.head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: start; }
+.num { font-size: 56px; font-weight: 800; color: var(--accent); line-height: .9; }
+.kicker { font-size: 13px; font-weight: 700; color: var(--accent); }
+.head h2 { font-size: clamp(22px, 2.8vw, 32px); font-weight: 800; margin-top: 6px; }
+.head .sub { color: var(--ink2); margin-top: 10px; max-width: 70ch; }
+.clash { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: stretch; margin-top: 28px; }
+.side { background: var(--paper); padding: 18px 20px; border-radius: var(--r); display: grid; gap: 8px; align-content: start; }
+.side .who { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--ink2); }
+.av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 14px; flex: none; }
+.side q { font-size: 18px; font-weight: 700; quotes: "“" "”"; }
+.side .stake { font-size: 13px; color: var(--ink2); }
+.vs { align-self: center; font-weight: 800; font-size: 13px; color: var(--bad); border: 2px solid var(--bad); border-radius: 50%; width: 44px; height: 44px; display: grid; place-items: center; }
+.stage { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.viz { background: var(--paper); border-radius: var(--r); padding: 14px; min-width: 0; }
+.viz canvas { width: 100%; height: auto; display: block; }
+.vizcap { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 12px; color: var(--mute); margin-top: 8px; }
+.panel { display: grid; gap: 14px; min-width: 0; }
+.box { border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; display: grid; gap: 10px; }
+.box h3 { font-size: 14px; font-weight: 700; color: var(--ink2); }
+.guess { display: grid; gap: 8px; }
+.guess .val { font-size: 32px; font-weight: 800; color: var(--ink); }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 99px; padding: 6px 14px; font-weight: 700; font-size: 14px; }
+.chip[aria-pressed=true] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.run { background: var(--accent); color: #fff; border: 0; border-radius: var(--r); padding: 14px 18px; font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.run:disabled { opacity: .55; cursor: default; }
+.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink2); border-radius: var(--r); padding: 8px 12px; font-weight: 600; font-size: 13px; }
+.result { display: grid; gap: 6px; }
+.big { font-size: 40px; font-weight: 800; line-height: 1.05; }
+.big.good { color: var(--good); }
+.big.bad { color: var(--bad); }
+.small { font-size: 13px; color: var(--ink2); }
+.verdict { font-size: 14px; font-weight: 700; padding: 10px 12px; border-radius: var(--r); }
+.verdict.hit { background: var(--goodbg); color: var(--good); }
+.verdict.miss { background: var(--badbg); color: var(--bad); }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.kpi { background: var(--paper); border-radius: var(--r); padding: 10px 12px; }
+.kpi b { display: block; font-size: 20px; }
+.kpi span { font-size: 12px; color: var(--ink2); }
+.twist { margin-top: 22px; background: var(--navy); color: var(--onnavy); border-radius: var(--r); padding: 18px 22px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; }
+.twist .q { font-size: 28px; font-weight: 800; color: var(--cyan); }
+.twist p { font-weight: 600; }
+.twist small { display: block; color: var(--onnavy2); font-weight: 500; margin-top: 4px; font-size: 13px; }
+.decide { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.decide .lbl { font-weight: 700; margin-right: 6px; }
+.yes, .hold { border-radius: var(--r); padding: 10px 16px; font-weight: 800; border: 2px solid; background: var(--bg); }
+.yes { color: var(--good); border-color: var(--good); }
+.hold { color: var(--bad); border-color: var(--bad); }
+.yes[aria-pressed=true] { background: var(--good); color: #fff; }
+.hold[aria-pressed=true] { background: var(--bad); color: #fff; }
+.assume { font-size: 12px; color: var(--mute); margin-top: 10px; }
+.list { max-height: 210px; overflow: auto; display: grid; gap: 6px; font-size: 13px; }
+.list div { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.dot { width: 10px; height: 10px; border-radius: 2px; }
+
+/* board */
+.board { padding-block: 56px; }
+.tablewrap { overflow-x: auto; margin-top: 24px; border: 1px solid var(--line); border-radius: var(--r); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; color: var(--ink2); font-weight: 700; background: var(--paper); }
+td.n { text-align: right; white-space: nowrap; font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+.status { font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 99px; white-space: nowrap; }
+.status.wait { background: var(--paper); color: var(--ink2); }
+.status.ok { background: var(--goodbg); color: var(--good); }
+.status.no { background: var(--badbg); color: var(--bad); }
+.reso { margin-top: 28px; position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 32px clamp(18px, 4vw, 48px); }
+.reso .doc-h { text-align: center; display: grid; gap: 4px; }
+.reso .doc-h b { font-size: 13px; letter-spacing: .06em; }
+.reso h3 { font-size: 22px; margin-top: 14px; }
+.reso ol { padding-left: 22px; display: grid; gap: 10px; margin: 18px 0 0; }
+.reso .sig { margin-top: 26px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--ink2); }
+.stamp { position: absolute; right: clamp(12px, 4vw, 40px); top: 26px; transform: rotate(-9deg); border: 3px solid var(--bad); color: var(--bad); font-weight: 800; padding: 8px 14px; font-size: 16px; letter-spacing: .06em; border-radius: 6px; text-align: center; line-height: 1.2; background: var(--bg); }
+.stamp small { display: block; font-size: 10px; letter-spacing: .04em; }
+.stamp.pending { border-color: var(--mute); color: var(--mute); }
+.waitnote { color: var(--ink2); margin-top: 14px; }
+.open { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.open div { background: var(--paper); border-radius: var(--r); padding: 16px; }
+.open b { color: var(--accent); font-size: 26px; display: block; }
+footer { padding-block: 28px 40px; font-size: 12px; color: var(--mute); }
+.pulse { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
+@media (max-width: 820px) {
+  .hero .wrap, .stage { grid-template-columns: minmax(0, 1fr); }
+  .agenda { border-left: 0; padding-left: 0; border-top: 1px solid rgba(255,255,255,.18); padding-top: 18px; }
+  .clash { grid-template-columns: minmax(0, 1fr); }
+  .vs { justify-self: center; }
+  .open { grid-template-columns: minmax(0, 1fr); }
+  .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stamp { position: static; display: inline-block; margin-bottom: 14px; }
+}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="clock" id="clock">07:42</div>
+      <h1>Phiên họp HĐQT: ba tờ trình AI, ba cuộc cãi nhau</h1>
+      <p class="lede">Mỗi tờ trình có hai lãnh đạo đứng ở hai phía. Cả phòng đoán trước kết quả. Máy chạy ngay trên màn hình, trước mặt mọi người. Rồi HĐQT biểu quyết.</p>
+      <p class="meta">Vertex SCS (công ty mô phỏng) · Phiên họp mô phỏng phục vụ workshop The 2:47 Files · Mọi phép tính chạy trực tiếp trong trình duyệt</p>
+    </div>
+    <nav class="agenda" aria-label="Chương trình phiên họp">
+      <div class="lbl">CHƯƠNG TRÌNH</div>
+      <a href="#t1"><b>01</b><span>Tuyến giao hàng</span><em id="ag1">Chờ biểu quyết</em></a>
+      <a href="#t2"><b>02</b><span>Xếp hàng lên xe</span><em id="ag2">Chờ biểu quyết</em></a>
+      <a href="#t3"><b>03</b><span>Hoá đơn bất thường</span><em id="ag3">Chờ biểu quyết</em></a>
+      <a href="#board"><b>04</b><span>Biểu quyết và nghị quyết</span><em id="ag4">0/3</em></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ TỜ TRÌNH 01 ============ -->
+<section class="paper" id="t1"><div class="wrap">
+  <div class="head"><div class="num">01</div><div>
+    <div class="kicker">Tờ trình 01 · Đội xe và Tài chính</div>
+    <h2>Tài xế luôn đi tới điểm gần nhất tiếp theo. Cách đó có phải ngắn nhất không?</h2>
+    <p class="sub">Một xe giao 18 điểm mỗi ngày trong khu vực 24 × 16 km. Đội xe có 40 xe. Đường đỏ trên bản đồ là cách tài xế đang chạy: luôn tới điểm gần nhất chưa giao.</p>
+  </div></div>
+  <div class="clash">
+    <div class="side"><div class="who"><span class="av" style="background:var(--accent)">Đ</span>Trưởng đội xe</div><q>Tài xế chạy khu này 5 năm. Không ai rành đường hơn họ.</q><p class="stake">Lo ngại: đổi tuyến là tài xế phản đối, giao trễ.</p></div>
+    <div class="vs">VS</div>
+    <div class="side"><div class="who"><span class="av" style="background:var(--bad)">T</span>Giám đốc tài chính</div><q>Mỗi km thừa nhân với 40 xe, 312 ngày là tiền thật.</q><p class="stake">Lo ngại: chi phí nhiên liệu tăng mà không ai đo được.</p></div>
+  </div>
+  <div class="stage">
+    <div class="viz"><canvas id="c1" width="760" height="520" aria-label="Bản đồ 18 điểm giao hàng và tuyến chạy"></canvas>
+      <div class="vizcap"><span id="c1cap">Đường đỏ: cách tài xế đang chạy · Đường xanh: tuyến máy tìm ra</span><button class="ghost" id="new1">Đổi bộ điểm giao</button></div></div>
+    <div class="panel">
+      <div class="box guess"><h3>Cả phòng đoán: máy rút ngắn được bao nhiêu?</h3><div class="val"><span id="g1v">10</span>%</div><input id="g1" type="range" min="0" max="40" step="1" value="10" aria-label="Dự đoán phần trăm rút ngắn"></div>
+      <button class="run" id="run1">Chạy máy tối ưu tuyến</button>
+      <div class="box result" id="r1"><h3>Kết quả</h3><div class="big good" id="r1big">?</div><p class="small" id="r1txt">Bấm chạy để xem máy tìm ra tuyến nào.</p><div id="r1v"></div>
+        <div class="kpis"><div class="kpi"><b id="k1a">–</b><span>km tuyến cũ</span></div><div class="kpi"><b id="k1b">–</b><span>km tuyến mới</span></div><div class="kpi"><b id="k1c">–</b><span>tỷ đồng/năm</span></div></div></div>
+    </div>
+  </div>
+  <div class="twist"><div class="q">?</div><p>Tuyến ngắn nhất có giao kịp khung giờ mà khách yêu cầu không?<small>Bài toán có khung giờ giao hàng mở ở buổi tiếp theo.</small></p></div>
+  <div class="decide"><span class="lbl">HĐQT biểu quyết tờ trình 01:</span><button class="yes" data-t="1" data-v="ok" aria-pressed="false">Duyệt thí điểm</button><button class="hold" data-t="1" data-v="no" aria-pressed="false">Hoãn</button></div>
+  <p class="assume">Giả định minh hoạ: 40 xe, 312 ngày chạy mỗi năm, chi phí 12.000 đồng/km (nhiên liệu và hao mòn). Máy dùng thuật toán 2-opt: thử đảo từng đoạn tuyến, giữ lại mọi lần đảo làm tuyến ngắn đi.</p>
+</div></section>
+
+<!-- ============ TỜ TRÌNH 02 ============ -->
+<section class="paper" id="t2"><div class="wrap">
+  <div class="head"><div class="num">02</div><div>
+    <div class="kicker">Tờ trình 02 · Kho và Vận tải</div>
+    <h2>Xếp kiện theo thứ tự đơn hàng là nhanh nhất. Nhưng phải gọi thêm bao nhiêu chuyến xe?</h2>
+    <p class="sub">Sáng nay kho có 46 kiện hàng, mỗi kiện từ 1,2 đến 7,5 m³. Mỗi xe chở tối đa 18 m³. Kho đang xếp theo thứ tự đơn: kiện nào không vừa xe hiện tại thì mở xe mới.</p>
+  </div></div>
+  <div class="clash">
+    <div class="side"><div class="who"><span class="av" style="background:var(--good)">K</span>Trưởng kho</div><q>Xếp theo thứ tự đơn thì không bao giờ nhầm hàng.</q><p class="stake">Lo ngại: đổi cách xếp làm chậm khâu bốc hàng.</p></div>
+    <div class="vs">VS</div>
+    <div class="side"><div class="who"><span class="av" style="background:var(--bad)">V</span>Trưởng vận tải</div><q>Mỗi chuyến xe chạy nửa trống là 4 triệu đồng đi theo.</q><p class="stake">Lo ngại: chi phí thuê xe tăng mỗi tháng.</p></div>
+  </div>
+  <div class="stage">
+    <div class="viz"><canvas id="c2" width="760" height="520" aria-label="Các xe và kiện hàng xếp lên mỗi xe"></canvas>
+      <div class="vizcap"><span id="c2cap">Mỗi thanh là một xe 18 m³ · Mỗi ô là một kiện hàng</span><button class="ghost" id="new2">Đổi bộ kiện hàng</button></div></div>
+    <div class="panel">
+      <div class="box guess"><h3>Cả phòng đoán: máy cần bao nhiêu xe?</h3><p class="small" id="g2hint">Kho đang dùng ? xe.</p><div class="chips" id="g2"></div></div>
+      <button class="run" id="run2">Chạy máy xếp hàng</button>
+      <div class="box result"><h3>Kết quả</h3><div class="big good" id="r2big">?</div><p class="small" id="r2txt">Bấm chạy để xem máy xếp lại 46 kiện.</p><div id="r2v"></div>
+        <div class="kpis"><div class="kpi"><b id="k2a">–</b><span>xe cách cũ</span></div><div class="kpi"><b id="k2b">–</b><span>xe máy xếp</span></div><div class="kpi"><b id="k2c">–</b><span>tỷ đồng/năm</span></div></div></div>
+    </div>
+  </div>
+  <div class="twist"><div class="q">?</div><p>Xe xếp đầy nhất có bốc dỡ nhanh nhất ở điểm giao không?<small>Bài toán xếp theo thứ tự điểm giao mở ở buổi tiếp theo.</small></p></div>
+  <div class="decide"><span class="lbl">HĐQT biểu quyết tờ trình 02:</span><button class="yes" data-t="2" data-v="ok" aria-pressed="false">Duyệt thí điểm</button><button class="hold" data-t="2" data-v="no" aria-pressed="false">Hoãn</button></div>
+  <p class="assume">Giả định minh hoạ: 4 triệu đồng mỗi chuyến xe, 312 ngày mỗi năm. Máy dùng cách xếp "kiện lớn trước, nhét vào xe đầu tiên còn chỗ" và so với mức tối thiểu lý thuyết (tổng m³ chia sức chứa một xe, làm tròn lên).</p>
+</div></section>
+
+<!-- ============ TỜ TRÌNH 03 ============ -->
+<section class="paper" id="t3"><div class="wrap">
+  <div class="head"><div class="num">03</div><div>
+    <div class="kicker">Tờ trình 03 · Kế toán và Kiểm toán nội bộ</div>
+    <h2>240 hoá đơn tháng này đã được kiểm tay từng cái. Còn sót cái nào không?</h2>
+    <p class="sub">Mỗi ô là một hoá đơn của 12 nhà cung cấp. Kế toán đã duyệt hết. Kiểm toán nội bộ muốn cho máy quét lại theo 3 dấu hiệu: hoá đơn trùng, hoá đơn chia nhỏ để né ngưỡng duyệt 50 triệu, và số tiền lớn bất thường so với chính nhà cung cấp đó.</p>
+  </div></div>
+  <div class="clash">
+    <div class="side"><div class="who"><span class="av" style="background:var(--accent)">K</span>Kế toán trưởng</div><q>Tôi ký từng hoá đơn. Không có gì lọt qua được.</q><p class="stake">Lo ngại: máy quét là ngầm nói phòng kế toán làm sai.</p></div>
+    <div class="vs">VS</div>
+    <div class="side"><div class="who"><span class="av" style="background:var(--bad)">K</span>Trưởng kiểm toán nội bộ</div><q>240 hoá đơn một tháng, ai dám chắc không sót cái nào?</q><p class="stake">Lo ngại: tiền trả hai lần không bao giờ đòi lại được.</p></div>
+  </div>
+  <div class="stage">
+    <div class="viz"><canvas id="c3" width="760" height="420" aria-label="Lưới 240 hoá đơn"></canvas>
+      <div class="vizcap"><span id="c3cap">Mỗi ô là một hoá đơn · màu đậm hơn là số tiền lớn hơn</span><button class="ghost" id="new3">Đổi dữ liệu tháng</button></div>
+      <div class="list" id="l3" aria-live="polite"></div></div>
+    <div class="panel">
+      <div class="box guess"><h3>Cả phòng đoán: bao nhiêu hoá đơn bất thường?</h3><div class="val"><span id="g3v">3</span> hoá đơn</div><input id="g3" type="range" min="0" max="30" step="1" value="3" aria-label="Dự đoán số hoá đơn bất thường"></div>
+      <button class="run" id="run3">Chạy máy quét hoá đơn</button>
+      <div class="box result"><h3>Kết quả</h3><div class="big bad" id="r3big">?</div><p class="small" id="r3txt">Bấm chạy để máy quét 240 hoá đơn.</p><div id="r3v"></div>
+        <div class="kpis"><div class="kpi"><b id="k3a">–</b><span>hoá đơn trùng</span></div><div class="kpi"><b id="k3b">–</b><span>chia nhỏ né ngưỡng</span></div><div class="kpi"><b id="k3c">–</b><span>lớn bất thường</span></div></div></div>
+    </div>
+  </div>
+  <div class="twist"><div class="q">?</div><p>Máy chỉ đánh dấu. Ai chịu trách nhiệm khi máy đánh dấu nhầm một hoá đơn đúng?<small>Quy trình người duyệt cuối cùng mở ở buổi tiếp theo.</small></p></div>
+  <div class="decide"><span class="lbl">HĐQT biểu quyết tờ trình 03:</span><button class="yes" data-t="3" data-v="ok" aria-pressed="false">Duyệt thí điểm</button><button class="hold" data-t="3" data-v="no" aria-pressed="false">Hoãn</button></div>
+  <p class="assume">Dữ liệu mô phỏng. Quy tắc quét: trùng nhà cung cấp và số tiền trong vòng 5 ngày; từ 2 hoá đơn cùng nhà cung cấp cùng ngày, mỗi cái từ 45 đến dưới 50 triệu; hoặc lớn hơn 3,5 lần mức trung vị của chính nhà cung cấp đó.</p>
+</div></section>
+
+<!-- ============ BIỂU QUYẾT ============ -->
+<section class="board" id="board"><div class="wrap">
+  <div class="head"><div class="num">04</div><div>
+    <div class="kicker">Biểu quyết</div>
+    <h2>HĐQT duyệt tờ trình nào, với điều kiện gì?</h2>
+    <p class="sub">Giá trị mỗi năm lấy từ kết quả máy vừa chạy ở trên. Chi phí năm đầu là giả định: gần như toàn bộ là OPEX, vì phần mềm giải bài toán có sẵn trong Excel hoặc miễn phí.</p>
+  </div></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Tờ trình</th><th style="text-align:right">Giá trị/năm (tỷ)</th><th style="text-align:right">Chi phí năm đầu (tỷ)</th><th style="text-align:right">ROI</th><th>Câu hỏi phản biện của HĐQT</th><th>Quyết định</th></tr></thead>
+    <tbody>
+      <tr><td><b>01 · Tuyến giao hàng</b></td><td class="n" id="b1v">chưa chạy</td><td class="n">0,15</td><td class="n" id="b1r">–</td><td>Tài xế có chịu chạy tuyến mới không?</td><td><span class="status wait" id="b1s">Chờ</span></td></tr>
+      <tr><td><b>02 · Xếp hàng lên xe</b></td><td class="n" id="b2v">chưa chạy</td><td class="n">0,10</td><td class="n" id="b2r">–</td><td>Xếp đầy hơn có làm chậm khâu bốc hàng?</td><td><span class="status wait" id="b2s">Chờ</span></td></tr>
+      <tr><td><b>03 · Hoá đơn bất thường</b></td><td class="n" id="b3v">chưa chạy</td><td class="n">0,08</td><td class="n" id="b3r">–</td><td>Ai chịu trách nhiệm khi máy đánh dấu nhầm?</td><td><span class="status wait" id="b3s">Chờ</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="reso" id="reso">
+    <div class="stamp pending" id="stamp">CHỜ<small>BIỂU QUYẾT</small></div>
+    <div class="doc-h"><b>CÔNG TY CỔ PHẦN VERTEX SCS (MÔ PHỎNG)</b><span class="small">Số: 01/2026/NQ-HĐQT · Ngày 31 tháng 10 năm 2026</span></div>
+    <h3>Nghị quyết HĐQT về thí điểm AI optimization</h3>
+    <div id="resoBody"><p class="waitnote">Nghị quyết sẽ hiện ra khi HĐQT đã biểu quyết đủ 3 tờ trình ở trên.</p></div>
+    <div class="sig"><span>Thư ký HĐQT</span><span>TM. Hội đồng quản trị · Chủ tịch</span></div>
+  </div>
+
+  <div class="open">
+    <div><b>?</b>Tuyến ngắn nhất có giao kịp khung giờ khách yêu cầu?</div>
+    <div><b>?</b>Xe đầy nhất có bốc dỡ nhanh nhất ở điểm giao?</div>
+    <div><b>?</b>Ai ký cuối cùng khi máy và người không đồng ý?</div>
+  </div>
+</div></section>
+</main>
+<footer><div class="wrap">Vertex SCS là công ty mô phỏng; nghị quyết là văn bản mô phỏng phục vụ đào tạo. Số liệu chi phí là giả định minh hoạ. The 2:47 Files · Vương Anh Tuấn · ERX Supply Chain Community.</div></footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fms = ms => ms < 0.1 ? 'chưa đầy 0,1 mili giây' : (ms < 1 ? ms : Math.round(ms * 10) / 10).toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + ' mili giây';
+  const vnd = (x, d = 2) => x.toLocaleString('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const value = { 1: null, 2: null, 3: null }, cost = { 1: 0.15, 2: 0.10, 3: 0.08 }, vote = { 1: null, 2: null, 3: null };
+
+  // live clock in hero (counts toward 08:00 meeting)
+  let clk = 7 * 60 + 42; setInterval(() => { clk = Math.min(clk + 1, 8 * 60); $('clock').textContent = String(Math.floor(clk / 60)).padStart(2, '0') + ':' + String(clk % 60).padStart(2, '0'); }, 20000);
+
+  /* ============ 01 ROUTE ============ */
+  const W1 = 24, H1 = 16, N1 = 18; let pts = [], habit = [], best = null, seed1 = 247;
+  const d = (a, b) => Math.hypot(pts[a].x - pts[b].x, pts[a].y - pts[b].y) * 1.3; // road factor
+  const len = t => { let s = 0; for (let i = 0; i < t.length; i++) s += d(t[i], t[(i + 1) % t.length]); return s; };
+  function gen1() { const r = rng(seed1); pts = [{ x: W1 / 2 + (r() - .5) * 2, y: H1 / 2 + (r() - .5) * 2 }]; for (let i = 0; i < N1; i++) pts.push({ x: 1 + r() * (W1 - 2), y: 1 + r() * (H1 - 2) });
+    const left = new Set(pts.map((_, i) => i)); left.delete(0); habit = [0]; while (left.size) { const cur = habit[habit.length - 1]; let bi = -1, bd = 1e9; left.forEach(j => { const dd = d(cur, j); if (dd < bd) { bd = dd; bi = j; } }); habit.push(bi); left.delete(bi); }
+    best = null; }
+  function draw1(tour, frac) { const c = $('c1'), g = c.getContext('2d'), Wp = c.width, Hp = c.height, pad = 30, sx = (Wp - 2 * pad) / W1, sy = (Hp - 2 * pad) / H1;
+    const P = i => [pad + pts[i].x * sx, pad + pts[i].y * sy];
+    g.clearRect(0, 0, Wp, Hp); g.strokeStyle = css('--line'); g.lineWidth = 1; for (let x = 0; x <= W1; x += 4) { g.beginPath(); g.moveTo(pad + x * sx, pad); g.lineTo(pad + x * sx, Hp - pad); g.stroke(); } for (let y = 0; y <= H1; y += 4) { g.beginPath(); g.moveTo(pad, pad + y * sy); g.lineTo(Wp - pad, pad + y * sy); g.stroke(); }
+    const path = (t, col, w, dash) => { g.strokeStyle = col; g.lineWidth = w; g.setLineDash(dash || []); g.beginPath(); t.forEach((i, k) => { const [x, y] = P(i); k ? g.lineTo(x, y) : g.moveTo(x, y); }); const [x0, y0] = P(t[0]); g.lineTo(x0, y0); g.stroke(); g.setLineDash([]); };
+    path(habit, css('--bad'), tour ? 2 : 3, tour ? [6, 6] : null); if (tour) path(tour, css('--accent'), 3.5);
+    pts.forEach((p, i) => { const [x, y] = P(i); g.beginPath(); if (i === 0) { g.fillStyle = css('--ink'); g.fillRect(x - 9, y - 9, 18, 18); } else { g.fillStyle = css('--bg'); g.strokeStyle = css('--ink'); g.lineWidth = 2; g.arc(x, y, 7, 0, 7); g.fill(); g.stroke(); } });
+    g.fillStyle = css('--ink2'); g.font = '600 13px Montserrat, sans-serif'; const [kx, ky] = P(0); g.fillText('Kho', kx + 12, ky - 10);
+    g.fillStyle = css('--mute'); g.font = '12px Montserrat, sans-serif'; g.fillText('Lưới 4 km', Wp - pad - 62, Hp - 10); }
+  function opt1() { let t = habit.slice(), L = len(t); const frames = [t.slice()]; let improved = true, checks = 0;
+    while (improved) { improved = false; for (let i = 1; i < t.length - 1; i++) for (let k = i + 1; k < t.length; k++) { checks++; const a = t[i - 1], b = t[i], c = t[k], e = t[(k + 1) % t.length]; const delta = d(a, c) + d(b, e) - d(a, b) - d(c, e); if (delta < -1e-9) { t = t.slice(0, i).concat(t.slice(i, k + 1).reverse(), t.slice(k + 1)); improved = true; frames.push(t.slice()); } } }
+    return { t, frames, checks }; }
+  function reset1() { $('r1big').textContent = '?'; $('r1txt').textContent = 'Bấm chạy để xem máy tìm ra tuyến nào.'; $('r1v').innerHTML = ''; ['k1a', 'k1b', 'k1c'].forEach(k => $(k).textContent = '–'); $('k1a').textContent = vnd(len(habit), 1); draw1(null); }
+  $('g1').oninput = e => $('g1v').textContent = e.target.value;
+  $('new1').onclick = () => { seed1 = Math.floor(Math.random() * 1e6); gen1(); reset1(); value[1] = null; board(); };
+  $('run1').onclick = () => { const btn = $('run1'); btn.disabled = true; const t0 = performance.now(); const res = opt1(); const ms = performance.now() - t0;
+    const L0 = len(habit), L1 = len(res.t), pct = (1 - L1 / L0) * 100; let f = 0; btn.innerHTML = '<span class="pulse">Máy đang thử các tuyến…</span>';
+    const step = () => { draw1(res.frames[f]); $('r1big').textContent = '−' + vnd((1 - len(res.frames[f]) / L0) * 100, 1) + '%'; f++; if (f < res.frames.length && !reduce) setTimeout(step, Math.max(60, 2400 / res.frames.length)); else done(); };
+    const done = () => { draw1(res.t); const kmDay = (L0 - L1) * 40, ty = kmDay * 312 * 12000 / 1e9; value[1] = ty;
+      $('r1big').textContent = '−' + vnd(pct, 1) + '%'; $('k1a').textContent = vnd(L0, 1); $('k1b').textContent = vnd(L1, 1); $('k1c').textContent = vnd(ty);
+      $('r1txt').textContent = `Máy xét ${res.checks.toLocaleString('vi-VN')} cách đảo tuyến và tìm ra tuyến mới trong ${fms(ms)}. Phần chạy chậm trên bản đồ là phát lại để cả phòng xem. Với 40 xe, mỗi ngày bớt ${vnd(kmDay, 0)} km.`;
+      const g = +$('g1').value; $('r1v').innerHTML = Math.abs(g - pct) <= 3 ? `<div class="verdict hit">Cả phòng đoán ${g}%, máy ra ${vnd(pct, 1)}%. Phòng đoán sát.</div>` : `<div class="verdict miss">Cả phòng đoán ${g}%, máy ra ${vnd(pct, 1)}%. Lệch ${vnd(Math.abs(g - pct), 1)} điểm.</div>`;
+      btn.disabled = false; btn.textContent = 'Chạy lại'; board(); };
+    reduce ? done() : step(); };
+
+  /* ============ 02 PACKING ============ */
+  const CAP = 18, NB = 46; let boxes = [], seed2 = 31;
+  function gen2() { const r = rng(seed2); boxes = Array.from({ length: NB }, (_, i) => ({ id: i + 1, v: Math.round((1.2 + Math.pow(r(), 1.3) * 6.3) * 10) / 10 })); }
+  function nextFit(bs) { const tr = [[]]; let used = 0; bs.forEach(b => { if (used + b.v > CAP + 1e-9) { tr.push([]); used = 0; } tr[tr.length - 1].push(b); used += b.v; }); return tr; }
+  function ffd(bs) { const s = bs.slice().sort((a, b) => b.v - a.v), tr = []; s.forEach(b => { const t = tr.find(x => x.reduce((a, y) => a + y.v, 0) + b.v <= CAP + 1e-9); t ? t.push(b) : tr.push([b]); }); return tr; }
+  const lb = () => Math.ceil(boxes.reduce((a, b) => a + b.v, 0) / CAP - 1e-9);
+  function draw2(trucks, title, shown) { const c = $('c2'), g = c.getContext('2d'), Wp = c.width, n = trucks.length, top = 34, rowH = Math.min(30, (c.height - top - 10) / Math.max(n, 1) - 6), left = 70, w = Wp - left - 70;
+    g.clearRect(0, 0, Wp, c.height); g.fillStyle = css('--ink'); g.font = '700 14px Montserrat, sans-serif'; g.fillText(title, 0, 18);
+    trucks.forEach((t, i) => { const y = top + i * (rowH + 6); g.fillStyle = css('--bg'); g.strokeStyle = css('--line'); g.lineWidth = 1; g.fillRect(left, y, w, rowH); g.strokeRect(left, y, w, rowH);
+      g.fillStyle = css('--ink2'); g.font = '600 12px Montserrat, sans-serif'; g.fillText('Xe ' + (i + 1), 0, y + rowH / 2 + 4);
+      let x = left, used = 0; t.forEach((b, k) => { if (shown != null && b._ord >= shown) return; const bw = b.v / CAP * w; g.fillStyle = css('--accent'); g.globalAlpha = 0.35 + 0.55 * ((b.id * 37) % 10) / 10; g.fillRect(x + 1, y + 2, bw - 2, rowH - 4); g.globalAlpha = 1; x += bw; used += b.v; });
+      const pct = used / CAP * 100; g.fillStyle = pct < 70 ? css('--bad') : css('--ink2'); g.font = '700 12px Montserrat, sans-serif'; g.fillText(Math.round(pct) + '%', left + w + 10, y + rowH / 2 + 4); }); }
+  function chips2(naive, opt) { const box = $('g2'); box.innerHTML = ''; const lo = Math.max(lb() - 1, 1); const opts = []; for (let k = naive; k >= lo && opts.length < 5; k--) opts.push(k);
+    opts.forEach((k, i) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = k + ' xe'; b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); b.dataset.k = k; b.onclick = () => { [...box.children].forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); }; box.appendChild(b); }); }
+  function reset2() { const nf = nextFit(boxes); draw2(nf, `Cách kho đang xếp: ${nf.length} xe`); $('g2hint').textContent = `Kho đang dùng ${nf.length} xe cho 46 kiện, tổng ${vnd(boxes.reduce((a, b) => a + b.v, 0), 1)} m³.`; chips2(nf.length); $('r2big').textContent = '?'; $('r2txt').textContent = 'Bấm chạy để xem máy xếp lại 46 kiện.'; $('r2v').innerHTML = ''; $('k2a').textContent = nf.length; $('k2b').textContent = '–'; $('k2c').textContent = '–'; }
+  $('new2').onclick = () => { seed2 = Math.floor(Math.random() * 1e6); gen2(); reset2(); value[2] = null; board(); };
+  $('run2').onclick = () => { const btn = $('run2'); btn.disabled = true; const t0 = performance.now(); const nf = nextFit(boxes), op = ffd(boxes); const ms = performance.now() - t0; let ord = 0; op.forEach(t => t.forEach(b => b._ord = 0)); op.flat().sort((a, b) => b.v - a.v).forEach(b => b._ord = ord++);
+    let s = 0; btn.innerHTML = '<span class="pulse">Máy đang xếp…</span>';
+    const step = () => { draw2(op, 'Máy xếp: kiện lớn trước, vào xe đầu tiên còn chỗ', s); s += 2; if (s <= NB + 1 && !reduce) setTimeout(step, 55); else done(); };
+    const done = () => { draw2(op, `Máy xếp: ${op.length} xe (tối thiểu lý thuyết ${lb()} xe)`); const saved = nf.length - op.length, ty = saved * 4e6 * 312 / 1e9; value[2] = ty;
+      $('r2big').textContent = saved > 0 ? `−${saved} xe/ngày` : 'Không bớt được xe'; $('k2b').textContent = op.length; $('k2c').textContent = vnd(ty);
+      $('r2txt').textContent = `Máy xếp xong trong ${fms(ms)}. Mức tối thiểu lý thuyết là ${lb()} xe, nên ${op.length === lb() ? 'đây đã là số xe ít nhất có thể' : 'chỉ còn cách mức tối thiểu ' + (op.length - lb()) + ' xe'}.`;
+      const pick = +($('g2').querySelector('[aria-pressed=true]') || {}).dataset?.k; $('r2v').innerHTML = pick === op.length ? `<div class="verdict hit">Cả phòng chọn ${pick} xe. Đúng bằng số xe máy cần.</div>` : `<div class="verdict miss">Cả phòng chọn ${pick} xe, máy cần ${op.length} xe.</div>`;
+      btn.disabled = false; btn.textContent = 'Chạy lại'; board(); };
+    reduce ? done() : step(); };
+
+  /* ============ 03 INVOICES ============ */
+  const NV = 12, NI = 240; let inv = [], seed3 = 1031, flags = [];
+  const vendors = ['Nhà xe A', 'Nhà xe B', 'Nhà xe C', 'Dầu nhớt D', 'Lốp xe E', 'Kho bãi F', 'Bảo hiểm G', 'Sửa chữa H', 'Bao bì I', 'Điện nước J', 'Phần mềm K', 'Vệ sinh L'];
+  function gen3() { for (let tries = 0; tries < 20; tries++) { const r = rng(seed3 + tries * 7919); const base = vendors.map(() => 3 + r() * 25); inv = [];
+      for (let i = 0; i < NI; i++) { const v = Math.floor(r() * NV); let a = base[v] * (0.7 + r() * 0.6); a = Math.round(a * 1000) / 1000; inv.push({ v, a, day: 1 + Math.floor(r() * 30), type: null }); }
+      const pickIdx = () => Math.floor(r() * NI);
+      const nd = 2 + Math.floor(r() * 3); for (let k = 0; k < nd; k++) { const o = inv[pickIdx()]; inv[pickIdx()] = { v: o.v, a: o.a, day: Math.min(30, o.day + 1 + Math.floor(r() * 3)), type: null }; }
+      const ns = 1 + Math.floor(r() * 2); for (let k = 0; k < ns; k++) { const v = Math.floor(r() * NV), day = 1 + Math.floor(r() * 30), m = 2 + Math.floor(r() * 2); for (let j = 0; j < m; j++) inv[pickIdx()] = { v, a: Math.round((45.5 + r() * 4.2) * 1000) / 1000, day, type: null }; }
+      const no = 2 + Math.floor(r() * 2); for (let k = 0; k < no; k++) { const v = Math.floor(r() * NV); inv[pickIdx()] = { v, a: Math.round(base[v] * (5 + r() * 3) * 1000) / 1000, day: 1 + Math.floor(r() * 30), type: null }; }
+      flags = scan3(); if (flags.length >= 4) return; } }
+  function scan3() { const out = new Map(); const med = v => { const a = inv.filter(x => x.v === v && x.a < 45).map(x => x.a).sort((p, q) => p - q); return a.length ? a[Math.floor(a.length / 2)] : 1; };
+    const M = vendors.map((_, v) => med(v));
+    inv.forEach((x, i) => { for (let j = 0; j < i; j++) { const y = inv[j]; if (y.v === x.v && Math.abs(y.a - x.a) < 1e-9 && Math.abs(y.day - x.day) <= 5) { if (!out.has(i)) out.set(i, 'dup'); break; } } });
+    const groups = {}; inv.forEach((x, i) => { if (x.a >= 45 && x.a < 50) (groups[x.v + '-' + x.day] = groups[x.v + '-' + x.day] || []).push(i); }); Object.values(groups).forEach(g => { if (g.length >= 2) g.forEach(i => { if (!out.has(i)) out.set(i, 'split'); }); });
+    inv.forEach((x, i) => { if (!out.has(i) && x.a > 3.5 * M[x.v] && !(x.a >= 45 && x.a < 50)) out.set(i, 'big'); });
+    return [...out.entries()].map(([i, t]) => ({ i, t })); }
+  const colT = t => t === 'dup' ? css('--bad') : t === 'split' ? css('--warn') : css('--accent');
+  function draw3(upto, show) { const c = $('c3'), g = c.getContext('2d'), cols = 24, rows = 10, cw = c.width / cols, ch = (c.height - 20) / rows, mx = Math.max(...inv.map(x => x.a));
+    g.clearRect(0, 0, c.width, c.height); const fl = new Map(flags.map(f => [f.i, f.t]));
+    inv.forEach((x, i) => { const cx = (i % cols) * cw, cy = Math.floor(i / cols) * ch; g.fillStyle = css('--ink2'); g.globalAlpha = 0.12 + 0.55 * Math.sqrt(x.a / mx); g.fillRect(cx + 2, cy + 2, cw - 4, ch - 4); g.globalAlpha = 1;
+      if (show && fl.has(i) && i < upto) { g.strokeStyle = colT(fl.get(i)); g.lineWidth = 4; g.strokeRect(cx + 3, cy + 3, cw - 6, ch - 6); } });
+    if (upto != null && upto < NI) { const y = Math.floor(upto / cols) * ch; g.fillStyle = css('--accent'); g.globalAlpha = .18; g.fillRect(0, y, c.width, ch); g.globalAlpha = 1; } }
+  function reset3() { draw3(null, false); $('l3').innerHTML = ''; $('r3big').textContent = '?'; $('r3txt').textContent = 'Bấm chạy để máy quét 240 hoá đơn.'; $('r3v').innerHTML = ''; ['k3a', 'k3b', 'k3c'].forEach(k => $(k).textContent = '–'); }
+  $('g3').oninput = e => $('g3v').textContent = e.target.value;
+  $('new3').onclick = () => { seed3 = Math.floor(Math.random() * 1e6); gen3(); reset3(); value[3] = null; board(); };
+  $('run3').onclick = () => { const btn = $('run3'); btn.disabled = true; const t0 = performance.now(); flags = scan3(); const ms = performance.now() - t0; let u = 0; btn.innerHTML = '<span class="pulse">Máy đang quét…</span>';
+    const step = () => { draw3(u, true); u += 8; if (u <= NI && !reduce) setTimeout(step, 45); else done(); };
+    const done = () => { draw3(NI, true); const cnt = t => flags.filter(f => f.t === t).length; const total = flags.reduce((a, f) => a + inv[f.i].a, 0);
+      const dupAmt = flags.filter(f => f.t === 'dup').reduce((a, f) => a + inv[f.i].a, 0); value[3] = dupAmt * 12 / 1000;
+      $('r3big').textContent = flags.length + ' hoá đơn'; $('k3a').textContent = cnt('dup'); $('k3b').textContent = cnt('split'); $('k3c').textContent = cnt('big');
+      $('r3txt').textContent = `Máy quét 240 hoá đơn trong ${fms(ms)}. Tổng tiền cần xem lại: ${vnd(total, 1)} triệu đồng, trong đó ${vnd(dupAmt, 1)} triệu là tiền có nguy cơ trả hai lần.`;
+      const lab = { dup: 'Trùng', split: 'Chia nhỏ né ngưỡng', big: 'Lớn bất thường' };
+      $('l3').innerHTML = flags.slice().sort((a, b) => a.t.localeCompare(b.t)).map(f => { const x = inv[f.i]; return `<div><span class="dot" style="background:${colT(f.t)}"></span><span><b>${lab[f.t]}</b> · ${vendors[x.v]} · ngày ${x.day}/10</span><span>${vnd(x.a, 1)} tr</span></div>`; }).join('');
+      const g = +$('g3').value; $('r3v').innerHTML = g === flags.length ? `<div class="verdict hit">Cả phòng đoán ${g}. Đúng chính xác.</div>` : `<div class="verdict miss">Cả phòng đoán ${g}, máy tìm ra ${flags.length}.</div>`;
+      btn.disabled = false; btn.textContent = 'Chạy lại'; board(); };
+    reduce ? done() : step(); };
+
+  /* ============ BOARD ============ */
+  document.querySelectorAll('.decide button').forEach(b => b.onclick = () => { const t = b.dataset.t; vote[t] = b.dataset.v; document.querySelectorAll(`.decide button[data-t="${t}"]`).forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); board(); });
+  function board() { let done = 0;
+    [1, 2, 3].forEach(t => { const v = value[t]; $('b' + t + 'v').textContent = v == null ? 'chưa chạy' : vnd(v); $('b' + t + 'r').textContent = v == null ? '–' : (v / cost[t]).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' lần';
+      const s = $('b' + t + 's'), a = $('ag' + t); if (vote[t]) done++;
+      s.className = 'status ' + (vote[t] === 'ok' ? 'ok' : vote[t] === 'no' ? 'no' : 'wait'); s.textContent = vote[t] === 'ok' ? 'Duyệt thí điểm' : vote[t] === 'no' ? 'Hoãn' : 'Chờ';
+      a.className = vote[t] === 'ok' ? 'ok' : vote[t] === 'no' ? 'no' : ''; a.textContent = vote[t] === 'ok' ? 'Đã duyệt' : vote[t] === 'no' ? 'Hoãn' : 'Chờ biểu quyết'; });
+    $('ag4').textContent = done + '/3'; reso(done); }
+  const name = { 1: 'tối ưu tuyến giao hàng', 2: 'tối ưu xếp hàng lên xe', 3: 'quét hoá đơn bất thường' };
+  const cond = { 1: 'chạy song song tuyến cũ và tuyến mới trên 5 xe trong 30 ngày; tài xế được góp ý tuyến; đo km, giờ giao và khiếu nại của khách', 2: 'áp dụng cho ca sáng tại một kho trong 30 ngày; đo số chuyến xe, thời gian bốc hàng và lỗi giao nhầm', 3: 'máy chỉ đánh dấu, kế toán trưởng duyệt cuối; kiểm toán nội bộ rà mẫu các hoá đơn bị đánh dấu nhầm mỗi tháng' };
+  const owner = { 1: 'Trưởng đội xe', 2: 'Trưởng kho', 3: 'Kế toán trưởng' };
+  function reso(done) { const st = $('stamp'), body = $('resoBody');
+    if (done < 3) { st.className = 'stamp pending'; st.innerHTML = 'CHỜ<small>BIỂU QUYẾT ' + done + '/3</small>'; body.innerHTML = '<p class="waitnote">Nghị quyết sẽ hiện ra khi HĐQT đã biểu quyết đủ 3 tờ trình ở trên.</p>'; return; }
+    const ok = [1, 2, 3].filter(t => vote[t] === 'ok'), no = [1, 2, 3].filter(t => vote[t] === 'no');
+    const sum = ok.reduce((a, t) => a + (value[t] || 0), 0), cs = ok.reduce((a, t) => a + cost[t], 0);
+    st.className = 'stamp'; st.innerHTML = ok.length ? 'ĐÃ THÔNG QUA<small>' + ok.length + '/3 TỜ TRÌNH · MÔ PHỎNG</small>' : 'KHÔNG THÔNG QUA<small>MÔ PHỎNG</small>';
+    let html = '<p class="small" style="margin-top:12px">Căn cứ kết quả chạy thử trực tiếp tại phiên họp và ý kiến phản biện của các thành viên, Hội đồng quản trị quyết nghị:</p><ol>';
+    ok.forEach(t => { html += `<li>Duyệt thí điểm <b>${name[t]}</b>, giá trị ước tính ${value[t] == null ? 'chưa đo' : vnd(value[t]) + ' tỷ đồng/năm'}, chi phí năm đầu ${vnd(cost[t])} tỷ đồng. Điều kiện: ${cond[t]}. Người chịu trách nhiệm: ${owner[t]}.</li>`; });
+    no.forEach(t => { html += `<li>Hoãn tờ trình <b>${name[t]}</b>; đơn vị trình bổ sung trả lời câu hỏi phản biện và trình lại ở phiên họp sau.</li>`; });
+    if (ok.length) html += `<li>Tổng giá trị ước tính của các tờ trình được duyệt: <b>${vnd(sum)} tỷ đồng/năm</b> trên chi phí năm đầu ${vnd(cs)} tỷ đồng. Giám đốc tài chính báo cáo kết quả thí điểm sau 30 ngày; chỉ mở rộng khi giá trị đo được đạt ít nhất một nửa mức ước tính.</li>`;
+    html += '<li>Một thành viên HĐQT bảo lưu ý kiến: đề nghị đo cả tác động tới khách hàng và người lao động, không chỉ chi phí.</li></ol>';
+    body.innerHTML = html; }
+
+  gen1(); reset1(); for (let k = 0; k < 400; k++) { gen2(); if (nextFit(boxes).length - ffd(boxes).length >= 2) break; seed2++; } reset2(); gen3(); reset3(); board();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { draw1(best); const nf = nextFit(boxes); draw2(nf, `Cách kho đang xếp: ${nf.length} xe`); draw3(null, false); });
+  const mq = window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener && mq.addEventListener('change', () => { reset1(); reset2(); reset3(); });
+})();
+</script>
+</body></html>
