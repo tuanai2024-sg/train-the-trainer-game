@@ -231,6 +231,84 @@ footer { padding-block: 28px 40px; font-size: 12px; color: var(--mute); }
 .roles2 div { background: var(--bg); border-radius: var(--r); padding: 16px; display: grid; gap: 6px; align-content: start; }
 .roles2 b { font-size: 16px; } .roles2 .stat { font-size: 30px; font-weight: 800; color: var(--good); }
 @media (max-width: 820px) { .crit, .rungs, .roles2 { grid-template-columns: minmax(0, 1fr); } .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } .rung { min-height: 0 !important; } }
+
+.agenda .aglist { display: grid; gap: 10px; }
+.own { color: var(--accent); font-weight: 700; margin-left: 6px; }
+.back { display: inline-block; margin-top: 18px; color: var(--cyan); font-weight: 700; text-decoration: none; }
+.back:hover, .own:hover { text-decoration: underline; }
+:root { --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+.ctrl { background: var(--navy); color: var(--onnavy); border-top: 1px solid rgba(255,255,255,.08); }
+.ctrl .wrap { padding-block: 30px 34px; display: grid; gap: 18px; }
+.ctrl-h { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
+.ctrl .kicker { color: var(--cyan); }
+.ctrl h2 { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; margin-top: 6px; }
+.ctrl .small { color: var(--onnavy2); margin-top: 8px; max-width: 70ch; }
+.runall { background: var(--cyan); color: #04121C; font-size: 17px; padding: 16px 24px; }
+.crit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.cr { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.cr span { font-size: 12px; font-weight: 700; color: var(--onnavy2); }
+.cr b { font-size: 34px; font-weight: 800; color: var(--onnavy); line-height: 1.1; }
+.cr small { font-size: 12px; color: var(--onnavy2); }
+.meter { position: relative; height: 8px; background: rgba(255,255,255,.14); border-radius: 99px; overflow: visible; }
+.meter i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--cyan); border-radius: 99px; transition: width .6s ease; }
+.meter em { position: absolute; left: 90%; top: -4px; width: 2px; height: 16px; background: var(--onnavy); }
+.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.tile { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 10px; align-items: center; text-decoration: none; color: var(--onnavy); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: var(--r); padding: 10px 12px; }
+.tile b { color: var(--cyan); font-size: 15px; grid-row: span 2; }
+.tile span { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ag-st { font-style: normal; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 99px; justify-self: start; white-space: nowrap; }
+.ag-st.idle { background: rgba(127,140,155,.25); color: var(--mute); }
+.ag-st.run { background: var(--accent); color: #fff; animation: pulse 1.2s ease-in-out infinite; }
+.ag-st.wait { background: var(--warn); color: #fff; }
+.ag-st.bad { background: var(--bad); color: #fff; }
+.ag-st.ok { background: var(--good); color: #fff; }
+.ctrl .ag-st.idle { color: var(--onnavy2); }
+.feed { font-family: var(--mono); font-size: 12.5px; line-height: 1.6; background: rgba(0,0,0,.25); border-radius: var(--r); padding: 12px 14px; max-height: 150px; overflow-y: auto; color: var(--onnavy2); }
+.feed .ln i, .console .ln i { font-style: normal; color: var(--cyan); margin-right: 6px; }
+.feed b, .console b { color: var(--onnavy); }
+.ln.dim { opacity: .7; } .ln.warn { color: #FFB27A; }
+.agent { margin-top: 22px; border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; display: grid; gap: 12px; }
+.ag-top { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.ag-top b { font-size: 16px; }
+.ag-src { font-size: 13px; color: var(--ink2); }
+.ag-top .ag-st { margin-left: auto; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; counter-reset: s; }
+.steps li { counter-increment: s; font-size: 12px; font-weight: 700; color: var(--mute); background: var(--paper); border-radius: var(--r); padding: 8px 10px; position: relative; }
+.steps li::before { content: counter(s); display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--line); color: var(--ink2); font-size: 11px; margin-right: 6px; }
+.steps li.on { background: var(--tint); color: var(--accent); } .steps li.on::before { background: var(--accent); color: #fff; }
+.steps li.done { color: var(--good); } .steps li.done::before { content: '✓'; background: var(--good); color: #fff; }
+.console { font-family: var(--mono); font-size: 12.5px; line-height: 1.65; background: var(--navy); color: var(--onnavy2); border-radius: var(--r); padding: 12px 14px; min-height: 92px; max-height: 230px; overflow-y: auto; }
+.console .tool { color: var(--cyan); } .console .ok { color: #3DDC97; font-weight: 700; } .console .bad { color: #FF6B7F; font-weight: 700; }
+.hil { font-size: 13px; color: var(--ink2); }
+.ladder { background: var(--paper); }
+.ladder .wrap { padding-block: 48px; display: grid; gap: 18px; }
+.ladder h2 { font-size: clamp(22px, 2.8vw, 30px); font-weight: 800; }
+.rungs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: end; }
+.rung { text-align: left; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 6px; }
+.rung:nth-child(1) { min-height: 120px; } .rung:nth-child(2) { min-height: 150px; } .rung:nth-child(3) { min-height: 180px; } .rung:nth-child(4) { min-height: 210px; }
+.rung b { font-size: 28px; color: var(--accent); line-height: 1; } .rung strong { font-size: 15px; } .rung span { font-size: 13px; color: var(--ink2); }
+.rung[aria-pressed=true] { border: 2px solid var(--accent); background: var(--tint); }
+.next { background: var(--bg); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: var(--r); }
+.roles2 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.roles2 div { background: var(--bg); border-radius: var(--r); padding: 16px; display: grid; gap: 6px; align-content: start; }
+.roles2 b { font-size: 16px; } .roles2 .stat { font-size: 30px; font-weight: 800; color: var(--good); }
+.ba { margin-top: 22px; border: 1px solid var(--line); border-radius: var(--r); padding: 18px 20px; display: grid; gap: 12px; }
+.ba .tag { font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: .04em; }
+.ba h3 { font-size: 18px; font-weight: 800; margin-top: -4px; }
+.ba .tablewrap { margin-top: 0; }
+.batab { min-width: 520px; }
+td.r, th.r { text-align: right; white-space: nowrap; }
+td.up { color: var(--good); font-weight: 800; } td.down { color: var(--bad); font-weight: 800; }
+.gc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.gc > div { border-radius: var(--r); padding: 14px 16px; }
+.gain { background: var(--goodbg); } .cost { background: var(--badbg); }
+.gc h4 { margin: 0 0 6px; font-size: 14px; } .gain h4 { color: var(--good); } .cost h4 { color: var(--bad); }
+.gc ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; }
+.fixl { font-size: 14px; color: var(--ink2); }
+.sumh { font-size: 17px; font-weight: 800; margin-top: 26px; }
+tfoot td { background: var(--paper); border-top: 2px solid var(--line); }
+@media (max-width: 820px) { .gc { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 820px) { .crit, .rungs, .roles2 { grid-template-columns: minmax(0, 1fr); } .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } .rung { min-height: 0 !important; } }
 </style></head><body><header class="hero"><div class="wrap"><div><div class="clock" id="clock">07:42</div><h1>Tờ trình 10: Agent Điều phối chiều về</h1><p class="lede">Ghép hàng chiều về. Hai lãnh đạo cãi nhau, cả phòng đoán trước. Agent lấy dữ liệu, chạy, tự kiểm tra ngay trên màn hình. Finance chỉ ra con số nào là tiền thật. Con người ký.</p>
 <p class="meta">Vertex SCS (công ty mô phỏng) · Phiên họp mô phỏng phục vụ workshop The 2:47 Files · Mọi phép tính chạy trực tiếp trong trình duyệt</p><a class="back" href="index.html">← Xem cả 10 tờ trình trong một phiên họp</a></div>
 <nav class="agenda" aria-label="Chương trình phiên họp"><div class="lbl">CHƯƠNG TRÌNH</div><div class="aglist" id="agendaList"></div></nav></div></header>
@@ -250,7 +328,10 @@ footer { padding-block: 28px 40px; font-size: 12px; color: var(--mute); }
 <div id="sections"></div>
 <section class="board" id="board"><div class="wrap">
   <div class="head"><div class="num">✓</div><div><div class="kicker">Biểu quyết</div><h2>HĐQT duyệt tờ trình nào, với điều kiện gì?</h2>
-    <p class="sub">Giá trị mỗi năm lấy từ kết quả máy vừa chạy, theo cách tính đang chọn ở ô "Phần của Finance". Chi phí năm đầu là giả định, gần như toàn bộ là OPEX.</p></div></div>
+    <p class="sub">Trước và sau, lợi ích và đánh đổi của từng agent tính từ chính lần chạy. Giá trị trong bảng biểu quyết theo cách tính đang chọn ở ô "Phần của Finance". Chi phí năm đầu là giả định, gần như toàn bộ là OPEX.</p></div></div>
+  <h3 class="sumh">Trước và sau: bức tranh của cả phòng</h3>
+  <div class="tablewrap"><table><thead><tr><th>Tờ trình</th><th>Chỉ số chính</th><th style="text-align:right">Trước</th><th style="text-align:right">Sau</th><th style="text-align:right">Lợi ích/năm (tỷ), cách tính Finance</th><th>Đánh đổi chính phải quản lý</th></tr></thead><tbody id="baSum"></tbody><tfoot id="baFoot"></tfoot></table></div>
+  <h3 class="sumh">Biểu quyết</h3>
   <div class="tablewrap"><table><thead><tr><th>Tờ trình</th><th style="text-align:right">Giá trị/năm (tỷ)</th><th style="text-align:right">Chi phí năm đầu (tỷ)</th><th style="text-align:right">ROI</th><th>Câu hỏi phản biện của HĐQT</th><th>Quyết định</th></tr></thead><tbody id="boardBody"></tbody></table></div>
   <div class="reso"><div class="stamp pending" id="stamp">CHỜ<small>BIỂU QUYẾT</small></div>
     <div class="doc-h"><b>CÔNG TY CỔ PHẦN VERTEX SCS (MÔ PHỎNG)</b><span class="small">Số: 01/2026/NQ-HĐQT · Ngày 31 tháng 10 năm 2026</span></div>
@@ -325,6 +406,7 @@ function boot(ids, single) {
     <ol class="steps" id="sp${n}">${STEPS.map(s => `<li>${s}</li>`).join('')}</ol>
     <div class="console" id="lg${n}" role="log" aria-live="polite"><div class="ln dim">Agent đang chờ yêu cầu từ ${esc(m.from)}.</div></div>
     <p class="hil">Người trong vòng lặp: <b>${esc(m.reviewer)}</b> quyết định thế nào là đúng và ký trước khi trình HĐQT. Agent không tự duyệt cho mình.</p></div>
+  <div class="ba"><div class="tag">TRƯỚC VÀ SAU</div><h3>Được gì, đánh đổi gì</h3><div id="ba${n}"><p class="small">Giao việc cho ${esc(m.name)} để thấy trước và sau, kèm cái được và cái phải đánh đổi, tính từ chính lần chạy.</p></div></div>
   <div class="fin"><div class="tag">PHẦN CỦA FINANCE</div><h3>${esc(d.fin.h)}</h3><div class="opts"><button class="opt wrong" data-n="${n}" data-m="wrong" aria-pressed="false"><b>${esc(d.fin.wrong[0])}</b><span>${esc(d.fin.wrong[1])}</span><em id="fw${n}">–</em></button><button class="opt right" data-n="${n}" data-m="right" aria-pressed="true"><b>${esc(d.fin.right[0])}</b><span>${esc(d.fin.right[1])}</span><em id="fr${n}">–</em></button></div><p class="why">${d.fin.why}</p></div>
   <div class="twist"><div class="q">?</div><p>${esc(d.twist[0])}<small>${esc(d.twist[1])}</small></p></div>
   <div class="decide"><span class="lbl">Agent đề xuất, người ký · HĐQT biểu quyết tờ trình ${no}:</span><button class="yes" data-n="${n}" data-v="ok" aria-pressed="false">Duyệt thí điểm</button><button class="hold" data-n="${n}" data-v="no" aria-pressed="false">Hoãn</button></div>
@@ -347,8 +429,8 @@ function boot(ids, single) {
       verdict(hit, t) { H$('vd' + n).innerHTML = `<div class="verdict ${hit ? 'hit' : 'miss'}">${esc(t)} ${hit ? 'Phòng đoán sát.' : 'Phòng đoán lệch.'}</div>`; },
       kpi(i, t) { H$('kp' + n + '-' + i).textContent = t; }, list(h) { const e = H$('ls' + n); if (e) e.innerHTML = h; },
       anim(count, stepFn, done, delay = 80) { if (REDUCE) { done(); return; } let i = 0; const go = () => { stepFn(i); i++; if (i < count) setTimeout(go, delay); else setTimeout(done, delay); }; go(); },
-      done(base, checks) { st.base = base; st.checks = checks || []; st.ran = true; finUpdate(n); if (st.resolve) { const r = st.resolve; st.resolve = null; r(); } } };
-    const resetUI = () => { api.big('?'); api.txt('Agent đang chờ việc.'); H$('vd' + n).innerHTML = ''; d.kpis.forEach((_, i) => api.kpi(i, '–')); api.list(''); st.base = null; st.checks = null; st.ran = false; finUpdate(n); step(n, -1); status(n, 'idle', 'Chưa chạy'); };
+      done(base, checks, ba) { st.base = base; st.checks = checks || []; st.ba = ba || null; st.ran = true; finUpdate(n); renderBA(n); if (st.resolve) { const r = st.resolve; st.resolve = null; r(); } } };
+    const resetUI = () => { api.big('?'); api.txt('Agent đang chờ việc.'); H$('vd' + n).innerHTML = ''; d.kpis.forEach((_, i) => api.kpi(i, '–')); api.list(''); st.base = null; st.checks = null; st.ba = null; st.ran = false; finUpdate(n); renderBA(n); step(n, -1); status(n, 'idle', 'Chưa chạy'); };
     if (d.guess.type === 'range') H$('g' + n).oninput = e => H$('gv' + n).textContent = e.target.value;
     H$('rn' + n).onclick = () => runCase(n);
     H$('nw' + n).onclick = () => { if (st.busy) return; st.seed = Math.floor(Math.random() * 1e6); resetUI(); d.init(api, false); log(n, `Dữ liệu mới được nạp từ ${esc(m.source)}. Kết quả cũ đã xoá.`, 'dim'); board(); };
@@ -375,6 +457,18 @@ function boot(ids, single) {
     for (let n = 1; n <= N; n++) { b.innerHTML = `<span class="pulse">Đang chạy agent ${n}/${N}…</span>`; await runCase(n); }
     feed(`<b>${N} agent đã xong.</b> ${N > 1 ? 'Tất cả tờ trình đang chờ người ký và HĐQT biểu quyết.' : 'Tờ trình đang chờ người ký.'}`); b.disabled = false; b.textContent = N > 1 ? `Chạy lại cả ${N} agent` : 'Giao việc lại'; };
 
+  function renderBA(n) { const d = defs[n - 1], st = S[n], box = H$('ba' + n), m = meta(d); if (!box) return;
+    if (!st.ba) { box.innerHTML = `<p class="small">Giao việc cho ${esc(m.name)} để thấy trước và sau, kèm cái được và cái phải đánh đổi, tính từ chính lần chạy.</p>`; return; }
+    const v = st.base ? d.fin.calc(st.base, 'right') : 0, cls = g => g === true ? 'up' : g === false ? 'down' : '';
+    const gains = [`Giá trị ${vnd(v)} tỷ đồng/năm theo cách tính của Finance, ROI khoảng ${(v / d.cost).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} lần`].concat(st.ba.gains);
+    const costs = [`Chi phí năm đầu ${vnd(d.cost)} tỷ đồng, phần lớn là OPEX (giấy phép, thời gian người dựng và kiểm)`].concat(st.ba.costs);
+    box.innerHTML = `<div class="tablewrap"><table class="batab"><thead><tr><th>Chỉ số</th><th class="r">Trước: cách cũ</th><th class="r">Sau: có agent</th><th class="r">Thay đổi</th></tr></thead><tbody>${st.ba.rows.map(r => `<tr><td>${esc(r[0])}</td><td class="r">${esc(r[1])}</td><td class="r"><b>${esc(r[2])}</b></td><td class="r ${cls(r[4])}">${esc(r[3])}</td></tr>`).join('')}</tbody></table></div>
+      <div class="gc"><div class="gain"><h4>Được gì</h4><ul>${gains.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div><div class="cost"><h4>Đánh đổi gì</h4><ul>${costs.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div></div>
+      <p class="fixl"><b>Cách giảm đánh đổi:</b> ${esc(st.ba.fix)}</p>`; }
+  function summary() { const body = H$('baSum'), foot = H$('baFoot'); if (!body) return; let tv = 0, tc = 0, nr = 0, nt = 0;
+    body.innerHTML = defs.map((d, k) => { const n = k + 1, st = S[n]; if (!st.ba) return `<tr><td><b>${num(k)} · ${esc(d.short)}</b></td><td colspan="5" class="small">Chưa chạy</td></tr>`; const r = st.ba.rows[0], v = d.fin.calc(st.base || {}, 'right') || 0; tv += v; tc += d.cost; nr++; nt += st.ba.costs.length + 1;
+      return `<tr><td><b>${num(k)} · ${esc(d.short)}</b></td><td>${esc(r[0])}</td><td class="r">${esc(r[1])}</td><td class="r"><b>${esc(r[2])}</b></td><td class="r up">${vnd(v)}</td><td>${esc(st.ba.costs[0])}</td></tr>`; }).join('');
+    foot.innerHTML = nr ? `<tr><td colspan="4"><b>Cộng ${nr} agent đã chạy</b></td><td class="r"><b>${vnd(tv)}</b></td><td>Chi phí năm đầu ${vnd(tc)} tỷ · ${nt} điểm đánh đổi phải quản lý · lợi ích ròng khoảng <b>${vnd(tv - tc)} tỷ/năm</b></td></tr>` : ''; }
   function finUpdate(n) { const d = defs[n - 1], st = S[n]; if (!st.base) { H$('fw' + n).textContent = '–'; H$('fr' + n).textContent = '–'; st.value = null; if (d.kpis[2] === 'tỷ đồng/năm') H$('kp' + n + '-2').textContent = '–'; return; }
     H$('fw' + n).textContent = vnd(d.fin.calc(st.base, 'wrong')) + ' tỷ/năm'; H$('fr' + n).textContent = vnd(d.fin.calc(st.base, 'right')) + ' tỷ/năm'; st.value = d.fin.calc(st.base, st.method); if (d.kpis[2] === 'tỷ đồng/năm') H$('kp' + n + '-2').textContent = vnd(st.value); }
   document.querySelectorAll('.fin .opt').forEach(o => o.onclick = () => { const n = +o.dataset.n; S[n].method = o.dataset.m; document.querySelectorAll(`.fin .opt[data-n="${n}"]`).forEach(x => x.setAttribute('aria-pressed', x === o ? 'true' : 'false')); finUpdate(n); board(); });
@@ -388,7 +482,7 @@ function boot(ids, single) {
       H$('br' + n).textContent = v == null ? '–' : (v / d.cost).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' lần';
       const s = H$('bs' + n), a = H$('ag-' + d.id); s.className = 'status ' + (st.vote === 'ok' ? 'ok' : st.vote === 'no' ? 'no' : 'wait'); s.textContent = st.vote === 'ok' ? 'Duyệt thí điểm' : st.vote === 'no' ? 'Hoãn' : 'Chờ';
       a.className = st.vote === 'ok' ? 'ok' : st.vote === 'no' ? 'no' : ''; a.textContent = st.vote === 'ok' ? 'Đã duyệt' : st.vote === 'no' ? 'Hoãn' : 'Chờ'; });
-    H$('ag-all').textContent = done + '/' + N; crit(); reso(done); }
+    H$('ag-all').textContent = done + '/' + N; crit(); summary(); reso(done); }
 
   function crit() { const all = defs.map((d, k) => ({ d, st: S[k + 1] })), tot = all.reduce((a, x) => a + meta(x.d).hours, 0), app = all.filter(x => x.st.vote === 'ok' && x.st.ran).reduce((a, x) => a + meta(x.d).hours * 0.9, 0), pct = tot ? app / tot * 100 : 0;
     const ran = all.filter(x => x.st.ran).length, signed = all.filter(x => x.st.ran && x.st.vote).length, chk = all.filter(x => x.st.checks).flatMap(x => x.st.checks), pass = chk.filter(c => c[1]).length;
@@ -474,7 +568,11 @@ CASES.route = (() => { const W = 24, H = 16, N = 18; let pts = [], habit = [];
       api.anim(frames.length, i => { draw(api, frames[i]); api.big('−' + api.vnd((1 - len(frames[i]) / L0) * 100, 1) + '%'); }, () => {
         draw(api, t); const kmDay = (L0 - L1) * 40; api.big('−' + api.vnd(pct, 1) + '%'); api.kpi(0, api.vnd(L0, 1)); api.kpi(1, api.vnd(L1, 1));
         api.txt(`Máy xét ${checks.toLocaleString('vi-VN')} cách đảo tuyến, xong trong ${api.fms(ms)}. Phần chạy chậm là phát lại để cả phòng xem. Với 40 xe, mỗi ngày bớt ${api.vnd(kmDay, 0)} km.`);
-        const g = api.guess(); api.verdict(Math.abs(g - pct) <= 3, `Cả phòng đoán ${g}%, máy ra ${api.vnd(pct, 1)}%.`); api.done({ kmDay }, [['Mỗi điểm được giao đúng 1 lần', new Set(t).size === t.length && t.length === N + 1], ['Tuyến bắt đầu và kết thúc ở kho', t[0] === 0], ['Tuyến mới không dài hơn tuyến cũ', L1 <= L0 + 1e-9]]); }); } };
+        const g = api.guess(); api.verdict(Math.abs(g - pct) <= 3, `Cả phòng đoán ${g}%, máy ra ${api.vnd(pct, 1)}%.`); const ek = (a, b) => a < b ? a + '-' + b : b + '-' + a, oldE = new Set(habit.map((v, i) => ek(v, habit[(i + 1) % habit.length]))), newE = t.filter((v, i) => !oldE.has(ek(v, t[(i + 1) % t.length]))).length, mins = L => L / 25 * 60 + N * 6;
+        const ba = { rows: [['Km mỗi tuyến', api.vnd(L0, 1), api.vnd(L1, 1), '−' + api.vnd(pct, 1) + '%', true], ['Thời gian mỗi tuyến, phút (25 km/h, 6 phút mỗi điểm)', api.vnd(mins(L0), 0), api.vnd(mins(L1), 0), '−' + api.vnd(mins(L0) - mins(L1), 0) + ' phút', true], ['Km cả đội mỗi năm, nghìn km', api.vnd(L0 * 40 * 312 / 1000, 0), api.vnd(L1 * 40 * 312 / 1000, 0), '−' + api.vnd(kmDay * 312 / 1000, 0), true]],
+          gains: [`Mỗi xe về sớm khoảng ${api.vnd(mins(L0) - mins(L1), 0)} phút, có thể nhận thêm đơn trong ngày`, 'Ít km hơn là ít nhiên liệu, ít hao mòn và ít khí thải'],
+          costs: [`${newE}/${t.length} chặng là đường mới với tài xế: tuần đầu dễ chậm và bị phản đối`, 'Tuyến ngắn nhất chưa xét khung giờ khách hẹn: có thể có điểm giao trễ giờ', 'Toạ độ điểm giao sai thì tuyến sai: cần làm sạch dữ liệu địa chỉ'],
+          fix: 'Chạy song song 2 tuần trên 5 xe, cho tài xế sửa tuyến và ghi lý do; thêm khung giờ giao hàng vào bài toán ở giai đoạn 2.' }; api.done({ kmDay }, [['Mỗi điểm được giao đúng 1 lần', new Set(t).size === t.length && t.length === N + 1], ['Tuyến bắt đầu và kết thúc ở kho', t[0] === 0], ['Tuyến mới không dài hơn tuyến cũ', L1 <= L0 + 1e-9]], ba); }); } };
 })();
 
 /* ---------- 02 PACKING ---------- */
@@ -511,7 +609,11 @@ CASES.pack = (() => { const CAP = 18, NB = 46; let boxes = [];
         draw(api, op, `Máy xếp: ${op.length} xe (tối thiểu lý thuyết ${lb()} xe)`); const saved = nf.length - op.length;
         api.big(saved > 0 ? `−${saved} xe/ngày` : 'Không bớt được xe'); api.kpi(1, op.length);
         api.txt(`Máy xếp xong trong ${api.fms(ms)}. Mức tối thiểu lý thuyết là ${lb()} xe, nên ${op.length === lb() ? 'đây đã là số xe ít nhất có thể' : 'chỉ còn cách mức tối thiểu ' + (op.length - lb()) + ' xe'}.`);
-        const g = api.guess(); api.verdict(g === op.length, `Cả phòng chọn ${g} xe, máy cần ${op.length} xe.`); api.done(saved > 0 ? { saved } : null, [['Không xe nào chở quá 18 m³', op.every(tk => tk.reduce((a, b) => a + b.v, 0) <= CAP + 1e-9)], ['Đủ 46 kiện, không sót kiện nào', op.flat().length === NB], ['Số xe không thấp hơn mức tối thiểu lý thuyết', op.length >= lb()]]); }, 55); } };
+        const g = api.guess(); api.verdict(g === op.length, `Cả phòng chọn ${g} xe, máy cần ${op.length} xe.`); const vol = boxes.reduce((a, b) => a + b.v, 0), f0 = vol / (nf.length * CAP) * 100, f1 = vol / (op.length * CAP) * 100, k0 = NB / nf.length, k1 = NB / op.length;
+        const ba = { rows: [['Số xe mỗi ngày', nf.length, op.length, saved > 0 ? '−' + saved + ' xe' : 'không đổi', saved > 0], ['Độ đầy trung bình của xe', api.vnd(f0, 0) + '%', api.vnd(f1, 0) + '%', '+' + api.vnd(f1 - f0, 0) + ' điểm %', true], ['Kiện mỗi xe, trung bình', api.vnd(k0, 1), api.vnd(k1, 1), '+' + api.vnd(k1 - k0, 1), false]],
+          gains: [`Bớt ${saved} chuyến xe mỗi ngày`, `Xe đầy hơn: từ ${api.vnd(f0, 0)}% lên ${api.vnd(f1, 0)}% sức chứa`],
+          costs: [`Mỗi xe chở trung bình ${api.vnd(k1, 1)} kiện thay vì ${api.vnd(k0, 1)}: thêm điểm dỡ, chuyến dài hơn`, 'Kho bốc theo thứ tự kiện lớn trước, không theo thứ tự đơn: dễ nhầm nếu nhãn không rõ', 'Xe nhà nằm không chỉ thành tiền khi bán bớt hoặc thôi thuê ngoài (Hồ sơ 08)'],
+          fix: 'Dán nhãn theo xe và điểm dỡ; ở giai đoạn 2 ghép bài toán xếp xe với bài toán tuyến đường.' }; api.done(saved > 0 ? { saved } : null, [['Không xe nào chở quá 18 m³', op.every(tk => tk.reduce((a, b) => a + b.v, 0) <= CAP + 1e-9)], ['Đủ 46 kiện, không sót kiện nào', op.flat().length === NB], ['Số xe không thấp hơn mức tối thiểu lý thuyết', op.length >= lb()]], ba); }, 55); } };
 })();
 
 /* ---------- 03 INVOICES ---------- */
@@ -556,7 +658,11 @@ CASES.inv = (() => { const NV = 12, NI = 240; let inv = [], flags = [];
         api.list(flags.slice().sort((a, b) => a.t.localeCompare(b.t)).map(f => { const x = inv[f.i]; return `<div><span class="dot" style="background:${colT(api, f.t)}"></span><span><b>${lab[f.t]}</b> · ${vendors[x.v]} · ngày ${x.day}/10</span><span>${api.vnd(x.a, 1)} tr</span></div>`; }).join(''));
         const g = api.guess(); api.verdict(g === flags.length, `Cả phòng đoán ${g}, máy tìm ra ${flags.length}.`); const fl = new Set(flags.map(f => f.i)), live = (x, i) => x.inj === 'dup' ? (inv[x.src] && inv[x.src].v === x.v && inv[x.src].a === x.a && !inv[x.src].inj) : x.inj === 'split' ? inv.filter(y => y.inj === 'split' && y.v === x.v && y.day === x.day).length >= 2 : !!x.inj;
         const known = inv.map((x, i) => [x, i]).filter(([x, i]) => live(x, i)), found = known.filter(([x, i]) => fl.has(i) || (x.inj === 'dup' && fl.has(x.src))).length, srcs = new Set(known.filter(([x]) => x.inj === 'dup').map(([x]) => x.src)), fp = flags.filter(f => !inv[f.i].inj && !srcs.has(f.i)).length;
-        api.done({ dup, total, n: flags.length }, [[`Kỳ đã đóng: bắt được ${found}/${known.length} bất thường đã biết`, found === known.length], [`Không đánh dấu nhầm hoá đơn hợp lệ (${fp} nhầm)`, fp === 0], ['Mỗi hoá đơn bị đánh dấu có ghi lý do', flags.every(f => !!f.t)]]); }, 45); } };
+        const hrsR = flags.length * 0.5;
+        const ba = { rows: [['Hoá đơn bị đánh dấu', '0', flags.length, '+' + flags.length, null], ['Tiền có nguy cơ trả hai lần, triệu', 'không thấy', api.vnd(dup, 1), 'được chặn', true], ['Giờ rà soát thêm mỗi tháng', '0', api.vnd(hrsR, 1), '+' + api.vnd(hrsR, 1) + ' giờ', false]],
+          gains: ['Chặn tiền trả trùng trước khi chuyển khoản, thay vì đòi lại sau', 'Thấy được hoá đơn chia nhỏ để né ngưỡng duyệt: dấu hiệu gian lận mà kiểm tay khó thấy'],
+          costs: [`${fp} hoá đơn hợp lệ bị đánh dấu nhầm: tốn thời gian giải thích với nhà cung cấp`, `Thêm ${api.vnd(hrsR, 1)} giờ rà soát mỗi tháng`, 'Phòng kế toán có thể thấy bị nghi ngờ nếu truyền thông không khéo'],
+          fix: 'Chỉ chặn thanh toán khi trùng; các dấu hiệu khác chỉ cảnh báo. Mỗi tháng rà mẫu các đánh dấu nhầm để chỉnh quy tắc.' }; api.done({ dup, total, n: flags.length }, [[`Kỳ đã đóng: bắt được ${found}/${known.length} bất thường đã biết`, found === known.length], [`Không đánh dấu nhầm hoá đơn hợp lệ (${fp} nhầm)`, fp === 0], ['Mỗi hoá đơn bị đánh dấu có ghi lý do', flags.every(f => !!f.t)]], ba); }, 45); } };
 })();
 
 /* ---------- 04 FORECAST ---------- */
@@ -592,7 +698,11 @@ CASES.fc = (() => { let y = [], base = [], best = null, tried = [];
       const mb = mape(base), mm = mape(bs.f); best = bs.f;
       api.anim(26, i => draw(api, tried.slice(0, i * 5)), () => { draw(api, tried.filter((_, i) => i % 9 === 0), bs.f); api.big(api.vnd(mm, 1) + '% sai số'); api.kpi(0, api.vnd(mb, 1)); api.kpi(1, api.vnd(mm, 1));
         api.txt(`Máy thử 125 bộ tham số trong ${api.fms(ms)}, chọn bộ khớp quá khứ tốt nhất (α ${bs.a}, β ${bs.b}, γ ${bs.gm}). Cách cũ sai trung bình ${api.vnd(mb, 1)}%, máy còn ${api.vnd(mm, 1)}%. Máy bắt được mùa cao điểm trước Tết; đường thẳng của kinh doanh thì không.`);
-        const g = api.guess(); api.verdict(Math.abs(g - mm) <= 2, `Cả phòng đoán ${g}%, máy sai ${api.vnd(mm, 1)}%.`); const av = bs.f.reduce((a, b) => a + b, 0) / 12; api.done({ mb, mm }, [[`Kiểm trên 12 tháng đã đóng: sai ${api.vnd(mm, 1)}%, cách cũ ${api.vnd(mb, 1)}%`, mm < mb], ['Bắt được mùa cao điểm trước Tết', (bs.f[0] + bs.f[1]) / 2 > av], ['Không có tháng nào dự báo âm', bs.f.every(v => v > 0)]]); }, 90); } };
+        const g = api.guess(); api.verdict(Math.abs(g - mm) <= 2, `Cả phòng đoán ${g}%, máy sai ${api.vnd(mm, 1)}%.`); const av = bs.f.reduce((a, b) => a + b, 0) / 12; const worse = bs.f.filter((v, h) => Math.abs(v - y[24 + h]) > Math.abs(base[h] - y[24 + h])).length, ss1 = 20 * mm / mb;
+        const ba = { rows: [['Sai số dự báo trung bình', api.vnd(mb, 1) + '%', api.vnd(mm, 1) + '%', (mm < mb ? '−' : '+') + api.vnd(Math.abs(mb - mm), 1) + ' điểm %', mm < mb], ['Tháng dự báo sát hơn cách cũ', '–', `${12 - worse}/12`, '', null], ['Tồn kho an toàn cần giữ, tỷ (ước)', '20,0', api.vnd(ss1, 1), '−' + api.vnd(20 - ss1, 1) + ' tỷ, một lần', true]],
+          gains: ['Bắt được mùa cao điểm trước Tết: ít thiếu vật tư, ít xe nằm bãi', `Tồn kho an toàn giảm khoảng ${api.vnd(20 - ss1, 1)} tỷ: tiền mặt về một lần`],
+          costs: [`Có ${worse}/12 tháng máy sai nhiều hơn cách cũ`, 'Cần dữ liệu 24 tháng sạch và chạy lại mỗi tháng', 'Mô hình học từ quá khứ: gặp cú sốc mới thì vẫn sai, cần người điều chỉnh'],
+          fix: 'Kinh doanh vẫn được điều chỉnh dự báo nhưng phải ghi lý do; mỗi tháng so sai số của máy và của người.' }; api.done({ mb, mm }, [[`Kiểm trên 12 tháng đã đóng: sai ${api.vnd(mm, 1)}%, cách cũ ${api.vnd(mb, 1)}%`, mm < mb], ['Bắt được mùa cao điểm trước Tết', (bs.f[0] + bs.f[1]) / 2 > av], ['Không có tháng nào dự báo âm', bs.f.every(v => v > 0)]], ba); }, 90); } };
 })();
 
 /* ---------- 05 COLLECTIONS ---------- */
@@ -624,7 +734,11 @@ CASES.ar = (() => { let cs = [], selB = [], selM = [];
     exec(api) { const t0 = performance.now(); selM = cs.slice().sort((a, b) => b.amt * b.up - a.amt * a.up).slice(0, 15).map(c => c.i); const ms = performance.now() - t0, iB = inc(selB), iM = inc(selM), pct = (iM / iB - 1) * 100;
       api.anim(16, i => draw(api, i), () => { draw(api); api.big('+' + api.vnd(pct, 0) + '% tiền thu thêm'); api.kpi(0, api.vnd(iB, 0)); api.kpi(1, api.vnd(iM, 0));
         api.txt(`Máy xếp hạng 60 khách trong ${api.fms(ms)}. Cách cũ dồn cuộc gọi vào khách nợ quá lâu, gọi cũng ít tác dụng. Máy chọn khách mà cuộc gọi làm thay đổi kết quả nhiều nhất: thu thêm ${api.vnd(iM, 0)} triệu so với ${api.vnd(iB, 0)} triệu trong đợt gọi này.`);
-        const g = api.guess(); api.verdict(Math.abs(g - pct) <= Math.max(20, pct * .15), `Cả phòng đoán +${g}%, máy ra +${api.vnd(pct, 0)}%.`); api.done({ incB: iB, incM: iM, grossM: gross(selM) }, [['Đúng 15 khách, không trùng', new Set(selM).size === 15], ['Danh sách mới thu thêm không ít hơn cách cũ', iM >= iB], ['Mỗi khách được chọn có tiền thu thêm dự kiến > 0', selM.every(i => cs[i].up > 0)]]); }, 110); } };
+        const g = api.guess(); api.verdict(Math.abs(g - pct) <= Math.max(20, pct * .15), `Cả phòng đoán +${g}%, máy ra +${api.vnd(pct, 0)}%.`); const avgD = q => q.reduce((a, i) => a + cs[i].days, 0) / q.length, old = q => q.filter(i => cs[i].days > 120).length, skipped = selB.filter(i => !selM.includes(i) && cs[i].days > 120).length, bigc = selM.filter(i => cs[i].amt >= 150).length;
+        const ba = { rows: [['Tiền thu thêm nhờ cuộc gọi, triệu (đợt này)', api.vnd(iB, 0), api.vnd(iM, 0), '+' + api.vnd(iM - iB, 0), true], ['Tuổi nợ trung bình khách được gọi, ngày', api.vnd(avgD(selB), 0), api.vnd(avgD(selM), 0), '', null], ['Khách nợ trên 120 ngày được gọi', old(selB), old(selM), '', null]],
+          gains: ['Cuộc gọi dồn vào khách mà cuộc gọi làm thay đổi kết quả', 'Tiền về sớm hơn: giảm vốn lưu động, giảm vay ngắn hạn'],
+          costs: [`${skipped} khách nợ trên 120 ngày không được gọi đợt này: bỏ mặc thì dễ thành nợ xấu`, `${bigc} khách nợ từ 150 triệu trở lên bị gọi: kinh doanh lo ảnh hưởng quan hệ`, 'Xác suất trả tiền là ước tính: cần lịch sử thanh toán đủ dài'],
+          fix: 'Khách nợ trên 120 ngày chuyển sang quy trình thu hồi riêng; khách lớn do người quản lý quan hệ gọi, không phải tổng đài.' }; api.done({ incB: iB, incM: iM, grossM: gross(selM) }, [['Đúng 15 khách, không trùng', new Set(selM).size === 15], ['Danh sách mới thu thêm không ít hơn cách cũ', iM >= iB], ['Mỗi khách được chọn có tiền thu thêm dự kiến > 0', selM.every(i => cs[i].up > 0)]], ba); }, 110); } };
 })();
 
 /* ---------- 06 SHIFTS ---------- */
@@ -657,7 +771,11 @@ CASES.shift = (() => { let req = [], xB = [], xM = null; const lab = ['00–04',
     exec(api) { const t0 = performance.now(), s = solve(), ms = performance.now() - t0, B = xB.reduce((a, b) => a + b, 0); xM = s.x;
       api.anim(8, i => draw(api, covM(s.x).map((v, j) => Math.round(v * i / 7))), () => { draw(api, covM(s.x)); const saved = B - s.s; api.big(`−${saved} người/ngày`); api.kpi(1, s.s);
         api.txt(`Máy xếp xong trong ${api.fms(ms)}: ${s.x.map((v, j) => v ? `${v} người vào lúc ${lab[j].slice(0, 2)}:00` : null).filter(Boolean).join(', ')}. Mọi khung vẫn đủ người.`);
-        const g = api.guess(); api.verdict(g === s.s, `Cả phòng chọn ${g} người, máy cần ${s.s} người.`); api.done({ saved }, [['Mọi khung giờ đủ người', covM(s.x).every((v, j) => v >= req[j])], ['Không ca nào xếp số người âm', s.x.every(v => v >= 0)], ['Không nhiều người hơn cách cũ', s.s <= B]]); }, 90); } };
+        const g = api.guess(); api.verdict(g === s.s, `Cả phòng chọn ${g} người, máy cần ${s.s} người.`); const over = c => c.reduce((a, v, j) => a + (v - req[j]) * 4, 0), oB = over(covB()), oM = over(covM(s.x)), stag = s.x[1] + s.x[3] + s.x[5];
+        const ba = { rows: [['Người mỗi ngày', B, s.s, '−' + saved, true], ['Giờ người dư, đứng chờ mỗi ngày', oB, oM, '−' + (oB - oM) + ' giờ', true], ['Người phải vào ca lệch giờ', 0, stag, '+' + stag, false]],
+          gains: [`Bớt ${saved} người mỗi ngày mà khung giờ nào cũng đủ người`, `Giờ người đứng chờ giảm từ ${oB} xuống ${oM} giờ mỗi ngày`],
+          costs: [`${stag} người phải vào ca lệch giờ (04:00, 12:00 hoặc 20:00)`, 'Nhiều lần giao ca hơn: dễ sót việc nếu không có quy trình giao ca', 'Ca bắt đầu 04:00 khó tuyển, có thể phải trả phụ cấp'],
+          fix: 'Hỏi nguyện vọng trước, cho chọn ca lệch kèm phụ cấp, và trừ phụ cấp vào giá trị khi tính lại.' }; api.done({ saved }, [['Mọi khung giờ đủ người', covM(s.x).every((v, j) => v >= req[j])], ['Không ca nào xếp số người âm', s.x.every(v => v >= 0)], ['Không nhiều người hơn cách cũ', s.s <= B]], ba); }, 90); } };
 })();
 
 /* ---------- 07 FACILITY ---------- */
@@ -689,7 +807,11 @@ CASES.hub = (() => { const W = 80, H = 50, FIX = 1.2; let cu = [], hubs = [], be
     exec(api) { const t0 = performance.now(), all = subs().map(S => ({ S, ...evalS(S) })); best = all.reduce((a, b) => b.tot < a.tot ? b : a); const ms = performance.now() - t0, all6 = evalS([0, 1, 2, 3, 4, 5]);
       api.anim(22, i => { const s = all[Math.min(all.length - 1, i * 3)]; draw(api, s.S); api.big(api.vnd(s.tot) + ' tỷ'); }, () => { draw(api, best.S); api.big(`Mở ${best.S.length} kho`); api.kpi(0, api.vnd(cur.tot)); api.kpi(1, api.vnd(best.tot));
         api.txt(`Máy thử 63 cách chọn kho trong ${api.fms(ms)}. Phương án tốt nhất tốn ${api.vnd(best.tot)} tỷ/năm, so với ${api.vnd(cur.tot)} tỷ hiện tại. Mở cả 6 kho như đề xuất của kinh doanh tốn ${api.vnd(all6.tot)} tỷ/năm.`);
-        const g = api.guess(); api.verdict(g === best.S.length, `Cả phòng chọn ${g} kho, máy chọn ${best.S.length} kho.`); api.done({ cur: cur.tot, best: best.tot, trCur: cur.tr, trAll: all6.tr }, [['Đã thử đủ 63/63 tổ hợp kho', all.length === 63], ['Phương án chọn rẻ nhất trong mọi tổ hợp', all.every(x => x.tot >= best.tot - 1e-9)], ['Chi phí cố định đã tính cho mọi kho mở', Math.abs(best.fix - best.S.length * FIX) < 1e-9]]); }, 80); } };
+        const g = api.guess(); api.verdict(g === best.S.length, `Cả phòng chọn ${g} kho, máy chọn ${best.S.length} kho.`); const akm = S2 => { let t2 = 0, w2 = 0; cu.forEach(c => { let m2 = 1e9; S2.forEach(h => m2 = Math.min(m2, dist2(c, hubs[h]) * 1.3)); t2 += m2 * c.t; w2 += c.t; }); return t2 / w2; }, newH = best.S.filter(h => h !== 0).length, k0 = akm([0]), k1 = akm(best.S), k6 = akm([0, 1, 2, 3, 4, 5]);
+        const ba = { rows: [['Tổng chi phí mỗi năm, tỷ', api.vnd(cur.tot), api.vnd(best.tot), '−' + api.vnd(cur.tot - best.tot), true], ['Km trung bình mỗi chuyến, một chiều', api.vnd(k0, 1), api.vnd(k1, 1), '−' + api.vnd(k0 - k1, 1) + ' km', true], ['Số kho', 1, best.S.length, '+' + (best.S.length - 1), null]],
+          gains: [`Tổng chi phí giảm ${api.vnd(cur.tot - best.tot)} tỷ mỗi năm`, `Km trung bình mỗi chuyến giảm từ ${api.vnd(k0, 1)} xuống ${api.vnd(k1, 1)}: giao nhanh hơn`],
+          costs: [`Cam kết thuê ${newH} kho mới: khoảng ${api.vnd(newH * FIX * 5, 1)} tỷ trong 5 năm, khó rút lui`, `So với mở cả 6 kho, mỗi chuyến xa hơn ${api.vnd(k1 - k6, 1)} km: giao chậm hơn một chút để tiết kiệm ${api.vnd(all6.tot - best.tot)} tỷ/năm`, 'Thêm kho là thêm tồn kho phân tán và thêm người quản lý'],
+          fix: 'Thuê ngắn hạn 1–2 năm cho kho đầu tiên; chỉ mở kho tiếp theo khi sản lượng thực tế đạt mức đã tính.' }; api.done({ cur: cur.tot, best: best.tot, trCur: cur.tr, trAll: all6.tr }, [['Đã thử đủ 63/63 tổ hợp kho', all.length === 63], ['Phương án chọn rẻ nhất trong mọi tổ hợp', all.every(x => x.tot >= best.tot - 1e-9)], ['Chi phí cố định đã tính cho mọi kho mở', Math.abs(best.fix - best.S.length * FIX) < 1e-9]], ba); }, 80); } };
 })();
 
 /* ---------- 08 MAINTENANCE ---------- */
@@ -720,7 +842,11 @@ CASES.pm = (() => { let tr = [], selB = [], selM = []; const CAPN = 8, RED = .7;
     exec(api) { const t0 = performance.now(); selM = tr.slice().sort((a, b) => b.p - a.p).slice(0, CAPN).map(t => t.i); const ms = performance.now() - t0, eB = exp(selB), eM = exp(selM), pct = (eB - eM) / eB * 100;
       api.anim(9, i => draw(api, i), () => { draw(api); api.big(`−${api.vnd(eB - eM, 1)} xe hỏng/tháng`); api.kpi(0, api.vnd(eB, 1)); api.kpi(1, api.vnd(eM, 1));
         api.txt(`Máy chấm 30 xe trong ${api.fms(ms)}. Cùng 8 suất bảo dưỡng, số xe hỏng dự kiến giảm từ ${api.vnd(eB, 1)} xuống ${api.vnd(eM, 1)} xe mỗi tháng (−${api.vnd(pct, 0)}%). ${selM.filter(i => !selB.includes(i)).length} trong 8 xe máy chọn không có trong lịch cũ.`);
-        const g = api.guess(); api.verdict(Math.abs(g - pct) <= 7, `Cả phòng đoán −${g}%, máy ra −${api.vnd(pct, 0)}%.`); const inS = new Set(selM), minIn = Math.min(...selM.map(i => tr[i].p)), maxOut = Math.max(...tr.filter(t => !inS.has(t.i)).map(t => t.p)); api.done({ eB, eM }, [['Đúng 8 xe, không vượt số suất', selM.length === CAPN], ['Số xe hỏng dự kiến không cao hơn cách cũ', eM <= eB + 1e-9], ['Không xe nào bị bỏ sót có nguy cơ cao hơn xe được chọn', minIn >= maxOut]]); }, 160); } };
+        const g = api.guess(); api.verdict(Math.abs(g - pct) <= 7, `Cả phòng đoán −${g}%, máy ra −${api.vnd(pct, 0)}%.`); const inS = new Set(selM), minIn = Math.min(...selM.map(i => tr[i].p)), maxOut = Math.max(...tr.filter(t => !inS.has(t.i)).map(t => t.p)); const old7 = q => q.filter(i => tr[i].age >= 7).length, skippedPm = selB.filter(i => !selM.includes(i)).length;
+        const ba = { rows: [['Xe hỏng dự kiến mỗi tháng', api.vnd(eB, 1), api.vnd(eM, 1), '−' + api.vnd(eB - eM, 1), true], ['Xe từ 7 năm tuổi được bảo dưỡng', old7(selB), old7(selM), '', null], ['Suất bảo dưỡng dùng', CAPN, CAPN, 'không đổi', null]],
+          gains: [`Bớt ${api.vnd(eB - eM, 1)} xe hỏng mỗi tháng với cùng ${CAPN} suất bảo dưỡng`, 'Ít sự cố giữa đường: ít phạt hợp đồng, ít thuê xe thay'],
+          costs: [`${skippedPm} xe trong lịch cũ bị lùi bảo dưỡng: phải bảo đảm vẫn đúng hạn đăng kiểm`, 'Nguy cơ hỏng là ước tính: dữ liệu km sai thì danh sách sai', 'Xưởng phải đổi kế hoạch phụ tùng theo danh sách mới mỗi tháng'],
+          fix: 'Các mốc đăng kiểm và an toàn vẫn bắt buộc, nằm ngoài danh sách của máy; mỗi quý đối chiếu dự báo với sự cố thực tế.' }; api.done({ eB, eM }, [['Đúng 8 xe, không vượt số suất', selM.length === CAPN], ['Số xe hỏng dự kiến không cao hơn cách cũ', eM <= eB + 1e-9], ['Không xe nào bị bỏ sót có nguy cơ cao hơn xe được chọn', minIn >= maxOut]], ba); }, 160); } };
 })();
 
 /* ---------- 09 BANK RECON ---------- */
@@ -763,7 +889,11 @@ CASES.rec = (() => { const NB = 140; let bank = [], led = [], res = null; const 
     exec(api) { const t0 = performance.now(); res = run(); const ms = performance.now() - t0, rB = res.filter(t => t === 'exact').length / NB, rM = res.filter(Boolean).length / NB;
       api.anim(5, i => draw(api, res, i), () => { draw(api, res, 4); api.big(api.vnd(rM * 100, 0) + '% tự khớp'); api.kpi(0, api.vnd(rB * 100, 0) + '%'); api.kpi(1, api.vnd(rM * 100, 0) + '%');
         api.txt(`Máy khớp 140 dòng qua 4 lớp quy tắc trong ${api.fms(ms)}. Còn ${NB - res.filter(Boolean).length} dòng cần người xem, thay vì ${Math.round(NB * (1 - rB))} dòng như hiện nay.`);
-        const g = api.guess(); api.verdict(Math.abs(g - rM * 100) <= 4, `Cả phòng đoán ${g}%, máy tự khớp ${api.vnd(rM * 100, 0)}%.`); const should = bank.filter(b => b.truth !== 'none').length, good = res.filter((t, i) => t && bank[i].truth !== 'none').length, fp = res.filter((t, i) => t && bank[i].truth === 'none').length; api.done({ rB, rM }, [[`Kỳ đã đóng: khớp ${good}/${should} dòng có chứng từ`, good === should], [`Không khớp nhầm dòng không có chứng từ (${fp} nhầm)`, fp === 0], ['Mỗi bút toán chỉ được khớp một lần', new Set(usedList).size === usedList.length]]); }, 600); } };
+        const g = api.guess(); api.verdict(Math.abs(g - rM * 100) <= 4, `Cả phòng đoán ${g}%, máy tự khớp ${api.vnd(rM * 100, 0)}%.`); const should = bank.filter(b => b.truth !== 'none').length, good = res.filter((t, i) => t && bank[i].truth !== 'none').length, fp = res.filter((t, i) => t && bank[i].truth === 'none').length; const mB = Math.round(NB * (1 - rB)), mM = NB - res.filter(Boolean).length, loose = res.filter(t2 => t2 && t2 !== 'exact').length, hrs = m2 => m2 * 22 * 8 / 60;
+        const ba = { rows: [['Dòng phải dò tay mỗi ngày', mB, mM, '−' + (mB - mM), true], ['Giờ dò tay mỗi tháng', api.vnd(hrs(mB), 0), api.vnd(hrs(mM), 0), '−' + api.vnd(hrs(mB) - hrs(mM), 0) + ' giờ', true], ['Dòng khớp theo quy tắc lỏng, cần kiểm mẫu', 0, loose, '+' + loose, false]],
+          gains: [`Giờ dò tay giảm từ ${api.vnd(hrs(mB), 0)} xuống ${api.vnd(hrs(mM), 0)} giờ mỗi tháng`, 'Chốt sổ sớm hơn, ít tăng ca cuối tháng'],
+          costs: [`${loose} dòng khớp theo quy tắc lỏng (lệch ngày, trừ phí, gộp hoá đơn): cần kiểm mẫu`, 'Khớp nhầm khó phát hiện hơn khớp thiếu: sai một dòng là sai công nợ khách', 'Giờ được giải phóng chỉ thành tiền khi bớt tăng ca hoặc không phải tuyển thêm'],
+          fix: 'Kiểm mẫu 10% các dòng khớp lỏng trong 2 kỳ đầu; dòng không khớp được giao cho người kèm lý do.' }; api.done({ rB, rM }, [[`Kỳ đã đóng: khớp ${good}/${should} dòng có chứng từ`, good === should], [`Không khớp nhầm dòng không có chứng từ (${fp} nhầm)`, fp === 0], ['Mỗi bút toán chỉ được khớp một lần', new Set(usedList).size === usedList.length]], ba); }, 600); } };
 })();
 
 /* ---------- 10 BACKHAUL ---------- */
@@ -804,7 +934,11 @@ CASES.bh = (() => { const W = 300, H = 200, N = 10, DEP = { x: 150, y: 100 }; le
       const a = hung(m).map((j, i) => j < N && P[i][j].prof > 0 ? j : -1); aM = a; const ms = performance.now() - t0, pB = tot(aB), pM = tot(a), pct = pB > 0 ? (pM / pB - 1) * 100 : 100;
       api.anim(6, i => draw(api, i % 2 ? aB : a, i % 2 ? '--bad' : '--accent'), () => { draw(api, a, '--accent'); api.big('+' + api.vnd(pct, 0) + '% lợi nhuận'); api.kpi(0, api.vnd(pB, 1)); api.kpi(1, api.vnd(pM, 1));
         api.txt(`Máy xét mọi cách ghép 10 xe với 10 đơn (hơn 3,6 triệu cách) bằng thuật toán Hungarian trong ${api.fms(ms)}. Lợi nhuận chiều về tăng từ ${api.vnd(pB, 1)} lên ${api.vnd(pM, 1)} triệu đồng mỗi ngày.`);
-        const g = api.guess(); api.verdict(Math.abs(g - pct) <= 15, `Cả phòng đoán +${g}%, máy ra +${api.vnd(pct, 0)}%.`); const tk = a.filter(j => j >= 0); api.done({ pB, pM, revM: rev(a) }, [['Mỗi xe tối đa 1 đơn, mỗi đơn tối đa 1 xe', new Set(tk).size === tk.length], ['Không nhận đơn lỗ: đơn lỗ thì xe chạy rỗng', a.every((j, i) => j < 0 || P[i][j].prof > 0)], ['Lợi nhuận không thấp hơn cách cũ', pM >= pB - 1e-9]]); }, 320); } };
+        const g = api.guess(); api.verdict(Math.abs(g - pct) <= 15, `Cả phòng đoán +${g}%, máy ra +${api.vnd(pct, 0)}%.`); const tk = a.filter(j => j >= 0); const dh = q => q.reduce((acc, j, i) => acc + (j >= 0 && P[i][j].prof > 0 ? dist2(trucks[i], loads[j].o) * 1.3 : 0), 0), cnt = q => q.filter((j, i) => j >= 0 && P[i][j].prof > 0).length, dfa = a.filter((j, i) => j !== aB[i]).length, dB = dh(aB), dM = dh(a);
+        const ba = { rows: [['Lợi nhuận chiều về mỗi ngày, triệu', api.vnd(pB, 1), api.vnd(pM, 1), '+' + api.vnd(pM - pB, 1), true], ['Xe có hàng chiều về', cnt(aB) + '/10', cnt(a) + '/10', '', null], ['Km chạy thêm để lấy hàng', api.vnd(dB, 0), api.vnd(dM, 0), (dM >= dB ? '+' : '−') + api.vnd(Math.abs(dM - dB), 0) + ' km', dM <= dB]],
+          gains: [`Lợi nhuận chiều về tăng từ ${api.vnd(pB, 1)} lên ${api.vnd(pM, 1)} triệu mỗi ngày`, `${cnt(a)}/10 xe có hàng chiều về thay vì ${cnt(aB)}/10`].concat(dM < dB ? [`Tổng km chạy để lấy hàng giảm từ ${api.vnd(dB, 0)} xuống ${api.vnd(dM, 0)} km`] : []),
+          costs: [dM > dB ? `Xe chạy thêm ${api.vnd(dM - dB, 0)} km để lấy hàng so với cách cũ: thêm giờ lái cho tài xế` : `Có xe phải chạy tới ${api.vnd(Math.max(...a.map((j, i) => j >= 0 ? dist2(trucks[i], loads[j].o) * 1.3 : 0)), 0)} km để lấy hàng: thêm giờ lái cho tài xế đó`, `${dfa}/10 tài xế nhận đơn khác với cách chia theo thứ tự về: dễ thấy không công bằng`, 'Cần vị trí xe theo thời gian thực; dữ liệu trễ thì ghép sai'],
+          fix: 'Thưởng theo lợi nhuận chuyến thay vì theo thứ tự về; đưa giới hạn giờ lái vào bài toán.' }; api.done({ pB, pM, revM: rev(a) }, [['Mỗi xe tối đa 1 đơn, mỗi đơn tối đa 1 xe', new Set(tk).size === tk.length], ['Không nhận đơn lỗ: đơn lỗ thì xe chạy rỗng', a.every((j, i) => j < 0 || P[i][j].prof > 0)], ['Lợi nhuận không thấp hơn cách cũ', pM >= pB - 1e-9]], ba); }, 320); } };
 })();
 
 boot(["bh"], 10);
