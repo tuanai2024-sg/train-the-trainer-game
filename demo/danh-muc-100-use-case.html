@@ -265,6 +265,12 @@ section+section{border-top:1px solid var(--line)}
 .lock{display:grid;gap:6px}
 .scrim{position:fixed;inset:0;background:rgba(8,14,24,.35);z-index:45}
 
+section{scroll-margin-top:80px}
+.idx{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px 24px}
+.ig{min-width:0}.ig h3{font-size:14px;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:6px}
+.ig ol{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13.5px}
+.ig a{color:var(--ink2);text-decoration:none}.ig a:hover{color:var(--s1);text-decoration:underline}
+.idot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--s1);vertical-align:middle}
 footer{border-top:1px solid var(--line);padding-block:24px 36px;font-size:13px;color:var(--muted)}
 footer a{color:var(--s1);font-weight:600}
 .ass{columns:2;column-gap:32px;font-size:13.5px;color:var(--ink2);padding-left:18px;margin:0}
@@ -418,6 +424,12 @@ footer a{color:var(--s1);font-weight:600}
       <div class="panel"><h3>Được</h3><ul id="gain"></ul></div>
       <div class="panel"><h3>Đánh đổi</h3><ul id="cost"></ul></div>
     </div>
+  </section>
+
+  <section id="sIndex" aria-labelledby="hIndex">
+    <div class="sh"><div><h2 id="hIndex">100 trang chạy thử</h2>
+      <p>Mỗi đề xuất có một trang riêng: agent chạy thuật toán trên dữ liệu mẫu, Finance tính lại con số, trước và sau, vị trí trong danh mục, và nghị quyết mô phỏng. Chấm xanh là đề xuất máy đang chọn.</p></div></div>
+    <div class="idx" id="idx"></div>
   </section>
 
   <section id="sTable" aria-labelledby="hTable">
@@ -739,6 +751,7 @@ function planInt(st) {
   return { sel, off: sequence(st, sel, i => UC[i].v) };
 }
 
+const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-thang","003-du-bao-dong-tien-13-tuan","004-thu-hoi-cong-no-theo-xac-suat-tra","005-kiem-soat-hoa-don-truoc-thanh-toan","006-toi-uu-ky-han-thanh-toan-nha-cung-cap","007-giai-thich-chenh-lech-ngan-sach-tu-dong","008-hop-nhat-va-loai-tru-giao-dich-noi-bo","009-ho-so-thue-va-chuyen-gia-lien-tuc","010-toi-uu-phong-ngua-rui-ro-ty-gia","011-phan-loai-va-phan-tich-chi-tieu","012-gia-muc-tieu-theo-chi-so-nguyen-lieu","013-canh-bao-som-rui-ro-nha-cung-cap","014-phan-bo-don-hang-cho-nhieu-nha-cung-cap","015-agent-soan-yeu-cau-va-so-sanh-bao-gia","016-doi-quyen-loi-theo-dieu-khoan-hop-dong","017-chan-chi-tieu-ngoai-hop-dong","018-thu-hoi-chiet-khau-san-luong","019-du-bao-gia-nguyen-lieu-dau-vao","020-so-sanh-tong-chi-phi-so-huu","021-toi-uu-tuyen-giao-hang-hang-ngay","022-ghep-don-chieu-ve-cho-xe-rong","023-xep-hang-len-xe-toi-uu","024-dau-thau-cuoc-theo-tuyen","025-du-bao-gio-den-cho-khach","026-kiem-toan-hoa-don-cuoc-van-tai","027-tiet-kiem-nhien-lieu-theo-hanh-vi-lai","028-bao-duong-du-doan-doi-xe","029-thiet-ke-lai-mang-luoi-kho","030-khung-gio-giao-chang-cuoi-dong","031-xep-ca-kho-theo-san-luong","032-bo-tri-vi-tri-hang-trong-kho","033-gom-don-va-toi-uu-duong-nhat-hang","034-kiem-dem-ton-kho-bang-thi-giac-may","035-du-bao-nhan-luc-mua-cao-diem","036-phat-hien-hao-hut-va-that-thoat","037-dat-lich-cua-nhap-xuat","038-xuat-hang-theo-han-dung","039-phan-loai-hang-tra-ve-nhanh","040-mo-hinh-kho-so-de-thu-truoc","041-du-bao-nhu-cau-theo-mat-hang-va-kho","042-ton-kho-an-toan-da-cap","043-ke-hoach-kinh-doanh-tich-hop-tai-chinh","044-lap-lich-san-xuat-toi-uu","045-du-bao-hang-moi-ra-mat","046-phan-bo-hang-khi-thieu-nguon","047-canh-bao-gian-doan-chuoi-cung-ung","048-toi-uu-lo-mua-vat-tu","049-mo-phong-kich-ban-chuoi-cung-ung","050-giai-phong-ton-kho-cham-luan-chuyen","051-dinh-gia-dong-theo-do-co-gian","052-toi-uu-chuong-trinh-khuyen-mai","053-chan-ro-ri-chiet-khau","054-du-doan-khach-hang-roi-bo","055-goi-y-ban-kem-cho-doi-ban-hang","056-agent-cham-soc-khach-hang","057-han-muc-tin-dung-khach-doanh-nghiep","058-tinh-gon-danh-muc-mat-hang","059-loi-nhuan-theo-khach-hang-va-kenh","060-agent-soan-ho-so-thau","061-canh-bao-nghi-viec-nhan-su-chu-chot","062-dinh-bien-theo-khoi-luong-cong-viec","063-tro-ly-chinh-sach-nhan-su","064-sang-loc-ho-so-tuyen-dung","065-lo-trinh-hoc-ky-nang-ai-theo-vai-tro","066-kiem-tra-bang-luong-truoc-khi-chi","067-toi-uu-goi-phuc-loi","068-an-toan-lao-dong-bang-camera","069-do-nang-suat-theo-hoat-dong","070-agent-ho-tro-nhan-vien-moi","071-giam-sat-giao-dich-gian-lan","072-kiem-soat-noi-bo-lien-tuc","073-theo-doi-van-ban-phap-quy-moi","074-sang-loc-doi-tac-va-danh-sach-trung-phat","075-kho-dieu-khoan-hop-dong-tra-cuu-duoc","076-du-phong-no-theo-xac-suat-vo-no","077-kiem-tra-chi-phi-cong-tac-va-the","078-quan-tri-rui-ro-mo-hinh-ai","079-phan-loai-va-che-du-lieu-nhay-cam","080-kiem-toan-noi-bo-theo-rui-ro","081-do-phat-thai-chuoi-cung-ung","082-toi-uu-nang-luong-nha-may-va-kho","083-soan-bao-cao-phat-trien-ben-vung","084-toi-uu-kich-thuoc-bao-bi","085-tuyen-duong-can-bang-chi-phi-va-phat-thai","086-thu-hoi-va-ban-lai-san-pham","087-giam-sat-nuoc-thai-va-chat-thai","088-cham-diem-ben-vung-nha-cung-cap","089-gia-carbon-noi-bo-cho-quyet-dinh-dau-tu","090-lo-trinh-dien-hoa-doi-xe","091-nen-tang-du-lieu-chung","092-quan-tri-du-lieu-chu","093-hoi-du-lieu-bang-tieng-viet","094-agent-tu-dong-hoa-quy-trinh","095-tro-ly-lap-trinh-cho-doi-cong-nghe","096-giam-sat-van-hanh-he-thong","097-phat-hien-xam-nhap-theo-hanh-vi","098-toi-uu-chi-phi-dien-toan-dam-may","099-kho-tri-thuc-noi-bo-co-trich-nguon","100-kiem-dinh-chat-luong-du-lieu-tu-dong"];
 /* ===== giao diện: trạng thái HĐQT, biểu đồ SVG, bảng, nghị quyết mô phỏng ===== */
 (function () {
   'use strict';
@@ -769,6 +782,8 @@ function planInt(st) {
   const axUnit = () => (PRESETS[st.preset].cur === 'USD' ? 'tỷ USD' : 'tỷ đồng');
   const monthTxt = m => (m == null ? 'chưa hoàn vốn trong ' + st.hz + ' năm' : 'tháng ' + m);
   const lossTxt = x => (x < 0.001 ? 'dưới 0,1%' : pct(x, 1));
+  const lf = t => t.charAt(0).toLowerCase() + t.slice(1);
+  const ucHref = id => 'uc/' + UCSLUG[id - 1] + '.html';
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   function nice(lo, hi, n) {
     const span = (hi - lo) || 1, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw))), e = raw / mag;
@@ -823,7 +838,7 @@ function planInt(st) {
   /* ---------- hero ---------- */
   function renderHero() {
     const P = PRESETS[st.preset], e = V.main.e, m = V.main.m;
-    $('#lede').innerHTML = `Các khối trình lên <b>100 đề xuất AI</b>, tổng vốn xin <b>${money(V.capAll)}</b>, hứa hẹn <b>${money(V.valAll)} mỗi năm</b> nếu mọi đề xuất đều thành công. Ngân sách HĐQT đặt ra là <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Câu hỏi không còn là AI có đáng làm hay không, mà là làm cái nào, khi nào, và ai chịu trách nhiệm.`;
+    $('#lede').innerHTML = `Các khối trình lên <b>100 đề xuất AI</b>, tổng vốn xin <b>${money(V.capAll)}</b>, hứa hẹn <b>${money(V.valAll)} mỗi năm</b> nếu mọi đề xuất đều thành công. Ngân sách HĐQT đặt ra là <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Câu hỏi không còn là AI có đáng làm hay không, mà là làm cái nào, khi nào, và ai chịu trách nhiệm. Mỗi đề xuất có <a href="#sIndex">một trang chạy thử riêng</a>.`;
     $('#scaleNote').textContent = `Ở quy mô này, mỗi đồng chi cho danh mục ${V.main.label} tạo ra ${nf(e.benefit / e.cost, 1)} đồng giá trị hiện tại trong ${st.hz} năm. Vốn tăng chậm hơn doanh thu nên doanh nghiệp càng lớn, tỷ suất càng cao.`;
     document.querySelectorAll('#scaleSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === st.preset)));
     const pre = stressed() ? `Trong kịch bản thử (giá trị đạt ${nf(st.R * 100, 0)}% kế hoạch, trễ ${st.delay} tháng): ` : '';
@@ -1019,7 +1034,7 @@ function planInt(st) {
     const dropped = V.int.filter(i => !V.sOpt.has(UC[i].id)).sort((a, b) => UC[b].v - UC[a].v);
     const added = V.opt.sel.filter(i => !V.sInt.has(UC[i].id));
     const why = i => { const it = V.items[i]; return it.E <= 0 ? `ra tiền sau ${it.t} tháng` : it.p < 0.65 ? `chỉ ${pct(it.p)} khả năng thành công` : 'mỗi đồng vốn tạo ra ít hơn'; };
-    if (dropped.length) html += `<li>Máy bỏ <b>${dropped.length} đề xuất có con số lớn</b> mà cảm tính chọn, như ${dropped.slice(0, 2).map(i => `${esc(UC[i].name.toLowerCase())} (${why(i)})`).join(' và ')}.</li>`;
+    if (dropped.length) html += `<li>Máy bỏ <b>${dropped.length} đề xuất có con số lớn</b> mà cảm tính chọn, như ${dropped.slice(0, 2).map(i => `${esc(lf(UC[i].name))} (${why(i)})`).join(' và ')}.</li>`;
     if (added.length) { const em = {}; eo.items.forEach(it => { em[it.u.id] = it; }); const q = added.filter(i => em[UC[i].id] && em[UC[i].id].t + em[UC[i].id].off <= 6).length; html += `<li>Máy thêm <b>${added.length} đề xuất nhỏ hơn</b>, ${q} trong số đó ra tiền trong 6 tháng đầu.</li>`; }
     const en = V.base[ENABLER - 1];
     if (V.opt.boosted) {
@@ -1158,7 +1173,7 @@ function planInt(st) {
       ['Nếu chỉ đạt một nửa giá trị kế hoạch?', `NPV ${money(h.npv)}`, `Hoàn vốn ${monthTxt(h.pb)}.${halfCmp}`],
       ['Bao lâu thì thấy tiền về?', e.pb == null ? 'Chưa hoàn vốn' : `Hoàn vốn tháng ${e.pb}`, `Vốn phải chịu tối đa ${money(-e.trough)} ở tháng ${e.troughM}. Nếu không tính vốn lưu động giải phóng, hoàn vốn ${monthTxt(e.pbX)}.`],
       ['Xác suất mất tiền là bao nhiêu?', lossTxt(M.loss), `Trong 2.000 kịch bản, 10% xấu nhất cho NPV dưới ${money(M.p10)}. Mô phỏng đã tính cả cú sốc chung đánh vào toàn danh mục.`],
-      ['Tiền tập trung ở đâu?', `5 đề xuất chiếm ${pct(top5)}`, items.length ? `Mảng đóng góp nhiều nhất là ${DOM[td].toLowerCase()} (${pct(byDom[td] / tot)}). Đề xuất lớn nhất: ${esc(items[0].u.name.toLowerCase())}.` : ''],
+      ['Tiền tập trung ở đâu?', `5 đề xuất chiếm ${pct(top5)}`, items.length ? `Mảng đóng góp nhiều nhất là ${DOM[td].toLowerCase()} (${pct(byDom[td] / tot)}). Đề xuất lớn nhất: ${esc(lf(items[0].u.name))}.` : ''],
       ['Mỗi tháng chần chừ mất bao nhiêu?', money(e.valYr / 12), `Đó là giá trị một tháng khi danh mục chạy đủ. Chờ thêm một quý để “nghiên cứu thêm” tốn khoảng ${money(e.valYr / 4)}.`],
       ['Ai chịu trách nhiệm từng đồng?', `${ow.length} giám đốc ký cam kết`, ow.length ? `Nhiều nhất: ${ow[0][0].toLowerCase()} (${ow[0][1]} đề xuất)${ow[1] ? `, ${ow[1][0].toLowerCase()} (${ow[1][1]})` : ''}. Finance đo giá trị cho cả ${e.n} đề xuất trên một sổ chung.` : ''],
     ];
@@ -1229,14 +1244,14 @@ function planInt(st) {
   /* ---------- bảng 100 ---------- */
   const COLS = [
     ['id', '#', 'r'], ['name', 'Đề xuất', ''], ['d', 'Mảng', ''], ['lev', 'Đòn bẩy', ''], ['tec', 'Kỹ thuật', ''],
-    ['ev', 'Giá trị kỳ vọng mỗi năm', 'r'], ['cap', 'Vốn', 'r'], ['p', 'Thành công', 'r'], ['r', 'Rủi ro', 'r'], ['t', 'Ra tiền', 'r'], ['E', 'NPV nếu làm ngay', 'r'], ['o', 'Máy', ''], ['w', 'Đợt', ''], ['i', 'Cảm tính', ''],
+    ['ev', 'Giá trị kỳ vọng mỗi năm', 'r'], ['cap', 'Vốn', 'r'], ['p', 'Thành công', 'r'], ['r', 'Rủi ro', 'r'], ['t', 'Ra tiền', 'r'], ['E', 'NPV nếu làm ngay', 'r'], ['o', 'Máy', ''], ['w', 'Đợt', ''], ['i', 'Cảm tính', ''], ['pg', 'Trang riêng', ''],
   ];
   function key(it, k) {
     const u = it.u;
     switch (k) {
       case 'id': return u.id; case 'name': return u.name; case 'd': return DOM[u.d]; case 'lev': return LEV[u.lev]; case 'tec': return TEC[u.tec];
       case 'ev': return it.evYr; case 'cap': return it.cap; case 'p': return it.p; case 'r': return u.r; case 't': return it.t; case 'E': return it.E;
-      case 'o': return st.locks[u.id] === 'in' ? 3 : V.sOpt.has(u.id) ? 2 : st.locks[u.id] === 'out' ? 0 : 1; case 'i': return V.sInt.has(u.id) ? 1 : 0; case 'w': return V.main.set.has(u.id) ? V.wave[u.id] : 9;
+      case 'o': return st.locks[u.id] === 'in' ? 3 : V.sOpt.has(u.id) ? 2 : st.locks[u.id] === 'out' ? 0 : 1; case 'i': return V.sInt.has(u.id) ? 1 : 0; case 'w': return V.main.set.has(u.id) ? V.wave[u.id] : 9; case 'pg': return u.id;
     }
   }
   function renderTable() {
@@ -1248,8 +1263,12 @@ function planInt(st) {
       const u = it.u, L = st.locks[u.id];
       const oc = !st.optRun ? '<span class="muted">chưa chạy</span>' : L === 'in' ? '<span class="pill lk">Ép giữ</span>' : L === 'out' ? '<span class="pill">Đã loại</span>' : V.sOpt.has(u.id) ? '<span class="pill o">Chọn</span>' : V.dropped.has(u.id) ? '<span class="muted">Hết năng lực</span>' : '';
       return `<tr class="${V.main.set.has(u.id) ? 'sel' : ''}"><td class="r">${u.id}</td><td class="nm"><button type="button" data-id="${u.id}">${esc(u.name)}</button></td><td>${DOM[u.d]}</td><td>${LEV[u.lev]}</td><td>${TEC[u.tec]}</td>
-        <td class="r">${money(it.evYr)}</td><td class="r">${money(it.cap)}</td><td class="r">${pct(it.p)}</td><td class="r">${u.r}/5</td><td class="r">${it.t} tháng</td><td class="r ${it.E < 0 ? 'neg' : ''}">${money(it.E)}</td><td>${oc}</td><td>${V.main.set.has(u.id) ? 'Đợt ' + (V.wave[u.id] + 1) : ''}</td><td>${V.sInt.has(u.id) ? '<span class="pill i">Chọn</span>' : ''}</td></tr>`;
-    }).join('') || `<tr><td colspan="14" class="muted">Không có đề xuất nào khớp bộ lọc. Chọn lại đòn bẩy hoặc mảng.</td></tr>`;
+        <td class="r">${money(it.evYr)}</td><td class="r">${money(it.cap)}</td><td class="r">${pct(it.p)}</td><td class="r">${u.r}/5</td><td class="r">${it.t} tháng</td><td class="r ${it.E < 0 ? 'neg' : ''}">${money(it.E)}</td><td>${oc}</td><td>${V.main.set.has(u.id) ? 'Đợt ' + (V.wave[u.id] + 1) : ''}</td><td>${V.sInt.has(u.id) ? '<span class="pill i">Chọn</span>' : ''}</td><td><a href="${ucHref(u.id)}">Chạy thử</a></td></tr>`;
+    }).join('') || `<tr><td colspan="15" class="muted">Không có đề xuất nào khớp bộ lọc. Chọn lại đòn bẩy hoặc mảng.</td></tr>`;
+  }
+
+  function renderIdx() {
+    $('#idx').innerHTML = DOM.map((d, k) => `<div class="ig"><h3>${d}</h3><ol>${UC.filter(u => u.d === k).map(u => `<li><a href="${ucHref(u.id)}">${u.id}. ${esc(u.name)}</a>${V.sOpt.has(u.id) ? ' <span class="idot" title="Máy chọn"></span>' : ''}</li>`).join('')}</ol></div>`).join('');
   }
 
   /* ---------- nghị quyết ---------- */
@@ -1267,7 +1286,7 @@ function planInt(st) {
     if (risky) art.push(`<b>${risky} đề xuất</b> có mức rủi ro từ 3/5 trở lên phải qua thẩm định mô hình độc lập trước khi chạy thật.`);
     const lk = Object.entries(st.locks);
     if (lk.length && V.free) {
-      const over = lk.filter(([id, v]) => v === 'in' && UC[id - 1].r > st.appetite).map(([id]) => UC[id - 1].name.toLowerCase());
+      const over = lk.filter(([id, v]) => v === 'in' && UC[id - 1].r > st.appetite).map(([id]) => lf(UC[id - 1].name));
       art.push(`Ghi nhận ${lk.length} quyết định riêng của HĐQT (ép giữ hoặc loại). ${priceTxt()} Người đề xuất quyết định ép báo cáo riêng kết quả mỗi quý.` + (over.length ? ` Đề xuất ${over.join(', ')} vượt khẩu vị rủi ro, được giữ theo quyết định riêng và phải có phương án dừng.` : ''));
     }
     if (M.loss > 0.1 || V.half.npv < 0 || e.pb == null || e.pb > 24) art.push(`Kịch bản thử cho thấy rủi ro đáng kể (xác suất lỗ ${lossTxt(M.loss)}, hoàn vốn ${monthTxt(e.pb)}). Ban điều hành trình phương án giảm rủi ro trong 30 ngày, trước khi giải ngân Đợt 2.`);
@@ -1307,6 +1326,7 @@ function planInt(st) {
     $('#drawer').innerHTML = `<button type="button" class="close">Đóng</button>
       <p class="xs muted" style="margin:0">Đề xuất ${id} trên 100</p>
       <h3 id="dwTitle" style="font-size:21px;margin-top:4px">${esc(u.name)}</h3>
+      <p style="margin:6px 0 10px"><a class="btn" href="${ucHref(id)}" style="display:inline-block;text-decoration:none">Mở trang chạy thử của đề xuất này</a></p>
       <div class="tag"><span>${DOM[u.d]}</span><span>${LEV[u.lev]}</span><span>${TEC[u.tec]}</span><span>Chủ sở hữu: ${OWN[u.d].toLowerCase()}</span></div>
       <div class="kv">
         <div>Giá trị mỗi năm nếu thành công<b>${money(it.val * 0.6)} đến ${money(it.val * 1.3)}</b></div>
@@ -1340,7 +1360,7 @@ function planInt(st) {
   let raf = 0;
   function schedule(changed) { if (changed !== false) st.voted = false; if (raf) return; raf = requestAnimationFrame(() => { raf = 0; update(); }); }
   function update() {
-    compute(); syncControls(); renderHero(); drawMap(); renderVerdict(); drawJ(); drawMC(); renderQs(); renderDom(); renderWaves(); renderBA(); renderTable(); renderReso(); renderDrawer();
+    compute(); syncControls(); renderHero(); drawMap(); renderVerdict(); drawJ(); drawMC(); renderQs(); renderDom(); renderWaves(); renderBA(); renderTable(); renderIdx(); renderReso(); renderDrawer();
   }
   function runOpt() {
     if (st.optRun) return;
@@ -1351,7 +1371,7 @@ function planInt(st) {
       order.forEach((i, k) => { dotEls[UC[i].id].style.transitionDelay = (k * 16) + 'ms'; });
       setTimeout(() => Object.values(dotEls).forEach(c => { c.style.transitionDelay = ''; }), 2400);
     }
-    syncControls(); renderHero(); drawMap(); renderVerdict(); drawJ(); drawMC(); renderQs(); renderDom(); renderWaves(); renderBA(); renderTable(); renderReso(); renderDrawer();
+    syncControls(); renderHero(); drawMap(); renderVerdict(); drawJ(); drawMC(); renderQs(); renderDom(); renderWaves(); renderBA(); renderTable(); renderIdx(); renderReso(); renderDrawer();
     const mp = $('#sMap').getBoundingClientRect();
     if (mp.top > innerHeight * 0.6 || mp.bottom < 0) $('#sMap').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
   }
