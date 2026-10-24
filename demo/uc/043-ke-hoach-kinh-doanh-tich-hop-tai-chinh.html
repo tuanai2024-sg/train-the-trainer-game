@@ -166,6 +166,116 @@ section+section{border-top:1px solid var(--line)}
 footer{border-top:1px solid var(--line);padding-block:20px 32px;font-size:13px;color:var(--muted)}
 footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px}
 
+
+/* ---------- dòng chảy đầu vào, xử lý, đầu ra ---------- */
+.story{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:14px 0 16px}
+.story .sg{flex:1 1 220px;min-width:0;border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--ink2);background:var(--surface);border:1px solid var(--line)}
+.story .sg b{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+.story .s1{border-color:color-mix(in srgb,var(--s1) 45%,var(--line))}
+.story .s2{border-color:var(--ink2)}
+.story .sa{align-self:center;color:var(--muted);font-weight:700}
+.flow{display:grid;grid-template-columns:minmax(0,290px) 40px minmax(0,1fr) 40px minmax(0,300px);align-items:start}
+.io{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--otherInk);border-radius:14px;padding:16px;min-width:0;transition:box-shadow .35s ease,transform .35s ease}
+.io.pr1{border-top-color:var(--s1)}.io.out1{border-top-color:var(--ink)}
+.io.live{box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 35%,transparent),var(--shadow);transform:translateY(-2px)}
+.ioh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ioh h3{margin:0;font-size:17px}
+.ioh span:not(.badge):not(.chip){display:block;font-size:12.5px;color:var(--muted)}
+.ioh .chip{margin-left:auto}
+.badge{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--chip);color:var(--ink)}
+.pr1 .badge{background:var(--s1);color:var(--onAccent)}.out1 .badge{background:var(--ink);color:var(--surface)}
+.io.past .badge{background:var(--s1);color:var(--onAccent)}
+.ico{flex:none;width:26px;height:26px;fill:none;stroke:var(--ink2);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pr1 .ico{stroke:var(--s1)}
+.src{margin:0 0 10px;display:grid;gap:6px}
+.src div{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;font-size:13px}
+.src dt{color:var(--muted);font-weight:600}.src dd{margin:0;color:var(--ink);font-weight:600}
+.mini{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.mini th{font-size:11px;line-height:1.3;color:var(--muted);font-weight:600;text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:bottom}
+.mini th.r{text-align:right}
+.mini td{padding:5px 6px;border-bottom:1px solid var(--grid);color:var(--ink2);vertical-align:top}
+.mini td.r{white-space:nowrap}
+.mini .r{text-align:right}
+.mini tbody tr:nth-child(odd) td{background:color-mix(in srgb,var(--chip) 60%,transparent)}
+.more{font-size:12px;color:var(--muted);margin:6px 0 10px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:13px;color:var(--ink2)}
+.checks li{display:flex;gap:8px;align-items:center}
+.checks .ck{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--axis);display:grid;place-items:center;font-size:11px;font-weight:800}
+.checks li.ok .ck{background:var(--goodText);border-color:var(--goodText);color:#fff}
+.pipe{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+.pipe li{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);background:var(--chip);border-radius:999px;padding:4px 10px 4px 4px}
+.pipe .n{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--surface);color:var(--muted)}
+.pipe li.cur{color:var(--ink);font-weight:700;background:var(--hl)}
+.pipe li.cur .n{background:var(--s1);color:var(--onAccent)}
+.pipe li.done{color:var(--ink2)}
+.pipe li.done .n{background:var(--s1);color:var(--onAccent)}
+.runrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tool{font-size:12px;background:var(--chip);border-radius:6px;padding:4px 8px;color:var(--ink2);overflow-wrap:anywhere}
+.logd{margin-top:12px}
+.logd summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink2)}
+.logd .console{margin-top:8px;max-height:200px;min-height:0}
+.okpis{display:grid;gap:10px}
+.ok1{border-left:3px solid var(--s1);padding:2px 0 2px 12px;min-width:0}
+.ok1 .k{font-size:12.5px;color:var(--muted);font-weight:600}
+.ok1 .v{font-size:24px;font-weight:800;letter-spacing:-.015em;line-height:1.2;font-variant-numeric:tabular-nums}
+.ok1 .d{font-size:12.5px;color:var(--ink2)}
+.outl{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.outl h4{margin:0 0 8px;font-size:14px}
+.outl ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:13px;color:var(--ink2)}
+.out1 .hil{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.out1 .hil p{font-size:13px;margin:0 0 8px}
+.arrow{align-self:start;display:flex;justify-content:center;padding-top:150px}
+.arrow svg{width:40px;height:24px;overflow:visible}
+.aline{fill:none;stroke:var(--axis);stroke-width:2.5;stroke-dasharray:5 5}
+.ahead{fill:none;stroke:var(--axis);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.arrow.go .aline{stroke:var(--s1);animation:dash .6s linear 6}
+.arrow.go .ahead,.arrow.done .ahead{stroke:var(--s1)}
+.arrow.done .aline{stroke:var(--s1);stroke-dasharray:none}
+@keyframes dash{to{stroke-dashoffset:-20}}
+
+/* ---------- trước và sau ---------- */
+.bavs{display:grid;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);gap:0;align-items:stretch;margin:14px 0 16px}
+.side{border-radius:14px;padding:18px 20px;min-width:0}
+.side.bef{background:var(--chip)}
+.side.aft{background:var(--hl);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--s1) 40%,transparent)}
+.side .tag{display:inline-block;font-size:12px;font-weight:800;border-radius:6px;padding:2px 8px;margin-bottom:8px}
+.bef .tag{background:color-mix(in srgb,var(--s2) 22%,transparent);color:var(--ink)}
+.aft .tag{background:var(--s1);color:var(--onAccent)}
+.side p{font-size:18px;line-height:1.45;margin:0;color:var(--ink);font-weight:600}
+.vsarrow{align-self:center;text-align:center;font-size:26px;font-weight:800;color:var(--s1)}
+.cmpk{display:flex;gap:16px;font-size:12.5px;color:var(--ink2);margin-bottom:6px}
+.cmpk span{display:inline-flex;gap:6px;align-items:center}
+.cgrp{font-size:12px;font-weight:700;color:var(--muted);padding:14px 0 6px;border-bottom:1px solid var(--line)}
+.crow{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1.4fr) minmax(0,.8fr) 110px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--grid);font-size:13.5px}
+.cn{font-weight:600;color:var(--ink)}
+.cv{font-variant-numeric:tabular-nums}.cv.bf{color:var(--muted);text-align:right}.cv.af{font-weight:700}
+.cb{display:grid;gap:4px}.cb span{display:block;height:9px;border-radius:5px;min-width:3px}
+.cb .b0{background:var(--s2);opacity:.8}.cb .b1{background:var(--s1)}
+.cb.nob{height:9px}
+.cd{text-align:right}
+.dl{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.dl.up{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--goodText)}
+.dl.dn{background:color-mix(in srgb,var(--s2) 18%,transparent);color:var(--critText)}
+.gainp{border-top:4px solid var(--s1)}.costp{border-top:4px solid var(--s2)}
+.axt2{fill:var(--ink2);font-size:12.5px;font-weight:600}
+
+@media (min-width:1101px){.io.in1,.io.out1{position:sticky;top:64px}}
+@media (max-width:1100px){
+  .flow{grid-template-columns:minmax(0,1fr)}
+  .arrow{padding:4px 0;transform:rotate(90deg);height:40px}
+}
+@media (max-width:700px){
+  .bavs{grid-template-columns:minmax(0,1fr)}
+  .vsarrow{transform:rotate(90deg);padding:4px 0}
+  .crow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 10px}
+  .crow .cn{grid-column:1/-1}.crow .cb{grid-column:1/-1;order:5}.cv.bf{text-align:left}.cd{text-align:left}
+  .side p{font-size:16px}
+  .story{flex-direction:column}
+  .story .sg{flex:none}
+  .story .sa{transform:rotate(90deg);line-height:1}
+}
+@media (prefers-reduced-motion:reduce){.arrow.go .aline{animation:none}}
+
 /* svg */
 .axt{fill:var(--muted);font-size:11px;font-family:inherit}
 .axtitle{fill:var(--muted);font-size:11.5px;font-weight:600}
@@ -233,27 +343,57 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
     <div class="debate" id="debate"></div>
     <p class="bq" id="bq"></p>
   </section>
-  <section id="sRun" aria-labelledby="hRun">
-    <div class="sh"><h2 id="hRun">Chạy thử trên dữ liệu mẫu</h2>
-      <p>Đoán trước kết quả, rồi giao việc cho agent. Agent nhận yêu cầu, lấy dữ liệu, kiểm dữ liệu, chạy thuật toán, tự kiểm tra, rồi chờ người có thẩm quyền duyệt. <span id="demo10"></span></p></div>
-    <div class="rungrid">
-      <div class="panel">
+
+  <section id="sFlow" aria-labelledby="hFlow">
+    <div class="sh"><h2 id="hFlow">Đầu vào, xử lý, đầu ra</h2>
+      <p>Đoán trước kết quả, rồi giao việc cho agent và nhìn dữ liệu chảy qua ba bước. <span id="demo10"></span></p></div>
+    <p class="story" id="story" aria-live="polite"></p>
+    <div class="flow" id="flow">
+      <article class="io in1" id="cIn" aria-labelledby="tIn">
+        <header class="ioh"><span class="badge">1</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg><div><h3 id="tIn">Đầu vào</h3><span>Dữ liệu agent nhận</span></div></header>
+        <dl class="src"><div><dt>Nguồn</dt><dd id="inSrc"></dd></div><div><dt>Nhận</dt><dd id="inPull"></dd></div></dl>
+        <div class="tw"><table class="mini" id="inTbl"></table></div>
+        <p class="more" id="inMore"></p>
+        <ul class="checks" id="inChecks"></ul>
+      </article>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 24"><path class="aline" d="M2 12H34"/><path class="ahead" d="M28 5l8 7-8 7"/></svg></div>
+      <article class="io pr1" id="cPr" aria-labelledby="tPr">
+        <header class="ioh"><span class="badge">2</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg><div><h3 id="tPr">Xử lý</h3><span id="agName"></span></div><span class="chip" id="agStatus"></span></header>
+        <ol class="pipe" id="steps"></ol>
         <div class="legend" id="legend"></div>
         <div class="box" id="stage"></div>
         <div class="guess"><label for="gIn" id="gQ"></label><output id="gOut"></output><input type="range" id="gIn" style="grid-column:1/-1"><div class="gres" id="gRes" aria-live="polite"></div></div>
-        <button type="button" class="btn" id="bRun">Giao việc cho agent</button>
-        <div class="kpis" id="kpis"></div>
+        <div class="runrow"><button type="button" class="btn" id="bRun">Giao việc cho agent</button><code class="tool" id="tool"></code></div>
         <div class="ctrl" id="ctrl" hidden><label for="ctrlIn" id="ctrlLab"></label><output id="ctrlOut"></output><input type="range" id="ctrlIn"></div>
         <p class="twist" id="twist" hidden></p>
-      </div>
-      <aside class="panel agent" aria-live="polite">
-        <div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h3 id="agName" style="margin:0"></h3><span class="chip" id="agStatus"></span></div>
-        <ol class="steps" id="steps"></ol>
-        <div class="console" id="console"><div class="muted">Agent đang chờ việc.</div></div>
-        <div class="hil" id="hil" hidden><p style="margin:0 0 8px">Agent không tự đưa kết quả vào vận hành. Người phụ trách xem và ký.</p><button type="button" class="btn ok" id="bApprove">Duyệt kết quả</button></div>
-      </aside>
+        <details class="logd"><summary>Nhật ký agent</summary><div class="console" id="console"><div class="muted">Agent đang chờ việc.</div></div></details>
+      </article>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 24"><path class="aline" d="M2 12H34"/><path class="ahead" d="M28 5l8 7-8 7"/></svg></div>
+      <article class="io out1" id="cOut" aria-labelledby="tOut">
+        <header class="ioh"><span class="badge">3</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 14l2.5 2.5L16 12"/></svg><div><h3 id="tOut">Đầu ra</h3><span>Kết quả để người duyệt</span></div></header>
+        <div class="okpis" id="kpis"></div>
+        <div class="outl"><h4 id="outTitle">Chưa có kết quả</h4><ul id="outList"><li class="muted">Giao việc cho agent ở bước 2.</li></ul></div>
+        <div class="hil" id="hil" hidden><p>Agent không tự đưa kết quả vào vận hành. Người phụ trách xem và ký.</p><button type="button" class="btn ok" id="bApprove">Duyệt kết quả</button></div>
+      </article>
     </div>
   </section>
+
+  <section id="sBA" aria-labelledby="hBA">
+    <div class="sh"><h2 id="hBA">Trước và sau</h2><p>Cùng một việc, làm theo cách cũ và làm với agent. Chỉ số vận hành đo trên dữ liệu mẫu; chỉ số tài chính theo quy mô đang chọn.</p></div>
+    <div class="bavs">
+      <div class="side bef"><span class="tag">Trước</span><p id="befTxt"></p></div>
+      <div class="vsarrow" aria-hidden="true">→</div>
+      <div class="side aft"><span class="tag">Sau</span><p id="aftTxt"></p></div>
+    </div>
+    <div class="panel"><div class="cmpk"><span><i class="sw sq2"></i>Trước</span><span><i class="sw sq1"></i>Sau</span></div><div class="cmprows" id="cmp"></div></div>
+  </section>
+
+  <section id="sTrade" aria-labelledby="hTrade">
+    <div class="sh"><h2 id="hTrade">Được và mất</h2><p>Cán cân mỗi năm khi chạy đủ: giá trị kỳ vọng ở bên phải, chi phí và vốn ở bên trái. Những gì không đo bằng tiền nằm ở hai cột dưới.</p></div>
+    <div class="panel"><div class="box" id="bal"></div></div>
+    <div class="gl2"><div class="panel gainp"><h3>Được</h3><ul id="gain"></ul></div><div class="panel costp"><h3>Mất và phải chấp nhận</h3><ul id="cost"></ul></div></div>
+  </section>
+
   <section id="sFin" aria-labelledby="hFin">
     <div class="sh"><h2 id="hFin">Finance tính lại con số</h2><p id="finTxt"></p></div>
     <div class="fingrid">
@@ -266,15 +406,12 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
       </div>
     </div>
   </section>
-  <section id="sBA" aria-labelledby="hBA">
-    <h2 id="hBA">Trước và sau, được và mất</h2>
-    <div class="panel tw" style="margin-top:12px"><table class="ba" id="ba"></table></div>
-    <div class="gl2"><div class="panel"><h3>Được</h3><ul id="gain"></ul></div><div class="panel"><h3>Đánh đổi</h3><ul id="cost"></ul></div></div>
-  </section>
+
   <section id="sPort" aria-labelledby="hPort">
     <div class="sh"><h2 id="hPort">Vị trí trong danh mục 100 đề xuất</h2><p>Mỗi chấm là một đề xuất; chấm xanh là đề xuất máy chọn trong danh mục mặc định (ngân sách mặc định, khẩu vị rủi ro cân bằng, 12 đề xuất mỗi đợt).</p></div>
     <div class="portgrid"><div class="panel"><div class="box" id="pmap"></div></div><div class="facts" id="facts"></div></div>
   </section>
+
   <section id="sReso" aria-labelledby="hReso">
     <h2 id="hReso">HĐQT quyết</h2>
     <div class="decide" id="decide" role="group" aria-label="Quyết định của HĐQT">
@@ -284,6 +421,7 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
     </div>
     <div class="reso" id="reso"></div>
   </section>
+
   <section id="sAss" aria-labelledby="hAss">
     <h2 id="hAss">Giả định</h2>
     <ul class="ass">
@@ -930,7 +1068,7 @@ ARCH.cover = {
         for (let x0 = 0; x0 <= Math.max(...req); x0++) { const x = [x0]; for (let j = 1; j < Sn; j++) x.push(Math.max(0, req[j] - x[j - 1])); if (x[Sn - 1] + x[0] >= req[0]) { const s = x.reduce((a, b) => a + b, 0); if (!best || s < best.s) best = { x, s }; } }
         xo = best.x; covO = req.map((_, i) => xo[i] + xo[(i - 1 + Sn) % Sn]);
       }
-      S = { req, covH, covO, nH: hx.reduce((a, b) => a + b, 0), nO: xo.reduce((a, b) => a + b, 0) };
+      S = { req, covH, covO, xo, nH: hx.reduce((a, b) => a + b, 0), nO: xo.reduce((a, b) => a + b, 0) };
       S.save = 1 - S.nO / S.nH;
       if (S.save >= 0.08 && S.save <= 0.4) break;
     }
@@ -1074,7 +1212,7 @@ ARCH.inv = {
     };
     const ropH = sku.map(s => s.mu * L + 14 * s.mu), ropO = sku.map(s => s.mu * L + 1.88 * s.cv * s.mu * Math.sqrt(L));
     const H = sim(ropH), O = sim(ropO);
-    return { sku, H, O, days, F: 30, red: 1 - O.avg / H.avg };
+    return { sku, H, O, ropH, ropO, days, F: 30, red: 1 - O.avg / H.avg };
   },
   draw(g, W, H, S, k, P) {
     const m = { l: 46, r: 10, t: 22, b: 30 }, mx = Math.max(...S.H.inv, ...S.O.inv) * 1.05, sc = niceS(0, mx, 4), Y = axY(g, m, W, H, sc, `Giá trị tồn kho, ${P.unit}`);
@@ -1168,7 +1306,7 @@ ARCH.load = {
 ARCH.whale = {
   init(P, r0) {
     const r = rng(Math.floor(r0() * 1e9)), cu = [];
-    for (let i = 0; i < 60; i++) { const rev = Math.exp(4 + randn(r) * 0.9) * 10, gm = 0.18 + r() * 0.12, orders = 5 + r() * 60, serve = orders * 0.3 + rev * (0.03 + 0.25 * Math.pow(r(), 1.6)); cu.push({ rev, profit: rev * gm - serve }); }
+    for (let i = 0; i < 60; i++) { const rev = Math.exp(4 + randn(r) * 0.9) * 10, gm = 0.18 + r() * 0.12, orders = 5 + r() * 60, serve = orders * 0.3 + rev * (0.03 + 0.25 * Math.pow(r(), 1.6)); cu.push({ rev, gm, serve, profit: rev * gm - serve }); }
     const tot = cu.reduce((a, c) => a + c.profit, 0);
     const curve = arr => { let s = 0; return [0].concat(arr.map(c => (s += c.profit) / tot)); };
     const byP = cu.slice().sort((a, b) => b.profit - a.profit), byR = cu.slice().sort((a, b) => b.rev - a.rev), cP = curve(byP), cR = curve(byR);
@@ -1292,7 +1430,7 @@ ARCH.reg = {
       const coef = solve(A, bb), pred = X.map(x => x.reduce((s, v, i) => s + v * coef[i], 0));
       const naive = X.map(x => sc(0.38 + 0.62 * x[1]));
       const test = [...Array(20).keys()].map(i => i + 60), mae = p => test.reduce((s, i) => s + Math.abs(p[i] - Y[i]), 0) / 20, inTol = p => test.filter(i => Math.abs(p[i] - Y[i]) <= P.tol).length / 20;
-      S = { Y, pred, naive, test, eN: mae(naive), eM: mae(pred), tN: inTol(naive), tM: inTol(pred) };
+      S = { X, Y, pred, naive, test, eN: mae(naive), eM: mae(pred), tN: inTol(naive), tM: inTol(pred) };
       if (S.eM < S.eN * 0.6) break;
     }
     S.F = 20; return S;
@@ -1496,7 +1634,7 @@ ARCH.agent = {
       if (cls === 'tqx') E('path', { d: `M${x + 3},${y + 3}L${x + cs - 6},${y + cs - 6}M${x + cs - 6},${y + 3}L${x + 3},${y + cs - 6}`, class: 'xmark' }, g);
     });
     const y0 = 4 + rows * cs + 14;
-    if (k >= 0) { const bw = (W - 8) / P.kinds.length; P.kinds.forEach((kd, i) => { E('text', { x: 4 + i * bw, y: y0, class: 'axt' }, g, kd[0].length > 26 ? kd[0].slice(0, 25) + '…' : kd[0]); E('rect', { x: 4 + i * bw, y: y0 + 6, width: bw - 12, height: 8, rx: 4, class: 'track' }, g); E('rect', { x: 4 + i * bw, y: y0 + 6, width: Math.max(0, (bw - 12) * S.byKind[i]), height: 8, rx: 4, class: 'fill1' }, g); E('text', { x: 4 + i * bw, y: y0 + 30, class: 'axt' }, g, `${vp(S.byKind[i], 0)} tự động`); }); }
+    if (k >= 0) { const bw = (W - 8) / P.kinds.length; P.kinds.forEach((kd, i) => { { const mc = Math.max(6, Math.floor((bw - 14) / 6.3)); E('text', { x: 4 + i * bw, y: y0, class: 'axt' }, g, kd[0].length > mc ? kd[0].slice(0, mc - 1) + '…' : kd[0]); } E('rect', { x: 4 + i * bw, y: y0 + 6, width: bw - 12, height: 8, rx: 4, class: 'track' }, g); E('rect', { x: 4 + i * bw, y: y0 + 6, width: Math.max(0, (bw - 12) * S.byKind[i]), height: 8, rx: 4, class: 'fill1' }, g); E('text', { x: 4 + i * bw, y: y0 + 30, class: 'axt' }, g, `${vp(S.byKind[i], 0)} tự động`); }); }
     else E('text', { x: 4, y: y0 + 6, class: 'axt' }, g, `${n} ${P.task} đang chờ người làm tay`);
   },
   legend: P => `<span><i class="sw sq1"></i>Agent xử lý đúng</span><span><i class="sw sqx"></i>Agent xử lý sai, lọt qua</span><span><i class="sw sqh"></i>Chuyển người xử lý</span><span><i class="sw sqg"></i>Chờ xử lý</span>`,
@@ -1633,17 +1771,108 @@ ARCH.platform = {
   gate: () => '48 chỉ tiêu có định nghĩa và chủ sở hữu, báo cáo HĐQT không còn bước đối chiếu thủ công, trong 6 tháng',
 };
 
-/* ===== bộ máy trang use case: kể chuyện, chạy agent, Finance, danh mục, nghị quyết ===== */
+/* ===== đầu vào thật và đầu ra thật của từng loại bài toán, để người xem thấy agent nhận gì và trả gì ===== */
+const L3 = i => String.fromCharCode(65 + i);
+const lvl = d => (d < 0.3 ? 'Dễ' : d < 0.6 ? 'Vừa' : 'Khó');
+const IO = {
+  tsp: {
+    inputs: (P, S) => ({ cols: [capf(P.pt), P.ax ? P.ax[0] : 'Toạ độ X', P.ax ? P.ax[1] : 'Toạ độ Y'], rows: S.pts.slice(1, 6).map((p, i) => [`${capf(P.pt)} ${i + 1}`, vn(p.x), vn(p.y)]), more: `và ${S.pts.length - 6} ${P.pt} khác, cùng vị trí ${P.depot.toLowerCase()}` }),
+    outputs: (P, S) => ({ title: `Thứ tự ${S.pts.length - 1} ${P.pt} mới`, items: [`${P.depot} → ${S.opt.slice(1, -1).join(' → ')} → ${P.depot}`, `Tổng ${vn(S.Lo)} ${P.unit}, trước đó ${vn(S.Lh)}`] }),
+  },
+  pack: {
+    inputs: (P, S) => ({ cols: [capf(P.item), `Kích thước, ${P.unit}`], rows: S.sz.slice(0, 6).map((s, i) => [`${capf(P.item)} ${i + 1}`, vn(s)]), more: `và ${S.sz.length - 6} ${P.item} khác; mỗi ${P.bin} chứa ${P.cap} ${P.unit}` }),
+    outputs: (P, S) => ({ title: `Kế hoạch xếp ${S.ff.length} ${P.bin}`, items: S.ff.slice(0, 4).map((b, j) => `${capf(P.bin)} ${j + 1}: ${b.items.length} ${P.item}, lấp ${vp(b.sum / S.C)}`).concat(S.ff.length > 4 ? [`và ${S.ff.length - 4} ${P.bin} khác`] : []) }),
+  },
+  assign: {
+    inputs: (P, S) => ({ cols: ['', ...[0, 1, 2, 3].map(j => `${P.rp} ${L3(j)}`)], rows: [0, 1, 2, 3].map(i => [`${P.lp} ${i + 1}`, ...[0, 1, 2, 3].map(j => vn(S.c[i][j]))]), more: `Bảng đầy đủ ${S.n}×${S.n}, đơn vị: ${P.unit}` }),
+    outputs: (P, S) => ({ title: 'Bảng ghép mới', items: S.op.slice(0, 5).map((j, i) => `${P.lp} ${i + 1} → ${P.rp} ${L3(j)}: ${vn(S.c[i][j])}`).concat([`và ${S.n - 5} cặp khác; tổng ${vn(S.Co)} ${P.unit}`]) }),
+  },
+  knap: {
+    inputs: (P, S) => ({ cols: [capf(P.item), `${capf(P.w)}, ${P.wu}`, `${capf(P.v)}, ${P.vu}`], rows: S.it.slice(0, 5).map((t, i) => [`${capf(P.item)} ${i + 1}`, vn(t.w, t.w < 10 ? 1 : 0), vn(t.v, t.v < 10 ? 1 : 0)]), more: `và ${S.it.length - 5} ${P.item} khác; ${P.cap}: ${vn(S.cap)} ${P.wu}` }),
+    outputs: (P, S) => ({ title: `Chọn ${S.os.size} ${P.item}`, items: [`${capf(P.item)} số ${[...S.os].sort((a, b) => a - b).map(i => i + 1).join(', ')}`, `${capf(P.v)}: ${vn(S.Vo)} ${P.vu}, trước đó ${vn(S.Vh)}`, `Dùng ${vp(S.Wo / S.cap)} ${P.cap}`] }),
+  },
+  cover: {
+    inputs: (P, S) => ({ cols: ['Khung giờ', `Cần, ${P.res}`], rows: P.slots.map((s, i) => [s, vn(S.req[i])]), more: `Ca dài 8 giờ; nhu cầu trung bình 8 tuần` }),
+    outputs: (P, S) => ({ title: `Lịch ca mới, ${S.nO} ca mỗi ngày`, items: S.xo.map((x, i) => (x ? `Ca bắt đầu ${P.slots[i].split('–')[0]}h: ${x} ${P.res}` : null)).filter(Boolean) }),
+  },
+  loc: {
+    inputs: (P, S) => ({ cols: ['Khách', 'Chuyến mỗi tháng'], rows: S.cu.slice(0, 5).map((c, i) => [`Khách ${i + 1}`, vn(c.w)]), more: `và ${S.cu.length - 5} khách khác; 6 vị trí kho khả thi` }),
+    outputs: (P, S) => ({ title: `Mạng lưới ${S.best.set.length} kho`, items: [`Mở kho ${S.best.set.map(j => j + 1).join(', ')}`, `Không mở kho ${[0, 1, 2, 3, 4, 5].filter(j => !S.best.set.includes(j)).map(j => j + 1).join(', ')}`, `Chi phí năm ${vn(S.best.tot, 1)} ${P.unit}, đề xuất các vùng ${vn(S.habit.tot, 1)}`] }),
+  },
+  alloc: {
+    inputs: (P, S) => S.mode === 'margin' ? ({ cols: ['Khách', `Nhu cầu, ${P.unit}`, 'Biên, tr/tấn', 'Cam kết'], rows: S.ent.slice(0, 5).map((e, i) => [`${P.ent} ${L3(i)}`, vn(e.d), vn(e.m, 1), e.lb ? vn(e.lb) : '—']), more: `và ${S.ent.length - 5} khách khác; hàng có ${vn(S.Sup)} ${P.unit}` }) : ({ cols: ['Nhà cung cấp', `Năng lực, ${P.unit}`, 'Đơn giá, tr/tấn'], rows: S.ent.map((e, i) => [`${P.ent} ${L3(i)}`, vn(e.cap), vn(e.u, 1)]), more: `Cần mua ${vn(S.Sup)} ${P.unit}; mỗi nhà tối đa 40%` }),
+    outputs: (P, S) => ({ title: 'Phân bổ mới', items: S.opt.map((x, i) => [x, i]).filter(a => a[0] > 0.5).slice(0, 5).map(([x, i]) => `${P.ent} ${L3(i)}: ${vn(x)} ${P.unit}`).concat(S.mode === 'margin' ? [`Lãi gộp ${vn(S.Vo)} triệu đồng`] : [`Chi phí ${vn(S.Co)} triệu đồng`]) }),
+  },
+  inv: {
+    inputs: (P, S) => ({ cols: ['Mặt hàng', 'Bán TB mỗi ngày', 'Độ biến động'], rows: S.sku.map((s, i) => [`Mặt hàng ${i + 1}`, vn(s.mu), vp(s.cv)]), more: 'Thời gian chờ hàng 7 ngày; 180 ngày lịch sử' }),
+    outputs: (P, S) => ({ title: 'Điểm đặt hàng mới', items: S.sku.map((s, i) => `Mặt hàng ${i + 1}: ${vn(S.ropH[i])} → ${vn(S.ropO[i])} đơn vị`) }),
+  },
+  eoq: {
+    inputs: (P, S) => ({ cols: ['Vật tư', 'Nhu cầu năm', 'Phí mỗi lần đặt, tr', 'Lưu kho, tr/đv/năm'], rows: S.mats.map((m, i) => [`Vật tư ${i + 1}`, vn(m.D), vn(m.Sc, 1), vn(m.Hc, 2)]), more: '' }),
+    outputs: (P, S) => ({ title: 'Cỡ lô mới', items: S.mats.map((m, i) => `Vật tư ${i + 1}: ${vn(m.Q0)} → ${vn(m.Qs)} đơn vị mỗi lần`) }),
+  },
+  load: {
+    inputs: (P, S) => ({ cols: ['Thiết bị', 'kW', 'Giờ chạy', 'Cho phép'], rows: S.jobs.slice(0, 5).map(j => [j.nm, vn(j.kw), vn(j.dur), `${j.e}h–${j.l}h`]), more: `và ${S.jobs.length - 5} thiết bị khác; biểu giá điện 24 giờ` }),
+    outputs: (P, S) => ({ title: 'Lịch chạy mới', items: S.jobs.map((j, i) => (S.sO[i] !== S.sH[i] ? `${j.nm}: ${S.sH[i]}h → ${S.sO[i]}h` : null)).filter(Boolean).slice(0, 6) }),
+  },
+  whale: {
+    inputs: (P, S) => ({ cols: ['Khách', 'Doanh thu', 'Biên gộp', 'Chi phí phục vụ'], rows: S.cu.slice(0, 5).map((c, i) => [`Khách ${i + 1}`, vn(c.rev), vp(c.gm), vn(c.serve)]), more: `và 55 khách khác; đơn vị triệu đồng` }),
+    outputs: (P, S) => ({ title: 'Khách lỗ lớn nhất cần xử lý', items: S.cu.map((c, i) => [c, i]).sort((a, b) => a[0].profit - b[0].profit).slice(0, 4).map(([c, i]) => `Khách ${i + 1}: doanh thu ${vn(c.rev)}, lỗ ${vn(-c.profit)} triệu đồng`) }),
+  },
+  sim: {
+    inputs: (P, S, fmt) => ({ cols: ['Giả định', 'Hiện tại', 'Đề xuất'], rows: [['Mức trung bình', fmt(P.A[1]), fmt(P.B[1])], ['Dao động', P.risk ? fmt(P.A[2]) : P.A[2] + '%', P.risk ? fmt(P.B[2]) : P.B[2] + '%'], ['Xác suất sự cố', vp(P.A[3]), vp(P.B[3])], ['Tác động sự cố', P.A[4] ? fmt(P.A[4]) : '—', P.B[4] ? fmt(P.B[4]) : '—']], more: 'Giả định do Finance ký, từ 36 tháng lịch sử' }),
+    outputs: (P, S, fmt) => ({ title: 'Khuyến nghị', items: [S.better >= 0.5 ? `Chọn “${P.B[0].toLowerCase()}”` : `Cân nhắc: đề xuất chỉ tốt hơn ở ${vp(S.better)} kịch bản`, `Tốt hơn ở ${vp(S.better)} trong ${vn(S.N)} kịch bản`, `10% xấu nhất: ${fmt(P.low ? S.sB.p90 : S.sB.p10)}, hiện tại ${fmt(P.low ? S.sA.p90 : S.sA.p10)}`] }),
+  },
+  ts: {
+    inputs: (P, S) => ({ cols: [capf(P.step), `${P.lab}, ${P.unit}`], rows: S.y.slice(19, 24).map((v, i) => [`${capf(P.step)} ${20 + i}`, vn(v, v < 100 ? 1 : 0)]), more: `trong 36 ${P.step} lịch sử; 12 ${P.step} cuối giữ lại để kiểm` }),
+    outputs: (P, S) => ({ title: `Dự báo 12 ${P.step} tới`, items: S.fc.slice(0, 4).map((v, i) => `${capf(P.step)} ${25 + i}: ${vn(v, v < 100 ? 1 : 0)} ${P.unit}`).concat([`Sai số ${vp(S.eM, 1)}, cách cũ ${vp(S.eN, 1)}`]) }),
+  },
+  reg: {
+    inputs: (P, S) => ({ cols: ['#', ...P.x.map(s => s.split(' ').slice(0, 2).join(' ')), P.y.split(' ').slice(0, 2).join(' ')], rows: [0, 1, 2, 3].map(i => [String(i + 1), vn(S.X[i][1] * 100), vn(S.X[i][2] * 100), vn(S.X[i][3] * 100), vn(S.Y[i], 1)]), more: `và 76 ${P.ent} khác; yếu tố quy về thang 0 đến 100` }),
+    outputs: (P, S) => ({ title: 'Dự đoán mới', items: S.test.slice(0, 4).map(i => `${capf(P.ent)} ${i + 1}: dự đoán ${vn(S.pred[i], 1)}, thực tế ${vn(S.Y[i], 1)} ${P.unit}`) }),
+  },
+  rank: {
+    inputs: (P, S) => ({ cols: ['#', ...P.feats.map(s => s.split(' ').slice(0, 3).join(' '))].concat(P.money === false && !P.lo ? [] : ['Giá trị']), rows: S.ent.slice(0, 5).map((e, i) => [String(i + 1), ...e.f.map(x => vn(x * 100))].concat(P.money === false && !P.lo ? [] : [vn(e.v)])), more: `và ${S.N - 5} ${P.ent} khác; yếu tố quy về thang 0 đến 100${P.money === false && !P.lo ? '' : '; giá trị tính bằng ' + P.unit}` }),
+    outputs: (P, S) => ({ title: `${S.k} ${P.ent} được ưu tiên`, items: S.oM.slice(0, 5).map((i, r) => `${r + 1}. ${capf(P.ent)} số ${i + 1}: xác suất ${vp(S.ent[i].p)}${P.money === false && !P.lo ? '' : `, giá trị ${vn(S.ent[i].v)} ${P.unit}`}`).concat([`và ${S.k - 5} ${P.ent} khác`]) }),
+  },
+  cls: {
+    inputs: (P, S) => ({ cols: [capf(P.item), 'Quy tắc cũ xếp vào'], rows: S.items.slice(0, 5).map((x, i) => [`${capf(P.item)} ${i + 1}`, P.cats[x.rule]]), more: `và ${S.items.length - 5} ${P.item} khác; nhãn thật do người gán trên mẫu kiểm` }),
+    outputs: (P, S) => { const auto = S.items.filter(x => x.conf >= S.tau); return { title: 'Kết quả phân loại', items: P.cats.map((c, k) => `${c}: ${auto.filter(x => x.model === k).length}`).concat([`${S.items.length - auto.length} ${P.item} chuyển người xem`]) }; },
+  },
+  agent: {
+    inputs: (P, S) => ({ cols: ['Việc', 'Loại', 'Độ khó'], rows: S.tasks.slice(0, 5).map((t, i) => [`${capf(P.task)} ${i + 1}`, P.kinds[t.kd][0], lvl(t.diff)]), more: `và ${S.tasks.length - 5} ${P.task} khác đang chờ` }),
+    outputs: (P, S) => { const a = S.tasks.filter(t => t.conf >= S.tau).length; return { title: 'Kết quả xử lý', items: [`${a} ${P.task} agent tự xử lý`, `${S.tasks.length - a} ${P.task} chuyển người làm`, `${S.wrong} lỗi lọt qua, kiểm mẫu 5% để bắt`, `Giờ công mỗi tháng: ${vn(S.hBefore)} → ${vn(S.hAfter)}`] }; },
+  },
+  anom: {
+    inputs: (P, S) => ({ cols: ['Mã', `Giá trị, ${P.amt}`], rows: S.tx.slice(0, 6).map((t, i) => [`${capf(P.tx)} ${i + 1}`, vn(t.a, t.a < 10 ? 1 : 0)]), more: `và ${S.tx.length - 6} ${P.tx} khác, cùng lịch sử 12 tháng` }),
+    outputs: (P, S) => ({ title: 'Danh sách cảnh báo', items: S.tx.map((t, i) => [t, i]).filter(a => a[0].s >= S.tau).sort((a, b) => b[0].s - a[0].s).slice(0, 5).map(([t, i]) => `${capf(P.tx)} ${i + 1}: ${t.kind >= 0 ? P.kinds[t.kind].toLowerCase() : 'cần người xem'}, điểm ${vn(t.s, 2)}`).concat([`Tổng ${S.tp + S.fp} cảnh báo cho người xem`]) }),
+  },
+  vision: {
+    inputs: (P, S) => P.mode === 'count' ? ({ cols: [capf(P.cell), 'Số trên sổ'], rows: S.cells.slice(0, 6).map((c, i) => [`${capf(P.cell)} ${i + 1}`, vn(c.book)]), more: `và ${S.cells.length - 6} ô khác; ảnh camera mỗi ô` }) : P.mode === 'grade' ? ({ cols: [capf(P.cell), 'Đầu vào'], rows: S.cells.slice(0, 5).map((c, i) => [`${capf(P.cell)} ${i + 1}`, 'ảnh 4 mặt và mã trả hàng']), more: `và ${S.cells.length - 5} kiện khác` }) : ({ cols: [capf(P.cell), 'Khu vực'], rows: S.cells.slice(0, 5).map((c, i) => [`${capf(P.cell)} ${i + 1}`, `Khu ${1 + (i % 4)}, camera ${i + 1}`]), more: `và ${S.cells.length - 5} khung hình khác trong ca` }),
+    outputs: (P, S) => { const fin = c => (c.conf < S.tau ? c.t : c.det); if (P.mode === 'count') return { title: 'Kết quả kiểm đếm', items: [`Tổng đếm được: ${vn(S.cells.reduce((a, c) => a + fin(c), 0))} ${P.obj}`, `${S.cells.filter(c => c.book !== fin(c)).length} ô lệch sổ cần điều chỉnh`, `${S.cells.filter(c => c.conf < S.tau).length} ô người kiểm lại`] }; if (P.mode === 'grade') { const g = [0, 1, 2].map(k => S.cells.filter(c => fin(c) === k).length); return { title: 'Kết quả phân loại', items: [`Loại A, nhập kho bán lại: ${g[0]}`, `Loại B, tân trang: ${g[1]}`, `Loại C, thanh lý: ${g[2]}`] }; } return { title: 'Kết quả rà soát', items: [`${S.found} ${P.obj} cần xử lý ngay`, `${S.fps} báo nhầm`, `${S.cells.filter(c => c.conf < S.tau).length} khung hình người xem lại`] }; },
+  },
+  platform: {
+    inputs: (P, S) => ({ cols: ['Chỉ tiêu', 'TC', 'KD', 'VH', 'KH'], rows: S.metrics.map((m, i) => [m, ...S.vals[i].map(v => vn(v, 1))]), more: 'TC tài chính, KD kinh doanh, VH vận hành, KH kế hoạch; con số chuẩn = 100' }),
+    outputs: () => ({ title: 'Bộ chỉ tiêu chuẩn', items: ['48 chỉ tiêu, mỗi chỉ tiêu một định nghĩa', 'Mỗi chỉ tiêu có một chủ sở hữu', 'Mọi con số truy được về sổ cái', '52 đề xuất khác được nâng xác suất'] }),
+  },
+  curve: {
+    inputs: (P, S) => ({ cols: ['Tuần', 'Giá, chỉ số', 'Sản lượng'], rows: S.obs.slice(0, 5).map((o, i) => [`Tuần ${i + 1}`, vn(o.p, 1), vn(o.q)]), more: 'và 35 tuần khác; chi phí biến đổi 60' }),
+    outputs: (P, S) => ({ title: 'Giá đề xuất', items: [`Đổi giá ${S.pOpt >= S.p0 ? '+' : '−'}${vn(Math.abs(S.pOpt / S.p0 - 1) * 100, 1)}%`, `Lãi mỗi tuần +${vp(S.prO / S.pr0 - 1, 1)}`, `Trong biên độ cho phép ±${S.guard}%`] }),
+  },
+};
+Object.keys(IO).forEach(k => Object.assign(ARCH[k], IO[k]));
+
+/* ===== bộ máy trang use case: đầu vào, xử lý, đầu ra; trước và sau; được và mất; Finance; danh mục; nghị quyết ===== */
 (function () {
   'use strict';
   const $ = s => document.querySelector(s);
   const RM = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
   const u = UC[UCID - 1], P = CFG[UCID], A = ARCH[P.a];
-  const st = { preset: 's', phase: 'idle', guessed: null, k: -1, decision: null, approved: false };
+  const st = { preset: 's', phase: 'idle', step: -1, guessed: null, k: -1, decision: null, approved: false };
   let S = A.init(P, rng(UCID * 7919 + 13));
   const GH = 'https://tuanai2024-sg.github.io/train-the-trainer-game/demo/';
 
-  /* ---------- tiền theo quy mô ---------- */
+  /* ---------- định dạng ---------- */
   const nf = (x, d) => new Intl.NumberFormat('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x);
   function money(x) {
     const Pp = PRESETS[st.preset], sg = x < -1e-9 ? '−' : '', a = Math.abs(x);
@@ -1661,6 +1890,9 @@ ARCH.platform = {
     return PRESETS[st.preset].cur === 'USD' ? nf(x / 1e9, 1) : nf(x, Math.abs(x) < 10 ? 1 : 0);
   }
   const fmtArg = P.a === 'sim' ? simFmt : undefined;
+  const short = m => m.replace(' tỷ đồng', '').replace(' tỷ USD', '').replace(' triệu đồng', ' tr').replace(' triệu USD', ' tr USD');
+
+  /* ---------- số liệu tài chính ---------- */
   function fin() {
     const C = ctxOf({ preset: st.preset, hz: 3 }), it = evalItem(u, C, false, 1, 0), H = 36;
     let B1 = 0, O = 0; for (let k = 1; k <= H; k++) { if (k > it.t) { B1 += it.val / 12 * Math.min(1, (k - it.t) / RAMP); O += it.opex / 12; } }
@@ -1684,9 +1916,9 @@ ARCH.platform = {
     return { po, pi, items, rank, chosen: io !== undefined, inI, why, n: po.sel.length };
   }
 
-  /* ---------- dựng khung ---------- */
+  /* ---------- khung tĩnh ---------- */
   const OW = OWN[u.d], skeptic = u.d === 0 ? 'Trưởng kiểm toán nội bộ' : 'Giám đốc tài chính';
-  const AG = 'Agent ' + u.name.charAt(0).toLowerCase() + u.name.slice(1);
+  const AG = 'Agent ' + lf(u.name);
   function staticTop() {
     document.title = u.name + ' | Use case ' + UCID;
     $('#kick').innerHTML = `<b>Use case ${UCID} trên 100, ${DOM[u.d].toLowerCase()}.</b> Vertex là doanh nghiệp mô phỏng; dữ liệu chạy thử là dữ liệu mẫu, nghị quyết là mô phỏng.`;
@@ -1699,11 +1931,14 @@ ARCH.platform = {
     $('#jump').addEventListener('change', e => { location.href = e.target.value + '.html'; });
     $('#agName').textContent = AG;
     $('#legend').innerHTML = A.legend(P, S);
+    $('#tool').textContent = A.tool(P, S);
+    $('#befTxt').textContent = u.before + '.';
+    $('#aftTxt').textContent = u.after + '.';
     if (DEMO10[UCID]) $('#demo10').innerHTML = `Use case này có bản demo chi tiết riêng: <a href="${GH + DEMO10[UCID]}" target="_blank" rel="noopener">mở bản chi tiết</a>.`;
   }
   function renderMoney() {
     const f = fin(), it = f.it;
-    $('#lede').innerHTML = `Hôm nay: ${esc(u.before.charAt(0).toLowerCase() + u.before.slice(1))}. Đề xuất: ${esc(u.after.charAt(0).toLowerCase() + u.after.slice(1))}. Tờ trình xin <b>${money(it.cap)}</b> và hứa <b>${money(it.val)} mỗi năm</b>.`;
+    $('#lede').innerHTML = `Hôm nay: ${esc(lf(u.before))}. Đề xuất: ${esc(lf(u.after))}. Tờ trình xin <b>${money(it.cap)}</b> và hứa <b>${money(it.val)} mỗi năm</b>.`;
     document.querySelectorAll('#scaleSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === st.preset)));
     $('#stats').innerHTML = [
       ['Giá trị mỗi năm nếu thành công', money(it.val), 'đòn bẩy: ' + LEV[u.lev].toLowerCase()],
@@ -1714,15 +1949,26 @@ ARCH.platform = {
     $('#debate').innerHTML = `<div class="quote q1"><p>“${esc(u.after)}. Tôi xin ${money(it.cap)}, mỗi năm công ty có thêm ${money(it.val)}.”</p><div class="who">${OW}, người đề xuất</div></div>
       <div class="quote q2"><p>“${esc(u.trade)}. Và ${money(it.val)} là con số khi mọi thứ đều đúng. Xác suất thành công thật là bao nhiêu, và bao giờ tiền mới về?”</p><div class="who">${skeptic}</div></div>`;
     $('#bq').textContent = `Câu hỏi cho HĐQT: có nên chi ${money(it.cap)} khi xác suất thành công ước tính ${pct(it.p)} và tiền chỉ bắt đầu về sau ${it.t} tháng?`;
-    renderFin(f); renderBA(f); renderPort(); renderReso(f);
+    renderFin(f); renderCompare(f); renderBalance(f); renderPort(); renderReso(f);
   }
 
-  /* ---------- sân khấu chạy thử ---------- */
-  function W() { return Math.max(300, Math.round($('#stage').clientWidth)); }
+  /* ---------- đầu vào ---------- */
+  function renderInput() {
+    const I = A.inputs(P, S, fmtArg);
+    $('#inSrc').textContent = SRC[u.d];
+    $('#inPull').textContent = capf(A.pull(P, S));
+    $('#inTbl').innerHTML = `<thead><tr>${I.cols.map((c, i) => `<th class="${i ? 'r' : ''}">${esc(c)}</th>`).join('')}</tr></thead><tbody>${I.rows.map(r => `<tr>${r.map((c, i) => `<td class="${i ? 'r' : ''}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+    $('#inMore').textContent = I.more ? capf(I.more) + '.' : '';
+    const ok = st.step > 2 || st.phase === 'done';
+    $('#inChecks').innerHTML = A.dq(P, S).map(c => `<li class="${ok ? 'ok' : ''}"><span class="ck">${ok ? '✓' : ''}</span>${esc(c)}</li>`).join('');
+  }
+
+  /* ---------- xử lý ---------- */
+  function W() { return Math.max(280, Math.round($('#stage').clientWidth)); }
   function draw() {
-    const box = $('#stage'), w = W(), h = Math.round(w < 520 ? Math.max(300, w * 0.85) : Math.min(420, Math.max(320, w * 0.5)));
+    const box = $('#stage'), w = W(), h = Math.round(w < 520 ? Math.max(290, w * 0.85) : Math.min(400, Math.max(300, w * 0.62)));
     box.innerHTML = '';
-    const g = E('svg', { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': `Chạy thử ${u.name.toLowerCase()} trên dữ liệu mẫu` }, box);
+    const g = E('svg', { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': `Chạy thử ${lf(u.name)} trên dữ liệu mẫu` }, box);
     A.draw(g, w, h, S, st.k, P, fmtArg);
   }
   function guessUI() {
@@ -1731,45 +1977,112 @@ ARCH.platform = {
     const out = () => { $('#gOut').textContent = nf(+gi.value, G.step < 1 ? 1 : 0) + G.unit; };
     out(); gi.oninput = out;
   }
-  function kpis() {
-    if (st.phase !== 'done') { $('#kpis').innerHTML = [1, 2, 3].map(() => '<div class="kpi"><div class="k">Chưa chạy</div><div class="v">—</div><div class="d">Giao việc cho agent để xem kết quả</div></div>').join(''); return; }
-    $('#kpis').innerHTML = A.kpis(P, S, fmtArg).map(x => `<div class="kpi"><div class="k">${x[0]}</div><div class="v">${x[1]}</div><div class="d">${x[2]}</div></div>`).join('');
-    const G = A.guess(P, S), gv = +$('#gIn').value;
-    const near = Math.abs(gv - G.truth) <= Math.max(G.step * 2, Math.abs(G.truth) * 0.15);
+  const STEPS = [['Nhận yêu cầu', 0], ['Lấy dữ liệu', 0], ['Kiểm dữ liệu', 0], ['Chạy thuật toán', 1], ['Tự kiểm tra', 1], ['Người duyệt', 2]];
+  function steps(cur) {
+    st.step = cur;
+    $('#steps').innerHTML = STEPS.map((s, i) => `<li class="g${s[1]} ${i < cur ? 'done' : i === cur ? 'cur' : ''}"><span class="n">${i < cur ? '✓' : i + 1}</span>${s[0]}</li>`).join('');
+    const stage = cur < 0 ? -1 : cur >= 6 ? 3 : STEPS[cur][1];
+    ['#cIn', '#cPr', '#cOut'].forEach((id, i) => { const el = $(id); el.classList.toggle('live', stage === i); el.classList.toggle('past', stage > i || (stage === 3)); });
+    document.querySelectorAll('.arrow').forEach((a, i) => { a.classList.toggle('go', stage === i + 1 && !st.approved); a.classList.toggle('done', stage > i + 1 || st.approved); });
+  }
+  function status(cls, txt) { const c = $('#agStatus'); c.className = 'chip ' + cls; c.textContent = txt; }
+  let t0 = 0;
+  function log(html) { const d = document.createElement('div'), s = ((performance.now() - t0) / 1000).toFixed(1); d.innerHTML = `<span class="muted">${s}s</span> ${html}`; $('#console').appendChild(d); $('#console').scrollTop = 1e6; }
+  const sleep = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
+
+  /* ---------- đầu ra ---------- */
+  function renderOutput() {
+    if (st.phase !== 'done') {
+      $('#kpis').innerHTML = [1, 2, 3].map(() => '<div class="ok1"><div class="k">Chưa chạy</div><div class="v">—</div></div>').join('');
+      $('#outTitle').textContent = 'Chưa có kết quả'; $('#outList').innerHTML = '<li class="muted">Giao việc cho agent ở bước 2.</li>';
+      return;
+    }
+    $('#kpis').innerHTML = A.kpis(P, S, fmtArg).map(x => `<div class="ok1"><div class="k">${x[0]}</div><div class="v">${x[1]}</div><div class="d">${x[2]}</div></div>`).join('');
+    const O = A.outputs(P, S, fmtArg);
+    $('#outTitle').textContent = O.title; $('#outList').innerHTML = O.items.map(s => `<li>${esc(s)}</li>`).join('');
+  }
+  function renderStory() {
+    const O = st.phase === 'done' ? A.outputs(P, S, fmtArg) : null;
+    $('#story').innerHTML = `<span class="sg s0"><b>Đầu vào</b>${esc(capf(A.pull(P, S)))}</span><span class="sa" aria-hidden="true">→</span><span class="sg s1"><b>Xử lý</b>${esc(AG)} chạy thuật toán, tự kiểm tra</span><span class="sa" aria-hidden="true">→</span><span class="sg s2"><b>Đầu ra</b>${O ? esc(O.title) : 'Kết quả chờ người duyệt'}</span>`;
+  }
+  function afterResult() {
+    renderOutput(); renderStory(); renderCompare(fin()); renderBalance(fin()); renderReso(fin());
+    const G = A.guess(P, S), gv = +$('#gIn').value, near = Math.abs(gv - G.truth) <= Math.max(G.step * 2, Math.abs(G.truth) * 0.15);
     $('#gRes').innerHTML = `Bạn đoán <b>${nf(gv, G.step < 1 ? 1 : 0)}${G.unit}</b>, máy đạt <b>${nf(G.truth, G.step < 1 ? 1 : 0)}${G.unit}</b>. ${near ? 'Trực giác của bạn khá sát.' : gv < G.truth ? 'Bạn đánh giá thấp bài toán này.' : 'Bạn kỳ vọng nhiều hơn những gì dữ liệu cho phép.'}`;
     $('#twist').hidden = false; $('#twist').textContent = A.twist(P, S, fmtArg);
     if (A.ctrl) {
       const c = A.ctrl(P, S), el = $('#ctrlIn');
       $('#ctrl').hidden = false; $('#ctrlLab').textContent = c.label;
-      if (!el.dataset.init) { el.min = c.min; el.max = c.max; el.step = c.step; el.value = c.val; el.dataset.init = '1'; el.addEventListener('input', () => { A.apply(P, S, +el.value); $('#ctrlOut').textContent = c.fmt(+el.value); draw(); kpis(); renderBA(fin()); renderReso(fin()); }); }
+      if (!el.dataset.init) { el.min = c.min; el.max = c.max; el.step = c.step; el.value = c.val; el.dataset.init = '1'; el.addEventListener('input', () => { A.apply(P, S, +el.value); $('#ctrlOut').textContent = c.fmt(+el.value); draw(); afterResult(); }); }
       $('#ctrlOut').textContent = c.fmt(+el.value);
     }
   }
-
-  /* ---------- agent ---------- */
-  const STEPS = ['Nhận yêu cầu', 'Lấy dữ liệu', 'Kiểm dữ liệu', 'Chạy kỹ năng', 'Tự kiểm tra', 'Người duyệt'];
-  function steps(cur) { $('#steps').innerHTML = STEPS.map((s, i) => `<li class="${i < cur ? 'done' : i === cur ? 'cur' : ''}"><span class="n">${i < cur ? '✓' : i + 1}</span>${s}</li>`).join(''); }
-  function status(cls, txt) { const c = $('#agStatus'); c.className = 'chip ' + cls; c.textContent = txt; }
-  let t0 = 0;
-  function log(html) { const d = document.createElement('div'), s = ((performance.now() - t0) / 1000).toFixed(1); d.innerHTML = `<span class="muted">${s}s</span> ${html}`; $('#console').appendChild(d); $('#console').scrollTop = 1e6; }
-  const sleep = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
   async function run() {
     if (st.phase === 'run') return;
     st.phase = 'run'; st.guessed = +$('#gIn').value; $('#bRun').disabled = true; $('#console').innerHTML = ''; t0 = performance.now();
-    status('run', 'Đang làm'); steps(0);
-    log(`<b>${OW}:</b> “${A.ask(P, S)}”`); await sleep(450);
-    steps(1); log(`Lấy dữ liệu từ <b>${SRC[u.d]}</b>: ${A.pull(P, S)}`); await sleep(450);
-    steps(2); A.dq(P, S).forEach(x => log(`<span class="okc">✓</span> ${x}`)); await sleep(450);
+    status('run', 'Đang làm'); steps(0); renderInput();
+    log(`<b>${OW}:</b> “${A.ask(P, S)}”`); await sleep(500);
+    steps(1); log(`Lấy dữ liệu từ <b>${SRC[u.d]}</b>: ${A.pull(P, S)}`); await sleep(550);
+    steps(2); renderInput(); await sleep(250); st.step = 3; renderInput(); A.dq(P, S).forEach(x => log(`<span class="okc">✓</span> ${x}`)); await sleep(450);
     steps(3); log(`Gọi kỹ năng <b>${A.tool(P, S)}</b>`);
-    const F = S.F, dur = RM ? 0 : 1800;
+    const F = S.F, dur = RM ? 0 : 1900;
     await new Promise(res => { if (!dur) { st.k = F - 1; draw(); res(); return; } const start = performance.now(); const tick = now => { const k = Math.min(F - 1, Math.floor((now - start) / dur * F)); if (k !== st.k) { st.k = k; draw(); } if (now - start < dur) requestAnimationFrame(tick); else { st.k = F - 1; draw(); res(); } }; requestAnimationFrame(tick); });
-    steps(4); A.checks(P, S).forEach(c => log(`${c[1] ? '<span class="okc">✓</span>' : '<span class="bad">✗</span>'} ${c[0]}`)); await sleep(350);
-    steps(5); st.phase = 'done'; status('wait', 'Chờ người duyệt');
+    steps(4); A.checks(P, S).forEach(c => log(`${c[1] ? '<span class="okc">✓</span>' : '<span class="bad">✗</span>'} ${c[0]}`)); await sleep(450);
+    st.phase = 'done'; steps(5); status('wait', 'Chờ người duyệt');
     log(`Chuyển kết quả cho <b>${OW.toLowerCase()}</b> duyệt. ${CTRL[u.tec]}.`);
     $('#hil').hidden = false; $('#bRun').textContent = 'Chạy lại'; $('#bRun').disabled = false;
-    kpis(); renderBA(fin()); renderReso(fin());
+    afterResult();
   }
   function approve() { if (st.phase !== 'done' || st.approved) return; st.approved = true; steps(6); status('ok', 'Đã duyệt'); log(`<span class="okc">✓</span> <b>${OW}</b> đã duyệt kết quả. Finance ghi nhận vào sổ đo giá trị.`); $('#bApprove').disabled = true; $('#bApprove').textContent = 'Đã duyệt'; }
+
+  /* ---------- trước và sau ---------- */
+  const numOf = s => { const m = String(s).replace(/\s/g, ' ').replace(/(\d)\.(\d{3})/g, '$1$2').replace(/(\d)\.(\d{3})/g, '$1$2').replace(',', '.').match(/[−-]?\d+(\.\d+)?/); return m ? parseFloat(m[0].replace('−', '-')) : null; };
+  const unitOf = s => String(s).replace(/[−-]?[\d.,]+/g, '#').replace(/khoảng|dưới|trên|trước đó/g, '').replace(/\s+/g, ' ').trim();
+  function renderCompare(f) {
+    const it = f.it, rows = [];
+    if (st.phase === 'done') A.ba(P, S, fmtArg).forEach(r => rows.push({ n: r[0], b: r[1], a: r[2], d: r[3] || '', good: r[4] !== false, grp: 'Vận hành, trên dữ liệu mẫu' }));
+    else rows.push({ n: 'Chỉ số vận hành', b: '—', a: '—', d: '', good: true, grp: 'Vận hành, trên dữ liệu mẫu', note: 'Giao việc cho agent ở phần trên để thấy chỉ số vận hành trước và sau.' });
+    const g2 = `Tài chính, quy mô ${PRESETS[st.preset].label}`;
+    rows.push({ n: 'Giá trị kỳ vọng mỗi năm', b: '0', a: money(it.p * it.val), d: '+' + short(money(it.p * it.val)), good: true, grp: g2, bv: 0, av: it.p * it.val });
+    rows.push({ n: 'Chi phí chạy mỗi năm', b: '0', a: money(it.opex), d: '+' + short(money(it.opex)), good: false, grp: g2, bv: 0, av: it.opex });
+    rows.push({ n: 'Vốn đầu tư một lần', b: '0', a: money(it.cap), d: '', good: false, grp: g2, bv: 0, av: it.cap });
+    rows.push({ n: 'NPV kỳ vọng 3 năm', b: '—', a: money(f.E), d: '', good: f.E > 0, grp: g2 });
+    let html = '', last = '';
+    rows.forEach(r => {
+      if (r.grp !== last) { html += `<div class="cgrp">${r.grp}</div>`; last = r.grp; }
+      if (r.note) { html += `<div class="crow"><div class="cn muted">${r.note}</div></div>`; return; }
+      let bv = r.bv, av = r.av;
+      if (bv == null) { const x = numOf(r.b), y = numOf(r.a); if (x != null && y != null && unitOf(r.b) === unitOf(r.a)) { bv = x; av = y; } }
+      const mx = bv != null ? Math.max(Math.abs(bv), Math.abs(av), 1e-9) : 0;
+      const bars = bv != null ? `<div class="cb"><span class="b0" style="width:${(Math.abs(bv) / mx * 100).toFixed(1)}%"></span><span class="b1" style="width:${(Math.abs(av) / mx * 100).toFixed(1)}%"></span></div>` : '<div class="cb nob"></div>';
+      html += `<div class="crow"><div class="cn">${esc(r.n)}</div><div class="cv bf">${esc(r.b)}</div>${bars}<div class="cv af">${esc(r.a)}</div><div class="cd">${r.d ? `<span class="dl ${r.good ? 'up' : 'dn'}">${esc(r.d)}</span>` : ''}</div></div>`;
+    });
+    $('#cmp').innerHTML = html;
+  }
+
+  /* ---------- được và mất ---------- */
+  function renderBalance(f) {
+    const it = f.it, box = $('#bal'), w = Math.max(300, Math.round(box.clientWidth)), narrow = w < 560;
+    const rowsB = [['Giá trị kỳ vọng mỗi năm', it.p * it.val, 'p'], ['Chi phí chạy mỗi năm', -it.opex, 'n'], ['Vốn chia đều 3 năm', -it.cap / 3, 'n']];
+    const net = rowsB.reduce((a, r) => a + r[1], 0); rowsB.push(['Ròng mỗi năm', net, 't']);
+    const lw = narrow ? 0 : 200, rh = narrow ? 58 : 40, top = narrow ? 18 : 0, h = rowsB.length * rh + 34, mx = Math.max(...rowsB.map(r => Math.abs(r[1]))), pad = narrow ? 92 : 120, cx = lw + (w - lw) / 2, half = (w - lw) / 2 - pad;
+    box.innerHTML = '';
+    const g = E('svg', { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': `Cán cân mỗi năm: giá trị ${money(it.p * it.val)}, chi phí chạy ${money(it.opex)}, vốn chia đều ${money(it.cap / 3)}, ròng ${money(net)}` }, box);
+    E('text', { x: cx - 8, y: 12, 'text-anchor': 'end', class: 'axtitle' }, g, '← Mất'); E('text', { x: cx + 8, y: 12, class: 'axtitle' }, g, 'Được →');
+    E('line', { x1: cx, x2: cx, y1: 18, y2: h - 4, class: 'zero' }, g);
+    rowsB.forEach((r, i) => {
+      const y = 22 + i * rh, bw = Math.abs(r[1]) / mx * half, x = r[1] >= 0 ? cx : cx - bw, by = y + 8 + top, bh = (narrow ? rh - 30 : rh - 18);
+      if (narrow) E('text', { x: 0, y: y + 12, class: r[2] === 't' ? 'rowlab' : 'axt2' }, g, r[0]);
+      else E('text', { x: 0, y: y + rh / 2 + 2, class: r[2] === 't' ? 'rowlab' : 'axt2' }, g, r[0]);
+      TT(E('rect', { x, y: by, width: Math.max(2, bw), height: bh, rx: 4, class: r[2] === 'p' ? 'fill1' : r[2] === 'n' ? 'bar2' : 'wfT' }, g), `${r[0]}: ${money(r[1])}`);
+      const tx = r[1] >= 0 ? x + bw + 6 : x - 6;
+      E('text', { x: tx, y: by + bh / 2 + 4, 'text-anchor': r[1] >= 0 ? 'start' : 'end', class: 'wfl' }, g, (r[1] > 0 ? '+' : '') + (narrow ? short(money(r[1])) : money(r[1])));
+      if (r[2] === 't') E('line', { x1: lw ? lw - 4 : 0, x2: w, y1: y + 2, y2: y + 2, class: 'gl' }, g);
+    });
+    const k = st.phase === 'done' ? A.kpis(P, S, fmtArg)[0] : null;
+    $('#gain').innerHTML = [`${esc(u.after)}.`, `<b>${money(it.p * it.val)}</b> giá trị kỳ vọng mỗi năm, ${money(it.val)} nếu thành công trọn vẹn.`, k ? `Trên dữ liệu mẫu: ${lf(k[0])} <b>${k[1]}</b> (${k[2]}).` : 'Chạy thử để thấy kết quả vận hành trên dữ liệu mẫu.', `Con người vẫn giữ quyền quyết: ${lf(CTRL[u.tec])}.`].map(s => `<li>${s}</li>`).join('');
+    $('#cost').innerHTML = [`${esc(u.trade)}.`, `Chi phí chạy <b>${money(it.opex)} mỗi năm</b> sau khi xây xong.`, `Xác suất thất bại <b>${pct(1 - it.p)}</b>; thất bại ở cổng giữa kỳ vẫn mất khoảng ${money(it.cap * Math.ceil(it.t / 2) / it.t)}.`, `Tiền chỉ bắt đầu về sau <b>${it.t} tháng</b> và tăng dần trong 9 tháng.`, u.r >= 3 ? `Rủi ro ${u.r}/5: phải có thẩm định độc lập trước khi chạy thật.` : `Rủi ro ${u.r}/5: kiểm soát thông thường là đủ.`].map(s => `<li>${s}</li>`).join('');
+  }
 
   /* ---------- Finance ---------- */
   function renderFin(f) {
@@ -1783,28 +2096,11 @@ ARCH.platform = {
     segs.forEach((s, i) => {
       const x = m.l + i * bw + bw * 0.14, a = Y(Math.max(s.y0, s.y1) / dv), b = Y(Math.min(s.y0, s.y1) / dv);
       TT(E('rect', { x, y: a, width: bw * 0.72, height: Math.max(1.5, b - a), rx: 3, class: 'wf' + s.t }, g), `${s.lab}: ${money(s.v)}`);
-      E('text', { x: x + bw * 0.36, y: (s.v >= 0 ? a : b) + (s.v >= 0 ? -6 : 14), 'text-anchor': 'middle', class: 'wfl' }, g, (s.t !== 'T' && s.v > 0 ? '+' : '') + money(s.v).replace(' tỷ đồng', '').replace(' tỷ USD', '').replace(' triệu đồng', ' tr').replace(' triệu USD', ' tr USD'));
+      E('text', { x: x + bw * 0.36, y: (s.v >= 0 ? a : b) + (s.v >= 0 ? -6 : 14), 'text-anchor': 'middle', class: 'wfl' }, g, (s.t !== 'T' && s.v > 0 ? '+' : '') + short(money(s.v)));
       const words = s.lab.split(' '), lines = []; let cur = ''; words.forEach(wd => { if ((cur + ' ' + wd).trim().length > (narrow ? 9 : 14)) { lines.push(cur.trim()); cur = wd; } else cur += ' ' + wd; }); lines.push(cur.trim());
       lines.slice(0, narrow ? 4 : 3).forEach((ln, j) => E('text', { x: x + bw * 0.36, y: h - m.b + 16 + j * 12, 'text-anchor': 'middle', class: 'wfc' }, g, ln));
     });
     $('#finTxt').innerHTML = `Tờ trình nói ${money(f.it.val)} mỗi năm, ba năm là ${money(3 * f.it.val)}, trừ vốn còn <b>${money(f.head)}</b>. Finance tính lại theo đúng nhịp tiền về, xác suất thành công và chi phí chạy: NPV kỳ vọng 3 năm là <b>${money(f.E)}</b>${f.pb ? `, hoàn vốn tháng ${f.pb}` : ', chưa hoàn vốn trong 3 năm'}.`;
-  }
-
-  /* ---------- trước và sau ---------- */
-  function renderBA(f) {
-    const it = f.it, ops = st.phase === 'done' ? A.ba(P, S, fmtArg) : null;
-    const rows = (ops ? ops.map(r => `<tr><td class="n">${r[0]}</td><td class="bf">${r[1]}</td><td>${r[2]}</td><td class="dl">${r[3] || ''}</td></tr>`).join('') : `<tr><td colspan="4" class="muted">Giao việc cho agent ở phần trên để thấy các chỉ số vận hành trước và sau.</td></tr>`);
-    $('#ba').innerHTML = `<thead><tr><th>Chỉ số</th><th>Trước</th><th>Sau</th><th style="text-align:right">Thay đổi</th></tr></thead><tbody>
-      <tr class="sep"><td colspan="4">Vận hành, trên dữ liệu mẫu</td></tr>${rows}
-      <tr class="sep"><td colspan="4">Tài chính, quy mô ${PRESETS[st.preset].label}</td></tr>
-      <tr><td class="n">Giá trị kỳ vọng mỗi năm (${LEV[u.lev].toLowerCase()})</td><td class="bf">0</td><td>${money(it.p * it.val)}</td><td class="dl"></td></tr>
-      <tr><td class="n">Vốn đầu tư</td><td class="bf">—</td><td>${money(it.cap)}</td><td class="dl"></td></tr>
-      <tr><td class="n">Chi phí chạy mỗi năm</td><td class="bf">0</td><td>${money(it.opex)}</td><td class="dl"></td></tr>
-      <tr><td class="n">NPV kỳ vọng 3 năm</td><td class="bf">—</td><td>${money(f.E)}</td><td class="dl"></td></tr>
-      <tr><td class="n">Hoàn vốn</td><td class="bf">—</td><td>${f.pb ? 'tháng ' + f.pb : 'chưa trong 3 năm'}</td><td class="dl"></td></tr></tbody>`;
-    const k = st.phase === 'done' ? A.kpis(P, S, fmtArg)[0] : null;
-    $('#gain').innerHTML = [`${esc(u.after)}.`, `<b>${money(it.p * it.val)}</b> giá trị kỳ vọng mỗi năm (${money(it.val)} nếu thành công).`, k ? `Trên dữ liệu mẫu: ${k[0].toLowerCase()} <b>${k[1]}</b> (${k[2]}).` : 'Chạy thử để thấy kết quả vận hành trên dữ liệu mẫu.', `Con người vẫn giữ quyền quyết: ${lf(CTRL[u.tec])}.`].map(s => `<li>${s}</li>`).join('');
-    $('#cost').innerHTML = [`${esc(u.trade)}.`, `Chi phí chạy <b>${money(it.opex)} mỗi năm</b> sau khi xây xong.`, `Xác suất thất bại <b>${pct(1 - it.p)}</b>; nếu thất bại ở cổng giữa kỳ vẫn mất khoảng ${money(it.cap * Math.ceil(it.t / 2) / it.t)}.`, `Tiền chỉ bắt đầu về sau <b>${it.t} tháng</b> và tăng dần trong 9 tháng.`, u.r >= 3 ? `Rủi ro ${u.r}/5: phải có thẩm định độc lập trước khi chạy thật.` : `Rủi ro ${u.r}/5: kiểm soát thông thường là đủ.`].map(s => `<li>${s}</li>`).join('');
   }
 
   /* ---------- danh mục ---------- */
@@ -1827,17 +2123,17 @@ ARCH.platform = {
   function renderReso(f) {
     const it = f.it, box = $('#reso'), G = st.phase === 'done' ? A.gate(P, S) : 'đạt mục tiêu vận hành đã cam kết trong tờ trình';
     document.querySelectorAll('#decide button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.d === st.decision)));
-    const head = `<div class="rh">Nghị quyết số ${String(UCID).padStart(3, '0')}/2026/NQ-HĐQT (mô phỏng)</div><h3>Về đề xuất “${esc(u.name.toLowerCase())}”</h3>`;
+    const head = `<div class="rh">Nghị quyết số ${String(UCID).padStart(3, '0')}/2026/NQ-HĐQT (mô phỏng)</div><h3>Về đề xuất “${esc(lf(u.name))}”</h3>`;
     if (!st.decision) { box.innerHTML = head + `<p class="muted">Chọn một quyết định ở trên. Văn bản sẽ tự soạn theo số liệu của đề xuất${st.phase === 'done' ? ' và kết quả chạy thử' : ''}.</p>`; return; }
     const arts = [], half = Math.ceil(it.t / 2);
     if (st.decision === 'hold') {
       const rs = []; if (f.E <= 0) rs.push(`NPV kỳ vọng 3 năm âm (${money(f.E)})`); if (u.r > 3) rs.push(`rủi ro ${u.r}/5 vượt khẩu vị cân bằng`); if (u.f <= 2) rs.push(`mức khả thi ${u.f}/5, dữ liệu chưa sẵn sàng`); if (!rs.length) rs.push('vốn được ưu tiên cho các đề xuất tạo nhiều giá trị hơn trên mỗi đồng');
-      arts.push(`Chưa phê duyệt đề xuất “${esc(u.name.toLowerCase())}” vì ${rs.join('; ')}.`);
+      arts.push(`Chưa phê duyệt đề xuất “${esc(lf(u.name))}” vì ${rs.join('; ')}.`);
       arts.push(`Giao ${OW.toLowerCase()} trình lại khi ${u.f <= 3 ? 'nền tảng dữ liệu chung đi vào vận hành và ' : ''}có thí điểm nhỏ chứng minh ${G}.`);
       arts.push('Finance lưu hồ sơ đề xuất để so sánh trong kỳ xét duyệt danh mục tiếp theo.');
     } else {
       const pilot = st.decision === 'pilot';
-      arts.push(pilot ? `Phê duyệt thí điểm 90 ngày cho đề xuất “${esc(u.name.toLowerCase())}”, giải ngân <b>${money(it.cap * 0.25)}</b> (25% vốn). Phần còn lại ${money(it.cap * 0.75)} chỉ giải ngân khi đạt điều kiện tại Điều 2.` : `Phê duyệt đề xuất “${esc(u.name.toLowerCase())}”, tổng vốn <b>${money(it.cap)}</b>, chủ sở hữu ${OW.toLowerCase()}.`);
+      arts.push(pilot ? `Phê duyệt thí điểm 90 ngày cho đề xuất “${esc(lf(u.name))}”, giải ngân <b>${money(it.cap * 0.25)}</b> (25% vốn). Phần còn lại ${money(it.cap * 0.75)} chỉ giải ngân khi đạt điều kiện tại Điều 2.` : `Phê duyệt đề xuất “${esc(lf(u.name))}”, tổng vốn <b>${money(it.cap)}</b>, chủ sở hữu ${OW.toLowerCase()}.`);
       arts.push(`Cổng ${pilot ? 'mở vốn' : 'giữa kỳ (tháng ' + half + ')'}: ${G}. Không đạt thì dừng, phần vốn chưa giải ngân được hoàn lại.`);
       arts.push(`Giám đốc tài chính đo giá trị theo cách: ${lf(MEAS[u.lev])}. Người đề xuất không tự chấm điểm.`);
       arts.push(`Người trong vòng kiểm soát: ${lf(CTRL[u.tec])}.`);
@@ -1847,15 +2143,15 @@ ARCH.platform = {
     box.innerHTML = head + `<p class="muted" style="margin:0">Hội đồng quản trị Vertex (mô phỏng) quyết nghị:</p><ol>${arts.map(a => `<li>${a}</li>`).join('')}</ol>` + (st.decision === 'hold' ? '<div class="stamp hold">Gác lại (mô phỏng)</div>' : `<div class="stamp">✓ ${st.decision === 'pilot' ? 'Duyệt thí điểm' : 'Đã thông qua'} (mô phỏng)</div>`);
   }
 
-  /* ---------- sự kiện ---------- */
-  staticTop(); steps(-1); status('', 'Chờ việc'); guessUI(); draw(); kpis(); renderMoney();
+  /* ---------- khởi động và sự kiện ---------- */
+  staticTop(); steps(-1); status('', 'Chờ việc'); renderInput(); guessUI(); draw(); renderOutput(); renderStory(); renderMoney();
   $('#bRun').addEventListener('click', () => { if (st.phase === 'done') { st.approved = false; $('#bApprove').disabled = false; $('#bApprove').textContent = 'Duyệt kết quả'; $('#hil').hidden = true; } st.k = -1; run(); });
   $('#bApprove').addEventListener('click', approve);
-  $('#scaleSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.preset = b.dataset.p; renderMoney(); if (st.phase === 'done') kpis(); });
+  $('#scaleSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.preset = b.dataset.p; renderMoney(); if (st.phase === 'done') afterResult(); });
   $('#decide').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.decision = b.dataset.d; renderReso(fin()); });
-  let rt = 0; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { draw(); renderFin(fin()); renderPort(); }, 80); });
-  ['#stage', '#wf', '#pmap'].forEach(s => ro.observe($(s)));
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { draw(); renderFin(fin()); renderPort(); });
+  let rt = 0; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { draw(); const f = fin(); renderFin(f); renderBalance(f); renderPort(); }, 80); });
+  ['#stage', '#wf', '#pmap', '#bal'].forEach(s => ro.observe($(s)));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { draw(); const f = fin(); renderFin(f); renderBalance(f); renderPort(); });
   window.__uc = { S: () => S, st, run, approve };
 })();
 

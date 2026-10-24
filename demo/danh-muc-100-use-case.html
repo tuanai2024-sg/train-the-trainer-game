@@ -271,6 +271,13 @@ section{scroll-margin-top:80px}
 .ig ol{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13.5px}
 .ig a{color:var(--ink2);text-decoration:none}.ig a:hover{color:var(--s1);text-decoration:underline}
 .idot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--s1);vertical-align:middle}
+.story{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:0 0 18px}
+.story .sg{flex:1 1 240px;min-width:0;border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--ink2);background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--otherInk)}
+.story .sg b{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+.story .s1{border-top-color:var(--s1)}.story .s2{border-top-color:var(--ink)}
+.story .sa{align-self:center;color:var(--muted);font-weight:700}
+@media (max-width:700px){.story{flex-direction:column}.story .sg{flex:none}.story .sa{transform:rotate(90deg);align-self:center;line-height:1}}
+.lede a{color:var(--s1);font-weight:600}
 footer{border-top:1px solid var(--line);padding-block:24px 36px;font-size:13px;color:var(--muted)}
 footer a{color:var(--s1);font-weight:600}
 .ass{columns:2;column-gap:32px;font-size:13.5px;color:var(--ink2);padding-left:18px;margin:0}
@@ -323,6 +330,7 @@ footer a{color:var(--s1);font-weight:600}
       <h3>Đề nghị của Ban điều hành</h3>
       <p id="answer"></p>
     </div>
+    <div class="story" id="ipo" aria-label="Đầu vào, xử lý, đầu ra của danh mục"></div>
     <div class="stats" id="stats"></div>
     <div id="stressBadge"></div>
     <ol class="steps" id="steps"></ol>
@@ -859,6 +867,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
       { k: 'Vốn đầu tư', v: money(e.capex), d: `${e.n} đề xuất, ${nf(e.capex / V.C.rev * 100, 2)}% doanh thu` },
       { k: 'Hoàn vốn tiền mặt', v: e.pb == null ? 'Chưa hoàn vốn' : 'Tháng ' + e.pb, d: `Không tính vốn lưu động: ${e.pbX == null ? 'chưa hoàn vốn' : 'tháng ' + e.pbX}` },
     ];
+    $('#ipo').innerHTML = `<span class="sg"><b>Đầu vào</b>100 đề xuất, tổng vốn xin ${money(V.capAll)}; ngân sách ${money(V.bud)}; rủi ro tối đa ${st.appetite}/5; ${st.cap >= 999 ? 'không giới hạn năng lực' : st.cap + ' đề xuất mỗi đợt'}</span><span class="sa" aria-hidden="true">→</span><span class="sg s1"><b>Xử lý</b>${opt ? 'Máy giải bài toán cái túi, xếp đợt theo năng lực, chạy 2.000 kịch bản rủi ro' : 'Chọn theo con số lớn nhất cho đến khi hết tiền; máy chưa chạy'}</span><span class="sa" aria-hidden="true">→</span><span class="sg s2"><b>Đầu ra</b>${e.n} đề xuất, NPV ${st.hz} năm ${money(e.npv)}, hoàn vốn ${e.pb == null ? 'chưa trong ' + st.hz + ' năm' : 'tháng ' + e.pb}${opt ? ', nghị quyết có điều kiện' : ''}</span>`;
     $('#stats').innerHTML = S.map(s => `<div class="stat"><div class="k">${s.k}</div><div class="v num">${s.v}</div><div class="d">${s.d}</div></div>`).join('');
     $('#stressBadge').innerHTML = stressed() ? `<span class="stress">Đang thử sức chịu đựng: giá trị đạt ${nf(st.R * 100, 0)}% kế hoạch, triển khai trễ ${st.delay} tháng</span>` : '';
     const done = [true, st.optRun, st.stressTouched, st.voted];
