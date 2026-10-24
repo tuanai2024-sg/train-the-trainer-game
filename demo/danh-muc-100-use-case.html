@@ -25,6 +25,7 @@
   --s1:#3987e5; --s2:#d95926; --other:#3a4350; --otherInk:#7e8897; --navy:#0d1a2e; --hl:#15263c; --chip:#1b2330;
   --goodText:#0ca30c; --critText:#e66767; --shadow:0 10px 30px rgba(0,0,0,.45); color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
@@ -346,6 +347,22 @@ footer a{color:var(--s1);font-weight:600}
   .btn.big{white-space:normal;text-align:left}
   .frows dd i{display:block;margin-left:0}
 }
+/* ---------- ba câu hỏi ---------- */
+.qh{display:flex;align-items:center;gap:10px;font-size:clamp(18px,1.9vw,22px);font-weight:800;letter-spacing:-.01em;margin:10px 0 12px;color:var(--ink)}
+.qn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--surface);display:grid;place-items:center;font-size:15px;font-weight:800}
+.qrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 18px}
+.qrow .qh{margin-bottom:8px}.qrow .scale{margin:0 0 8px}
+.whys{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:10px;max-width:900px}
+.whys li{position:relative;padding:12px 16px 12px 44px;background:var(--chip);border-radius:12px;font-size:15.5px;line-height:1.5;color:var(--ink2)}
+.whys li b{color:var(--ink)}
+.whys li::before{content:attr(data-n);position:absolute;left:14px;top:12px;width:20px;height:20px;border-radius:6px;background:var(--s1);color:var(--onAccent);font-size:12px;font-weight:800;display:grid;place-items:center}
+.whys li.muted{padding-left:16px;color:var(--muted)}.whys li.muted::before{display:none}
+.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px;margin:0 0 18px}
+.gloss div{border-top:1px solid var(--line);padding-top:10px}
+.gloss dt{font-weight:800;font-size:15px;color:var(--ink);margin-bottom:3px}
+.gloss dd{margin:0;font-size:14px;line-height:1.5;color:var(--ink2)}
+.assh{font-size:15px;margin:8px 0 6px}
+@media (max-width:640px){.gloss{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -356,37 +373,41 @@ footer a{color:var(--s1);font-weight:600}
     <p class="doc"><b>Tờ trình Hội đồng quản trị, quý IV/2026.</b> Vertex là doanh nghiệp mô phỏng; 100 đề xuất, mọi con số và nghị quyết trên trang này là giả định minh hoạ.</p>
     <h1>100 đề xuất AI, một ngân sách. HĐQT chọn cái nào?</h1>
     <p class="lede" id="lede"></p>
+    <div class="qrow"><h2 class="qh"><span class="qn" aria-hidden="true">1</span>Chọn theo thói quen hay để máy chọn: khác nhau bao nhiêu?</h2>
+      <div class="scale">
+        <span class="lbl" id="scaleLbl">Doanh thu công ty</span>
+        <div class="seg" role="group" aria-labelledby="scaleLbl" id="scaleSeg">
+          <button type="button" data-p="s" aria-pressed="true">10.000 tỷ đồng</button>
+          <button type="button" data-p="m" aria-pressed="false">100.000 tỷ đồng</button>
+          <button type="button" data-p="l" aria-pressed="false">1.000 tỷ USD</button>
+        </div>
+        <span class="note" id="scaleNote" hidden></span>
+      </div></div>
     <div class="face" id="face" aria-live="polite">
       <div class="fside f0">
-        <span class="ftag">Trước: chọn theo cảm tính</span>
-        <p class="ftxt">Lấy đề xuất có con số lớn nhất trước, đến khi hết ngân sách.</p>
+        <span class="ftag">Thói quen: chọn con số to nhất</span>
+        <p class="ftxt">Xếp đề xuất theo số tiền hứa hẹn, chọn từ trên xuống cho đến khi hết ngân sách.</p>
         <div class="fbig"><span class="fl" id="fBigL0"></span><span class="fv" id="fBig0"></span></div>
         <dl class="frows" id="fRows0"></dl>
       </div>
       <div class="fmid" id="fMid"></div>
       <div class="fside f1">
-        <span class="ftag">Sau: máy tối ưu</span>
-        <p class="ftxt">Cùng ngân sách. Xét xác suất thành công, lúc ra tiền và năng lực triển khai từng đợt.</p>
+        <span class="ftag">Để máy chọn</span>
+        <p class="ftxt">Cùng ngân sách. Máy tính thêm khả năng thành công, lúc tiền về và sức của đội triển khai.</p>
         <div class="fbig"><span class="fl" id="fBigL1"></span><span class="fv" id="fBig1"></span></div>
         <dl class="frows" id="fRows1"></dl>
       </div>
     </div>
-    <div class="fcta"><button type="button" class="btn big" id="bOpt2">Để máy tối ưu trên cùng ngân sách</button><p class="ftick" id="fTick"></p></div>
-    <div class="scale">
-      <span class="lbl" id="scaleLbl">Quy mô doanh thu</span>
-      <div class="seg" role="group" aria-labelledby="scaleLbl" id="scaleSeg">
-        <button type="button" data-p="s" aria-pressed="true">10.000 tỷ đồng</button>
-        <button type="button" data-p="m" aria-pressed="false">100.000 tỷ đồng</button>
-        <button type="button" data-p="l" aria-pressed="false">1.000 tỷ USD</button>
-      </div>
-      <span class="note" id="scaleNote"></span>
-    </div>
+    <div class="fcta"><button type="button" class="btn big" id="bOpt2">Để máy chọn trên cùng ngân sách</button><p class="ftick" id="fTick"></p></div>
+    <h2 class="qh"><span class="qn" aria-hidden="true">2</span>Vì sao máy chọn được nhiều tiền hơn?</h2>
+    <ul class="whys" id="whys"></ul>
+    <h2 class="qh"><span class="qn" aria-hidden="true">3</span>Nên quyết thế nào?</h2>
     <div class="answer" aria-live="polite">
-      <h3>Đề nghị của Ban điều hành</h3>
+      <h3>Đề nghị của Ban điều hành (mô phỏng)</h3>
       <p id="answer"></p>
     </div>
-    <div class="story" id="ipo" aria-label="Đầu vào, xử lý, đầu ra của danh mục"></div>
-    <div class="stats" id="stats"></div>
+    <div class="story" id="ipo" hidden></div>
+    <div class="stats" id="stats" hidden></div>
     <div id="stressBadge"></div>
     <ol class="steps" id="steps"></ol>
   </div>
@@ -395,18 +416,18 @@ footer a{color:var(--s1);font-weight:600}
 <div class="ctrlbar">
   <div class="in ctrls">
     <div class="ctl"><label for="cBudget"><span>Ngân sách AI</span> <output id="oBudget"></output></label><input type="range" id="cBudget"></div>
-    <div class="ctl"><label for="cRisk">Khẩu vị rủi ro</label>
+    <div class="ctl"><label for="cRisk">Mức rủi ro chấp nhận</label>
       <select id="cRisk">
         <option value="2">Thận trọng, đến 2/5</option>
         <option value="3" selected>Cân bằng, đến 3/5</option>
         <option value="4">Chủ động, đến 4/5</option>
         <option value="5">Táo bạo, mọi mức</option>
       </select></div>
-    <div class="ctl"><label for="cHz">Chân trời đánh giá</label>
+    <div class="ctl"><label for="cHz">Tính lãi trong</label>
       <select id="cHz"><option value="3" selected>3 năm</option><option value="5">5 năm</option></select></div>
-    <div class="ctl stressc"><label for="cR"><span>Giá trị đạt</span> <output id="oR"></output></label><input type="range" id="cR" min="40" max="120" step="5" value="100"></div>
-    <div class="ctl stressc"><label for="cD"><span>Triển khai trễ</span> <output id="oD"></output></label><input type="range" id="cD" min="0" max="6" step="1" value="0"></div>
-    <div class="btnrow"><button type="button" class="btn" id="bOpt">Để máy tối ưu</button><button type="button" class="linkbtn" id="bReset">Đặt lại</button></div>
+    <div class="ctl stressc"><label for="cR"><span>Nếu chỉ đạt</span> <output id="oR"></output></label><input type="range" id="cR" min="40" max="120" step="5" value="100"></div>
+    <div class="ctl stressc"><label for="cD"><span>Nếu chậm</span> <output id="oD"></output></label><input type="range" id="cD" min="0" max="6" step="1" value="0"></div>
+    <div class="btnrow"><button type="button" class="btn" id="bOpt">Để máy chọn</button><button type="button" class="linkbtn" id="bReset">Đặt lại</button></div>
   </div>
 </div>
 
@@ -417,16 +438,16 @@ footer a{color:var(--s1);font-weight:600}
       <p>Mỗi chấm là một đề xuất. Càng sang phải càng chắc thành công, càng lên cao càng nhiều tiền mỗi năm, chấm càng to càng tốn vốn. Bấm vào một chấm để xem chi tiết và quyết định riêng cho đề xuất đó.</p></div>
     </div>
     <div class="filters">
-      <div class="chips" role="group" aria-label="Lọc theo đòn bẩy giá trị" id="levChips"></div>
+      <div class="chips" role="group" aria-label="Lọc theo loại lợi ích" id="levChips"></div>
       <select id="domSel" aria-label="Lọc theo mảng"></select>
     </div>
     <div class="mapgrid">
       <div class="panel">
         <div class="legend" id="mapLegend">
           <span><i class="sw f1"></i>Máy chọn</span>
-          <span><i class="sw r2"></i>Cảm tính chọn</span>
+          <span><i class="sw r2"></i>Thói quen chọn</span>
           <span><i class="sw o"></i>Chưa chọn</span>
-          <span><i class="sw x"></i>Vượt khẩu vị rủi ro</span>
+          <span><i class="sw x"></i>Vượt mức rủi ro HĐQT chấp nhận</span>
           <span class="muted">Kích thước chấm là vốn đầu tư</span>
         </div>
         <div class="box" id="mapBox"></div>
@@ -446,7 +467,7 @@ footer a{color:var(--s1);font-weight:600}
         <p class="xs" id="jCap" style="color:var(--ink2);margin:8px 0 0"></p>
       </div>
       <div class="panel">
-        <div class="ptitle"><h3 id="mcTitle">Phân bố NPV qua 2.000 kịch bản</h3><span class="xs muted" id="mcUnit"></span></div>
+        <div class="ptitle"><h3 id="mcTitle">Phân bố lãi ròng qua 2.000 kịch bản</h3><span class="xs muted" id="mcUnit"></span></div>
         <p class="sm" id="mcText" style="color:var(--ink2);margin-bottom:6px"></p>
         <div class="box" id="mcBox"></div>
       </div>
@@ -455,19 +476,19 @@ footer a{color:var(--s1);font-weight:600}
 
   <section id="sQ" aria-labelledby="hQ">
     <div class="sh"><div><h2 id="hQ">Sáu câu hỏi khó nhất của HĐQT</h2>
-      <p>Câu trả lời tự cập nhật theo ngân sách, khẩu vị rủi ro và kịch bản thử đang chọn.</p></div></div>
+      <p>Câu trả lời tự cập nhật theo ngân sách, mức rủi ro HĐQT chấp nhận và kịch bản thử đang chọn.</p></div></div>
     <div class="qs" id="qs"></div>
   </section>
 
   <section id="sDom" aria-labelledby="hDom">
     <div class="sh"><div><h2 id="hDom">Giá trị nằm ở đâu</h2>
-      <p>Nền xám là toàn bộ giá trị kỳ vọng các khối đã đề xuất. Thanh xanh là phần danh mục của máy giữ lại, vạch cam là phần cách chọn theo cảm tính giữ lại.</p></div>
-      <div class="legend"><span><i class="sw f1" style="border-radius:3px"></i>Máy chọn</span><span><i class="sw" style="border-left:3px solid var(--s2);border-radius:0;width:3px"></i>Cảm tính chọn</span><span><i class="sw o" style="border-radius:3px"></i>Tổng đề xuất</span></div></div>
+      <p>Nền xám là toàn bộ tiền thu về mỗi năm (đã tính rủi ro) của các đề xuất. Thanh xanh là phần danh mục của máy giữ lại, vạch cam là phần cách chọn theo thói quen giữ lại.</p></div>
+      <div class="legend"><span><i class="sw f1" style="border-radius:3px"></i>Máy chọn</span><span><i class="sw" style="border-left:3px solid var(--s2);border-radius:0;width:3px"></i>Thói quen chọn</span><span><i class="sw o" style="border-radius:3px"></i>Tổng đề xuất</span></div></div>
     <div class="panel"><div class="dom" id="dom"></div></div>
   </section>
 
   <section id="sWave" aria-labelledby="hWave">
-    <div class="sh"><div><h2 id="hWave">Lộ trình ba đợt, giải ngân theo cổng</h2>
+    <div class="sh"><div><h2 id="hWave">Lộ trình ba đợt, giải ngân từng đợt có điều kiện</h2>
       <p>Tổ chức không thể đổi hàng chục quy trình cùng lúc. Mỗi đợt 6 tháng chỉ khởi động được một số đề xuất; máy xếp đề xuất tạo nhiều giá trị nhất trên mỗi đồng vốn lên trước. HĐQT chỉ giải ngân Đợt 1, tiền cho đợt sau mở khi đợt trước chứng minh được giá trị.</p></div>
       <div class="scale" style="margin:0"><span class="lbl" id="capLbl">Năng lực khởi động mỗi đợt</span>
         <div class="seg" role="group" aria-labelledby="capLbl" id="capSeg">
@@ -476,7 +497,7 @@ footer a{color:var(--s1);font-weight:600}
           <button type="button" data-cap="20" aria-pressed="false">20</button>
           <button type="button" data-cap="999" aria-pressed="false">Không giới hạn</button></div></div></div>
     <div class="waves" id="waves"></div>
-    <p class="gatenote">Cổng giải ngân: Giám đốc tài chính xác nhận đợt trước đạt tối thiểu 70% giá trị kế hoạch, đo so với đường cơ sở đã khoá trước khi triển khai. Người đề xuất không tự chấm điểm đề xuất của mình.</p>
+    <p class="gatenote">Điểm kiểm tra trước khi giải ngân: Giám đốc tài chính xác nhận đợt trước đạt tối thiểu 70% giá trị kế hoạch, đo so với đường cơ sở đã khoá trước khi triển khai. Người đề xuất không tự chấm điểm đề xuất của mình.</p>
   </section>
 
   <section id="sBA" aria-labelledby="hBA">
@@ -497,7 +518,7 @@ footer a{color:var(--s1);font-weight:600}
 
   <section id="sTable" aria-labelledby="hTable">
     <div class="sh"><div><h2 id="hTable">Toàn bộ 100 đề xuất</h2>
-      <p>Bấm tiêu đề cột để sắp xếp, bấm tên để mở chi tiết. NPV đã nhân xác suất thành công, trừ vốn và chi phí chạy, tính như thể đề xuất khởi động ngay tháng 1 trong chân trời đang chọn.</p></div>
+      <p>Bấm tiêu đề cột để sắp xếp, bấm tên để mở chi tiết. Lãi ròng đã nhân khả năng thành công, trừ vốn và chi phí chạy, tính như thể đề xuất khởi động ngay tháng 1 trong chân trời đang chọn.</p></div>
       <label class="sm" style="display:flex;gap:6px;align-items:center;font-weight:600;color:var(--ink2)"><input type="checkbox" id="onlySel"> Chỉ hiện đề xuất được chọn</label></div>
     <div class="tblwrap"><table class="tbl" id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
   </section>
@@ -509,22 +530,29 @@ footer a{color:var(--s1);font-weight:600}
   </section>
 
   <section id="sAss" aria-labelledby="hAss">
-    <div class="sh"><div><h2 id="hAss">Giả định và cách tính</h2></div></div>
+    <div class="sh"><div><h2 id="hAss">Cách đọc các con số, giả định</h2></div></div>
+    <dl class="gloss">
+      <div><dt>Lãi ròng 3 năm</dt><dd>Tiền thu về trong 3 năm trừ vốn và chi phí vận hành, đã tính khả năng thất bại, quy về giá trị hôm nay. Dương là đáng làm. Giới tài chính gọi là NPV.</dd></div>
+      <div><dt>Khả năng thành công, khả năng lỗ</dt><dd>Cứ 10 dự án như thế thì bao nhiêu dự án đạt kết quả. Khả năng lỗ của cả danh mục tính từ 2.000 lần mô phỏng ngẫu nhiên.</dd></div>
+      <div><dt>Hoàn vốn</dt><dd>Tháng mà tổng tiền thu về bắt đầu vượt tổng tiền đã bỏ ra.</dd></div>
+      <div><dt>Chọn theo thói quen, để máy chọn</dt><dd>Thói quen: lấy đề xuất hứa hẹn nhiều tiền nhất trước. Máy: cùng ngân sách, tính thêm khả năng thành công, lúc tiền về và sức của đội triển khai.</dd></div>
+    </dl>
+    <h3 class="assh">Giả định</h3>
     <ul class="ass">
       <li>Vertex là doanh nghiệp mô phỏng. 100 đề xuất và mọi con số là giả định minh hoạ, không phải dữ liệu của doanh nghiệp thật.</li>
       <li>Giá trị là EBITDA tăng thêm hoặc tổn thất tránh được mỗi năm khi chạy đủ, tính theo điểm cơ bản trên doanh thu. Giá trị tăng dần trong 9 tháng sau khi chạy.</li>
-      <li>Vốn lưu động giải phóng được tính một lần vào dòng tiền. Không cộng thêm lãi vay tiết kiệm để tránh đếm hai lần.</li>
+      <li>Tiền giải phóng từ tồn kho, công nợ được tính một lần vào dòng tiền. Không cộng thêm lãi vay tiết kiệm để tránh đếm hai lần.</li>
       <li>Vốn đầu tư đã gồm dữ liệu, tích hợp, đào tạo và quản trị thay đổi (bằng 1,3 lần phần công nghệ). Chi phí chạy hằng năm 12 đến 25% vốn tuỳ kỹ thuật, agent cao nhất.</li>
-      <li>Xác suất thành công bằng 35% cộng 10% cho mỗi bậc khả thi (1 đến 5), cộng hoặc trừ 0,5% cho mỗi tháng ra tiền ngắn hơn hoặc dài hơn 10 tháng, giới hạn trong 45 đến 95%.</li>
-      <li>Thất bại được phát hiện ở cổng giữa kỳ xây: tốn một nửa vốn, không có giá trị.</li>
+      <li>Khả năng thành công bằng 35% cộng 10% cho mỗi bậc khả thi (1 đến 5), cộng hoặc trừ 0,5% cho mỗi tháng ra tiền ngắn hơn hoặc dài hơn 10 tháng, giới hạn trong 45 đến 95%.</li>
+      <li>Thất bại được phát hiện ở điểm kiểm tra giữa kỳ xây: tốn một nửa vốn, không có giá trị.</li>
       <li>Vốn tăng chậm hơn doanh thu: nhân hệ số (doanh thu chia 10.000 tỷ đồng) mũ −0,15. Tỷ giá 26.000 đồng một USD chỉ dùng cho hệ số này.</li>
-      <li>Nền tảng dữ liệu chung nâng xác suất thành công thêm 12 điểm và rút 2 tháng cho các đề xuất có mức khả thi từ 3 trở xuống.</li>
+      <li>Nền tảng dữ liệu chung nâng khả năng thành công thêm 12 điểm và rút 2 tháng cho các đề xuất có mức khả thi từ 3 trở xuống.</li>
       <li>Chiết khấu 12% một năm. Không tính giá trị sau chân trời đánh giá, nên đề xuất ra tiền chậm bị thiệt ở chân trời 3 năm.</li>
       <li>Mô phỏng 2.000 kịch bản: mỗi đề xuất thành công hay thất bại theo xác suất của nó, đạt 60 đến 130% giá trị, trễ 0 đến 3 tháng, cộng một cú sốc chung 75 đến 115% cho cả danh mục.</li>
-      <li>Năng lực triển khai: mỗi đợt 6 tháng khởi động tối đa 12 đề xuất (chỉnh được ở phần lộ trình). Đề xuất ở đợt sau khởi động muộn hơn 6 tháng, dòng tiền tính đúng độ trễ đó. Cột NPV trong bảng là NPV nếu làm ngay từ tháng 1.</li>
-      <li>Chọn theo cảm tính: xếp đề xuất theo con số giá trị tiêu đề, chọn lần lượt đến khi hết ngân sách, vẫn tôn trọng khẩu vị rủi ro, rồi khởi động theo đúng thứ tự đó.</li>
-      <li>Máy tối ưu: bài toán cái túi giải bằng quy hoạch động, tối đa NPV kỳ vọng trong ngân sách và khẩu vị rủi ro, thử cả hai phương án có và không có nền tảng dữ liệu chung; sau đó xếp đợt theo giá trị trên mỗi đồng vốn và bỏ đề xuất nào đến lượt thì không còn NPV dương.</li>
-      <li>Biên EBITDA trước khi làm giả định là 10% doanh thu.</li>
+      <li>Năng lực triển khai: mỗi đợt 6 tháng khởi động tối đa 12 đề xuất (chỉnh được ở phần lộ trình). Đề xuất ở đợt sau khởi động muộn hơn 6 tháng, dòng tiền tính đúng độ trễ đó. Cột lãi ròng trong bảng là lãi ròng nếu làm ngay từ tháng 1.</li>
+      <li>Chọn theo thói quen: xếp đề xuất theo con số giá trị tiêu đề, chọn lần lượt đến khi hết ngân sách, vẫn tôn trọng mức rủi ro HĐQT chấp nhận, rồi khởi động theo đúng thứ tự đó.</li>
+      <li>Cách máy chọn: bài toán cái túi giải bằng quy hoạch động, tối đa lãi ròng trong ngân sách và mức rủi ro HĐQT chấp nhận, thử cả hai phương án có và không có nền tảng dữ liệu chung; sau đó xếp đợt theo giá trị trên mỗi đồng vốn và bỏ đề xuất nào đến lượt thì không còn lãi ròng dương.</li>
+      <li>Biên lợi nhuận hoạt động (EBITDA) trước khi làm giả định là 10% doanh thu.</li>
     </ul>
   </section>
 </main>
@@ -882,7 +910,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const boost = !!(V.opt && V.opt.boosted);
     V.items = UC.map(u => evalItem(u, C, boost, 1, 0));
     V.base = UC.map(u => evalItem(u, C, false, 1, 0));
-    V.main = V.opt ? { sel: V.opt.sel, off: V.opt.off, e: V.eOpt, m: V.mOpt, set: V.sOpt, label: 'máy tối ưu' } : { sel: V.int, off: V.pi.off, e: V.eInt, m: V.mInt, set: V.sInt, label: 'chọn theo cảm tính' };
+    V.main = V.opt ? { sel: V.opt.sel, off: V.opt.off, e: V.eOpt, m: V.mOpt, set: V.sOpt, label: 'máy chọn' } : { sel: V.int, off: V.pi.off, e: V.eInt, m: V.mInt, set: V.sInt, label: 'chọn theo thói quen' };
     V.half = evalSel(st, V.main.sel, 0.5, st.delay, V.main.off);
     V.halfInt = evalSel(st, V.int, 0.5, st.delay, V.pi.off);
     V.wave = {}; V.main.e.items.forEach(it => { V.wave[it.u.id] = Math.min(2, it.off / 6); });
@@ -910,10 +938,10 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
   }
   function renderFace() {
     const ei = V.eInt, mi = V.mInt, opt = V.opt && !V.opt.over, eo = opt ? V.eOpt : null, mo = opt ? V.mOpt : null;
-    const L = `NPV kỳ vọng ${st.hz} năm`;
+    const L = `Lãi ròng sau ${st.hz} năm`;
     $('#fBigL0').textContent = L; $('#fBigL1').textContent = L;
     $('#fBig0').textContent = money(ei.npv);
-    const rows = (e, m) => [['Xác suất lỗ', lossTxt(m.loss)], ['Hoàn vốn tiền mặt', e.pb == null ? 'chưa hoàn vốn' : 'tháng ' + e.pb], ['10% kịch bản xấu nhất', 'dưới ' + money(m.p10)], ['Vốn dùng', `${money(e.capex)}, ${e.n} đề xuất`]];
+    const rows = (e, m) => [['Khả năng lỗ', lossTxt(m.loss)], ['Hoàn vốn', e.pb == null ? 'chưa hoàn vốn' : 'tháng ' + e.pb], ['Nếu không may (1 trên 10)', m.p10 >= 0 ? 'vẫn lãi ' + money(m.p10) : 'lỗ ' + money(-m.p10)], ['Vốn dùng', `${money(e.capex)}, ${e.n} đề xuất`]];
     const r0 = rows(ei, mi);
     $('#fRows0').innerHTML = r0.map(r => `<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('');
     if (opt) {
@@ -922,52 +950,63 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
       $('#fRows1').innerHTML = r1.map((r, i) => `<dt>${r[0]}</dt><dd>${esc(r[1])}${tags[i]}</dd>`).join('');
       $('#fBig1').textContent = money(eo.npv);
       const ratio = ei.npv > 0 ? eo.npv / ei.npv : null, up = eo.npv >= ei.npv;
-      $('#fMid').innerHTML = `<span class="arr" aria-hidden="true">→</span><span class="fdelta ${up ? 'up' : 'dn'}">${ratio && ratio >= 1.15 ? 'gấp ' + nf(ratio, 1) + ' lần' : signed(eo.npv - ei.npv)}</span><span class="fsub">${signed(eo.npv - ei.npv)} NPV, cùng ${money(V.bud)}</span>`;
-      $('#fTick').innerHTML = up ? `Giữ cách chọn cũ, công ty bỏ lại khoảng <b>${money((eo.npv - ei.npv) / (st.hz * 12))}</b> giá trị hiện tại mỗi tháng trong ${st.hz} năm.` : 'Danh mục máy chọn thấp hơn vì các quyết định ép giữ của HĐQT.';
+      $('#fMid').innerHTML = `<span class="arr" aria-hidden="true">→</span><span class="fdelta ${up ? 'up' : 'dn'}">${ratio && ratio >= 1.15 ? 'gấp ' + nf(ratio, 1) + ' lần' : signed(eo.npv - ei.npv)}</span><span class="fsub">${signed(eo.npv - ei.npv)} lãi ròng, cùng ${money(V.bud)} ngân sách</span>`;
+      $('#fTick').innerHTML = up ? `Giữ cách chọn theo thói quen là bỏ lại khoảng <b>${money((eo.npv - ei.npv) / (st.hz * 12))}</b> lãi ròng mỗi tháng, trong ${st.hz} năm.` : 'Danh mục máy chọn thấp hơn vì các quyết định ép giữ của HĐQT.';
       if (faceAnim) { fTween($('#fBig1'), money(eo.npv)); faceAnim = false; }
     } else {
       $('#fRows1').innerHTML = r0.map(r => `<dt>${r[0]}</dt><dd>?</dd>`).join('');
       $('#fBig1').textContent = V.opt && V.opt.over ? 'Vượt ngân sách' : '?';
       $('#fMid').innerHTML = `<span class="arr" aria-hidden="true">→</span><span class="fdelta q">?</span><span class="fsub">cùng ${money(V.bud)} ngân sách</span>`;
-      $('#fTick').innerHTML = V.opt && V.opt.over ? 'Các quyết định ép giữ đang vượt ngân sách; nới ngân sách hoặc bỏ bớt trước khi so.' : `Cùng ${money(V.bud)}, cùng 100 đề xuất. Máy có tìm được danh mục tốt hơn cách chọn quen thuộc không?`;
+      $('#fTick').innerHTML = V.opt && V.opt.over ? 'Các quyết định ép giữ đang vượt ngân sách; nới ngân sách hoặc bỏ bớt trước khi so.' : `Cùng ${money(V.bud)}, cùng 100 đề xuất. Máy có chọn được danh mục nhiều tiền hơn không?`;
     }
     $('#face').classList.toggle('open', !!opt);
-    const b2 = $('#bOpt2'); b2.textContent = st.optRun ? 'Xem 100 chấm trên bản đồ' : 'Để máy tối ưu trên cùng ngân sách';
+    const b2 = $('#bOpt2'); b2.textContent = st.optRun ? 'Xem 100 đề xuất trên bản đồ' : 'Để máy chọn trên cùng ngân sách';
+    renderWhys(opt);
+  }
+  function renderWhys(opt) {
+    if (!opt) { $('#whys').innerHTML = `<li class="muted">Bấm “Để máy chọn” ở trên. Máy sẽ chỉ ra đề xuất nào bị bỏ, đề xuất nào được thêm, và vì sao.</li>`; return; }
+    const sI = new Set(V.int), sO = new Set(V.opt.sel), drop = V.int.filter(i => !sO.has(i)), add = V.opt.sel.filter(i => !sI.has(i) && UC[i].id !== ENABLER);
+    const avg = (arr, f) => arr.length ? arr.reduce((a, i) => a + f(i), 0) / arr.length : 0, unused = V.bud - V.eOpt.capex, L = [];
+    if (drop.length) { const big = drop.slice().sort((a, b) => V.base[b].val - V.base[a].val).slice(0, 2).map(i => '“' + lf(UC[i].name) + '”'); L.push(`<b>Bỏ ${drop.length} đề xuất</b> mà cách chọn theo thói quen giữ lại vì con số hứa hẹn to. Khả năng thành công của nhóm này trung bình chỉ ${pct(avg(drop, i => V.base[i].p))}, tiền về sau khoảng ${nf(avg(drop, i => V.base[i].t), 0)} tháng. Ví dụ: ${big.join(', ')}.`); }
+    if (add.length) L.push(`<b>Thêm ${add.length} đề xuất</b> nhỏ hơn nhưng chắc hơn: khả năng thành công trung bình ${pct(avg(add, i => V.items[i].p))}, tiền về sau khoảng ${nf(avg(add, i => V.items[i].t), 0)} tháng.`);
+    if (V.opt.boosted) L.push(`<b>Làm nền tảng dữ liệu chung trước.</b> Tự nó không sinh lãi, nhưng giúp các đề xuất khác dễ thành công hơn và ra tiền sớm hơn.`);
+    L.push(`<b>Chia ${V.waves.length} đợt</b>, mỗi đợt tối đa ${st.cap >= 999 ? 'không giới hạn' : st.cap} đề xuất cho vừa sức đội triển khai${unused > V.bud * 0.05 ? `. Để lại ${money(unused)} chưa tiêu vì thiếu người làm, không phải thiếu tiền` : ''}.`);
+    $('#whys').innerHTML = L.map((s, i) => `<li data-n="${i + 1}">${s}</li>`).join('');
   }
   function renderHero() {
     renderFace();
     const P = PRESETS[st.preset], e = V.main.e, m = V.main.m;
-    $('#lede').innerHTML = `Các khối trình lên <b>100 đề xuất AI</b>, tổng vốn xin <b>${money(V.capAll)}</b>, hứa hẹn <b>${money(V.valAll)} mỗi năm</b> nếu mọi đề xuất đều thành công. Ngân sách HĐQT đặt ra là <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Câu hỏi không còn là AI có đáng làm hay không, mà là làm cái nào, khi nào, và ai chịu trách nhiệm. Mỗi đề xuất có <a href="#sIndex">một trang chạy thử riêng</a>.`;
+    $('#lede').innerHTML = `Các khối xin <b>${money(V.capAll)}</b> cho 100 đề xuất AI. Ngân sách chỉ có <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Trang này trả lời ba câu hỏi bên dưới. Mỗi đề xuất có <a href="#sIndex">một trang chạy thử riêng</a>.`;
     $('#scaleNote').textContent = `Ở quy mô này, mỗi đồng chi cho danh mục ${V.main.label} tạo ra ${nf(e.benefit / e.cost, 1)} đồng giá trị hiện tại trong ${st.hz} năm. Vốn tăng chậm hơn doanh thu nên doanh nghiệp càng lớn, tỷ suất càng cao.`;
     document.querySelectorAll('#scaleSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === st.preset)));
-    const pre = stressed() ? `Trong kịch bản thử (giá trị đạt ${nf(st.R * 100, 0)}% kế hoạch, trễ ${st.delay} tháng): ` : '';
+    const pre = stressed() ? `Nếu chỉ đạt ${nf(st.R * 100, 0)}% kế hoạch và chậm ${st.delay} tháng: ` : '';
     if (!V.opt) {
-      $('#answer').innerHTML = `${pre}Nếu chọn như thường lệ, lấy con số lớn nhất cho đến khi hết tiền, HĐQT duyệt <b>${e.n} đề xuất</b>, dùng ${money(e.capex)}, NPV ${st.hz} năm kỳ vọng <b>${money(e.npv)}</b>, hoàn vốn ${monthTxt(e.pb)}, xác suất lỗ ${lossTxt(m.loss)}. Ban điều hành chưa đề nghị danh mục này: cần để máy tối ưu trên cùng ngân sách trước khi quyết.`;
+      $('#answer').innerHTML = `${pre}Nếu chọn theo thói quen, HĐQT duyệt <b>${e.n} đề xuất</b>, dùng ${money(e.capex)}, lãi ròng ${st.hz} năm <b>${money(e.npv)}</b>, hoàn vốn ở ${monthTxt(e.pb)}, khả năng lỗ ${lossTxt(m.loss)}. Ban điều hành chưa đề nghị danh mục này: cần để máy chọn trên cùng ngân sách rồi mới quyết.`;
     } else if (V.opt.over) {
       $('#answer').innerHTML = `Các quyết định ép giữ của HĐQT đang vượt ngân sách. Nới ngân sách hoặc bỏ bớt quyết định ép trước khi biểu quyết.`;
     } else {
       const ei = V.eInt, unused = V.bud - e.capex, w1 = V.waves[0];
-      const cmp = ei.npv > 0 ? `gấp ${nf(e.npv / ei.npv, 1)} lần cách chọn theo cảm tính` : `trong khi cách chọn theo cảm tính cho ${money(ei.npv)}`;
-      $('#answer').innerHTML = `${pre}Duyệt <b>${e.n} đề xuất</b> với ${money(e.capex)}${unused > V.bud * 0.05 ? `, để lại ${money(unused)} vì năng lực triển khai, không phải tiền, mới là giới hạn` : ''}. NPV ${st.hz} năm kỳ vọng <b>${money(e.npv)}</b>, ${cmp}; hoàn vốn ${monthTxt(e.pb)}; xác suất lỗ ${lossTxt(m.loss)}. Hôm nay chỉ giải ngân Đợt 1: <b>${w1.items.length} đề xuất, ${money(w1.cap)}</b>.`;
+      const cmp = ei.npv > 0 ? `gấp ${nf(e.npv / ei.npv, 1)} lần cách chọn theo thói quen` : `trong khi cách chọn theo thói quen cho ${money(ei.npv)}`;
+      $('#answer').innerHTML = `${pre}Duyệt <b>${e.n} đề xuất</b> với ${money(e.capex)}${unused > V.bud * 0.05 ? `, giữ lại ${money(unused)} vì đội triển khai, không phải tiền, mới là giới hạn` : ''}. Lãi ròng ${st.hz} năm <b>${money(e.npv)}</b>, ${cmp}; hoàn vốn ở ${monthTxt(e.pb)}; khả năng lỗ ${lossTxt(m.loss)}. Hôm nay chỉ giải ngân Đợt 1: <b>${w1.items.length} đề xuất, ${money(w1.cap)}</b>. Đợt sau chỉ giải ngân khi đợt trước đạt kết quả.`;
     }
     const ei = V.eInt, opt = !!V.opt;
-    const dl = (a, b, better) => { const d = a - b; if (Math.abs(d) < 1e-9) return 'bằng cách chọn theo cảm tính'; const good = better === 'hi' ? d > 0 : d < 0; return `<span class="${good ? 'up' : 'dn'}">${signed(d)}</span> so với cảm tính`; };
+    const dl = (a, b, better) => { const d = a - b; if (Math.abs(d) < 1e-9) return 'bằng cách chọn theo thói quen'; const good = better === 'hi' ? d > 0 : d < 0; return `<span class="${good ? 'up' : 'dn'}">${signed(d)}</span> so với thói quen`; };
     const S = [
-      { k: `NPV kỳ vọng ${st.hz} năm`, v: money(e.npv), d: opt ? dl(e.npv, ei.npv, 'hi') : 'Cách chọn thường lệ' },
-      { k: 'Giá trị kỳ vọng mỗi năm', v: money(e.valYr), d: `+${nf(e.ebitda / V.C.rev * 100, 2)} điểm biên EBITDA` },
+      { k: `Lãi ròng ${st.hz} năm`, v: money(e.npv), d: opt ? dl(e.npv, ei.npv, 'hi') : 'Cách chọn thường lệ' },
+      { k: 'Tiền thu về mỗi năm, đã tính rủi ro', v: money(e.valYr), d: `+${nf(e.ebitda / V.C.rev * 100, 2)} điểm biên lợi nhuận hoạt động` },
       { k: 'Vốn đầu tư', v: money(e.capex), d: `${e.n} đề xuất, ${nf(e.capex / V.C.rev * 100, 2)}% doanh thu` },
-      { k: 'Hoàn vốn tiền mặt', v: e.pb == null ? 'Chưa hoàn vốn' : 'Tháng ' + e.pb, d: `Không tính vốn lưu động: ${e.pbX == null ? 'chưa hoàn vốn' : 'tháng ' + e.pbX}` },
+      { k: 'Hoàn vốn tiền mặt', v: e.pb == null ? 'Chưa hoàn vốn' : 'Tháng ' + e.pb, d: `Không tính tiền giải phóng từ tồn kho: ${e.pbX == null ? 'chưa hoàn vốn' : 'tháng ' + e.pbX}` },
     ];
-    $('#ipo').innerHTML = `<span class="sg"><b>Đầu vào</b>100 đề xuất, tổng vốn xin ${money(V.capAll)}; ngân sách ${money(V.bud)}; rủi ro tối đa ${st.appetite}/5; ${st.cap >= 999 ? 'không giới hạn năng lực' : st.cap + ' đề xuất mỗi đợt'}</span><span class="sa" aria-hidden="true">→</span><span class="sg s1"><b>Xử lý</b>${opt ? 'Máy giải bài toán cái túi, xếp đợt theo năng lực, chạy 2.000 kịch bản rủi ro' : 'Chọn theo con số lớn nhất cho đến khi hết tiền; máy chưa chạy'}</span><span class="sa" aria-hidden="true">→</span><span class="sg s2"><b>Đầu ra</b>${e.n} đề xuất, NPV ${st.hz} năm ${money(e.npv)}, hoàn vốn ${e.pb == null ? 'chưa trong ' + st.hz + ' năm' : 'tháng ' + e.pb}${opt ? ', nghị quyết có điều kiện' : ''}</span>`;
+    $('#ipo').innerHTML = `<span class="sg"><b>Đầu vào</b>100 đề xuất, tổng vốn xin ${money(V.capAll)}; ngân sách ${money(V.bud)}; rủi ro tối đa ${st.appetite}/5; ${st.cap >= 999 ? 'không giới hạn năng lực' : st.cap + ' đề xuất mỗi đợt'}</span><span class="sa" aria-hidden="true">→</span><span class="sg s1"><b>Xử lý</b>${opt ? 'Máy giải bài toán cái túi, xếp đợt theo năng lực, chạy 2.000 kịch bản rủi ro' : 'Chọn theo con số lớn nhất cho đến khi hết tiền; máy chưa chạy'}</span><span class="sa" aria-hidden="true">→</span><span class="sg s2"><b>Đầu ra</b>${e.n} đề xuất, lãi ròng ${st.hz} năm ${money(e.npv)}, hoàn vốn ${e.pb == null ? 'chưa trong ' + st.hz + ' năm' : 'tháng ' + e.pb}${opt ? ', nghị quyết có điều kiện' : ''}</span>`;
     $('#stats').innerHTML = S.map(s => `<div class="stat"><div class="k">${s.k}</div><div class="v num">${s.v}</div><div class="d">${s.d}</div></div>`).join('');
     $('#stressBadge').innerHTML = stressed() ? `<span class="stress">Đang thử sức chịu đựng: giá trị đạt ${nf(st.R * 100, 0)}% kế hoạch, triển khai trễ ${st.delay} tháng</span>` : '';
     const done = [true, st.optRun, st.stressTouched, st.voted];
     const cur = done.indexOf(false);
     const STEPS = [
-      ['Xem cách chọn thường lệ', 'Con số lớn nhất được chọn trước, đến khi hết tiền.'],
-      ['Để máy tối ưu', 'Cùng ngân sách, xét xác suất thành công và lúc ra tiền.'],
-      ['Thử sức chịu đựng', 'Kéo giá trị đạt được xuống, cho triển khai trễ.'],
-      ['Biểu quyết', 'Nghị quyết có điều kiện, giải ngân theo cổng.'],
+      ['Xem cách chọn theo thói quen', 'Con số lớn nhất được chọn trước, đến khi hết tiền.'],
+      ['Để máy chọn', 'Cùng ngân sách, xét khả năng thành công và lúc ra tiền.'],
+      ['Thử trường hợp xấu', 'Kéo giá trị đạt được xuống, cho triển khai chậm.'],
+      ['Biểu quyết', 'Nghị quyết có điều kiện, giải ngân từng đợt có điều kiện.'],
     ];
     $('#steps').innerHTML = STEPS.map((s, i) => `<li class="${done[i] ? 'done' : i === cur ? 'cur' : ''}"><span class="n">${done[i] ? '✓' : i + 1}</span><div><b>${s[0]}</b><span>${s[1]}</span></div></li>`).join('');
   }
@@ -983,7 +1022,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     $('#cD').value = st.delay; $('#oD').textContent = st.delay + ' tháng';
     const bo = $('#bOpt');
     bo.disabled = st.optRun;
-    bo.textContent = st.optRun ? 'Đã tối ưu, tự cập nhật' : 'Để máy tối ưu';
+    bo.textContent = st.optRun ? 'Máy đã chọn, tự cập nhật' : 'Để máy chọn';
   }
 
   /* ---------- tooltip ---------- */
@@ -999,19 +1038,19 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
   function hideTip() { tip.hidden = true; if (hovDot) { hovDot.classList.remove('hov'); hovDot = null; } }
   function statusTxt(id) {
     const o = V.sOpt.has(id), i = V.sInt.has(id), L = st.locks[id];
-    if (!st.optRun) return i ? 'Cảm tính chọn' : 'Cảm tính không chọn';
+    if (!st.optRun) return i ? 'Thói quen chọn' : 'Thói quen không chọn';
     const ms = L === 'in' ? 'HĐQT ép giữ' : L === 'out' ? 'HĐQT đã loại' : o ? 'Máy chọn' : 'Máy không chọn';
-    return ms + (i ? ', cảm tính chọn' : ', cảm tính không chọn');
+    return ms + (i ? ', thói quen chọn' : ', thói quen không chọn');
   }
   function itemTip(id) {
     const u = UC[id - 1], it = V.items[id - 1];
     return `<b>${esc(u.name)}</b><div class="xs muted" style="margin-bottom:6px">${DOM[u.d]}, ${LEV[u.lev].toLowerCase()}, ${TEC[u.tec].toLowerCase()}</div>
-      <div class="r"><span>Giá trị kỳ vọng mỗi năm</span><span>${money(it.evYr)}</span></div>
+      <div class="r"><span>Tiền thu về mỗi năm (đã tính rủi ro)</span><span>${money(it.evYr)}</span></div>
       <div class="r"><span>Vốn đầu tư</span><span>${money(it.cap)}</span></div>
-      <div class="r"><span>Xác suất thành công</span><span>${pct(it.p)}</span></div>
+      <div class="r"><span>Khả năng thành công</span><span>${pct(it.p)}</span></div>
       <div class="r"><span>Rủi ro</span><span>${u.r}/5</span></div>
       <div class="r"><span>Ra tiền sau</span><span>${it.t} tháng</span></div>
-      <div class="r"><span>NPV kỳ vọng nếu làm ngay</span><span>${money(it.E)}</span></div>
+      <div class="r"><span>Lãi ròng nếu làm ngay</span><span>${money(it.E)}</span></div>
       <div class="st">${statusTxt(id)}</div>`;
   }
 
@@ -1032,7 +1071,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
       svg.addEventListener('click', e => { const p = nearest(e); if (p) openDrawer(p.u.id); });
     }
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
-    svg.setAttribute('aria-label', `Bản đồ 100 đề xuất theo xác suất thành công và giá trị kỳ vọng mỗi năm. Máy chọn ${V.sOpt.size}, cảm tính chọn ${V.sInt.size}. Bảng đầy đủ ở phần Toàn bộ 100 đề xuất.`);
+    svg.setAttribute('aria-label', `Bản đồ 100 đề xuất theo khả năng thành công và tiền thu về mỗi năm. Máy chọn ${V.sOpt.size}, thói quen chọn ${V.sInt.size}. Bảng đầy đủ ở phần Toàn bộ 100 đề xuất.`);
     const narrow = W < 560, m = { l: narrow ? 46 : 60, r: 14, t: 16, b: 46 };
     const pts = V.items.map(it => ({ u: it.u, xv: Math.min(98.5, it.p * 100 + jit(it.u.id)), yv: it.evYr, cap: it.cap }));
     const sy0 = nice(0, Math.max(...pts.map(p => p.yv)) / axDiv() * 1.04, 5), ymax = sy0.hi * axDiv();
@@ -1040,8 +1079,8 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const ax = svg.querySelector('.ax'); ax.innerHTML = '';
     sy0.t.forEach(t => { const y = Y(t * axDiv()); el('line', { class: t === 0 ? 'zero' : 'gl', x1: m.l, x2: W - m.r, y1: y, y2: y }, ax); el('text', { x: m.l - 8, y: y + 4, 'text-anchor': 'end', class: 'num' }, ax, nf(t, sy0.d)); });
     [50, 60, 70, 80, 90, 100].forEach(t => { const x = X(t); el('line', { class: 'gl', x1: x, x2: x, y1: m.t, y2: H - m.b }, ax); el('text', { x, y: H - m.b + 16, 'text-anchor': 'middle' }, ax, t + '%'); });
-    el('text', { x: (m.l + W - m.r) / 2, y: H - 6, 'text-anchor': 'middle', class: 'axtitle' }, ax, 'Xác suất thành công');
-    el('text', { x: 12, y: (m.t + H - m.b) / 2, transform: `rotate(-90 12 ${(m.t + H - m.b) / 2})`, 'text-anchor': 'middle', class: 'axtitle' }, ax, `Giá trị kỳ vọng mỗi năm, ${axUnit()}`);
+    el('text', { x: (m.l + W - m.r) / 2, y: H - 6, 'text-anchor': 'middle', class: 'axtitle' }, ax, 'Khả năng thành công');
+    el('text', { x: 12, y: (m.t + H - m.b) / 2, transform: `rotate(-90 12 ${(m.t + H - m.b) / 2})`, 'text-anchor': 'middle', class: 'axtitle' }, ax, `Tiền thu về mỗi năm (đã tính rủi ro), ${axUnit()}`);
     const q = svg.querySelector('.quadg'); q.innerHTML = '';
     const qx = X(72), qy = Y(ymax * 0.4);
     el('line', { class: 'quad', x1: qx, x2: qx, y1: m.t, y2: H - m.b }, q);
@@ -1113,33 +1152,33 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
         <table class="cmp"><tbody>
         <tr><td>Số đề xuất</td><td class="w">${ei.n}</td></tr>
         <tr><td>Vốn dùng</td><td class="w">${money(ei.capex)}</td></tr>
-        <tr><td>NPV ${st.hz} năm kỳ vọng</td><td class="w">${money(ei.npv)}</td></tr>
+        <tr><td>Lãi ròng ${st.hz} năm</td><td class="w">${money(ei.npv)}</td></tr>
         <tr><td>Hoàn vốn</td><td class="w">${ei.pb == null ? 'Chưa' : 'Tháng ' + ei.pb}</td></tr>
-        <tr><td>Xác suất lỗ</td><td class="w">${lossTxt(mi.loss)}</td></tr></tbody></table>
-        <div class="cta"><p>Cùng ngân sách, máy sẽ xét thêm xác suất thành công, thời điểm ra tiền và chi phí chạy của từng đề xuất, rồi giải bài toán chọn tập con tốt nhất.</p><button type="button" class="btn" data-act="opt">Để máy tối ưu</button></div>`;
+        <tr><td>Khả năng lỗ</td><td class="w">${lossTxt(mi.loss)}</td></tr></tbody></table>
+        <div class="cta"><p>Cùng ngân sách, máy sẽ xét thêm khả năng thành công, thời điểm ra tiền và chi phí vận hành của từng đề xuất, rồi giải bài toán chọn tập con tốt nhất.</p><button type="button" class="btn" data-act="opt">Để máy chọn</button></div>`;
       return;
     }
     const eo = V.eOpt, mo = V.mOpt;
     const row = (k, a, b, better, fa, fb) => { const wa = better(a, b) < 0, wb = better(a, b) > 0; return `<tr><td>${k}</td><td class="${wa ? 'w' : ''}">${fa}</td><td class="${wb ? 'w' : ''}">${fb}</td></tr>`; };
     const hi = (a, b) => Math.sign(b - a), lo = (a, b) => Math.sign(a - b);
     const pbv = x => (x == null ? 999 : x);
-    let html = `<h3>Máy so với cảm tính</h3><p class="sm" style="color:var(--ink2)">Cùng ngân sách ${money(V.bud)}, cùng khẩu vị rủi ro.</p>
-      <table class="cmp"><thead><tr><th></th><th>Cảm tính</th><th>Máy</th></tr></thead><tbody>
+    let html = `<h3>Máy so với thói quen</h3><p class="sm" style="color:var(--ink2)">Cùng ngân sách ${money(V.bud)}, cùng mức rủi ro HĐQT chấp nhận.</p>
+      <table class="cmp"><thead><tr><th></th><th>Thói quen</th><th>Máy</th></tr></thead><tbody>
       ${row('Số đề xuất', ei.n, eo.n, () => 0, ei.n, eo.n)}
       ${row('Vốn dùng', ei.capex, eo.capex, () => 0, money(ei.capex), money(eo.capex))}
-      ${row(`NPV ${st.hz} năm`, ei.npv, eo.npv, hi, money(ei.npv), money(eo.npv))}
+      ${row(`Lãi ròng ${st.hz} năm`, ei.npv, eo.npv, hi, money(ei.npv), money(eo.npv))}
       ${row('Hoàn vốn', pbv(ei.pb), pbv(eo.pb), lo, ei.pb == null ? 'Chưa' : 'Tháng ' + ei.pb, eo.pb == null ? 'Chưa' : 'Tháng ' + eo.pb)}
-      ${row('Xác suất lỗ', mi.loss, mo.loss, lo, lossTxt(mi.loss), lossTxt(mo.loss))}
+      ${row('Khả năng lỗ', mi.loss, mo.loss, lo, lossTxt(mi.loss), lossTxt(mo.loss))}
       </tbody></table><ul class="ins">`;
     const dropped = V.int.filter(i => !V.sOpt.has(UC[i].id)).sort((a, b) => UC[b].v - UC[a].v);
     const added = V.opt.sel.filter(i => !V.sInt.has(UC[i].id));
     const why = i => { const it = V.items[i]; return it.E <= 0 ? `ra tiền sau ${it.t} tháng` : it.p < 0.65 ? `chỉ ${pct(it.p)} khả năng thành công` : 'mỗi đồng vốn tạo ra ít hơn'; };
-    if (dropped.length) html += `<li>Máy bỏ <b>${dropped.length} đề xuất có con số lớn</b> mà cảm tính chọn, như ${dropped.slice(0, 2).map(i => `${esc(lf(UC[i].name))} (${why(i)})`).join(' và ')}.</li>`;
+    if (dropped.length) html += `<li>Máy bỏ <b>${dropped.length} đề xuất có con số lớn</b> mà thói quen chọn, như ${dropped.slice(0, 2).map(i => `${esc(lf(UC[i].name))} (${why(i)})`).join(' và ')}.</li>`;
     if (added.length) { const em = {}; eo.items.forEach(it => { em[it.u.id] = it; }); const q = added.filter(i => em[UC[i].id] && em[UC[i].id].t + em[UC[i].id].off <= 6).length; html += `<li>Máy thêm <b>${added.length} đề xuất nhỏ hơn</b>, ${q} trong số đó ra tiền trong 6 tháng đầu.</li>`; }
     const en = V.base[ENABLER - 1];
     if (V.opt.boosted) {
       const nb = V.opt.sel.filter(i => UC[i].id !== ENABLER && UC[i].f <= 3).length;
-      html += `<li>Máy chọn <b>nền tảng dữ liệu chung</b> dù tự nó có NPV ${money(en.E)}: nó nâng xác suất thành công của ${nb} đề xuất khác trong danh mục. Trên bản đồ, các chấm đó dịch sang phải.</li>`;
+      html += `<li>Máy chọn <b>nền tảng dữ liệu chung</b> dù tự nó có lãi ròng ${money(en.E)}: nó nâng khả năng thành công của ${nb} đề xuất khác trong danh mục. Trên bản đồ, các chấm đó dịch sang phải.</li>`;
     } else if (st.locks[ENABLER] !== 'out') {
       html += `<li>Ở mức ngân sách này, máy chưa chọn nền tảng dữ liệu chung: tiền dành cho nó tạo ra ít hơn các đề xuất ra tiền nhanh. Nới ngân sách để thấy máy đổi ý.</li>`;
     }
@@ -1153,9 +1192,9 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
 
   function priceTxt() {
     const price = V.free.E - V.opt.E;
-    if (price > Math.abs(V.free.E) * 0.002) return `Quyết định riêng của HĐQT đang tốn <b>${money(price)}</b> NPV kỳ vọng so với để máy tự chọn.`;
-    if (price < -Math.abs(V.free.E) * 0.002) return `Quyết định riêng của HĐQT làm NPV kỳ vọng tăng <b>${money(-price)}</b>, đổi lại danh mục nhận rủi ro vượt khẩu vị đã đặt.`;
-    return 'Quyết định riêng của HĐQT không làm thay đổi NPV kỳ vọng của danh mục.';
+    if (price > Math.abs(V.free.E) * 0.002) return `Quyết định riêng của HĐQT đang tốn <b>${money(price)}</b> lãi ròng so với để máy tự chọn.`;
+    if (price < -Math.abs(V.free.E) * 0.002) return `Quyết định riêng của HĐQT làm lãi ròng tăng <b>${money(-price)}</b>, đổi lại danh mục nhận rủi ro vượt khẩu vị đã đặt.`;
+    return 'Quyết định riêng của HĐQT không làm thay đổi lãi ròng của danh mục.';
   }
 
   /* ---------- dòng tiền cộng dồn ---------- */
@@ -1164,8 +1203,8 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const box = $('#jBox'), W = Math.max(300, Math.round(box.clientWidth)), narrow = W < 520, H = narrow ? 270 : 310;
     const m = { l: narrow ? 46 : 58, r: narrow ? 12 : 92, t: 18, b: 36 };
     const ser = [];
-    if (V.eOpt) ser.push({ c: 1, name: 'Máy tối ưu', e: V.eOpt });
-    ser.push({ c: 2, name: 'Cảm tính', e: V.eInt });
+    if (V.eOpt) ser.push({ c: 1, name: 'Máy chọn', e: V.eOpt });
+    ser.push({ c: 2, name: 'Thói quen', e: V.eInt });
     $('#jLegend').innerHTML = ser.map(s => `<span><i class="sw l${s.c}"></i>${s.name}</span>`).join('');
     $('#jUnit').textContent = axUnit() + ', theo tháng';
     const Hm = V.C.H, dv = axDiv();
@@ -1208,7 +1247,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const xh = el('line', { class: 'xh', x1: 0, x2: 0, y1: m.t, y2: H - m.b, visibility: 'hidden' }, svg);
     const ov = el('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: 'transparent' }, svg);
     jState = { X, ser, Hm, m, W, H };
-    $('#jCap').innerHTML = ser.map(s => `<b>${s.name}:</b> cần vốn tối đa ${money(-s.e.trough)} ở tháng ${s.e.troughM}, hoàn vốn ${monthTxt(s.e.pb)} (không tính vốn lưu động: ${monthTxt(s.e.pbX)}).`).join(' ');
+    $('#jCap').innerHTML = ser.map(s => `<b>${s.name}:</b> cần vốn tối đa ${money(-s.e.trough)} ở tháng ${s.e.troughM}, hoàn vốn ${monthTxt(s.e.pb)} (không tính tiền giải phóng từ tồn kho: ${monthTxt(s.e.pbX)}).`).join(' ');
     ov.addEventListener('pointermove', e => {
       const r = svg.getBoundingClientRect(), sc2 = r.width / W, x = (e.clientX - r.left) / sc2;
       const k = Math.max(0, Math.min(Hm, Math.round((x - m.l) / (W - m.l - m.r) * Hm)));
@@ -1222,10 +1261,10 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
   function drawMC() {
     const box = $('#mcBox'), W = Math.max(300, Math.round(box.clientWidth)), narrow = W < 520, H = narrow ? 250 : 286;
     const M = V.main.m, out = M.out, N = out.length, dv = axDiv();
-    $('#mcTitle').textContent = `Phân bố NPV ${st.hz} năm, danh mục ${V.main.label}`;
+    $('#mcTitle').textContent = `Phân bố lãi ròng ${st.hz} năm, danh mục ${V.main.label}`;
     $('#mcUnit').textContent = axUnit();
-    const cmpTxt = V.opt ? ` Cách chọn theo cảm tính: xác suất lỗ ${lossTxt(V.mInt.loss)}, 10% kịch bản xấu nhất dưới ${money(V.mInt.p10)}.` : '';
-    $('#mcText').innerHTML = `80% kịch bản nằm trong khoảng <b>${money(M.p10)}</b> đến <b>${money(M.p90)}</b>. Xác suất lỗ <b>${lossTxt(M.loss)}</b>.${cmpTxt}`;
+    const cmpTxt = V.opt ? ` Cách chọn theo thói quen: khả năng lỗ ${lossTxt(V.mInt.loss)}, 10% kịch bản xấu nhất dưới ${money(V.mInt.p10)}.` : '';
+    $('#mcText').innerHTML = `80% kịch bản nằm trong khoảng <b>${money(M.p10)}</b> đến <b>${money(M.p90)}</b>. Khả năng lỗ <b>${lossTxt(M.loss)}</b>.${cmpTxt}`;
     const m = { l: narrow ? 40 : 50, r: 12, t: 30, b: 36 };
     const lo = out[0] / dv, hi = out[N - 1] / dv, sx = nice(Math.min(lo, 0), Math.max(hi, 0), narrow ? 4 : 6);
     const nb = narrow ? 18 : 28, bw = (hi - lo) / nb || 1, cnt = new Array(nb).fill(0);
@@ -1233,22 +1272,22 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const sy = nice(0, Math.max(...cnt), 4);
     const X = v => m.l + (v - sx.lo) / (sx.hi - sx.lo) * (W - m.l - m.r), Y = c => H - m.b - c / sy.hi * (H - m.t - m.b);
     box.innerHTML = '';
-    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': `Phân bố NPV qua ${N} kịch bản: P10 ${money(M.p10)}, P50 ${money(M.p50)}, P90 ${money(M.p90)}, xác suất lỗ ${pct(M.loss, 1)}.` }, box);
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': `Phân bố lãi ròng qua ${N} kịch bản: trường hợp xấu ${money(M.p10)}, giữa ${money(M.p50)}, trường hợp tốt ${money(M.p90)}, khả năng lỗ ${pct(M.loss, 1)}.` }, box);
     const ax = el('g', { class: 'ax' }, svg);
     sy.t.forEach(t => { const y = Y(t); el('line', { class: t === 0 ? 'zero' : 'gl', x1: m.l, x2: W - m.r, y1: y, y2: y }, ax); el('text', { x: m.l - 8, y: y + 4, 'text-anchor': 'end', class: 'num' }, ax, nf(t, 0)); });
     sx.t.forEach(t => el('text', { x: X(t), y: H - m.b + 16, 'text-anchor': 'middle', class: 'num' }, ax, nf(t, sx.d)));
-    el('text', { x: (m.l + W - m.r) / 2, y: H - 4, 'text-anchor': 'middle', class: 'axtitle' }, ax, `NPV ${st.hz} năm, ${axUnit()}`);
+    el('text', { x: (m.l + W - m.r) / 2, y: H - 4, 'text-anchor': 'middle', class: 'axtitle' }, ax, `Lãi ròng ${st.hz} năm, ${axUnit()}`);
     el('text', { x: m.l, y: 12, class: 'axtitle' }, ax, 'Số kịch bản');
     const bars = el('g', {}, svg);
     cnt.forEach((c, i) => {
       if (!c) return;
       const a = lo + i * bw, b = a + bw, x0 = X(a) + 1, x1 = X(b) - 1, y = Y(c);
       const r = el('rect', { x: x0, y, width: Math.max(1, x1 - x0), height: Y(0) - y, rx: 2, class: 'bar' + ((a + b) / 2 < 0 ? ' neg' : '') }, bars);
-      r.addEventListener('pointermove', e => { r.classList.add('h'); showTip(`<b>${c} kịch bản</b><div class="r"><span>NPV từ</span><span>${money(a * dv)}</span></div><div class="r"><span>đến</span><span>${money(b * dv)}</span></div>${(a + b) / 2 < 0 ? '<div class="st">Vùng lỗ</div>' : ''}`, e.clientX, e.clientY); });
+      r.addEventListener('pointermove', e => { r.classList.add('h'); showTip(`<b>${c} kịch bản</b><div class="r"><span>Lãi ròng từ</span><span>${money(a * dv)}</span></div><div class="r"><span>đến</span><span>${money(b * dv)}</span></div>${(a + b) / 2 < 0 ? '<div class="st">Vùng lỗ</div>' : ''}`, e.clientX, e.clientY); });
       r.addEventListener('pointerleave', () => { r.classList.remove('h'); hideTip(); });
     });
     if (sx.lo < 0 && sx.hi > 0) el('line', { class: 'zero', x1: X(0), x2: X(0), y1: m.t - 6, y2: H - m.b }, svg);
-    const P = [['P10', M.p10], ['P50', M.p50], ['P90', M.p90]];
+    const P = [['Xấu (1/10)', M.p10], ['Giữa', M.p50], ['Tốt (1/10)', M.p90]];
     let lastX = -1e9, row = 0;
     P.forEach(([k, v]) => {
       const x = X(v / dv);
@@ -1268,11 +1307,11 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const own = {}; items.forEach(it => own[OWN[it.u.d]] = (own[OWN[it.u.d]] || 0) + 1);
     const ow = Object.entries(own).sort((a, b) => b[1] - a[1]);
     const minT = items.length ? Math.min(...items.map(it => it.t + it.off)) + st.delay + 1 : 0;
-    const halfCmp = V.opt ? ` Cách chọn theo cảm tính trong cùng kịch bản: ${money(V.halfInt.npv)}.` : '';
+    const halfCmp = V.opt ? ` Cách chọn theo thói quen trong cùng kịch bản: ${money(V.halfInt.npv)}.` : '';
     const Q = [
-      ['Nếu chỉ đạt một nửa giá trị kế hoạch?', `NPV ${money(h.npv)}`, `Hoàn vốn ${monthTxt(h.pb)}.${halfCmp}`],
-      ['Bao lâu thì thấy tiền về?', e.pb == null ? 'Chưa hoàn vốn' : `Hoàn vốn tháng ${e.pb}`, `Vốn phải chịu tối đa ${money(-e.trough)} ở tháng ${e.troughM}. Nếu không tính vốn lưu động giải phóng, hoàn vốn ${monthTxt(e.pbX)}.`],
-      ['Xác suất mất tiền là bao nhiêu?', lossTxt(M.loss), `Trong 2.000 kịch bản, 10% xấu nhất cho NPV dưới ${money(M.p10)}. Mô phỏng đã tính cả cú sốc chung đánh vào toàn danh mục.`],
+      ['Nếu chỉ đạt một nửa giá trị kế hoạch?', `Lãi ròng ${money(h.npv)}`, `Hoàn vốn ${monthTxt(h.pb)}.${halfCmp}`],
+      ['Bao lâu thì thấy tiền về?', e.pb == null ? 'Chưa hoàn vốn' : `Hoàn vốn tháng ${e.pb}`, `Vốn phải chịu tối đa ${money(-e.trough)} ở tháng ${e.troughM}. Nếu không tính tiền giải phóng từ tồn kho giải phóng, hoàn vốn ${monthTxt(e.pbX)}.`],
+      ['Khả năng mất tiền là bao nhiêu?', lossTxt(M.loss), `Trong 2.000 kịch bản, 10% xấu nhất cho lãi ròng dưới ${money(M.p10)}. Mô phỏng đã tính cả cú sốc chung đánh vào toàn danh mục.`],
       ['Tiền tập trung ở đâu?', `5 đề xuất chiếm ${pct(top5)}`, items.length ? `Mảng đóng góp nhiều nhất là ${DOM[td].toLowerCase()} (${pct(byDom[td] / tot)}). Đề xuất lớn nhất: ${esc(lf(items[0].u.name))}.` : ''],
       ['Mỗi tháng chần chừ mất bao nhiêu?', money(e.valYr / 12), `Đó là giá trị một tháng khi danh mục chạy đủ. Chờ thêm một quý để “nghiên cứu thêm” tốn khoảng ${money(e.valYr / 4)}.`],
       ['Ai chịu trách nhiệm từng đồng?', `${ow.length} giám đốc ký cam kết`, ow.length ? `Nhiều nhất: ${ow[0][0].toLowerCase()} (${ow[0][1]} đề xuất)${ow[1] ? `, ${ow[1][0].toLowerCase()} (${ow[1][1]})` : ''}. Finance đo giá trị cho cả ${e.n} đề xuất trên một sổ chung.` : ''],
@@ -1291,7 +1330,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     }).join('');
     document.querySelectorAll('#dom .drow').forEach(r => {
       const k = +r.dataset.k;
-      r.addEventListener('pointermove', e => showTip(`<b>${DOM[k]}</b><div class="r"><span>Tổng đề xuất</span><span>${money(pool[k])}</span></div><div class="r"><span>Máy chọn</span><span>${V.opt ? money(o[k]) : 'chưa chạy'}</span></div><div class="r"><span>Cảm tính chọn</span><span>${money(i2[k])}</span></div><div class="st">Giá trị kỳ vọng mỗi năm</div>`, e.clientX, e.clientY));
+      r.addEventListener('pointermove', e => showTip(`<b>${DOM[k]}</b><div class="r"><span>Tổng đề xuất</span><span>${money(pool[k])}</span></div><div class="r"><span>Máy chọn</span><span>${V.opt ? money(o[k]) : 'chưa chạy'}</span></div><div class="r"><span>Thói quen chọn</span><span>${money(i2[k])}</span></div><div class="st">Tiền thu về mỗi năm (đã tính rủi ro)</div>`, e.clientX, e.clientY));
       r.addEventListener('pointerleave', hideTip);
     });
   }
@@ -1303,7 +1342,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const parts = V.waves.map((w, k) => `<div class="wave"><div class="wt"><b>${L[k][0]}</b><span class="xs muted">${L[k][1]}</span></div>
       <div class="wm"><div>Đề xuất<b>${w.items.length}</b></div><div>Vốn<b>${money(w.cap)}</b></div><div>Giá trị mỗi năm<b>${money(w.val)}</b></div></div>
       <div class="wl">${w.items.map(it => `<button type="button" data-id="${it.u.id}">${esc(short(it.u.name, 34))}</button>`).join('') || (k === 2 ? `<span class="sm muted">Không có đề xuất nào đáng khởi động từ tháng 13: không còn kịp tạo giá trị trong ${st.hz} năm.</span>` : '<span class="sm muted">Không có đề xuất</span>')}</div></div>`);
-    $('#waves').innerHTML = parts[0] + '<div class="gate"><span>Cổng 1</span></div>' + parts[1] + '<div class="gate"><span>Cổng 2</span></div>' + parts[2];
+    $('#waves').innerHTML = parts[0] + '<div class="gate"><span>Kiểm tra 1</span></div>' + parts[1] + '<div class="gate"><span>Kiểm tra 2</span></div>' + parts[2];
   }
 
   /* ---------- trước và sau ---------- */
@@ -1311,10 +1350,10 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const e = V.main.e, rev = V.C.rev, n = e.n;
     const top = e.items.slice().sort((a, b) => b.p * b.val - a.p * a.val).slice(0, 8);
     $('#baTable').innerHTML = `<thead><tr><th>Chỉ số hoặc quy trình</th><th>Trước</th><th>Sau</th><th style="text-align:right">Giá trị mỗi năm</th></tr></thead><tbody>
-      <tr class="kpi"><td class="n">Biên EBITDA</td><td class="bf">${nf(EBITDA0, 1)}%</td><td>${nf(EBITDA0 + e.ebitda / rev * 100, 1)}%</td><td class="v">${money(e.ebitda)}</td></tr>
-      <tr class="kpi"><td class="n">Vốn lưu động giải phóng</td><td class="bf">Không có</td><td>${money(e.wc)}</td><td class="v">một lần</td></tr>
+      <tr class="kpi"><td class="n">Biên lợi nhuận hoạt động (EBITDA)</td><td class="bf">${nf(EBITDA0, 1)}%</td><td>${nf(EBITDA0 + e.ebitda / rev * 100, 1)}%</td><td class="v">${money(e.ebitda)}</td></tr>
+      <tr class="kpi"><td class="n">Tiền giải phóng từ tồn kho, công nợ</td><td class="bf">Không có</td><td>${money(e.wc)}</td><td class="v">một lần</td></tr>
       <tr class="kpi"><td class="n">Quy trình chạy bằng agent hoặc mô hình</td><td class="bf">0</td><td>${n}</td><td class="v"></td></tr>
-      <tr class="kpi"><td class="n">Chi phí chạy mới</td><td class="bf">0</td><td>${money(e.opexYr)} mỗi năm</td><td class="v neg">${money(-e.opexYr)}</td></tr>
+      <tr class="kpi"><td class="n">Chi phí vận hành mới</td><td class="bf">0</td><td>${money(e.opexYr)} mỗi năm</td><td class="v neg">${money(-e.opexYr)}</td></tr>
       ${top.map(it => `<tr><td class="n">${esc(it.u.name)}</td><td class="bf">${esc(it.u.before)}</td><td>${esc(it.u.after)}</td><td class="v">${money(it.p * st.R * it.val)}</td></tr>`).join('')}</tbody>`;
     const lvK = e.items.filter(it => it.u.lev === 'K').reduce((s, it) => s + it.p * st.R * it.val, 0);
     const posLeft = V.items.filter(it => it.E > 0 && it.u.r <= st.appetite && !V.main.set.has(it.u.id));
@@ -1326,15 +1365,15 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const tot = e.items.reduce((s, it) => s + it.p * it.val, 0) || 1;
     const top5 = e.items.slice().sort((a, b) => b.p * b.val - a.p * a.val).slice(0, 5).reduce((s, it) => s + it.p * it.val, 0) / tot;
     $('#gain').innerHTML = [
-      `<b>${money(e.npv)}</b> NPV kỳ vọng trong ${st.hz} năm, ${money(e.valYr)} giá trị mỗi năm khi chạy đủ.`,
-      `<b>${money(e.wc)}</b> vốn lưu động giải phóng một lần, giảm nhu cầu vay ngắn hạn.`,
+      `<b>${money(e.npv)}</b> lãi ròng trong ${st.hz} năm, ${money(e.valYr)} giá trị mỗi năm khi chạy đủ.`,
+      `<b>${money(e.wc)}</b> tiền giải phóng một lần từ tồn kho, công nợ, giảm nhu cầu vay ngắn hạn.`,
       `<b>${money(lvK)}</b> tổn thất tránh được mỗi năm từ các đề xuất kiểm soát rủi ro.`,
       `Mỗi đồng chi tạo ra <b>${nf(e.benefit / e.cost, 1)} đồng</b> giá trị hiện tại.`,
     ].map(s => `<li>${s}</li>`).join('');
     $('#cost').innerHTML = [
-      posLeft.length ? `Bỏ lại <b>${posLeft.length} đề xuất có NPV dương nếu làm ngay</b>, tổng ${money(posLeft.reduce((s, it) => s + it.E, 0))}, vì ${V.bud - e.capex > V.bud * 0.05 ? 'năng lực triển khai không đủ để khởi động kịp' : 'hết ngân sách hoặc năng lực triển khai'}.` : 'Không bỏ lại đề xuất nào có NPV dương trong khẩu vị rủi ro.',
-      exc.length ? `Gác <b>${exc.length} đề xuất vượt khẩu vị rủi ro</b>, giá trị kỳ vọng ${money(exc.reduce((s, it) => s + it.evYr, 0))} mỗi năm.` : 'Khẩu vị rủi ro hiện tại không loại đề xuất nào.',
-      `Chi phí chạy <b>${money(e.opexYr)} mỗi năm</b> sau khi xây xong: agent và mô hình không miễn phí.`,
+      posLeft.length ? `Bỏ lại <b>${posLeft.length} đề xuất có lãi ròng dương nếu làm ngay</b>, tổng ${money(posLeft.reduce((s, it) => s + it.E, 0))}, vì ${V.bud - e.capex > V.bud * 0.05 ? 'năng lực triển khai không đủ để khởi động kịp' : 'hết ngân sách hoặc năng lực triển khai'}.` : 'Không bỏ lại đề xuất nào có lãi ròng dương trong mức rủi ro HĐQT chấp nhận.',
+      exc.length ? `Gác <b>${exc.length} đề xuất vượt mức rủi ro HĐQT chấp nhận</b>, tiền thu về mỗi năm ${money(exc.reduce((s, it) => s + it.evYr, 0))} mỗi năm.` : 'Mức rủi ro chấp nhận hiện tại không loại đề xuất nào.',
+      `Chi phí vận hành <b>${money(e.opexYr)} mỗi năm</b> sau khi xây xong: agent và mô hình không miễn phí.`,
       in6.length ? `Tải thay đổi: <b>${in6.length} quy trình</b> đổi cách làm trong 6 tháng đầu, nhiều nhất ở mảng ${DOM[dmax[0]].toLowerCase()} (${dmax[1]}). Tổng cộng ${e.n} quy trình trong ${Math.max(1, ...e.items.map(it => it.off / 6 + 1))} đợt.` : 'Không có quy trình nào đổi trong 6 tháng đầu.',
       `Tập trung: 5 đề xuất lớn nhất chiếm <b>${pct(top5)}</b> giá trị.`,
       `<b>${risky} đề xuất</b> có rủi ro từ 3/5 trở lên cần thẩm định mô hình độc lập.`,
@@ -1343,8 +1382,8 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
 
   /* ---------- bảng 100 ---------- */
   const COLS = [
-    ['id', '#', 'r'], ['name', 'Đề xuất', ''], ['d', 'Mảng', ''], ['lev', 'Đòn bẩy', ''], ['tec', 'Kỹ thuật', ''],
-    ['ev', 'Giá trị kỳ vọng mỗi năm', 'r'], ['cap', 'Vốn', 'r'], ['p', 'Thành công', 'r'], ['r', 'Rủi ro', 'r'], ['t', 'Ra tiền', 'r'], ['E', 'NPV nếu làm ngay', 'r'], ['o', 'Máy', ''], ['w', 'Đợt', ''], ['i', 'Cảm tính', ''], ['pg', 'Trang riêng', ''],
+    ['id', '#', 'r'], ['name', 'Đề xuất', ''], ['d', 'Mảng', ''], ['lev', 'Loại lợi ích', ''], ['tec', 'Kỹ thuật', ''],
+    ['ev', 'Tiền thu về mỗi năm, đã tính rủi ro', 'r'], ['cap', 'Vốn', 'r'], ['p', 'Thành công', 'r'], ['r', 'Rủi ro', 'r'], ['t', 'Ra tiền', 'r'], ['E', 'Lãi ròng nếu làm ngay', 'r'], ['o', 'Máy', ''], ['w', 'Đợt', ''], ['i', 'Thói quen', ''], ['pg', 'Trang riêng', ''],
   ];
   function key(it, k) {
     const u = it.u;
@@ -1364,7 +1403,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
       const oc = !st.optRun ? '<span class="muted">chưa chạy</span>' : L === 'in' ? '<span class="pill lk">Ép giữ</span>' : L === 'out' ? '<span class="pill">Đã loại</span>' : V.sOpt.has(u.id) ? '<span class="pill o">Chọn</span>' : V.dropped.has(u.id) ? '<span class="muted">Hết năng lực</span>' : '';
       return `<tr class="${V.main.set.has(u.id) ? 'sel' : ''}"><td class="r">${u.id}</td><td class="nm"><button type="button" data-id="${u.id}">${esc(u.name)}</button></td><td>${DOM[u.d]}</td><td>${LEV[u.lev]}</td><td>${TEC[u.tec]}</td>
         <td class="r">${money(it.evYr)}</td><td class="r">${money(it.cap)}</td><td class="r">${pct(it.p)}</td><td class="r">${u.r}/5</td><td class="r">${it.t} tháng</td><td class="r ${it.E < 0 ? 'neg' : ''}">${money(it.E)}</td><td>${oc}</td><td>${V.main.set.has(u.id) ? 'Đợt ' + (V.wave[u.id] + 1) : ''}</td><td>${V.sInt.has(u.id) ? '<span class="pill i">Chọn</span>' : ''}</td><td><a href="${ucHref(u.id)}">Chạy thử</a></td></tr>`;
-    }).join('') || `<tr><td colspan="15" class="muted">Không có đề xuất nào khớp bộ lọc. Chọn lại đòn bẩy hoặc mảng.</td></tr>`;
+    }).join('') || `<tr><td colspan="15" class="muted">Không có đề xuất nào khớp bộ lọc. Chọn lại loại lợi ích hoặc mảng.</td></tr>`;
   }
 
   function renderIdx() {
@@ -1375,7 +1414,7 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
   function renderReso() {
     const box = $('#reso');
     const head = `<div class="rh">Nghị quyết số 07/2026/NQ-HĐQT (mô phỏng)</div><h3>Về danh mục đầu tư AI giai đoạn 2027–${2026 + st.hz}</h3>`;
-    if (!V.opt) { box.innerHTML = head + `<p style="color:var(--ink2)">Chưa có danh mục đề nghị. Ban điều hành cần chạy tối ưu trên cùng ngân sách trước khi HĐQT biểu quyết.</p><button type="button" class="btn" data-act="opt">Để máy tối ưu</button>`; return; }
+    if (!V.opt) { box.innerHTML = head + `<p style="color:var(--ink2)">Chưa có danh mục đề nghị. Ban điều hành cần để máy chọn trên cùng ngân sách trước khi HĐQT biểu quyết.</p><button type="button" class="btn" data-act="opt">Để máy chọn</button>`; return; }
     if (V.opt.over) { box.innerHTML = head + `<p class="blocked">Các quyết định ép giữ đang vượt ngân sách ${money(V.bud)}. Nới ngân sách hoặc bỏ bớt quyết định ép trước khi biểu quyết.</p>`; return; }
     const e = V.eOpt, M = V.mOpt, w = V.waves, rev = V.C.rev, unused = V.bud - e.capex;
     const risky = e.items.filter(it => it.u.r >= 3).length;
@@ -1387,9 +1426,9 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     const lk = Object.entries(st.locks);
     if (lk.length && V.free) {
       const over = lk.filter(([id, v]) => v === 'in' && UC[id - 1].r > st.appetite).map(([id]) => lf(UC[id - 1].name));
-      art.push(`Ghi nhận ${lk.length} quyết định riêng của HĐQT (ép giữ hoặc loại). ${priceTxt()} Người đề xuất quyết định ép báo cáo riêng kết quả mỗi quý.` + (over.length ? ` Đề xuất ${over.join(', ')} vượt khẩu vị rủi ro, được giữ theo quyết định riêng và phải có phương án dừng.` : ''));
+      art.push(`Ghi nhận ${lk.length} quyết định riêng của HĐQT (ép giữ hoặc loại). ${priceTxt()} Người đề xuất quyết định ép báo cáo riêng kết quả mỗi quý.` + (over.length ? ` Đề xuất ${over.join(', ')} vượt mức rủi ro HĐQT chấp nhận, được giữ theo quyết định riêng và phải có phương án dừng.` : ''));
     }
-    if (M.loss > 0.1 || V.half.npv < 0 || e.pb == null || e.pb > 24) art.push(`Kịch bản thử cho thấy rủi ro đáng kể (xác suất lỗ ${lossTxt(M.loss)}, hoàn vốn ${monthTxt(e.pb)}). Ban điều hành trình phương án giảm rủi ro trong 30 ngày, trước khi giải ngân Đợt 2.`);
+    if (M.loss > 0.1 || V.half.npv < 0 || e.pb == null || e.pb > 24) art.push(`Kịch bản thử cho thấy rủi ro đáng kể (khả năng lỗ ${lossTxt(M.loss)}, hoàn vốn ${monthTxt(e.pb)}). Ban điều hành trình phương án giảm rủi ro trong 30 ngày, trước khi giải ngân Đợt 2.`);
     if (unused > V.bud * 0.05) art.push(`Giữ lại <b>${money(unused)}</b> ngân sách chưa phân bổ. Giao Ban điều hành trình phương án nâng năng lực triển khai trong 90 ngày; phần ngân sách này chỉ mở khi năng lực tăng.`);
     art.push(`Giám đốc tài chính lập báo cáo hiện thực hoá giá trị hằng quý. Mọi con số giá trị phải đối chiếu được với sổ cái và đường cơ sở đã khoá.`);
     box.innerHTML = head + `<p style="color:var(--ink2);margin-bottom:0">Hội đồng quản trị Vertex (mô phỏng) quyết nghị:</p><ol>${art.map(a => `<li>${a}</li>`).join('')}</ol>` +
@@ -1416,12 +1455,12 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
     if (!st.optRun) mo = 'chưa chạy';
     else if (L === 'in') mo = 'HĐQT ép giữ';
     else if (L === 'out') mo = 'HĐQT đã loại';
-    else if (V.sOpt.has(id)) mo = (id === ENABLER ? 'chọn, vì nó nâng xác suất thành công của các đề xuất khác' : 'chọn') + `, khởi động ở đợt ${V.wave[id] + 1}`;
-    else if (V.dropped.has(id)) mo = `không khởi động: NPV dương nếu làm ngay, nhưng năng lực triển khai đẩy nó sang đợt sau, khi đó không còn kịp tạo giá trị trong ${st.hz} năm`;
-    else if (u.r > st.appetite) mo = 'không chọn, vì vượt khẩu vị rủi ro';
-    else if (it.E <= 0) mo = `không chọn, vì NPV kỳ vọng ${st.hz} năm âm: ra tiền sau ${it.t} tháng, xác suất thành công ${pct(it.p)}`;
-    else mo = 'không chọn: NPV dương nhưng mỗi đồng vốn tạo ra ít hơn các đề xuất được chọn';
-    const io = V.sInt.has(id) ? 'chọn, vì con số giá trị tiêu đề lớn' : u.r > st.appetite ? 'không chọn, vượt khẩu vị rủi ro' : 'không chọn, hết ngân sách trước khi đến lượt';
+    else if (V.sOpt.has(id)) mo = (id === ENABLER ? 'chọn, vì nó nâng khả năng thành công của các đề xuất khác' : 'chọn') + `, khởi động ở đợt ${V.wave[id] + 1}`;
+    else if (V.dropped.has(id)) mo = `không khởi động: lãi ròng dương nếu làm ngay, nhưng năng lực triển khai đẩy nó sang đợt sau, khi đó không còn kịp tạo giá trị trong ${st.hz} năm`;
+    else if (u.r > st.appetite) mo = 'không chọn, vì vượt mức rủi ro HĐQT chấp nhận';
+    else if (it.E <= 0) mo = `không chọn, vì lãi ròng ${st.hz} năm âm: ra tiền sau ${it.t} tháng, khả năng thành công ${pct(it.p)}`;
+    else mo = 'không chọn: lãi ròng dương nhưng mỗi đồng vốn tạo ra ít hơn các đề xuất được chọn';
+    const io = V.sInt.has(id) ? 'chọn, vì con số giá trị tiêu đề lớn' : u.r > st.appetite ? 'không chọn, vượt mức rủi ro HĐQT chấp nhận' : 'không chọn, hết ngân sách trước khi đến lượt';
     const nb = UC.filter(x => x.id !== ENABLER && x.f <= 3).length;
     $('#drawer').innerHTML = `<button type="button" class="close">Đóng</button>
       <p class="xs muted" style="margin:0">Đề xuất ${id} trên 100</p>
@@ -1430,12 +1469,12 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
       <div class="tag"><span>${DOM[u.d]}</span><span>${LEV[u.lev]}</span><span>${TEC[u.tec]}</span><span>Chủ sở hữu: ${OWN[u.d].toLowerCase()}</span></div>
       <div class="kv">
         <div>Giá trị mỗi năm nếu thành công<b>${money(it.val * 0.6)} đến ${money(it.val * 1.3)}</b></div>
-        <div>Xác suất thành công<b>${pct(it.p)}</b></div>
+        <div>Khả năng thành công<b>${pct(it.p)}</b></div>
         <div>Vốn đầu tư<b>${money(it.cap)}</b></div>
-        <div>Chi phí chạy mỗi năm<b>${money(it.opex)}</b></div>
+        <div>Chi phí vận hành mỗi năm<b>${money(it.opex)}</b></div>
         <div>Ra tiền sau<b>${it.t} tháng</b></div>
-        <div>NPV kỳ vọng nếu làm ngay<b class="${it.E < 0 ? 'neg' : ''}">${money(it.E)}</b></div>
-        ${u.wc ? `<div>Vốn lưu động giải phóng<b>${money(it.wc)}</b></div>` : ''}
+        <div>Lãi ròng nếu làm ngay<b class="${it.E < 0 ? 'neg' : ''}">${money(it.E)}</b></div>
+        ${u.wc ? `<div>Tiền giải phóng từ tồn kho, công nợ<b>${money(it.wc)}</b></div>` : ''}
         <div>Mức rủi ro<b>${u.r}/5</b></div>
       </div>
       <div class="bfaf"><div class="b0"><small>Trước</small>${esc(u.before)}</div><div class="b1"><small>Sau</small>${esc(u.after)}</div></div>
@@ -1443,17 +1482,17 @@ const UCSLUG = ["001-doi-soat-ngan-hang-tu-dong","002-rut-ngan-dong-so-cuoi-than
         <div><small>Đánh đổi</small>${esc(u.trade)}</div>
         <div><small>Người trong vòng kiểm soát</small>${CTRL[u.tec]}</div>
         <div><small>Finance đo giá trị thế nào</small>${MEAS[u.lev]}</div>
-        ${id === ENABLER ? `<div><small>Vì sao máy quan tâm</small>Tự nó có NPV âm, nhưng nâng xác suất thành công thêm 12 điểm cho ${nb} đề xuất có mức khả thi thấp.</div>` : ''}
+        ${id === ENABLER ? `<div><small>Vì sao máy quan tâm</small>Tự nó có lãi ròng âm, nhưng nâng khả năng thành công thêm 12 điểm cho ${nb} đề xuất có mức khả thi thấp.</div>` : ''}
       </div>
-      <div class="why"><b>Máy:</b> ${mo}. <br><b>Cảm tính:</b> ${io}.</div>
+      <div class="why"><b>Máy:</b> ${mo}. <br><b>Thói quen:</b> ${io}.</div>
       ${st.optRun ? `<div class="lock"><div class="xs muted" style="font-weight:600">Quyết định riêng của HĐQT</div>
         <div class="seg" role="group" aria-label="Quyết định riêng cho đề xuất này">
           <button type="button" data-lk="in" aria-pressed="${L === 'in'}">Ép giữ</button>
           <button type="button" data-lk="auto" aria-pressed="${!L}">Để máy quyết</button>
           <button type="button" data-lk="out" aria-pressed="${L === 'out'}">Loại</button></div>
-        <p class="xs muted" style="margin:4px 0 0">Máy tối ưu lại phần còn lại và báo giá của quyết định này.</p>
+        <p class="xs muted" style="margin:4px 0 0">Máy chọn lại phần còn lại và báo giá của quyết định này.</p>
         ${V.free ? `<p class="sm" style="margin-top:8px">${priceTxt()}</p>` : ''}</div>`
-        : `<p class="sm" style="color:var(--ink2)">Bấm “Để máy tối ưu” để HĐQT có thể ép giữ hoặc loại riêng đề xuất này.</p>`}`;
+        : `<p class="sm" style="color:var(--ink2)">Bấm “Để máy chọn” để HĐQT có thể ép giữ hoặc loại riêng đề xuất này.</p>`}`;
   }
 
   /* ---------- vòng cập nhật ---------- */
