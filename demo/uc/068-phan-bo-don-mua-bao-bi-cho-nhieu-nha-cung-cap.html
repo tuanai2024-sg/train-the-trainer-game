@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Phân bổ đơn mua bao bì cho nhiều nhà cung cấp | Bài toán 68</title>
 <meta name="description" content="Bài toán 68 trên 150, Vertex Consumer, khâu mua hàng: máy tối ưu giải trên dữ liệu mẫu, quy ra tiền, xếp hạng trong 150 bài toán, quyết định mô phỏng.">
+<link rel="alternate" hreflang="en" href="../en/uc/068-splitting-packaging-orders-across-suppliers.html">
+<script>try{var t=localStorage.getItem('erx-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
@@ -420,6 +422,7 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
 .rdl dt{font-size:13.5px;font-weight:700;color:var(--muted)}
 .rdl dd{margin:0;font-size:15px;line-height:1.45;color:var(--ink)}
 .decide .isrec::after{content:"Đề nghị";margin-left:8px;font-size:11px;font-weight:800;padding:1px 6px;border-radius:5px;background:color-mix(in srgb,var(--good) 20%,var(--surface));color:var(--goodText)}
+html[lang="en"] .decide .isrec::after{content:"Recommended"}
 .gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px;margin:0 0 18px}
 .gloss div{border-top:1px solid var(--line);padding-top:10px}
 .gloss dt{font-weight:800;font-size:15px;color:var(--ink);margin-bottom:3px}
@@ -660,12 +663,41 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
 @media (max-width:640px){.brow{grid-template-columns:24px minmax(0,1fr) auto;row-gap:6px}.bbar{grid-column:2/-1}.bval{grid-row:1;grid-column:3}}
 .rowlab2{fill:var(--ink2);font-size:12px;font-weight:600}
 
+/* ===== điều hướng, giao diện sáng/tối, ngôn ngữ, khái niệm cần biết trước ===== */
+.navl{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+.tbtn,.lbtn{display:inline-grid;place-items:center;min-width:38px;height:38px;padding:0 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink2);font:inherit;font-weight:800;font-size:12.5px;text-decoration:none;cursor:pointer}
+.tbtn:hover,.lbtn:hover{border-color:var(--s1);color:var(--s1)}
+.tbtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tbtn .i-sun{display:none}
+:root[data-theme="dark"] .tbtn .i-sun{display:block}:root[data-theme="dark"] .tbtn .i-moon{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tbtn .i-sun{display:block}:root:not([data-theme="light"]) .tbtn .i-moon{display:none}}
+.prep{padding-block:34px 6px}
+.prh h2{font-size:clamp(19px,2vw,23px);margin:0 0 4px}
+.prh p{margin:0 0 14px;color:var(--ink2);max-width:70ch;font-size:14.5px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;align-items:start}
+.cc{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--s1);border-radius:12px;min-width:0}
+.cc>summary{cursor:pointer;list-style:none;padding:12px 14px 13px;display:grid;gap:4px}
+.cc>summary::-webkit-details-marker{display:none}
+.cct{font-weight:800;font-size:15px;line-height:1.3;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cct::after{content:"+";color:var(--s1);font-weight:800;font-size:18px;line-height:1}
+.cc[open] .cct::after{content:"−"}
+.ccs{font-size:13.5px;color:var(--ink2);line-height:1.45}
+.ccb{padding:0 14px 14px;display:grid;gap:9px;font-size:13.5px;line-height:1.5;color:var(--ink2)}
+.ccb p{margin:0}
+.ccb b{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:2px}
+.ccf span{display:block;font-weight:700;color:var(--ink);background:var(--chip);border-radius:8px;padding:7px 10px}
+.cch{border-left:3px solid var(--s2);padding-left:10px}
+.cch span{color:var(--ink)}
+.ccm{font-size:13px;font-weight:700;text-underline-offset:3px}
+.flinks{display:flex;gap:16px;flex-wrap:wrap}
+@media (max-width:760px){.chips{gap:5px}.chips span{font-size:12px;padding:2px 8px}.herofoot{gap:8px}.navr select{max-width:44vw}}
+
 </style>
 </head>
 <body>
 <nav class="topnav" aria-label="Điều hướng bài toán"><div class="in">
-  <a href="../danh-muc-150-use-case.html">← Bản đồ 150 bài toán</a>
-  <div class="navr"><a id="prev" href="#">‹ Trước</a><select id="jump" aria-label="Đi tới bài toán"></select><a id="next" href="#">Sau ›</a></div>
+  <div class="navl"><a href="../danh-muc-150-use-case.html">← Bản đồ 150 bài toán</a><a href="../kien-thuc-nen.html">Kiến thức nền</a></div>
+  <div class="navr"><a id="prev" href="#">‹ Trước</a><select id="jump" aria-label="Đi tới bài toán"></select><a id="next" href="#">Sau ›</a><button type="button" class="tbtn" id="themeBtn" aria-label="Đổi giao diện sáng hoặc tối" title="Giao diện sáng hoặc tối"><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><a class="lbtn" id="langBtn" href="#" hreflang="en" lang="en" title="English version">EN</a></div>
 </div>
 <div class="spbar"><div class="in" id="spbar"></div></div>
 </nav>
@@ -677,6 +709,11 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
   <div class="herofoot"><div class="chips" id="chips"></div><a class="skip" id="skip" href="#s5">Bận? Đọc ngay kết luận</a></div>
 </div></header>
 <main class="in">
+
+  <section class="prep" id="s0" aria-labelledby="t0">
+    <div class="prh"><h2 id="t0"></h2><p id="d0"></p></div>
+    <div class="cgrid" id="cgrid"></div>
+  </section>
 
   <section class="scene" id="s1" aria-labelledby="t1">
     <div class="sch"><p class="act"><span class="an">1</span>Bài toán</p><h2 id="t1"></h2><p class="sub" id="d1"></p></div>
@@ -804,11 +841,12 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
     </details>
   </section>
 </main>
-<footer><div class="in"><span>Trang mô phỏng phục vụ đào tạo, ERX Supply Chain Community.</span><a href="../danh-muc-150-use-case.html">Về bản đồ 150 bài toán</a></div></footer>
+<footer><div class="in"><span>Trang mô phỏng phục vụ đào tạo, ERX Supply Chain Community.</span><span class="flinks"><a href="../danh-muc-150-use-case.html">Về bản đồ 150 bài toán</a><a href="../kien-thuc-nen.html">Kiến thức nền</a></span></div></footer>
 
 <script>
 const UCID = 68;
 const SLUGS = ["001-thiet-ke-lai-mang-luoi-kho-mien-nam","002-nang-luc-kho-cho-mua-cao-diem","003-so-xe-so-huu-va-xe-thue-ngoai","004-du-bao-san-luong-hang-theo-kho","005-ke-hoach-tuyen-truc-giua-cac-trung-tam","006-dau-thau-cuoc-theo-tuyen-voi-nha-xe","007-phan-bo-san-luong-cho-nhieu-nha-xe","008-chien-luoc-mua-nhien-lieu","009-ky-han-thue-kho-theo-kich-ban-nhu-cau","010-chon-tuyen-chuyen-sang-xe-tai-dien","011-bo-tri-vi-tri-hang-trong-kho","012-gom-don-va-toi-uu-duong-nhat-hang","013-xep-ca-nhan-cong-kho-theo-san-luong","014-dat-lich-xe-vao-cua-nhap-xuat","015-doi-phu-tai-dien-kho-lanh","016-xep-pallet-len-container-va-xe","017-ghep-hang-chuyen-tiep-qua-kho-trung-chuyen","018-tuyen-giao-hang-hang-ngay-trong-do-thi","019-ghep-chuyen-chieu-ve-cho-xe-rong","020-chuyen-tuyen-dai-sang-duong-sat-va-duong-thuy","021-dinh-gia-khung-gio-giao-chang-cuoi","022-phan-vung-giao-cho-tai-xe-chang-cuoi","023-chon-don-giao-khi-thieu-xe-ngay-cao-diem","024-dieu-chuyen-container-rong","025-tuyen-thu-gom-hang-tra-ve-va-pallet","026-khieu-nai-hu-hong-bat-thuong","027-loi-nhuan-theo-khach-hang-hop-dong","028-gia-chao-thau-theo-kha-nang-trung","029-thu-hoi-cong-no-theo-xac-suat-tra","030-kiem-hoa-don-cuoc-va-phu-phi","031-du-bao-nhu-cau-theo-cua-hang-va-mat-hang","032-danh-muc-hang-theo-dien-tich-ke","033-phan-bo-dien-tich-giua-cac-nganh-hang","034-du-doan-doanh-thu-cua-hang-moi","035-luong-hang-tet-theo-kich-ban","036-luong-mua-ban-dau-hang-thoi-trang-theo-mua","037-phan-bo-don-hang-nhan-rieng-cho-nha-san-xuat","038-thu-hoi-chiet-khau-va-ho-tro-chua-doi","039-co-lo-dat-hang-ve-trung-tam-phan-phoi","040-du-bao-gia-nhap-hang-tuoi","041-ton-an-toan-theo-muc-phuc-vu-tung-mat-hang","042-dieu-chuyen-hang-giua-cua-hang-truoc-khi-giam-gia","043-xep-ca-nhan-vien-cua-hang-theo-luu-luong-khach","044-tuyen-xe-tu-trung-tam-phan-phoi-toi-cua-hang","045-giam-gia-hang-tuoi-theo-gio-trong-ngay","046-doi-phu-tai-dien-lanh-cua-hang","047-that-thoat-va-hao-hut-bat-thuong","048-chon-diem-xuat-hang-cho-don-online","049-phi-giao-theo-khung-gio-cho-don-online","050-ghep-don-online-thanh-chuyen-giao","051-chon-doi-tac-giao-chang-cuoi-theo-vung","052-uu-tien-xu-ly-hang-tra-ve-theo-gia-tri-thu-hoi","053-phan-bo-hang-ton-cham-cho-cac-kenh-thanh-ly","054-gian-lan-tra-hang","055-lich-giam-gia-cuoi-mua","056-chon-chuong-trinh-khuyen-mai-co-lai-gia-tang","057-gia-theo-do-co-gian-tung-nganh-hang","058-ban-vi-tri-trung-bay-cho-nha-cung-cap","059-chon-hoa-don-tra-som-de-lay-chiet-khau","060-phan-bo-hang-thieu-giua-cac-kenh","061-du-bao-nhu-cau-theo-kenh-va-ma-hang","062-ke-hoach-san-xuat-va-phan-phoi-hop-nhat","063-tinh-gon-danh-muc-ma-hang","064-ton-kho-thanh-pham-cho-mua-tet","065-phan-bo-hang-cho-nha-phan-phoi-khi-thieu-nguon","066-phoi-tron-nguyen-lieu-nuoc-giai-khat","067-mua-duong-dau-co-va-nhua-pet","068-phan-bo-don-mua-bao-bi-cho-nhieu-nha-cung-cap","069-co-lo-nhap-khau-nguyen-lieu","070-du-bao-gia-nguyen-lieu-dau-vao","071-thu-tu-me-san-xuat-giam-thoi-gian-doi-me","072-gan-ma-hang-cho-day-chuyen","073-phan-bo-san-luong-giua-4-nha-may","074-cat-mang-bao-bi-it-phe-lieu-nhat","075-doi-phu-tai-dien-nha-may","076-xep-ca-cong-nhan-theo-ke-hoach-san-xuat","077-tu-san-xuat-hay-thue-gia-cong","078-mang-luoi-kho-vung","079-tuyen-giao-hang-cua-nha-phan-phoi-toi-diem-ban","080-xep-hang-len-container-xuat-khau","081-uu-tien-diem-ban-cho-doi-ban-hang-ghe","082-han-muc-tin-dung-nha-phan-phoi","083-giam-gia-hang-can-date-theo-tuan","084-dieu-chuyen-hang-can-date-giua-nha-phan-phoi","085-thu-hoi-ket-chai-va-pallet-quay-vong","086-chon-chuong-trinh-khuyen-mai-thuong-mai","087-gia-va-quy-cach-goi","088-loi-nhuan-theo-nha-phan-phoi","089-chi-tra-ho-tro-thuong-mai-sai","090-chiet-khau-thanh-toan-som-cho-nha-phan-phoi","091-chon-don-hang-khi-cong-suat-can-kin","092-du-bao-nhu-cau-thep-theo-vung-va-mua-xay-dung","093-phan-bo-don-hang-giua-hai-nha-may-can","094-them-day-chuyen-hay-chay-them-ca","095-ton-thanh-pham-theo-muc-phuc-vu-tung-quy-cach","096-phoi-tron-phe-lieu-cho-lo-dien","097-phe-lieu-nhap-khau-hay-noi-dia","098-phan-bo-don-mua-than-dien-cuc-hop-kim","099-du-bao-gia-phoi-thep","100-co-lo-mua-vat-tu-phu","101-lich-can-theo-quy-cach-giam-thoi-gian-doi-truc","102-cat-cuon-thep-theo-don-it-phe-lieu-nhat","103-du-doan-hieu-suat-thu-hoi-theo-thong-so-lo","104-doi-phu-tai-lo-dien-sang-gio-thap-diem","105-uu-tien-bao-tri-theo-xac-suat-hong","106-ton-phu-tung-theo-muc-phuc-vu","107-xep-ca-cong-nhan-theo-lich-san-xuat","108-phat-hien-me-loi-som-tu-thong-so","109-tuyen-giao-thep-toi-cong-trinh","110-van-chuyen-hang-roi-bang-sa-lan-duong-sat-xe-tai","111-xep-thep-len-xe-theo-tai-trong","112-kho-trung-chuyen-gan-cong-trinh","113-lich-xe-nhan-hang-tai-cong-nha-may","114-phe-lieu-noi-bo-tai-nau-hay-ban-ra","115-ghep-lo-thep-loi-voi-don-ha-cap","116-gia-ban-theo-du-an-va-thoi-diem-giao","117-loi-nhuan-theo-dai-ly-va-du-an","118-phong-ngua-gia-thep-va-phe-lieu","119-sai-lech-gia-thanh-theo-me","120-thu-no-dai-ly-theo-xac-suat-tra","121-du-bao-dong-tien-13-tuan-toan-tap-doan","122-gop-quy-tien-giua-cac-cong-ty","123-phong-ngua-ty-gia-cho-thanh-toan-nhap-khau","124-co-cau-nguon-vay","125-chon-don-bay-von-luu-dong","126-danh-muc-dau-tu-nam-giua-bon-cong-ty","127-phan-bo-ngan-sach-tiep-thi-giua-thuong-hieu-va-kenh","128-ke-hoach-nam-theo-1-000-kich-ban-thi-truong","129-ngan-sach-nam-chan-de-xuat-chi-bat-thuong","130-chon-nha-cung-cap-cho-tai-tro-chuoi-cung-ung","131-gom-mua-sam-gian-tiep-giua-bon-cong-ty","132-phan-bo-van-tai-giua-vertex-logistics-va-nha-xe-ngoai","133-mua-dien-hop-dong-nang-luong-tai-tao-hay-gia-luoi","134-muc-giu-lai-khi-mua-bao-hiem-gian-doan","135-muc-ton-kho-dem-truoc-rui-ro-duong-bien","136-rui-ro-tap-trung-nha-cung-cap-chien-luoc","137-mang-luoi-kho-dung-chung-cho-ban-le-va-fmcg","138-chon-don-bay-giam-phat-thai-chi-phi-thap-nhat","139-xe-dung-chung-giua-cac-cong-ty","140-gia-carbon-noi-bo-cho-quyet-dinh-van-tai","141-tuyen-duong-bien-va-hang-tau-cho-nhap-khau","142-thu-hoi-bao-bi-va-san-pham-cu-lien-cong-ty","143-thanh-ly-tai-san-va-hang-ton-cu-toan-tap-doan","144-phan-ra-chenh-lech-loi-nhuan-theo-dong-luc","145-loi-nhuan-theo-khach-hang-chung-cua-tap-doan","146-chan-thanh-toan-trung-va-sai-truoc-khi-chi","147-han-muc-tin-dung-khach-hang-toan-tap-doan","148-lich-hoan-thue-gia-tri-gia-tang","149-muc-tien-mat-toi-thieu-cua-tung-cong-ty","150-gia-dich-vu-logistics-noi-bo"];
+const MAPURL = 'danh-muc-150-use-case.html', PRIMERURL = 'kien-thuc-nen.html', ALTURL = '../en/uc/068-splitting-packaging-orders-across-suppliers.html';
 /* ===== Tập đoàn Vertex (mô phỏng): bốn công ty và cách quy kết quả của máy tối ưu ra tiền ===== */
 function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 const CO = [
@@ -1002,7 +1040,7 @@ const UC = [
   { id: 147, co: 4, st: 5, key: 'G20', name: 'Hạn mức tín dụng khách hàng toàn tập đoàn', q: 'Nên ưu tiên rà lại hạn mức của khách nào để tránh nợ xấu trên cả tập đoàn mà không mất doanh thu?', before: 'Mỗi công ty tự rà khách nợ nhiều nhất', after: 'Xếp theo xác suất chậm trả nhân dư nợ trên cả tập đoàn', trade: 'Khách bị hạ hạn mức ở nhiều công ty cùng lúc', dec: 'Rà hạn mức hằng tháng theo xếp hạng chung của máy', mech: 'Bớt dư nợ ở nơi rủi ro cao, tiền về sớm hơn', amp: 'Kết hợp thu nợ theo xác suất trả', links: [[29,'thu nợ logistics'],[120,'thu nợ đại lý'],[82,'hạn mức nhà phân phối']], plain: 'Máy chỉ ra khách nào cần xem lại mức cho nợ trên cả tập đoàn.', pool: ['Phải thu khách hàng toàn tập đoàn',7000], sc: 0.3, scl: 'khách dùng nhiều công ty', k: 0.12, kind: 'cash', t: 3, r: 2, f: 3, sd: 147, own: 'Giám đốc tài chính tập đoàn' },
   { id: 148, co: 4, st: 5, key: 'G27', name: 'Lịch hoàn thuế giá trị gia tăng', q: 'Hồ sơ hoàn thuế nào nên làm trước để tiền về nhiều và sớm nhất với đội thuế có hạn?', before: 'Làm hồ sơ theo thứ tự phát sinh', after: 'Xếp theo xác suất được hoàn nhanh nhân số tiền', trade: 'Hồ sơ nhỏ chờ lâu hơn', dec: 'Đổi thứ tự lập hồ sơ hoàn thuế theo xếp hạng của máy', mech: 'Tiền thuế được hoàn về sớm hơn, giảm vốn lưu động bị giữ', amp: 'Kết hợp dự báo dòng tiền', links: [[121,'dòng tiền'],[125,'vốn lưu động'],[146,'kiểm soát chi']], plain: 'Máy chọn hồ sơ hoàn thuế nào nên làm trước để tiền về sớm nhất.', pool: ['Thuế giá trị gia tăng chờ hoàn',1400], sc: 1, scl: 'bốn công ty', k: 0.14, kind: 'cash', t: 3, r: 1, f: 4, sd: 148, own: 'Giám đốc tài chính tập đoàn' },
   { id: 149, co: 4, st: 5, key: 'G28', name: 'Mức tiền mặt tối thiểu của từng công ty', q: 'Mỗi công ty nên giữ bao nhiêu tiền mặt tối thiểu, khi thiếu phải vay nóng đắt còn thừa thì nằm không?', before: 'Giữ bằng chi tiêu trung bình 2 tuần', after: 'Mức tiền mặt theo tỷ lệ chi phí thiếu và thừa', trade: 'Có tuần tiền mặt thấp hơn quen thuộc', dec: 'Đặt mức tiền mặt tối thiểu theo máy cho bốn công ty, xét lại mỗi quý', mech: 'Bớt tiền nằm không mà vẫn ít khi phải vay nóng', amp: 'Kết hợp gộp quỹ tiền', links: [[122,'gộp quỹ'],[121,'dòng tiền'],[124,'cơ cấu vay']], plain: 'Máy tính mỗi công ty nên giữ bao nhiêu tiền mặt dự phòng.', pool: ['Chi phí tiền nằm không và vay nóng',260], sc: 1, scl: 'bốn công ty', k: 0.19, kind: 'cost', t: 2, r: 1, f: 4, sd: 149, own: 'Giám đốc tài chính tập đoàn' },
-  { id: 150, co: 4, st: 5, key: 'G29', name: 'Giá dịch vụ logistics nội bộ', q: 'Vertex Logistics nên tính giá dịch vụ cho các công ty trong tập đoàn bao nhiêu để lãi của cả tập đoàn cao nhất mà các công ty vẫn dùng?', before: 'Giá vốn cộng 5%', after: 'Giá theo độ co giãn sử dụng nội bộ, trong biên độ giá thị trường', trade: 'Phải phù hợp quy định giá chuyển giao', dec: 'Áp biểu giá nội bộ máy đề xuất trong biên độ giá thị trường đã thẩm định', mech: 'Giá đúng làm các công ty dùng logistics nội bộ khi nội bộ rẻ hơn thật sự', amp: 'Kết hợp phân bổ vận tải tập đoàn', links: [[132,'phân bổ vận tải'],[27,'lợi nhuận khách'],[139,'xe dùng chung']], plain: 'Máy tìm giá dịch vụ nội bộ để cả tập đoàn có lãi nhất.', pool: ['Lãi gộp dịch vụ logistics nội bộ',360], sc: 1, scl: 'dịch vụ cho ba công ty', k: 0.14, kind: 'margin', t: 4, r: 3, f: 3, sd: 150, own: 'Giám đốc tài chính tập đoàn' },
+  { id: 150, co: 4, st: 5, key: 'G29', name: 'Giá dịch vụ logistics nội bộ', q: 'Trong biên độ giá thị trường, Vertex Logistics nên tính giá dịch vụ cho các công ty trong tập đoàn bao nhiêu để lãi của cả tập đoàn cao nhất mà các công ty vẫn dùng?', before: 'Giá vốn cộng 5%', after: 'Giá theo độ co giãn sử dụng nội bộ, trong biên độ giá thị trường', trade: 'Phải phù hợp quy định giá chuyển giao', dec: 'Áp biểu giá nội bộ máy đề xuất trong biên độ giá thị trường đã thẩm định', mech: 'Giá đúng làm các công ty dùng logistics nội bộ khi nội bộ rẻ hơn thật sự', amp: 'Kết hợp phân bổ vận tải tập đoàn', links: [[132,'phân bổ vận tải'],[27,'lợi nhuận khách'],[139,'xe dùng chung']], plain: 'Máy tìm giá dịch vụ nội bộ để cả tập đoàn có lãi nhất.', pool: ['Lãi gộp dịch vụ logistics nội bộ',360], sc: 1, scl: 'dịch vụ cho ba công ty', k: 0.14, kind: 'margin', t: 4, r: 3, f: 3, sd: 150, own: 'Giám đốc tài chính tập đoàn' },
 ];
 /* giá trị tính sẵn bằng đúng thuật toán và hạt giống của từng trang, để các trang so được với nhau */
 const VAL = [{"V":41.847,"W":0,"d":0.12996,"lo":21.97,"hi":68.001},{"V":5.039,"W":0,"d":0.08475,"lo":3.023,"hi":6.802},{"V":25.094,"W":0,"d":0.14082,"lo":13.175,"hi":40.778},{"V":19.179,"W":0,"d":0.73766,"lo":10.069,"hi":31.166},{"V":16.293,"W":0,"d":0.10209,"lo":8.554,"hi":26.476},{"V":50.436,"W":0,"d":0.18543,"lo":26.479,"hi":81.959},{"V":6.285,"W":0,"d":0.03301,"lo":3.299,"hi":10.212},{"V":116.821,"W":0,"d":0.09224,"lo":70.092,"hi":157.708},{"V":47.895,"W":0,"d":0.44151,"lo":28.737,"hi":64.658},{"V":4.358,"W":0,"d":0.1153,"lo":2.288,"hi":7.082},{"V":9.315,"W":0,"d":0.17395,"lo":4.89,"hi":15.137},{"V":9.543,"W":0,"d":0.20791,"lo":5.01,"hi":15.508},{"V":5.786,"W":0,"d":0.08571,"lo":3.038,"hi":9.402},{"V":4.604,"W":0,"d":0.1165,"lo":2.417,"hi":7.482},{"V":7.146,"W":0,"d":0.27568,"lo":3.751,"hi":11.612},{"V":11.782,"W":0,"d":0.18182,"lo":6.185,"hi":19.145},{"V":5.243,"W":0,"d":0.14685,"lo":2.752,"hi":8.519},{"V":54.732,"W":0,"d":0.17886,"lo":28.734,"hi":88.939},{"V":27.528,"W":0,"d":0.23528,"lo":14.452,"hi":44.733},{"V":13.806,"W":0,"d":0.08073,"lo":7.248,"hi":22.434},{"V":2.276,"W":0,"d":0.05149,"lo":1.195,"hi":3.699},{"V":15.682,"W":0,"d":0.16772,"lo":8.233,"hi":25.483},{"V":13.219,"W":0,"d":0.20982,"lo":6.94,"hi":21.48},{"V":8.361,"W":0,"d":0.09779,"lo":4.389,"hi":13.586},{"V":8.031,"W":0,"d":0.2072,"lo":4.216,"hi":13.05},{"V":9.967,"W":0,"d":0.72222,"lo":5.232,"hi":16.196},{"V":6.359,"W":0,"d":0.03281,"lo":3.338,"hi":10.333},{"V":2.711,"W":0,"d":0.04757,"lo":1.423,"hi":4.406},{"V":3.786,"W":27.041,"d":0.20331,"lo":1.988,"hi":6.152},{"V":14.222,"W":0,"d":0.88889,"lo":7.467,"hi":23.111},{"V":41.165,"W":0,"d":0.76232,"lo":21.612,"hi":66.894},{"V":7.86,"W":0,"d":0.12596,"lo":4.127,"hi":12.773},{"V":9.563,"W":0,"d":0.21733,"lo":5.02,"hi":15.539},{"V":14.069,"W":0,"d":0.4885,"lo":7.386,"hi":22.862},{"V":22.947,"W":0,"d":0.19186,"lo":12.047,"hi":37.289},{"V":16.276,"W":0,"d":0.18623,"lo":8.545,"hi":26.449},{"V":9.298,"W":0,"d":0.0587,"lo":4.881,"hi":15.109},{"V":25,"W":0,"d":0.66667,"lo":13.125,"hi":40.625},{"V":8.562,"W":0,"d":0.16989,"lo":4.495,"hi":13.914},{"V":8.053,"W":0,"d":0.59649,"lo":4.228,"hi":13.085},{"V":15.785,"W":112.751,"d":0.37285,"lo":8.287,"hi":25.651},{"V":3.409,"W":0,"d":0.09104,"lo":1.789,"hi":5.539},{"V":15.464,"W":0,"d":0.12727,"lo":8.118,"hi":25.128},{"V":22.253,"W":0,"d":0.20333,"lo":11.683,"hi":36.16},{"V":10.245,"W":0,"d":0.16524,"lo":5.379,"hi":16.648},{"V":16.116,"W":0,"d":0.29844,"lo":8.461,"hi":26.188},{"V":36,"W":0,"d":1,"lo":18.9,"hi":58.5},{"V":4.115,"W":0,"d":0.08165,"lo":2.16,"hi":6.687},{"V":1.097,"W":0,"d":0.03046,"lo":0.576,"hi":1.782},{"V":5.498,"W":0,"d":0.18182,"lo":2.887,"hi":8.935},{"V":1.466,"W":0,"d":0.04581,"lo":0.77,"hi":2.382},{"V":11.52,"W":0,"d":0.24615,"lo":6.048,"hi":18.72},{"V":11.314,"W":0,"d":0.15671,"lo":5.94,"hi":18.386},{"V":9.8,"W":0,"d":0.77778,"lo":5.145,"hi":15.925},{"V":7.236,"W":0,"d":0.07445,"lo":3.799,"hi":11.759},{"V":23.055,"W":0,"d":0.25617,"lo":12.104,"hi":37.465},{"V":11.51,"W":0,"d":0.04427,"lo":6.043,"hi":18.704},{"V":15.715,"W":0,"d":0.24251,"lo":8.25,"hi":25.537},{"V":8.453,"W":0,"d":0.21133,"lo":4.438,"hi":13.737},{"V":7.279,"W":0,"d":0.16175,"lo":3.821,"hi":11.828},{"V":27.327,"W":0,"d":0.55769,"lo":14.347,"hi":44.406},{"V":15.325,"W":0,"d":0.09255,"lo":8.046,"hi":24.904},{"V":21.197,"W":0,"d":0.2944,"lo":11.128,"hi":34.445},{"V":18.177,"W":0,"d":0.08415,"lo":9.543,"hi":29.538},{"V":11.244,"W":0,"d":0.1409,"lo":5.903,"hi":18.271},{"V":36.05,"W":0,"d":0.13908,"lo":18.926,"hi":58.581},{"V":155.569,"W":0,"d":0.06788,"lo":93.341,"hi":210.018},{"V":10.963,"W":0,"d":0.06693,"lo":5.756,"hi":17.816},{"V":11.878,"W":0,"d":0.19035,"lo":6.236,"hi":19.302},{"V":19.658,"W":0,"d":0.68257,"lo":10.321,"hi":31.945},{"V":16.125,"W":0,"d":0.20476,"lo":8.465,"hi":26.203},{"V":15.208,"W":0,"d":0.2253,"lo":7.984,"hi":24.712},{"V":5.409,"W":0,"d":0.02613,"lo":2.84,"hi":8.789},{"V":9.36,"W":0,"d":0.14286,"lo":4.914,"hi":15.21},{"V":14.023,"W":0,"d":0.26864,"lo":7.362,"hi":22.787},{"V":10.455,"W":0,"d":0.19149,"lo":5.489,"hi":16.99},{"V":7.882,"W":0,"d":0.09475,"lo":4.729,"hi":10.641},{"V":20.206,"W":0,"d":0.08909,"lo":10.608,"hi":32.835},{"V":16.137,"W":0,"d":0.19923,"lo":8.472,"hi":26.223},{"V":9.12,"W":0,"d":0.14286,"lo":4.788,"hi":14.82},{"V":18.292,"W":0,"d":0.21171,"lo":9.603,"hi":29.725},{"V":6.845,"W":48.892,"d":0.22825,"lo":3.594,"hi":11.123},{"V":20.852,"W":0,"d":0.31029,"lo":10.947,"hi":33.884},{"V":7.549,"W":0,"d":0.22467,"lo":3.963,"hi":12.267},{"V":8,"W":0,"d":0.2442,"lo":4.2,"hi":13},{"V":52.692,"W":0,"d":0.32526,"lo":27.663,"hi":85.624},{"V":5.916,"W":0,"d":0.02568,"lo":3.106,"hi":9.614},{"V":21.491,"W":0,"d":0.02843,"lo":11.283,"hi":34.923},{"V":21.12,"W":0,"d":0.88889,"lo":11.088,"hi":34.32},{"V":2.894,"W":20.674,"d":0.14478,"lo":1.52,"hi":4.703},{"V":8.707,"W":0,"d":0.13887,"lo":4.571,"hi":14.149},{"V":28.779,"W":0,"d":0.85653,"lo":15.109,"hi":46.767},{"V":3.14,"W":0,"d":0.02565,"lo":1.648,"hi":5.102},{"V":5.921,"W":0,"d":0.06263,"lo":3.553,"hi":7.993},{"V":10.329,"W":73.781,"d":0.35472,"lo":5.423,"hi":16.785},{"V":62.738,"W":0,"d":0.1556,"lo":32.937,"hi":101.949},{"V":213.053,"W":0,"d":0.05495,"lo":127.832,"hi":287.621},{"V":5.765,"W":0,"d":0.04004,"lo":3.027,"hi":9.368},{"V":8.377,"W":0,"d":0.70396,"lo":4.398,"hi":13.613},{"V":2.614,"W":0,"d":0.06314,"lo":1.372,"hi":4.248},{"V":9.146,"W":0,"d":0.12703,"lo":4.802,"hi":14.862},{"V":6.892,"W":0,"d":0.15385,"lo":3.618,"hi":11.2},{"V":13.207,"W":0,"d":0.69002,"lo":6.934,"hi":21.461},{"V":29.127,"W":0,"d":0.24954,"lo":15.292,"hi":47.332},{"V":14.626,"W":0,"d":0.19245,"lo":7.679,"hi":23.767},{"V":4.371,"W":31.22,"d":0.37524,"lo":2.295,"hi":7.103},{"V":7.273,"W":0,"d":0.11364,"lo":3.818,"hi":11.818},{"V":29.867,"W":0,"d":0.77778,"lo":15.68,"hi":48.533},{"V":9.624,"W":0,"d":0.19095,"lo":5.053,"hi":15.639},{"V":8.698,"W":0,"d":0.07945,"lo":4.566,"hi":14.134},{"V":7.636,"W":0,"d":0.18182,"lo":4.009,"hi":12.409},{"V":5.24,"W":0,"d":0.04845,"lo":2.751,"hi":8.515},{"V":1.909,"W":0,"d":0.0816,"lo":1.002,"hi":3.103},{"V":12.746,"W":0,"d":0.24512,"lo":6.692,"hi":20.712},{"V":5.07,"W":0,"d":0.18107,"lo":2.662,"hi":8.239},{"V":7.843,"W":0,"d":0.06314,"lo":4.117,"hi":12.744},{"V":12.261,"W":0,"d":0.03709,"lo":6.437,"hi":19.924},{"V":120.638,"W":0,"d":0.11107,"lo":72.383,"hi":162.861},{"V":31.778,"W":0,"d":0.72222,"lo":16.683,"hi":51.639},{"V":3.818,"W":27.273,"d":0.16138,"lo":2.005,"hi":6.205},{"V":23.27,"W":0,"d":0.79149,"lo":12.217,"hi":37.813},{"V":33.968,"W":0,"d":0.5242,"lo":17.833,"hi":55.198},{"V":67.434,"W":0,"d":0.54133,"lo":40.46,"hi":91.036},{"V":4.848,"W":0,"d":0.04439,"lo":2.545,"hi":7.877},{"V":9.872,"W":70.518,"d":0.26118,"lo":5.183,"hi":16.043},{"V":48.659,"W":0,"d":0.50686,"lo":25.546,"hi":79.07},{"V":14.29,"W":0,"d":0.13231,"lo":7.502,"hi":23.221},{"V":221.722,"W":0,"d":0.13814,"lo":133.033,"hi":299.324},{"V":28.5,"W":0,"d":0.83333,"lo":14.962,"hi":46.313},{"V":12.896,"W":92.113,"d":0.21932,"lo":6.77,"hi":20.956},{"V":27.802,"W":0,"d":0.50366,"lo":14.596,"hi":45.178},{"V":10.787,"W":0,"d":0.05351,"lo":5.663,"hi":17.528},{"V":106.922,"W":0,"d":0.0686,"lo":64.153,"hi":144.345},{"V":9.444,"W":0,"d":0.12755,"lo":5.667,"hi":12.75},{"V":22.891,"W":0,"d":0.28685,"lo":12.018,"hi":37.197},{"V":99.102,"W":0,"d":0.6247,"lo":59.461,"hi":133.787},{"V":11.893,"W":0,"d":0.05796,"lo":6.244,"hi":19.327},{"V":43.179,"W":0,"d":0.44698,"lo":22.669,"hi":70.165},{"V":10.645,"W":0,"d":0.13861,"lo":5.589,"hi":17.299},{"V":146.499,"W":0,"d":0.0517,"lo":87.9,"hi":197.774},{"V":9.592,"W":0,"d":0.11102,"lo":5.036,"hi":15.587},{"V":2.584,"W":0,"d":0.06728,"lo":1.356,"hi":4.198},{"V":2.057,"W":14.692,"d":0.1166,"lo":1.08,"hi":3.342},{"V":20.928,"W":0,"d":0.78675,"lo":10.987,"hi":34.007},{"V":7.292,"W":0,"d":0.01761,"lo":3.828,"hi":11.849},{"V":11.667,"W":0,"d":0.77778,"lo":6.125,"hi":18.958},{"V":3.454,"W":24.671,"d":0.0979,"lo":1.813,"hi":5.613},{"V":4.861,"W":34.723,"d":0.17716,"lo":2.552,"hi":7.899},{"V":5.512,"W":0,"d":0.11159,"lo":2.894,"hi":8.958},{"V":2.656,"W":0,"d":0.0527,"lo":1.395,"hi":4.316}];
@@ -1157,7 +1195,7 @@ const CFG = {
   146: {a: 'anom',when: 'trước khi chi tiền',mlab: 'Tiền chi sai chặn được',tx: 'lệnh chi',N: 240,kinds: ['Trùng số hoá đơn','Đổi tài khoản nhận gần đây','Số tiền khác đơn mua'],amt: 'triệu đồng',lo: 5,hi: 900},
   147: {a: 'rank',ent: 'khách hàng',N: 60,k: 15,out: 'chậm trả quá 60 ngày',naive: 'rà khách nợ nhiều nhất',feats: ['Số ngày phải thu tăng','Chậm trả ở công ty khác','Biến động đơn hàng'],val: 'dư nợ rủi ro giảm được',unit: 'triệu đồng',lo: 300,hi: 15000},
   148: {a: 'rank',ent: 'hồ sơ hoàn thuế',N: 60,k: 15,out: 'được hoàn trong 60 ngày',naive: 'làm theo thứ tự phát sinh',feats: ['Đủ chứng từ đầu vào','Lịch sử kiểm tra','Số tiền'],val: 'tiền hoàn về',unit: 'triệu đồng',lo: 500,hi: 6000},
-  149: {a: 'newsv',act: 'giữ tiền mặt',per: 'mỗi tuần',unit: 'tỷ đồng',unit1: 'tỷ đồng',mu: 900,cv: 0.3,cu: 3.2,co: 1.1,cper: 'mỗi năm',habit: 'giữ bằng chi tiêu trung bình',hq: 1},
+  149: {a: 'newsv',act: 'giữ tiền mặt',per: 'mỗi tuần',unit: 'tỷ đồng',unit1: 'tỷ đồng',mu: 900,cv: 0.3,cu: 3.2,co: 1.1,cper: 'mỗi tuần',habit: 'giữ bằng chi tiêu trung bình',hq: 1},
   150: {a: 'curve',unit: 'nghìn đồng',grp: 'biểu giá dịch vụ nội bộ',qlab: 'Sản lượng nội bộ mỗi tháng',obsu: 'tháng'},
 };
 
@@ -1165,7 +1203,7 @@ const CFG = {
 const NS = 'http://www.w3.org/2000/svg';
 function E(tag, a, p, t) { const e = document.createElementNS(NS, tag); if (a) for (const k in a) e.setAttribute(k, a[k]); if (t != null) e.textContent = t; if (p) p.appendChild(e); return e; }
 function TT(el, s) { E('title', null, el, s); return el; }
-const vn = (x, d = 0) => new Intl.NumberFormat('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x);
+const vn = (x, d = 0) => new Intl.NumberFormat('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x).replace(/^-/, '−');
 const vq = (v, unit) => unit === 'triệu đồng' && Math.abs(v) >= 1000 ? vn(v / 1000, Math.abs(v) >= 1e5 ? 0 : Math.abs(v) >= 1e4 ? 1 : 2) + ' tỷ đồng' : vn(v, 0) + ' ' + unit;
 const vq2 = (a, b, unit) => { const m = Math.max(Math.abs(a), Math.abs(b)); if (unit !== 'triệu đồng' || m < 1000) return [vn(a, 0) + ' ' + unit, vn(b, 0) + ' ' + unit]; const d = m >= 1e5 ? 0 : m >= 1e4 ? 1 : 2; return [vn(a / 1000, d) + ' tỷ đồng', vn(b / 1000, d) + ' tỷ đồng']; };
 const isLen = P => /^k?m$/.test(P.unit), tq = P => isLen(P) ? 'quãng đường' : P.unit, tv = (P, v) => vn(v, 0) + (isLen(P) ? ' ' + P.unit : '');
@@ -1671,7 +1709,7 @@ ARCH.whale = {
   legend: P => `<span><i class="sw l2"></i>Xếp ${WE(P)} theo doanh thu</span><span><i class="sw l1"></i>Xếp ${WE(P)} theo lợi nhuận sau chi phí phục vụ</span>`,
   guess: (P, S) => ({ q: `Bao nhiêu phần trăm ${WE(P)} đang làm công ty lỗ sau khi tính chi phí phục vụ?`, min: 0, max: 60, step: 1, val: 5, unit: '%', truth: S.negShare * 100 }),
   kpis: (P, S) => [[`${capf(WE(P))} tạo ra 100% lợi nhuận`, vp(S.x100, 0), `số ${WE(P)}`], ['Đỉnh đường cong', vp(S.peak, 0), 'lợi nhuận trước khi bị bào mòn'], [`${capf(WE(P))} đang lỗ`, vp(S.negShare, 0), `bào mòn ${vn(S.negSum, 0)} ${P.unit}`]],
-  ba: (P, S) => [[`Biết lãi lỗ theo ${WE(P)}`, 'Không', 'Có, sau chi phí phục vụ', '', true], [`${capf(WE(P))} đang làm công ty lỗ, nhìn thấy được`, '0 ' + WE(P), vn(Math.round(S.negShare * 60)) + ' ' + WE(P), 'phát hiện ' + vq(S.negSum, P.unit) + ' lợi nhuận đang bị bào mòn', true], ['Lợi nhuận nếu đưa nửa nhóm lỗ về hoà vốn', vq(S.tot, P.unit), vq(S.tot + S.negSum * 0.5, P.unit), '+' + vp(S.negSum * 0.5 / S.tot, 0), true]],
+  ba: (P, S) => [[`Biết lãi lỗ theo ${WE(P)}`, 'Không', 'Có, sau chi phí phục vụ', '', true], [`Số ${WE(P)} đang làm công ty lỗ mà báo cáo thấy được`, '0 ' + WE(P), vn(Math.round(S.negShare * 60)) + ' ' + WE(P), 'phát hiện ' + vq(S.negSum, P.unit) + ' lợi nhuận đang bị bào mòn', true], ['Lợi nhuận nếu đưa nửa nhóm lỗ về hoà vốn', vq(S.tot, P.unit), vq(S.tot + S.negSum * 0.5, P.unit), '+' + vp(S.negSum * 0.5 / S.tot, 0), true]],
   ask: P => `Tính lãi lỗ thật của 60 ${WE(P)} lớn nhất sau chi phí phục vụ`,
   pull: P => `60 ${WE(P)}: doanh thu, biên gộp, số đơn, chi phí giao và hỗ trợ`,
   dq: P => [`60/60 ${WE(P)} có doanh thu và số đơn`, 'Chi phí phục vụ được phân bổ đủ 100%'],
@@ -1791,9 +1829,9 @@ ARCH.reg = {
     E('text', { x: Xf(sc.hi) - 4, y: Yf(sc.hi) + 14, 'text-anchor': 'end', class: 'axt' }, g, 'Đường chéo là dự đoán đúng');
   },
   legend: P => `<span><i class="sw dot2h"></i>Cách cũ: ${P.naive}</span><span><i class="sw dot1"></i>Mô hình dùng ${P.x.length} yếu tố</span>`,
-  guess: (P, S) => ({ q: `Sai số trung bình của mô hình là bao nhiêu ${P.unit}, so với ${vn(S.eN, 1)} của cách cũ?`, min: 0, max: Math.ceil(S.eN * 1.2), step: Math.max(.1, Math.round(S.eN / 20 * 10) / 10), val: Math.round(S.eN * 0.8 * 10) / 10, unit: ' ' + P.unit, truth: S.eM }),
-  kpis: (P, S) => [['Sai số cách cũ', vn(S.eN, 1) + ' ' + P.unit, P.naive], ['Sai số mô hình', vn(S.eM, 1) + ' ' + P.unit, 'trên 20 ' + P.ent + ' chưa dùng để học'], [`Trong ±${vn(P.tol)} ${P.unit}`, vp(S.tM, 0), `cách cũ ${vp(S.tN, 0)}`]],
-  ba: (P, S) => [[`Sai số trung bình`, vn(S.eN, 1) + ' ' + P.unit, vn(S.eM, 1) + ' ' + P.unit, '−' + vp(1 - S.eM / S.eN, 0), true], [`Tỷ lệ ${P.ent} trong ±${vn(P.tol)} ${P.unit}`, vp(S.tN, 0), vp(S.tM, 0), '', true]],
+  guess: (P, S) => ({ q: `Sai số trung bình của mô hình là bao nhiêu ${P.unit}, so với ${vn(S.eN, 1)} của cách cũ?`, min: 0, max: Math.ceil(S.eN * 1.2), step: Math.max(.1, Math.round(S.eN / 20 * 10) / 10), val: Math.round(S.eN * 0.8 * 10) / 10, unit: (P.unit === '%' ? '' : ' ') + P.unit, truth: S.eM }),
+  kpis: (P, S) => [['Sai số cách cũ', vn(S.eN, 1) + (P.unit === '%' ? '' : ' ') + P.unit, P.naive], ['Sai số mô hình', vn(S.eM, 1) + (P.unit === '%' ? '' : ' ') + P.unit, 'trên 20 ' + P.ent + ' chưa dùng để học'], [`Trong ±${vn(P.tol, P.tol < 1 ? 1 : 0)}${P.unit === '%' ? '' : ' '}${P.unit}`, vp(S.tM, 0), `cách cũ ${vp(S.tN, 0)}`]],
+  ba: (P, S) => [[`Sai số trung bình`, vn(S.eN, 1) + (P.unit === '%' ? '' : ' ') + P.unit, vn(S.eM, 1) + (P.unit === '%' ? '' : ' ') + P.unit, '−' + vp(1 - S.eM / S.eN, 0), true], [`Tỷ lệ ${P.ent} trong ±${vn(P.tol, P.tol < 1 ? 1 : 0)}${P.unit === '%' ? '' : ' '}${P.unit}`, vp(S.tN, 0), vp(S.tM, 0), '', true]],
   ask: (P) => `Dự đoán ${P.y.toLowerCase()} cho từng ${P.ent}`,
   pull: (P) => `80 ${P.ent} gần nhất: ${P.x.map(s => s.toLowerCase()).join(', ')}`,
   dq: (P) => ['80/80 dòng đủ ba yếu tố', 'Không có giá trị ngoài phạm vi'],
@@ -2216,7 +2254,7 @@ ARCH.blend = {
       if (!best || !ok(m0)) continue;
       S = { ing, pr, a, lim, m0, mH: m0, mO: best.m, vH: val(m0), vO: val(best.m), Ch: cost(m0), Co: best.c, frames: sample(frames, 20) };
       S.save = 1 - S.Co / S.Ch;
-      S.bind = S.vO.filter((v, kk) => Math.min(Math.abs(v - S.lim[kk][0]), Math.abs(v - S.lim[kk][1])) < 1.2).length;
+      S.bind = S.vO.filter((v, kk) => S.lim[kk].some(L => L != null && Math.abs(v - L) <= Math.max(0.02 * Math.abs(L), 1e-6))).length;
       if (S.save >= 0.05 && S.save <= 0.25) break;
     }
     S.F = Math.max(1, S.frames.length); return S;
@@ -2246,7 +2284,7 @@ ARCH.blend = {
   dq: (P, S) => [`${S.ing.length}/${S.ing.length} ${P.ingl} có kết quả phân tích`, 'Giới hạn tiêu chuẩn có người ký'],
   tool: () => 'phoi_tron(quy_hoach_tuyen_tinh, luoi="2,5%")',
   checks: (P, S) => [['Đạt mọi tiêu chuẩn', S.vO.every((v, kk) => v >= S.lim[kk][0] - 1e-9 && v <= S.lim[kk][1] + 1e-9)], ['Tổng tỷ lệ bằng 100%', Math.abs(S.mO.reduce((a, b) => a + b, 0) - 1) < 1e-9], ['Không đắt hơn công thức hôm nay', S.Co <= S.Ch]],
-  twist: (P, S) => { const d = S.mO.map((x, i) => x - S.mH[i]), up = d.indexOf(Math.max(...d)), dn = d.indexOf(Math.min(...d)); return `Công thức hôm nay giữ biên an toàn rộng ở mọi tiêu chuẩn. Máy chạy sát giới hạn ở ${S.bind} tiêu chuẩn, tăng ${S.ing[up].toLowerCase()} và bớt ${S.ing[dn].toLowerCase()}. Cái giá là phải đo chất lượng từng mẻ chặt hơn.`; },
+  twist: (P, S) => { const d = S.mO.map((x, i) => x - S.mH[i]), up = d.indexOf(Math.max(...d)), dn = d.indexOf(Math.min(...d)); return `Công thức hôm nay giữ biên an toàn rộng ở mọi tiêu chuẩn. ${S.bind ? `Máy chạy sát giới hạn ở ${S.bind} tiêu chuẩn` : 'Máy vẫn để biên ở mọi tiêu chuẩn nhưng đổi hẳn cơ cấu'}, tăng ${S.ing[up].toLowerCase()} và bớt ${S.ing[dn].toLowerCase()}. Cái giá là phải đo chất lượng từng mẻ chặt hơn.`; },
   gate: (P, S) => `chi phí ${P.ingl} mỗi ${P.ou} giảm tối thiểu ${vn(Math.max(2, Math.floor(S.save * 70)))}% với 100% mẻ đạt tiêu chuẩn, đo 3 tháng liền`,
   inputs: (P, S) => ({ cols: [capf(P.ingl), `Giá, ${P.cu}`, ...P.spec.map(x => x[0])], rows: S.ing.map((nm, i) => [nm, vn(S.pr[i], 1), ...S.a[i].map(v => vn(v))]), more: `Tiêu chuẩn: ${P.spec.map((x, kk) => `${x[0].toLowerCase()} ${x[1] === 'min' ? '≥ ' + vn(S.lim[kk][0], 1) : '≤ ' + vn(S.lim[kk][1], 1)}`).join('; ')}` }),
   outputs: (P, S) => ({ title: 'Công thức mới', items: S.ing.map((nm, i) => `${nm}: ${vp(S.mH[i])} → ${vp(S.mO[i])}`).concat([`Chi phí ${vn(S.Co, 1)} ${P.cu} mỗi ${P.ou}, trước đó ${vn(S.Ch, 1)}`]) }),
@@ -2368,14 +2406,14 @@ ARCH.pvm = {
   },
   legend: () => `<span><i class="sw" style="background:var(--ink2)"></i>Lợi nhuận</span><span><i class="sw sq1"></i>Cộng thêm</span><span><i class="sw sq2"></i>Trừ đi</span>`,
   guess: (P, S) => ({ q: 'Trong năm động lực, động lực nào kéo lợi nhuận xuống nhiều nhất? Đoán mức kéo xuống (tỷ đồng).', min: 0, max: Math.ceil(-S.top[1] * 2), step: 0.5, val: Math.round(-S.top[1] * 0.4), unit: ' tỷ', truth: -S.top[1] }),
-  kpis: (P, S) => [['Lợi nhuận kỳ này', vn(S.E1, 1) + ' ' + (P.unit || 'tỷ đồng'), `kỳ trước ${vn(S.E0, 1)}`], ['Động lực kéo xuống nhiều nhất', S.top[0], vn(S.top[1], 1) + ' ' + (P.unit || 'tỷ đồng')], ['Phần do giá và cơ cấu', vn(-S.hidden, 1), 'báo cáo hôm nay không thấy']],
+  kpis: (P, S) => [['Lợi nhuận kỳ này', vn(S.E1, 1) + ' ' + (P.unit || 'tỷ đồng'), `kỳ trước ${vn(S.E0, 1)}`], ['Động lực kéo xuống nhiều nhất', S.top[0], vn(S.top[1], 1) + ' ' + (P.unit || 'tỷ đồng')], ['Phần do giá và cơ cấu', vn(-S.hidden, 1) + ' ' + (P.unit || 'tỷ đồng'), 'báo cáo hôm nay không thấy']],
   ba: (P, S) => [['Số động lực được tách', '2 (doanh thu, chi phí)', '5', '', true], ['Động lực kéo xuống nhiều nhất', 'không thấy', `${S.top[0].toLowerCase()} ${vn(S.top[1], 1)} ${P.unit || 'tỷ đồng'}`, '', true], ['Thời gian lập báo cáo', '3 ngày', 'vài phút', '', true]],
   ask: () => 'Tách chênh lệch lợi nhuận kỳ này so với kỳ trước theo từng động lực',
   pull: () => '40 mặt hàng: sản lượng, giá bán, giá vốn hai kỳ; chi phí chung hai kỳ',
   dq: () => ['40/40 mặt hàng đủ hai kỳ', 'Tổng khớp sổ cái'],
   tool: () => 'phan_ra_loi_nhuan(dong_luc=["san_luong","co_cau","gia","gia_von","chi_phi_chung"])',
   checks: (P, S) => [['Tổng các động lực bằng chênh lệch', Math.abs(S.steps.reduce((a, s) => a + s[1], 0) - S.gap) < 1e-6], ['Khớp sổ cái hai kỳ', true], ['Mỗi mặt hàng có đủ năm động lực', true]],
-  twist: (P, S) => `Doanh thu tăng ${vp(S.revG, 0)} nên báo cáo hôm nay đổ lỗi cho chi phí. Tách ra mới thấy ${S.top[0].toLowerCase()} kéo xuống ${vn(-S.top[1], 1)} ${P.unit || 'tỷ đồng'}; giá bán và cơ cấu cộng lại ${vn(-S.hidden, 1)}, những thứ đội bán hàng sửa được ngay.`,
+  twist: (P, S) => `Doanh thu tăng ${vp(S.revG, 0)} nên báo cáo hôm nay đổ lỗi cho chi phí. Tách ra mới thấy ${S.top[0].toLowerCase()} kéo xuống ${vn(-S.top[1], 1)} ${P.unit || 'tỷ đồng'}; giá bán và cơ cấu cộng lại ${vn(-S.hidden, 1)} ${P.unit || 'tỷ đồng'}, những thứ đội bán hàng sửa được ngay.`,
   gate: (P, S) => `trong 2 quý, phần lợi nhuận mất do giá bán và cơ cấu giảm tối thiểu một nửa, đo bằng cùng cách phân rã`,
   inputs: (P, S) => ({ cols: ['Mặt hàng', 'Sản lượng hai kỳ', 'Giá hai kỳ', 'Giá vốn hai kỳ'], rows: S.it.slice(0, 5).map((x, i) => [`#${i + 1}`, `${vn(x.q0)} → ${vn(x.q1)}`, `${vn(x.p0, 2)} → ${vn(x.p1, 2)}`, `${vn(x.c0, 2)} → ${vn(x.c1, 2)}`]), more: 'và 35 mặt hàng khác' }),
   outputs: (P, S) => ({ title: 'Cầu nối lợi nhuận', items: S.steps.map(s => `${s[0]}: ${s[1] >= 0 ? '+' : ''}${vn(s[1], 1)} ${P.unit || 'tỷ đồng'}`) }),
@@ -2719,6 +2757,180 @@ const QK = {
   risk: 'Giá trị nằm ở năm xấu, năm bình thường có khi tốn hơn. Ban lãnh đạo chấp nhận mức rủi ro nào, và ai cập nhật giả định mỗi quý?',
 };
 
+/* ===== khái niệm tài chính cần biết trước cho từng bài toán (dùng chung cho hai ngôn ngữ) =====
+   Thứ tự khái niệm trong danh sách là thứ tự hiện trên trang. Tối đa 4 khái niệm mỗi bài. */
+const CORDER = ['capex', 'roi', 'payback', 'npv', 'pl', 'fixvar', 'abc', 'pvm', 'elastic', 'transfer', 'wc', 'carry', 'service', 'eoq', 'cucu', 'fcst', 'ev', 'tail'];
+const CTAG_KEY = {
+  L01: ['capex', 'fixvar', 'npv'], L02: ['capex', 'tail', 'fixvar'], L03: ['capex', 'payback', 'cucu'], L09: ['npv', 'tail'], L10: ['capex', 'roi', 'payback'],
+  F17: ['capex', 'fixvar', 'tail'], F18: ['capex', 'fixvar'], I04: ['capex', 'payback', 'tail'], I13: ['roi', 'payback', 'fcst'], I15: ['ev', 'capex'], I22: ['capex', 'fixvar'],
+  R29: ['wc', 'npv'], F30: ['wc', 'npv'],
+  G01: ['fcst', 'wc'], G02: ['wc', 'transfer'], G04: ['npv'], G05: ['wc', 'carry'], G08: ['transfer', 'fixvar'], G09: ['npv', 'tail', 'capex'], G10: ['tail', 'ev'],
+  G11: ['npv', 'roi', 'capex', 'payback'], G13: ['capex', 'fixvar'], G14: ['transfer', 'fixvar'], G15: ['capex', 'roi', 'payback'], G16: ['tail', 'capex'],
+  G22: ['carry', 'cucu', 'service'], G28: ['wc', 'cucu'], G29: ['transfer', 'abc'],
+};
+function CTAGS(u, P) {
+  if (CTAG_KEY[u.key]) return CTAG_KEY[u.key].slice();
+  const a = P.a, k = u.kind, t = [];
+  const add = (...x) => x.forEach(c => { if (!t.includes(c)) t.push(c); });
+  if (a === 'newsv') add('cucu', 'ev', k === 'margin' ? 'pl' : 'carry');
+  else if (a === 'inv') add('service', 'carry', 'wc');
+  else if (a === 'eoq') add('eoq', 'carry');
+  else if (a === 'ts' || a === 'reg') { const un = P.unit || '', cash = /đồng|VND/.test(un);
+    if (cash && /\//.test(un)) add('fcst', 'tail');
+    else if (cash) add('fcst', 'capex', 'npv');
+    else if (un === '%') add('fcst', 'pl');
+    else add('fcst', 'service'); }
+  else if (a === 'curve' || a === 'mark') add('elastic', 'pl');
+  else if (a === 'whale') add('abc', 'pl');
+  else if (a === 'pvm') add('pvm', 'pl');
+  else if (a === 'rank') add('ev', k === 'cash' ? 'wc' : 'pl');
+  else if (a === 'sim') add('tail', 'ev');
+  else if (a === 'load') add('capex', 'fixvar');
+  else if (a === 'anom') add('pl');
+  else if (a === 'loc') add('fixvar', 'capex');
+  else if (a === 'knap') add(k === 'cash' ? 'wc' : 'pl', k === 'cash' ? 'carry' : 'fixvar');
+  else { add('fixvar'); if (k === 'margin') add('pl'); }
+  if (k === 'cash') add('wc', 'carry');
+  return t.slice(0, 4);
+}
+
+/* ===== kiến thức nền tài chính: định nghĩa, công thức, ví dụ, sai lầm hay gặp; và câu "ở bài này" theo số liệu từng trang ===== */
+const CONCEPTS = {
+  pl: { t: 'Doanh thu, lãi gộp và EBIT', s: 'Doanh thu là tiền bán hàng. Trừ giá vốn hàng bán còn lãi gộp. Trừ tiếp chi phí bán hàng, quản lý và khấu hao còn EBIT, lợi nhuận trước lãi vay và thuế: thước đo hiệu quả kinh doanh cốt lõi.',
+    f: 'EBIT = Doanh thu − Giá vốn − Chi phí bán hàng và quản lý − Khấu hao',
+    ex: 'Vertex Retail: doanh thu 20.000 tỷ, lãi gộp 4.400 tỷ (22%), EBIT 700 tỷ (3,5%). Biên mỏng nên giảm 1% chi phí trên doanh thu đã bằng gần 30% EBIT.',
+    pit: 'Lấy mức tăng doanh thu làm thành tích. Doanh thu tăng mà biên giảm có thể làm EBIT đi xuống.' },
+  capex: { t: 'CAPEX và OPEX', s: 'CAPEX là tiền chi một lần để có tài sản dùng nhiều năm (kho, xe, dây chuyền), ghi vào tài sản rồi khấu hao dần. OPEX là chi phí vận hành trả theo kỳ (thuê, nhiên liệu, nhân công, cước), đi thẳng vào chi phí trong năm.',
+    f: 'Chi phí mỗi năm của một khoản CAPEX ≈ Giá trị × r ÷ (1 − (1 + r)^−n), với r là chi phí vốn, n là số năm dùng (như trả góp đều)',
+    ex: 'Mua một xe tải 1,5 tỷ, dùng 8 năm, chi phí vốn 10%: chi phí sở hữu khoảng 0,28 tỷ mỗi năm (khấu hao cộng chi phí vốn), chưa kể nhiên liệu. Thuê ngoài cùng sức chở có thể tốn 0,45 tỷ mỗi năm nhưng chỉ trả khi dùng.',
+    pit: 'So CAPEX với OPEX chỉ bằng tiền chi năm đầu. Phải quy cả hai về chi phí mỗi năm, hoặc về giá trị hôm nay, mới so được.' },
+  roi: { t: 'ROI: tỷ suất sinh lời trên vốn', s: 'ROI cho biết mỗi đồng bỏ ra mang về bao nhiêu đồng lợi ích mỗi năm. Dùng để so nhanh các khoản đầu tư khác quy mô.',
+    f: 'ROI = Lợi ích ròng mỗi năm ÷ Vốn bỏ ra × 100%',
+    ex: 'Lắp cảm biến cho lò điện hết 12 tỷ, mỗi năm tiết kiệm 5 tỷ: ROI khoảng 42% một năm.',
+    pit: 'ROI không tính lúc tiền về, rủi ro và thời gian dùng của tài sản. ROI 25% cho một tài sản chỉ dùng 3 năm vẫn làm mất giá trị khi chi phí vốn là 10%. Khi lợi ích đều mỗi năm, ROI chính là 1 ÷ thời gian hoàn vốn, nên hai chỉ số không phải hai phép thử riêng; với khoản lớn, dùng NPV.' },
+  payback: { t: 'Thời gian hoàn vốn', s: 'Bao lâu thì tiền tiết kiệm hoặc lãi thêm cộng dồn đủ bù số vốn bỏ ra.',
+    f: 'Thời gian hoàn vốn ≈ Vốn bỏ ra ÷ Lợi ích ròng mỗi năm (khi lợi ích đều)',
+    ex: 'Xe tải điện đắt hơn xe dầu 0,9 tỷ, mỗi năm tiết kiệm nhiên liệu và bảo dưỡng 0,3 tỷ: hoàn vốn sau khoảng 3 năm.',
+    pit: 'Bỏ qua lợi ích sau mốc hoàn vốn và bỏ qua chi phí vốn. Dùng như bộ lọc rủi ro (bao lâu thì hết lo), không dùng làm tiêu chí xếp hạng duy nhất.' },
+  npv: { t: 'NPV, chiết khấu và chi phí vốn', s: 'Một đồng nhận sau 3 năm đáng giá ít hơn một đồng hôm nay. NPV quy mọi dòng tiền về hôm nay theo chi phí vốn rồi cộng lại. NPV dương nghĩa là tạo thêm giá trị so với dùng số vốn đó vào việc khác cùng rủi ro.',
+    f: 'NPV = −Vốn bỏ ra + Σ Dòng tiền năm t ÷ (1 + r)^t, với r là tỷ lệ chiết khấu theo rủi ro của dự án (bằng WACC nếu dự án có rủi ro trung bình)',
+    ex: 'Bỏ 100 tỷ, mỗi năm thu 30 tỷ trong 5 năm, r = 10%: giá trị hôm nay của dòng tiền khoảng 113,7 tỷ, NPV khoảng +13,7 tỷ.',
+    pit: 'Dùng cùng một tỷ lệ chiết khấu thấp cho mọi dự án, kể cả dự án rủi ro hơn; hoặc quên giá trị còn lại và chi phí đóng cửa cuối kỳ.' },
+  fixvar: { t: 'Chi phí cố định, biến đổi và chi phí đơn vị', s: 'Chi phí cố định không đổi theo sản lượng trong ngắn hạn (thuê kho, lương cơ bản, khấu hao). Chi phí biến đổi tăng theo từng chuyến, từng km, từng tấn. Chi phí đơn vị là tổng chi phí chia cho sản lượng.',
+    f: 'Tổng chi phí = Chi phí cố định + Chi phí biến đổi mỗi đơn vị × Sản lượng',
+    ex: 'Một kho tốn 12 tỷ cố định mỗi năm, chứa tối đa 100.000 pallet, xử lý mỗi pallet tốn thêm 40 nghìn đồng. Chạy đầy: 160 nghìn mỗi pallet; chạy một nửa: 280 nghìn, cao hơn 75%.',
+    pit: 'Giảm chi phí ở khâu này nhưng đẩy sang khâu khác; hoặc tính chi phí đơn vị trên sản lượng đỉnh thay vì sản lượng thực.' },
+  wc: { t: 'Vốn lưu động và chu kỳ tiền mặt', s: 'Vốn lưu động là tiền nằm trong hàng tồn kho và công nợ khách hàng, trừ phần đang nợ nhà cung cấp. Chu kỳ tiền mặt đo số ngày từ lúc trả tiền mua hàng tới lúc thu được tiền bán hàng.',
+    f: 'Chu kỳ tiền mặt = Số ngày tồn kho (DIO) + Số ngày thu tiền (DSO) − Số ngày trả tiền (DPO)',
+    ex: 'Vertex Consumer doanh thu 16.000 tỷ: rút ngắn 5 ngày thu tiền giải phóng khoảng 16.000 × 5 ÷ 365 ≈ 219 tỷ, một lần.',
+    pit: 'Coi tiền giải phóng là lợi nhuận hằng năm. Tiền chỉ về một lần; giá trị hằng năm là chi phí giữ tiết kiệm được.' },
+  carry: { t: 'Chi phí giữ tồn kho và công nợ phải thu', s: 'Giữ hàng hoặc để khách nợ đều tốn tiền: chi phí vốn bị chôn, cộng lưu kho, bảo hiểm, hao hụt, lỗi thời với hàng tồn, hoặc nợ xấu và chi phí theo dõi với công nợ. Các trang này dùng chung 14% một năm cho đơn giản: 10% chi phí vốn và 4% cho phần còn lại.',
+    f: 'Chi phí giữ mỗi năm = Giá trị tồn bình quân × 14%',
+    ex: 'Giảm 100 tỷ tồn kho bình quân: tiền về một lần 100 tỷ, và mỗi năm sau đó bớt khoảng 14 tỷ chi phí giữ.',
+    pit: 'Chỉ tính lãi vay mà quên hao hụt và lỗi thời, nhất là với hàng tươi, hàng thời trang, phụ tùng ít dùng.' },
+  service: { t: 'Mức phục vụ và tồn an toàn', s: 'Mức phục vụ là xác suất không hết hàng trong một chu kỳ nhập hàng; tỷ lệ đáp ứng (phần nhu cầu giao được ngay) thường cao hơn con số này. Tồn an toàn là phần hàng giữ thêm để chống lệch giữa nhu cầu, thời gian giao thực tế và dự báo.',
+    f: 'Tồn an toàn ≈ z × độ lệch chuẩn của nhu cầu trong thời gian chờ hàng (z ≈ 1,65 cho 95%; 2,33 cho 99%)',
+    ex: 'Nâng mức phục vụ từ 95% lên 99% cần thêm khoảng 40% tồn an toàn: mỗi điểm phần trăm cuối đắt hơn điểm trước.',
+    pit: 'Đặt cùng một mức phục vụ cho mọi mặt hàng. Mặt hàng chủ lực cần cao; mặt hàng ít bán có thể thấp hơn, có chủ đích.' },
+  eoq: { t: 'Cỡ lô kinh tế (EOQ)', s: 'Đặt hàng ít lần thì tốn ít chi phí đặt nhưng tồn kho nhiều; đặt nhiều lần thì ngược lại. EOQ là cỡ lô cân bằng hai khoản chi phí đó.',
+    f: 'EOQ = √(2 × Nhu cầu năm × Chi phí một lần đặt ÷ Chi phí giữ một đơn vị một năm)',
+    ex: 'Nhu cầu 12.000 thùng một năm, mỗi lần đặt tốn 2 triệu, giữ một thùng tốn 50 nghìn một năm: EOQ = √(2 × 12.000 × 2 ÷ 0,05) ≈ 980 thùng, khoảng 12 lần đặt mỗi năm.',
+    pit: 'Áp EOQ nguyên công thức khi có chiết khấu theo lượng, hạn dùng ngắn hoặc giới hạn sức chứa kho.' },
+  cucu: { t: 'Chi phí thiếu, chi phí thừa và tỷ lệ tới hạn', s: 'Khi chỉ đặt được một lần cho cả mùa, thiếu một đơn vị thì mất lãi, thừa một đơn vị thì phải giữ hoặc bán rẻ. Lượng đặt tốt nhất không phải dự báo trung bình mà là mức cân hai cái giá đó.',
+    f: 'Tỷ lệ tới hạn = Chi phí thiếu ÷ (Chi phí thiếu + Chi phí thừa). Đặt ở mức mà xác suất đủ hàng bằng tỷ lệ này.',
+    ex: 'Hộp quà Tết: thiếu một hộp mất 150 nghìn lãi, thừa một hộp lỗ 40 nghìn khi xả: tỷ lệ tới hạn = 150 ÷ 190 ≈ 79%, nên đặt nhiều hơn dự báo trung bình.',
+    pit: 'Đặt đúng bằng dự báo trung bình. Cách đó chỉ đúng khi chi phí thiếu và chi phí thừa bằng nhau.' },
+  ev: { t: 'Giá trị kỳ vọng', s: 'Giá trị kỳ vọng là kết quả trung bình nếu cùng một quyết định được lặp lại nhiều lần: xác suất của mỗi kết cục nhân với giá trị của nó, rồi cộng lại.',
+    f: 'Giá trị kỳ vọng = Σ Xác suất × Giá trị',
+    ex: 'Khoản nợ 500 triệu, xác suất thu được 20%: kỳ vọng 100 triệu. Khoản 200 triệu, xác suất 70%: kỳ vọng 140 triệu. Gọi khoản nhỏ trước có lợi hơn.',
+    pit: 'Xếp theo giá trị lớn nhất mà bỏ qua xác suất; hoặc chỉ nhìn kỳ vọng mà quên rủi ro năm xấu.' },
+  tail: { t: 'Rủi ro năm xấu (P10, P90) và phòng ngừa', s: 'Trung bình che mất năm xấu. P90 của chi phí là mức chỉ bị vượt trong 1 trên 10 năm; P10 của lãi là mức chỉ tệ hơn trong 1 trên 10 năm. Phòng ngừa (hợp đồng kỳ hạn, giá cố định, bảo hiểm) đổi một chút chi phí năm bình thường lấy thiệt hại nhỏ hơn trong năm xấu.',
+    f: 'Giá trị của phòng ngừa = (Thiệt hại năm xấu khi không phòng ngừa − Thiệt hại năm xấu khi có phòng ngừa) − Chi phí phòng ngừa trong năm bình thường',
+    ex: 'Chi phí nhiên liệu trung bình như nhau ở hai cách mua; năm xấu, mua thả nổi tốn 1.800 tỷ, chốt kỳ hạn 60% chỉ tốn 1.640 tỷ: phòng ngừa giảm 160 tỷ thiệt hại năm xấu.',
+    pit: 'Đánh giá phòng ngừa bằng lãi lỗ năm bình thường. Mục tiêu là giảm dao động, không phải đoán đúng thị trường.' },
+  elastic: { t: 'Độ co giãn của cầu theo giá', s: 'Độ co giãn cho biết lượng bán đổi bao nhiêu phần trăm khi giá đổi 1%. Co giãn lớn hơn 1: giảm giá làm doanh thu tăng; nhỏ hơn 1: tăng giá làm doanh thu tăng.',
+    f: 'Độ co giãn = % thay đổi lượng bán ÷ % thay đổi giá',
+    ex: 'Độ co giãn 1,8: giảm giá 5% bán thêm khoảng 9%. Với biên lãi gộp 40%, lãi vẫn giảm: từ 40 xuống khoảng 38 trên mỗi 100 đồng doanh thu ban đầu.',
+    pit: 'Ước co giãn từ vài tuần khuyến mãi rồi áp cho cả năm; hoặc quên phản ứng của đối thủ.' },
+  abc: { t: 'Chi phí phục vụ và phân bổ theo hoạt động', s: 'Hai khách cùng doanh thu có thể tốn chi phí rất khác nhau: giao lẻ, giao gấp, trả hàng, nợ lâu. Phân bổ theo hoạt động gán chi phí cho từng khách theo số lần họ dùng mỗi hoạt động.',
+    f: 'Lợi nhuận của một khách = Lãi gộp − Σ (Số lần dùng hoạt động × Chi phí mỗi lần)',
+    ex: 'Khách A mua 10 tỷ với 50 lần giao; khách B mua 10 tỷ với 400 lần giao lẻ và trả hàng nhiều. B có thể lỗ dù doanh thu bằng A.',
+    pit: 'Chia chi phí chung theo doanh thu: khách nhỏ, phức tạp trông có lãi, còn khách lớn, đơn giản phải gánh hộ.' },
+  pvm: { t: 'Phân rã lợi nhuận: lượng, cơ cấu, giá, chi phí', s: 'Lợi nhuận đổi giữa hai kỳ có thể do bán nhiều hay ít (lượng), bán mặt hàng lãi cao hay thấp (cơ cấu), giá bán, hay chi phí. Tách đúng từng phần mới biết phải sửa ở đâu.',
+    f: 'Chênh lệch lợi nhuận = Hiệu ứng lượng + Hiệu ứng cơ cấu + Hiệu ứng giá + Hiệu ứng chi phí (các hiệu ứng cộng lại đúng bằng tổng chênh lệch)',
+    ex: 'Doanh thu tăng 9% nhưng lợi nhuận giảm. Phân rã cho thấy chiết khấu sâu và cơ cấu nghiêng về mặt hàng lãi thấp, không phải do chi phí.',
+    pit: 'Chỉ nhìn doanh thu và tổng chi phí, kết luận sai nguyên nhân rồi cắt nhầm chỗ.' },
+  fcst: { t: 'Sai số dự báo (MAPE)', s: 'MAPE là mức lệch trung bình giữa dự báo và thực tế, tính theo phần trăm của thực tế. Sai số thấp hơn nghĩa là ít tồn thừa, ít thiếu hàng, ít chi phí xử lý gấp.',
+    f: 'MAPE = Trung bình của |Thực tế − Dự báo| ÷ Thực tế',
+    ex: 'Giảm MAPE từ 25% xuống 12% thường giảm được khoảng một nửa phần tồn an toàn dùng để chống lệch nhu cầu, vì phần đó tỷ lệ với độ lệch của dự báo.',
+    pit: 'Đo sai số trên chính dữ liệu đã dùng để học; phải đo trên giai đoạn mô hình chưa thấy. MAPE cũng hỏng khi số thực tế bằng 0 hoặc rất nhỏ, nên với mặt hàng bán chậm dùng MAPE có trọng số.' },
+  transfer: { t: 'Giá chuyển giao nội bộ', s: 'Khi các công ty trong tập đoàn bán dịch vụ, cho vay hoặc dùng chung tài sản với nhau, giá nội bộ quyết định lợi nhuận nằm ở công ty nào. Giá phải gần giá thị trường (nguyên tắc giao dịch độc lập) để đúng thuế và đúng động lực.',
+    f: 'Giá chuyển giao hợp lý ≈ Giá của giao dịch tương đương với bên độc lập',
+    ex: 'Vertex Logistics chở hàng cho Vertex Retail rẻ hơn thị trường 10%: Retail có lãi đẹp, Logistics lỗ giả, và cơ quan thuế có thể điều chỉnh.',
+    pit: 'Đặt giá nội bộ để báo cáo của một công ty trông đẹp; quyết định vận hành theo giá sai sẽ sai theo.' },
+};
+/* bốn ý nền để đọc mọi trang bài toán */
+const CFOUND = [
+  ['Bài toán tối ưu', 'Mỗi trang viết một quyết định thành ba phần: máy được chọn gì (biến quyết định), để đạt gì (mục tiêu), trong giới hạn nào (ràng buộc). Máy thử rất nhiều phương án hợp lệ và giữ phương án tốt nhất theo mục tiêu đó.'],
+  ['Dữ liệu mẫu và dữ liệu thật', 'Bài chạy thử dùng dữ liệu mẫu sinh cố định cho từng bài, không phải số liệu của doanh nghiệp nào. Mức cải thiện thật phải đo trên dữ liệu thật khi thí điểm.'],
+  ['Hệ số quy đổi và chồng lấn', 'Kết quả trên dữ liệu mẫu chưa phải tiền. Hệ số quy đổi trừ phần không giữ được khi chạy thật. Hai bài cùng chạm một khoản chi phí không cộng thẳng được: phải trừ phần chồng lấn.'],
+  ['Ba loại tiền trên trang', 'Giá trị mỗi năm: chi phí giảm hoặc lãi tăng hằng năm. Tiền giải phóng: rút ra một lần khỏi tồn kho, công nợ. Giảm thiệt hại năm xấu: chỉ xuất hiện trong năm xấu, không cộng vào lợi nhuận hằng năm.'],
+];
+/* câu "ở bài này" viết tay cho các bài cần giải thích riêng */
+const CHERE_KEY = {
+  L01: { capex: 'Mỗi kho là một cam kết thuê hoặc xây nhiều năm. Đóng một kho giảm chi phí cố định mỗi năm nhưng tăng quãng đường; mở kho mới cần CAPEX và phải hoàn vốn bằng phần cước giảm.', npv: 'Hợp đồng thuê kho kéo dài nhiều năm, nên so phương án bằng chi phí mỗi năm quy về cùng một mốc, hoặc bằng NPV của cả hợp đồng.' },
+  L02: { capex: 'Thuê dài hạn là cam kết cố định cả năm; kho tạm là OPEX chỉ trả khi dùng nhưng đắt hơn mỗi m².' },
+  L03: { capex: 'Mua xe là CAPEX: trả một lần, khấu hao nhiều năm, chạy hay đứng đều tốn. Thuê ngoài là OPEX: chỉ trả khi có chuyến.', payback: 'Mỗi xe mua thêm phải chạy đủ số ngày để tiền thuê ngoài tiết kiệm được bù chi phí sở hữu. Máy tìm điểm cân bằng đó qua 1.000 kịch bản nhu cầu.' },
+  L09: { npv: 'Thuê 5 năm giá cố định hay 2 năm có quyền gia hạn: so bằng chi phí cả kỳ quy về hôm nay, và bằng rủi ro phải trả tiền cho kho trống nếu khách lớn rời đi.' },
+  L10: { capex: 'Xe tải điện cần CAPEX lớn hơn xe dầu, đổi lại OPEX (điện, bảo dưỡng) thấp hơn mỗi năm.', roi: 'Giờ sạc là nguồn lực khan hiếm, nên máy xếp tuyến theo tiền tiết kiệm trên mỗi giờ sạc, rồi chọn tập tuyến có tổng tiết kiệm lớn nhất.', payback: 'Tuyến dài tiết kiệm nhiều nhất trên mỗi xe nhưng ngốn nhiều giờ sạc nhất, nên ưu tiên tuyến dài nhất như hôm nay chưa chắc hoàn vốn nhanh nhất cho cả đội xe.' },
+  F17: { capex: 'Chạy thêm ca dùng dây chuyền sẵn có, không cần CAPEX mới; thuê gia công là OPEX theo sản lượng nhưng đắt hơn mỗi đơn vị.', fixvar: 'Sản lượng càng lớn và ổn định, tự sản xuất càng có lợi; sản lượng dao động mạnh thì thuê gia công an toàn hơn.' },
+  F18: { capex: 'Kho vùng là chi phí cố định nhiều năm. Số kho tối ưu cân chi phí cố định với cước giao tới nhà phân phối.' },
+  I04: { capex: 'Dây chuyền mới là CAPEX lớn và thêm chi phí cố định nhiều năm; chạy thêm ca là OPEX, chỉ phát sinh khi có đơn.', payback: 'Dây chuyền chỉ hoàn vốn nếu nhu cầu cao kéo dài nhiều năm. Máy so hai phương án qua 1.000 kịch bản nhu cầu.' },
+  I13: { roi: 'Lắp thêm cảm biến là khoản đầu tư nhỏ. Nếu dự đoán hiệu suất thu hồi tốt hơn giúp mỗi tấn thép phế cho nhiều thép lỏng hơn, ROI có thể rất cao.', payback: 'Đo bằng số thật trong hai quý đầu để biết có hoàn vốn nhanh như ước tính hay không.' },
+  I15: { capex: 'Bảo trì là OPEX với chi phí đội gần như cố định; cái lợi là giờ dừng máy tránh được. Dời sai hạng mục thì thiết bị hỏng lớn và phải thay mới, tức là CAPEX.' },
+  I22: { capex: 'Kho trung chuyển gần công trình là chi phí cố định; đổi lại xe giao quãng ngắn hơn và ít chuyến rỗng.' },
+  R29: { wc: 'Ví dụ: chiết khấu 2% để trả sớm 20 ngày tương đương lãi suất khoảng 37% một năm. Đáng lấy khi chi phí vốn thấp hơn mức đó.', npv: 'Trả sớm là dùng tiền hôm nay đổi lấy khoản giảm giá; so lợi suất ngầm của chiết khấu với chi phí vốn.' },
+  F30: { wc: 'Ví dụ: cho nhà phân phối chiết khấu 1% để trả sớm 30 ngày tương đương lãi suất khoảng 12% một năm. Chỉ đáng khi chi phí vốn của Vertex cao hơn, hoặc rủi ro nợ xấu giảm đủ nhiều.', npv: 'Tiền về sớm có giá trị theo chi phí vốn; khoản chiết khấu là cái giá trả cho điều đó.' },
+  G01: { wc: 'Dự báo dòng tiền 13 tuần chính xác hơn cho phép giữ ít tiền đệm và vay ngắn hạn ít hơn.' },
+  G02: { wc: 'Gộp quỹ tiền dùng tiền thừa của công ty này trả nợ cho công ty khác, giảm vay ngắn hạn và chi phí lãi của cả tập đoàn.', transfer: 'Khoản cho vay nội bộ phải có lãi suất gần thị trường và hợp đồng rõ ràng.' },
+  G04: { npv: 'Mỗi nguồn vay có chi phí khác nhau. Cơ cấu vay tốt hạ chi phí vốn bình quân (WACC) trong giới hạn rủi ro kỳ hạn và tỷ giá.' },
+  G05: { wc: 'Mỗi đòn bẩy (rút ngày thu tiền, kéo ngày trả tiền, giảm tồn) giải phóng một lượng tiền và gây căng thẳng khác nhau. Máy chọn tập đòn bẩy giải phóng nhiều tiền nhất trong mức căng thẳng chấp nhận được.' },
+  G08: { transfer: 'Quyết định phân bổ của tập đoàn dùng chi phí biến đổi của Vertex Logistics; giá nội bộ chỉ quyết định lãi nằm ở công ty nào, và nên theo giá thị trường.' },
+  G09: { npv: 'Hợp đồng điện tái tạo cam kết 10 năm: so bằng NPV chi phí điện cả kỳ theo nhiều kịch bản giá lưới, không chỉ năm đầu.', capex: 'Mua qua hợp đồng thì không cần CAPEX; tự đầu tư điện mặt trời áp mái mới là CAPEX.' },
+  G10: { ev: 'Mức giữ lại cao hơn làm phí bảo hiểm giảm; đổi lại tập đoàn tự chịu các sự cố nhỏ.' },
+  G11: { npv: 'Mỗi dự án của bốn công ty có NPV riêng. Máy chọn tập dự án có tổng NPV lớn nhất trong nguồn vốn năm tới.', roi: 'Xếp dự án theo ROI đơn thuần dễ bỏ sót dự án lớn có NPV cao; máy tối ưu trên tổng giá trị, không trên tỷ lệ.', capex: 'Đây là quyết định phân bổ CAPEX của cả tập đoàn.', payback: 'Thời gian hoàn vốn dùng làm điều kiện lọc rủi ro, không dùng để xếp hạng.' },
+  G13: { capex: 'Dùng chung kho giữa Bán lẻ và FMCG giảm tổng chi phí cố định; đổi lại phải chung quy trình và hệ thống quản lý kho.' },
+  G14: { transfer: 'Xe dùng chung giữa các công ty cần giá nội bộ cho mỗi chuyến, để mỗi công ty trả đúng phần mình dùng.' },
+  G15: { capex: 'Mỗi đòn bẩy giảm phát thải có CAPEX và mức giảm khác nhau.', roi: 'Máy chọn tập dự án tiết kiệm chi phí nhiều nhất trong giới hạn vốn; mức đạt mục tiêu phát thải vẫn phải kiểm tra riêng.', payback: 'Đòn bẩy tiết kiệm năng lượng thường tự hoàn vốn; đòn bẩy đắt bị lùi lại.' },
+  G16: { capex: 'Chuyển sang đường thuỷ, đường sắt cần đầu tư bãi trung chuyển, tức là CAPEX.' },
+  G22: { carry: 'Tồn đệm chống đứt hàng đường biển tốn chi phí giữ 14% một năm. Máy giữ nhiều hơn ở nguyên liệu dễ đứt, ít hơn ở nguyên liệu có nguồn thay thế.' },
+  G28: { wc: 'Tiền mặt tối thiểu là vốn lưu động bị giữ lại: giữ quá nhiều tốn chi phí vốn trừ lãi tiền gửi, quá ít phải vay nóng đắt.' },
+  G29: { transfer: 'Giá dịch vụ logistics nội bộ phải theo giá thị trường: quá thấp làm Logistics lỗ giả, quá cao đẩy các công ty khác thuê ngoài.' },
+};
+/* câu "ở bài này" theo số liệu của trang; x = { u, v, P, S, co, money, pct, nf, head, dl, done } */
+function CHERE(c, x) {
+  const m = CHERE_KEY[x.u.key]; if (m && m[c]) return m[c];
+  const { u, v, P, S, co, money, pct, nf, head, done } = x, a = P.a;
+  switch (c) {
+    case 'pl': return u.kind === 'risk' ? '' : `${money(v.V)} mỗi năm đi thẳng vào EBIT, bằng ${pct(v.V / co.ebit, 1)} EBIT của ${co.name}.`;
+    case 'capex': return a === 'load' ? 'Dời giờ chạy thiết bị giảm OPEX (tiền điện) mà gần như không cần CAPEX: chỉ cần đổi lịch.' : a === 'loc' ? 'Mở thêm kho là cam kết chi phí cố định nhiều năm; đóng bớt kho giảm chi phí cố định nhưng xe chạy xa hơn.' : '';
+    case 'fixvar': return a === 'loc' ? 'Mở thêm kho tăng chi phí cố định, giảm quãng đường; máy tìm điểm cân bằng giữa hai khoản.' : a === 'cover' ? 'Mỗi ca là khoản chi gần như cố định; xếp ca sát nhu cầu bớt giờ công thừa.' : a === 'load' ? 'Tiền điện là chi phí biến đổi theo giờ: cùng một lượng điện, chạy giờ thấp điểm rẻ hơn.' : u.kind === 'margin' ? (done ? `Phương án của máy tăng lãi (${x.dl}: ${pct(v.d, 1)} trên dữ liệu mẫu) trên cùng chi phí cố định.` : 'Phương án của máy tăng lãi trên cùng chi phí cố định.') : done ? `Phương án của máy giảm chi phí biến đổi (${x.dl}: ${pct(v.d, 1)} trên dữ liệu mẫu) mà không thêm chi phí cố định.` : 'Phương án của máy giảm chi phí biến đổi mà không thêm chi phí cố định.';
+    case 'wc': return u.kind === 'cash' ? `Giải phóng ${money(v.W)} khỏi vốn lưu động, một lần; sau đó phải giữ được mức mới.` : '';
+    case 'carry': return u.kind === 'cash' ? `${money(v.W)} × 14% = ${money(v.V)} mỗi năm chi phí giữ tiết kiệm được.` : a === 'newsv' ? 'Mỗi đơn vị thừa phải giữ lại hoặc bán rẻ: đó là chi phí thừa của bài này.' : a === 'eoq' ? 'Lô lớn hơn làm tăng chi phí giữ; lô nhỏ hơn làm tăng số lần đặt.' : '';
+    case 'service': return a === 'inv' && done ? `Máy giữ tỷ lệ đáp ứng quanh 97% nhưng tồn bình quân giảm ${pct(S.red)} trên dữ liệu mẫu, vì mỗi ${P.sku || 'mặt hàng'} có tồn an toàn riêng.` : a === 'inv' ? `Máy đặt tồn an toàn riêng cho từng ${P.sku || 'mặt hàng'} theo mức phục vụ cần có.` : '';
+    case 'eoq': return done ? `Máy tính lại cỡ lô; tổng chi phí đặt hàng và lưu kho giảm ${pct(S.save, 1)} trên dữ liệu mẫu.` : 'Máy tính lại cỡ lô cho từng nhóm theo đúng công thức trên.';
+    case 'cucu': return a === 'newsv' ? `Thiếu một ${P.unit1 || 'đơn vị'} mất ${nf(P.cu, 1)}, thừa mất ${nf(P.co, 1)} (triệu đồng): tỷ lệ tới hạn = ${nf(P.cu, 1)} ÷ (${nf(P.cu, 1)} + ${nf(P.co, 1)}) = ${pct(S.fr)}.` + (done ? ` Máy đặt ${nf(S.Qo)} thay vì ${nf(S.Qh)} ${P.unit} theo thói quen.` : '') : '';
+    case 'ev': return a === 'rank' ? `Máy xếp ${P.ent} theo xác suất nhân giá trị, không theo giá trị lớn nhất.` : a === 'sim' ? 'Trung bình của 1.000 kịch bản là giá trị kỳ vọng của mỗi phương án.' : a === 'newsv' ? 'Lượng đặt tốt nhất làm chi phí kỳ vọng (trung bình trên 1.000 kịch bản nhu cầu) thấp nhất.' : '';
+    case 'tail': return a === 'sim' && done && v.sim ? `Năm xấu (1 trên 10): cách hôm nay ${money(v.sim.tA)}, phương án máy chọn ${money(v.sim.tB)}.` : a === 'sim' ? 'Máy so hai phương án trên cùng 1.000 kịch bản, nhìn cả trung bình lẫn năm xấu.' : '';
+    case 'elastic': return a === 'curve' ? (done ? `Máy ước độ co giãn khoảng ${nf(S.eh, 1)} từ dữ liệu bán, rồi chọn giá trong biên độ ±${S.guard}%.` : `Máy ước độ co giãn từ dữ liệu bán, rồi chọn giá trong biên độ ±${S.guard}%.`) : a === 'mark' ? `Độ co giãn khoảng ${nf(S.e, 1)}: giảm giá bán thêm nhiều, nhưng mỗi đơn vị lãi ít hơn. Máy chọn giảm giá vào tuần nào, bao nhiêu.` : '';
+    case 'abc': return a === 'whale' ? (done ? `${pct(S.negShare)} số ${P.ent2 || 'khách'} đang lỗ sau khi tính đủ chi phí phục vụ; số còn lại tạo ${pct(S.peak)} tổng lợi nhuận.` : `Máy tính lợi nhuận từng ${P.ent2 || 'khách'} sau khi phân bổ đủ chi phí phục vụ.`) : '';
+    case 'pvm': return done ? `Doanh thu tăng ${pct(S.revG, 1)} nhưng lợi nhuận giảm; máy tách phần do giá và cơ cấu để sửa ngay.` : 'Máy tách chênh lệch lợi nhuận thành lượng, cơ cấu, giá và chi phí.';
+    case 'fcst': return (a === 'ts' || a === 'reg') && done ? `Trên dữ liệu mẫu, sai số giảm từ ${head[1]} xuống ${head[2]}.` : '';
+    default: return '';
+  }
+}
+const CTXT = { prep: 'Cần biết trước', prepSub: 'Bài toán này dùng các khái niệm sau. Bấm để xem nhanh; đọc kỹ ở trang Kiến thức nền.', here: 'Ở bài này', formula: 'Công thức', example: 'Ví dụ', pitfall: 'Sai lầm hay gặp', more: 'Đọc kỹ ở Kiến thức nền', hidden: 'Phần áp vào bài này mở sau khi máy giải.' };
+
 /* ===== trang một bài toán tối ưu của Tập đoàn Vertex (mô phỏng), kể theo 5 cảnh:
    bài toán hôm nay, máy tối ưu giải, đáng bao nhiêu, hệ thống và đánh đổi, quyết định.
    Mỗi cảnh: tiêu đề nói thẳng điều rút ra, một biểu đồ, ít chữ, và một câu hỏi mở dẫn sang cảnh sau. ===== */
@@ -2881,6 +3093,22 @@ const QK = {
   function renderAsk() {
     const h = headRow();
     $('#ask').innerHTML = `${esc(u.q)} Hôm nay, ${esc(lf(h[0]))} là <b>${esc(h[1])}</b>. Máy tối ưu giải lại đúng bài toán này trên dữ liệu mẫu; Ban điều hành cần năm câu trả lời trước khi đổi cách làm.`;
+  }
+
+  /* ---------- cần biết trước: khái niệm tài chính của bài này ---------- */
+  function renderPrep() {
+    const tags = CTAGS(u, P), done = ready(), x = { u, v: val(), P, S, co, money, pct, nf, head: headRow(), dl: A.dl ? A.dl(P) : '', done };
+    $('#t0').textContent = CTXT.prep; $('#d0').textContent = CTXT.prepSub;
+    const open = new Set([...document.querySelectorAll('#cgrid details[open]')].map(d => d.dataset.c));
+    $('#cgrid').innerHTML = tags.map(c => {
+      const C = CONCEPTS[c], manual = !!(CHERE_KEY[u.key] && CHERE_KEY[u.key][c]), here = CHERE(c, x), hide = SHOW && !done && !manual;
+      const sn = C.s.split(/(?<=[.:])\s/); let lead = sn[0]; for (let i = 1; i < sn.length && lead.length < 60; i++) lead += ' ' + sn[i];
+      return `<details class="cc" data-c="${c}"${open.has(c) ? ' open' : ''}><summary><span class="cct">${esc(C.t)}</span><span class="ccs">${esc(lead)}</span></summary><div class="ccb">`
+        + (C.s !== lead ? `<p>${esc(C.s.slice(lead.length).trim())}</p>` : '')
+        + `<p class="ccf"><b>${CTXT.formula}</b><span>${esc(C.f)}</span></p>`
+        + (here ? `<p class="cch"><b>${CTXT.here}</b><span>${hide ? esc(CTXT.hidden) : esc(here)}</span></p>` : '')
+        + `<p class="ccx"><b>${CTXT.example}</b><span>${esc(C.ex)}</span></p><a class="ccm" href="../${PRIMERURL}#${c}">${CTXT.more}</a></div></details>`;
+    }).join('');
   }
 
   /* ---------- cảnh 1: bài toán ---------- */
@@ -3128,7 +3356,7 @@ const QK = {
     $('#facts').innerHTML = `<div>Xếp hạng trong ${FAM}<b>${R.rk}/${R.n}</b>${R.rk === 1 ? 'lớn nhất tập đoàn' : `lớn hơn ${pct((R.n - R.rk) / (R.n - 1))} bài cùng loại`}</div>`
       + `<div>Trong ${esc(co.name)}<b>${R.rkc}/${R.nco}</b>chiếm ${pct(R.share)} tổng giá trị ${R.nco} ${RISK ? 'bài giảm rủi ro' : 'bài tạo lợi nhuận'} của ${u.co === 4 ? 'cấp tập đoàn' : 'công ty'}, chưa trừ chồng lấn</div>`
       + `<div>Thời gian ra giá trị<b>${u.t} tháng</b>${R.faster >= R.slower ? `nhanh hơn ${pct(R.faster)} trong ${N} bài toán` : `chậm hơn ${pct(R.slower)} trong ${N} bài toán`}</div>`
-      + `<div><a href="../danh-muc-150-use-case.html">Mở bản đồ giá trị ${N} bài toán</a></div>`;
+      + `<div><a href="../${MAPURL}">Mở bản đồ giá trị ${N} bài toán</a></div>`;
     /* cây liên kết */
     const links = u.links.filter(([id]) => UC[id - 1]);
     const stg = [...new Set([u.st].concat(links.map(([id]) => UC[id - 1].st)))].sort((a, b) => a - b).map(k => STG[k].toLowerCase());
@@ -3205,7 +3433,7 @@ const QK = {
   }
   function renderNext() {
     const nx = UC[UCID], el = $('#nextk');
-    if (!nx) { el.innerHTML = `<p class="nk0">Bạn đã đi hết ${N} bài toán</p><h3>Cộng cả ${N} bài, giá trị dồn vào đâu, và tập đoàn nên làm bài nào trước?</h3><a class="btn" href="../danh-muc-150-use-case.html">Mở bản đồ giá trị ${N} bài toán</a>`; return; }
+    if (!nx) { el.innerHTML = `<p class="nk0">Bạn đã đi hết ${N} bài toán</p><h3>Cộng cả ${N} bài, giá trị dồn vào đâu, và tập đoàn nên làm bài nào trước?</h3><a class="btn" href="../${MAPURL}">Mở bản đồ giá trị ${N} bài toán</a>`; return; }
     const sw = nx.co !== u.co ? ` Sang ${CO[nx.co].name}.` : nx.st !== u.st ? ` Sang khâu ${STG[nx.st].toLowerCase()}.` : '';
     el.innerHTML = `<p class="nk0">Bài toán tiếp theo, ${nx.id}/${N}.${sw}</p><h3><a href="${SLUGS[UCID]}.html${HASH}">${esc(nx.name)}</a></h3><p>${esc(nx.q)} Hôm nay: ${esc(lf(nx.before))}. Máy tối ưu sẽ tìm ra gì?</p><a class="btn" href="${SLUGS[UCID]}.html${HASH}">Mở bài toán ${nx.id}</a>`;
   }
@@ -3255,7 +3483,7 @@ const QK = {
   /* ---------- vẽ lại toàn bộ ---------- */
   function renderText() {
     const v = val();
-    renderAsk(); renderS1(); renderForm(); renderBoard(false); renderCompare(); renderS3(v); renderS4(v); renderS5(v); renderHooks(); renderNext(); renderSpine();
+    renderAsk(); renderPrep(); renderS1(); renderForm(); renderBoard(false); renderCompare(); renderS3(v); renderS4(v); renderS5(v); renderHooks(); renderNext(); renderSpine();
   }
   function renderCharts() { const v = val(); drawToday(); draw(); renderWipe(); if (ready()) renderRange(v); renderPort(); renderTL(v); }
 
@@ -3300,8 +3528,17 @@ const QK = {
   function resetRun() { st.k = -1; if (ready()) { st.approved = false; $('#bApprove').disabled = false; $('#bApprove').textContent = 'Duyệt phương án'; $('#hil').hidden = true; } }
   function go() { $('#flowd').open = true; smooth($('#flowd')); setTimeout(() => { resetRun(); run(); }, RM ? 0 : 600); }
 
+  /* ---------- giao diện sáng/tối và ngôn ngữ ---------- */
+  function toggles() {
+    const tb = $('#themeBtn'), lb = $('#langBtn'), root = document.documentElement;
+    const cur = () => root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (tb) { tb.setAttribute('aria-pressed', String(cur() === 'dark')); tb.addEventListener('click', () => { const n = cur() === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', n); try { localStorage.setItem('erx-theme', n); } catch (e) { /* trình duyệt chặn lưu */ } tb.setAttribute('aria-pressed', String(n === 'dark')); }); }
+    if (lb && !ALTURL) lb.hidden = true;
+    else if (lb) { lb.href = ALTURL + HASH; lb.addEventListener('click', () => { try { localStorage.setItem('erx-lang', lb.getAttribute('hreflang')); } catch (e) { /* trình duyệt chặn lưu */ } }); }
+  }
+
   /* ---------- khởi động và sự kiện ---------- */
-  staticTop(); steps(-1); status('', 'Chờ bài toán'); renderInput(); guessUI(); renderOutput(); renderText(); renderCharts();
+  toggles(); staticTop(); steps(-1); status('', 'Chờ bài toán'); renderInput(); guessUI(); renderOutput(); renderText(); renderCharts();
   document.body.classList.toggle('show', SHOW); if (SHOW) $('#flowd').open = true; else instant();
   $('#bRun').addEventListener('click', () => { resetRun(); run(); });
   $('#bApprove').addEventListener('click', approve);
