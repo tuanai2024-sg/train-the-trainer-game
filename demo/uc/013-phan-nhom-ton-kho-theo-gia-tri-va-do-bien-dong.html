@@ -433,6 +433,42 @@ body.show .guess{display:grid!important}
 @media (max-width:420px){.mt4{grid-template-columns:minmax(0,1fr)}.mt4 .mt+.mt{border-left:0;border-top:1px solid color-mix(in srgb,var(--ink) 10%,transparent)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* con số này tính thế nào */
+.basis{margin:-4px 0 16px}
+.basis details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 16px}
+.basis summary{cursor:pointer;font-weight:700;font-size:14.5px;padding:12px 0;color:var(--ink);list-style-position:inside}
+.basis dl{display:grid;gap:8px;margin:0 0 10px}
+.basis dl div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:12px}
+.basis dt{font-size:13px;font-weight:700;color:var(--muted)}
+.basis dd{margin:0;font-size:14.5px;line-height:1.5;color:var(--ink)}
+.bnote{margin:0 0 12px;font-size:12.5px;color:var(--muted)}
+/* HĐQT thẩm định */
+.review{margin:0 0 18px}
+.rvg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.rvc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
+.rvc h3{font-size:15.5px;margin:0 0 10px;color:var(--ink)}
+.rvc .chain{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.rvc .chain li{position:relative;padding:0 0 12px 22px;border-left:2px solid var(--line);margin-left:6px}
+.rvc .chain li:last-child{border-left-color:transparent;padding-bottom:4px}
+.rvc .chain li::before{content:"";position:absolute;left:-7px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--s1)}
+.rvc .chain span{display:block;font-size:12px;font-weight:700;color:var(--muted)}
+.rvc .chain b{display:block;font-size:14.5px;line-height:1.4;color:var(--ink);font-weight:600}
+.rvc .chain small{display:block;font-size:12.5px;color:var(--muted)}
+.rvnote{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--ink2)}
+.rvc .qs{margin:0;padding-left:18px;display:grid;gap:8px}
+.rvc .qs li{font-size:14px;line-height:1.5;color:var(--ink)}
+.rvc .lk{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.rvc .lk li{display:grid;gap:1px}
+.rvc .lk a{font-size:14px;font-weight:600;color:var(--s1);text-decoration:none}
+.rvc .lk a:hover{text-decoration:underline}
+.rvc .lk small{font-size:12.5px;color:var(--muted)}
+.rvd{display:grid;gap:10px;margin:0}
+.rvd div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px}
+.rvd dt{font-size:13px;font-weight:700;color:var(--muted)}
+.rvd dd{margin:0;font-size:14px;line-height:1.5;color:var(--ink)}
+@media (max-width:820px){.rvg{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.basis dl div,.rvd div{grid-template-columns:minmax(0,1fr);gap:2px}}
+
 </style>
 </head>
 <body>
@@ -451,6 +487,7 @@ body.show .guess{display:grid!important}
     <div class="bmid" id="bMid"></div>
     <div class="bside b1"><span class="btag">Sau khi có AI</span><p class="btxt" id="bAftTxt"></p><div class="bk" id="bKey1"></div></div>
   </div>
+  <div class="basis" id="basis"></div>
   <div class="ctarow"><button type="button" class="btn big" id="bGo">Cho AI làm thử ngay</button><p class="tick" id="tick"></p></div>
 
   <div class="qrow"><h2 class="qh"><span class="qn" aria-hidden="true">2</span>Bỏ ra bao nhiêu, thu về bao nhiêu?</h2>
@@ -460,6 +497,9 @@ body.show .guess{display:grid!important}
   <h2 class="qh"><span class="qn" aria-hidden="true">3</span>Nên quyết thế nào?</h2>
   <div class="rec" id="rec"></div>
   <div class="chips" id="chips"></div>
+
+  <h2 class="qh" id="hRev"><span class="qn" aria-hidden="true">4</span>HĐQT thẩm định: logic, phản biện, hệ thống, quyết định</h2>
+  <div class="review" id="review"></div>
 </div></header>
 <main class="in">
   <section id="sFlow" aria-labelledby="hFlow">
@@ -1012,7 +1052,7 @@ function planRatio(st) {
 
 /* ===== cấu hình bài toán cho từng use case: loại thuật toán và nhãn theo ngữ cảnh (150 đề xuất, thứ tự theo chuỗi) ===== */
 const CFG = {
-  1: {a: 'ts', lab: 'Nhu cầu vật tư', unit: 'tấn', step: 'tháng', per: 12, season: 0.25, base: 500, trend: 0.005},
+  1: {a: 'ts', lab: 'Nhu cầu bán ra của một mặt hàng tại một kho', unit: 'tấn', step: 'tháng', per: 12, season: 0.25, base: 500, trend: 0.005},
   2: {a: 'ts', lab: 'Đơn hàng thực nhận', unit: 'nghìn thùng', step: 'ngày', per: 7, season: 0.22, base: 60, trend: 0.002},
   3: {a: 'reg', ent: 'sản phẩm mới', y: 'Doanh số 12 tuần đầu', unit: 'nghìn sản phẩm', yr: [5, 60], x: ['Doanh số sản phẩm tương tự', 'Mức giá', 'Kênh phân phối'], naive: 'ước lượng của nhóm sản phẩm', tol: 5},
   4: {a: 'rank', ent: 'chương trình khuyến mãi', N: 50, k: 12, out: 'có lãi gia tăng', naive: 'chạy lại chương trình doanh số lớn nhất năm trước', feats: ['Mức giảm giá', 'Độ co giãn mặt hàng', 'Ăn mòn mặt hàng khác'], val: 'lãi gia tăng', unit: 'triệu đồng', lo: 30, hi: 900},
@@ -1075,7 +1115,7 @@ const CFG = {
   61: {a: 'inv', unit: 'triệu đồng', sku: 'mã phụ tùng', sold: 'dùng'},
   62: {a: 'sim', out: 'Chi phí sở hữu nhóm máy chính một năm', low: true, A: ['Sửa đến khi hỏng hẳn', 14, 20, 0.15, 8], B: ['Thay theo vòng đời tối ưu', 12.5, 10, 0.05, 3]},
   63: {a: 'agent', task: 'dòng chênh lệch giá thành', N: 120, min: 15, vol: 900, kinds: [['Chênh lệch giá vật tư', 0.1], ['Tiêu hao vượt định mức', 0.35], ['Có lợi nhờ sản xuất nhiều hơn bán', 0.6], ['Định mức đã cũ', 0.85]]},
-  64: {a: 'alloc', mode: 'cost', ent: 'Nguồn', n: 6, unit: 'tấn', habit: 'giữ công thức cũ', who: 'nguồn nguyên liệu', cl: 'chi phí nguyên liệu', vol: 'nguyên liệu cho tháng tới', lim: 'phòng chất lượng', limRule: 'mỗi nguồn tối đa 40% công thức', limRisk: 'chất lượng mẻ trộn sẽ không ổn định'},
+  64: {a: 'alloc', mode: 'cost', ent: 'Nguồn', n: 6, unit: 'tấn', habit: 'giữ công thức cũ', who: 'nguồn nguyên liệu', cl: 'chi phí nguyên liệu', vol: 'nguyên liệu cần cho tháng tới', lim: 'phòng chất lượng', limRule: 'mỗi nguồn tối đa 40% công thức', limRisk: 'chất lượng mẻ trộn sẽ không ổn định'},
   65: {a: 'load', unit: 'triệu đồng'},
   66: {a: 'anom', when: 'trong tuần', mlab: 'Chi phí năng lượng tiết kiệm được', tx: 'lần đo lưu lượng', N: 240, kinds: ['Lưu lượng cao khi máy nghỉ', 'Áp suất tụt dần', 'Tiêu thụ ngoài giờ sản xuất'], amt: 'triệu đồng', lo: 1, hi: 25},
   67: {a: 'vision', mode: 'event', cell: 'khung hình', obj: 'vi phạm an toàn', rows: 5, cols: 8, manual: 'giám sát đi kiểm 10% khu vực mỗi ca'},
@@ -1487,7 +1527,7 @@ ARCH.loc = {
 
 /* ---------- phân bổ nguồn có hạn ---------- */
 /* nhãn cho chế độ chi phí: mặc định là mua hàng */
-const AW = P => P.who || 'nhà cung cấp', AW1 = P => P.who || 'nhà cung cấp', AC = P => P.cl || 'chi phí mua', AV = P => P.vol || 'sản lượng mua';
+const AW = P => P.who || 'nhà cung cấp', AW1 = P => P.who || 'nhà cung cấp', AC = P => P.cl || 'chi phí mua', AV = P => P.vol || 'hàng cần mua trong quý tới';
 ARCH.alloc = {
   init(P, r0) {
     const r = rng(Math.floor(r0() * 1e9)), n = P.n, ent = [];
@@ -2219,6 +2259,342 @@ Object.keys(IO).forEach(k => Object.assign(ARCH[k], IO[k]));
 const tyfix = x => typeof x === 'string' ? x.replace(/(\d{1,3}(?:\.\d{3})+) triệu đồng/g, m => { const v = parseInt(m.replace(/\D/g, ''), 10); return vn(v / 1000, v >= 1e5 ? 0 : v >= 1e4 ? 1 : 2) + ' tỷ đồng'; }) : Array.isArray(x) ? x.map(tyfix) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, tyfix(v)])) : x;
 Object.keys(ARCH).forEach(k => ['kpis', 'ba', 'outputs', 'inputs', 'twist', 'gate', 'ask', 'pull'].forEach(m => { const f = ARCH[k][m]; if (typeof f === 'function') ARCH[k][m] = function () { return tyfix(f.apply(this, arguments)); }; }));
 
+/* ===== "Con số này tính thế nào": định nghĩa, dữ liệu, cách hôm nay, cách AI, lưu ý; và câu hỏi phản biện theo loại bài toán =====
+   Trả về { m, d, h, a, c, q }: m = con số đo gì, d = dữ liệu, h = hôm nay, a = AI (có thể chứa kết quả, chỉ hiện khi đã chạy thử),
+   c = lưu ý khi đọc, q = câu hỏi phản biện về cách so sánh. */
+const BASIS = {
+  ts: (P, S) => {
+    const st = P.step, worst = S.y.slice(24).map((v, i) => ({ i, v, eN: Math.abs(v - S.naive[i]) / v, eM: Math.abs(v - S.fc[i]) / v })).sort((a, b) => (b.eN - b.eM) - (a.eN - a.eM))[0], dd = S.y[24] < 100 ? 1 : 0;
+    return {
+      m: `Trung bình mỗi ${st}, con số dự báo lệch bao nhiêu phần trăm so với thực tế. Lệch của một ${st} = |thực tế − dự báo| ÷ thực tế.`,
+      d: `36 ${st} số liệu mẫu về ${P.lab.toLowerCase()} (${P.unit}). Cả hai cách chỉ được nhìn 24 ${st} đầu, rồi phải đoán trước 12 ${st} sau; 12 ${st} này được giấu đi để chấm điểm.`,
+      h: `Lấy trung bình 3 ${st} gần nhất (${st} 22 đến 24) làm dự báo cho cả 12 ${st} sau, nên không thấy mùa vụ: lệch trung bình ${vp(S.eN, 1)}.`,
+      a: `Học xu hướng và mùa vụ từ 24 ${st} (phương pháp Holt-Winters, thử 125 bộ tham số, giữ bộ khớp nhất): lệch trung bình ${vp(S.eM, 1)}. Ví dụ ${st} ${worst.i + 25}: thực tế ${vn(worst.v, dd)}, cách hôm nay đoán ${vn(S.naive[worst.i], dd)} (lệch ${vp(worst.eN, 0)}), AI đoán ${vn(S.fc[worst.i], dd)} (lệch ${vp(worst.eM, 0)}).`,
+      c: `Sai số giảm ${vn((S.eN - S.eM) * 100, 1)} điểm phần trăm, tức nhỏ đi ${vp(1 - S.eM / S.eN, 0)} so với cách hôm nay.`,
+      q: `Trong bài chạy thử, cách hôm nay không được cập nhật lại mỗi ${st}. Nếu cập nhật thì khoảng cách sẽ hẹp hơn; khi thí điểm phải so hai cách trong cùng điều kiện.`,
+    };
+  },
+  reg: (P, S) => ({
+    m: `Trung bình mỗi ${P.ent}, con số ước tính lệch bao nhiêu ${P.unit} so với ${P.y.toLowerCase()} thực tế.`,
+    d: `80 ${P.ent} mẫu, mỗi ${P.ent} có 3 yếu tố: ${P.x.join(', ').toLowerCase()}. Học trên 60 ${P.ent}, chấm điểm trên 20 ${P.ent} còn lại mà máy chưa thấy.`,
+    h: `${capf(P.naive)}: lệch trung bình ${vn(S.eN, 1)} ${P.unit}; ${vp(S.tN, 0)} ${P.ent} nằm trong khoảng ±${vn(P.tol)} ${P.unit}.`,
+    a: `Học cách 3 yếu tố cùng ảnh hưởng tới ${P.y.toLowerCase()} (hồi quy, có tính tác động kết hợp): lệch trung bình ${vn(S.eM, 1)} ${P.unit}; ${vp(S.tM, 0)} ${P.ent} nằm trong ±${vn(P.tol)} ${P.unit}.`,
+    q: `Chỉ chấm trên 20 ${P.ent}, quá ít để kết luận. Thí điểm cần vài trăm ${P.ent} thật, và phải có đủ 3 yếu tố cho từng ${P.ent}.`,
+  }),
+  rank: (P, S) => ({
+    m: `Đội chỉ đủ sức xử lý ${S.k} trên ${S.N} ${P.ent}. Con số là tổng ${P.val} của những ${P.ent} được chọn mà thật sự ${P.out}.`,
+    d: `${S.N} ${P.ent} mẫu, mỗi ${P.ent} có 3 dấu hiệu: ${P.feats.join(', ').toLowerCase()}; kết quả thật đã biết để chấm điểm.`,
+    h: `${capf(P.naive)}: thu được ${vq2(S.cN, S.cM, P.unit || '')[0]}.`,
+    a: `Tính xác suất ${P.out}${P.money === false ? '' : ' nhân với giá trị'} cho từng ${P.ent}, rồi chọn ${S.k} ${P.ent} cao nhất: thu được ${vq2(S.cN, S.cM, P.unit || '')[1]}, gấp ${vn(S.lift, 1)} lần.`,
+    q: `Cách hôm nay trong mẫu là một luật đơn giản. Người giỏi kết hợp nhiều kinh nghiệm hơn, nên khi thí điểm phải so với người giỏi nhất, không phải với luật.`,
+  }),
+  cls: (P, S) => ({
+    m: `Tỷ lệ ${P.item} được xếp đúng nhóm, trên ${S.items.length} ${P.item} mẫu.`,
+    d: `${S.items.length} ${P.item} mẫu đã biết nhóm đúng, chia ${P.cats.length} nhóm: ${P.cats.join(', ').toLowerCase()}.`,
+    h: `Xếp theo một bộ quy tắc cố định: đúng ${vp(S.accR, 0)}.`,
+    a: `AI tự xếp khi chắc chắn từ ${vn(S.tau * 100)}% trở lên; ca không chắc (${vp(S.human, 0)}) chuyển người. Tính chung: đúng ${vp(S.accAll, 0)}.`,
+    q: `Phần chuyển cho người được tính là đúng hết. Thật ra người cũng sai, nên tỷ lệ thật sẽ thấp hơn một chút.`,
+  }),
+  agent: (P, S) => ({
+    m: `Giờ công mỗi tháng = số ${P.task} mỗi tháng (${vn(P.vol)}) × số phút cho mỗi ${P.task}.`,
+    d: `Mỗi ${P.task} người làm mất khoảng ${vn(P.min)} phút (ước tính của người đề xuất). Chạy thử trên ${S.tasks.length} ${P.task} mẫu chia 4 loại, từ dễ (“${P.kinds[0][0].toLowerCase()}”) đến khó (“${P.kinds[3][0].toLowerCase()}”).`,
+    h: `Người làm hết: ${vn(P.vol)} × ${vn(P.min)} phút = ${vn(S.hBefore, 0)} giờ mỗi tháng. Tỷ lệ làm sai ước khoảng ${vp(ARCH.agent.hE(P), 1)}.`,
+    a: `AI tự làm ${vp(S.autoRate, 0)} số việc (những việc nó chắc chắn từ ${vn(S.tau * 100)}% trở lên), mỗi việc người xem lại 0,6 phút; phần còn lại chuyển người: còn ${vn(S.hAfter, 0)} giờ. Lỗi lọt qua trên mẫu: ${vn(S.wrong)} trên ${vn(S.tasks.length)}.`,
+    q: `Số phút mỗi việc và tỷ lệ người làm sai là ước tính, chưa đo. Trước khi duyệt phải bấm giờ thật trên vài trăm việc.`,
+  }),
+  anom: (P, S) => ({
+    m: `Số ${P.tx} bất thường bắt được, trên tổng số ${P.tx} bất thường thật có trong mẫu.`,
+    d: `${S.tx.length} ${P.tx} mẫu, trong đó có ${S.nA} trường hợp bất thường thuộc 3 loại: ${P.kinds.join(', ').toLowerCase()}.`,
+    h: `Kiểm ${vn((P.samp || 0.05) * 100)}% ${P.tx} có số tiền lớn nhất cộng ${vn((P.samp || 0.05) * 100)}% chọn ngẫu nhiên: bắt được ${S.baseTp} trên ${S.nA}.`,
+    a: `Chấm điểm bất thường cho 100% ${P.tx}, cảnh báo những ${P.tx} có điểm từ ${vn(S.tau, 1)} trở lên: bắt được ${S.tp} trên ${S.nA}, kèm ${vn(S.fp)} báo động giả cần người xem.`,
+    q: `Bất thường trong mẫu được cài sẵn và khá rõ; ngoài đời tinh vi hơn. Báo động giả tốn công điều tra, cần đo số giờ xử lý mỗi tuần.`,
+  }),
+  vision: (P, S) => P.mode === 'count' ? ({
+    m: 'Sai lệch giữa số hàng ghi nhận và số hàng thật, tính trên tổng số thùng.',
+    d: `${S.cells.length} ${P.cell} mẫu, đã biết số ${P.obj} thật trong từng ô (tổng ${vn(S.tot)}).`,
+    h: `${capf(P.manual)}: lệch ${vp(S.errBook, 1)}.`,
+    a: `Camera đếm từng ô; ô nào camera không chắc thì người đếm lại: lệch ${vp(S.errCam, 1)}.`,
+    q: 'Ánh sáng, góc camera và hàng che khuất ngoài đời làm độ chính xác thấp hơn mẫu. Thử ở một kho trước.',
+  }) : P.mode === 'grade' ? ({
+    m: 'Thời gian từ lúc hàng trả về tới lúc được phân loại và cất lại kho.',
+    d: `Con số 10 ngày và 48 giờ là ước tính của người đề xuất. Bài chạy thử đo độ chính xác xếp loại trên ${S.cells.length} kiện mẫu.`,
+    h: `${capf(P.manual)}, khoảng 10 ngày.`,
+    a: `Camera xếp loại, kiện không chắc thì người xem: xếp đúng ${vp(S.acc, 0)}; mục tiêu 48 giờ.`,
+    q: 'Thời gian 48 giờ chưa được đo. Thí điểm phải bấm giờ thật từ lúc hàng về tới lúc cất kho.',
+  }) : ({
+    m: `Số ${P.obj} phát hiện được, trên tổng số ${P.obj} thật có trong ${S.cells.length} ${P.cell} mẫu.`,
+    d: `${S.cells.length} ${P.cell} mẫu, đã biết chỗ nào có ${P.obj}.`,
+    h: `${capf(P.manual)}: thấy ${S.manual} trên ${S.ev}.`,
+    a: `Camera xem 100% ${P.cell}; ca không chắc chuyển người: thấy ${S.found} trên ${S.ev}, kèm ${S.fps} báo nhầm.`,
+    q: 'Ánh sáng, góc camera và vật che khuất ngoài đời làm độ chính xác thấp hơn mẫu. Thử ở một chuyền, một ca trước.',
+  }),
+  tsp: (P, S) => ({
+    m: `Tổng ${tq(P)} của một lượt đi qua cả ${S.pts.length - 1} ${P.pt} rồi quay về ${P.depot.toLowerCase()}.`,
+    d: `Toạ độ ${S.pts.length - 1} ${P.pt} trong dữ liệu mẫu; khoảng cách tính theo đường thẳng giữa hai điểm rồi đổi ra ${P.unit}.`,
+    h: `${capf(P.habit)}: ${tv(P, S.Lh)}${isLen(P) ? '' : ' ' + P.unit}.`,
+    a: `Bắt đầu từ điểm gần nhất, rồi thử đổi thứ tự từng cặp điểm, hễ ngắn hơn thì giữ, đến khi không rút ngắn được nữa: ${tv(P, S.Lo)}${isLen(P) ? '' : ' ' + P.unit}.`,
+    q: 'Mẫu tính theo đường thẳng, chưa tính giờ hẹn của khách, kẹt xe, tải trọng. Tiết kiệm thật thường thấp hơn mẫu.',
+  }),
+  pack: (P, S) => ({
+    m: `Số ${P.bin} cần để chứa hết ${S.sz.length} ${P.item}, mỗi ${P.bin} chứa tối đa ${vn(S.C)} ${P.unit}.`,
+    d: `Kích thước ${S.sz.length} ${P.item} trong dữ liệu mẫu, tổng ${vn(S.tot)} ${P.unit}; về lý thuyết cần ít nhất ${vn(S.lb)} ${P.bin}.`,
+    h: `${capf(P.habit)}; ${P.bin} nào đầy thì mở ${P.bin} mới: ${vn(S.nf.length)} ${P.bin}.`,
+    a: `Xếp ${P.item} lớn trước, mỗi ${P.item} vào ${P.bin} đầu tiên còn đủ chỗ: ${vn(S.ff.length)} ${P.bin}.`,
+    q: 'Mẫu chỉ xét kích thước. Ngoài đời còn trọng lượng, hàng dễ vỡ và thứ tự dỡ hàng.',
+  }),
+  assign: (P, S) => ({
+    m: `Tổng ${an(P)} khi ghép ${S.n} ${P.L.toLowerCase()} với ${S.n} ${P.R.toLowerCase()}, mỗi bên đúng một.`,
+    d: `Bảng ${S.n}×${S.n} ô trong dữ liệu mẫu; mỗi ô là ${an(P)} nếu ghép cặp đó.`,
+    h: `${capf(P.habit)}: ${P.lp.toLowerCase()} nào chọn trước thì lấy ${P.rp.toLowerCase()} rẻ nhất còn lại: ${av(P, S.Ch)}${isTr(P) ? '' : ' ' + P.unit}.`,
+    a: `Xét cả bảng cùng lúc để tổng nhỏ nhất (thuật toán ghép cặp Hungary): ${av(P, S.Co)}${isTr(P) ? '' : ' ' + P.unit}; đổi ${S.changed} cặp so với cách hôm nay.`,
+    q: 'Mẫu giả định mỗi bên ghép đúng một. Ngoài đời có thêm giới hạn về giờ, năng lực, và người phụ trách phải duyệt từng thay đổi.',
+  }),
+  knap: (P, S) => ({
+    m: `Tổng ${P.v} của các ${P.item} được chọn, không vượt ${P.cap}.`,
+    d: `${S.it.length} ${P.item} trong dữ liệu mẫu, mỗi ${P.item} có ${P.w} và ${P.v}; giới hạn bằng khoảng 45% tổng ${P.w}.`,
+    h: `${capf(P.habit)}, đến khi hết ${P.cap}: ${vq(S.Vh, P.vu)}.`,
+    a: `Thử mọi tổ hợp bằng quy hoạch động để tổng ${P.v} lớn nhất: ${vq(S.Vo, P.vu)}.`,
+    q: `${capf(P.v)} của từng ${P.item} là ước tính; ước sai thì chọn sai. Cần xem lại ước tính sau mỗi kỳ.`,
+  }),
+  cover: (P, S) => ({
+    m: `Số ca ${P.res} mỗi ngày (mỗi ca 8 giờ) để khung giờ nào cũng đủ người.`,
+    d: `Nhu cầu ${P.res} theo ${P.slots.length} khung ${P.hours} giờ, trung bình 8 tuần trong dữ liệu mẫu.`,
+    h: `${capf(P.habit)}; mỗi ca phải đủ người cho giờ đông nhất trong ca: ${vn(S.nH)} ca, thừa ${vn(S.overH)} giờ mỗi ngày.`,
+    a: `Cho ca bắt đầu ở mọi khung và chồng lên nhau ở giờ cao điểm, chọn số ca ít nhất mà vẫn đủ người: ${vn(S.nO)} ca, thừa ${vn(S.overO)} giờ.`,
+    q: 'Mẫu chưa tính nghỉ phép, kỹ năng từng người và quy định lao động về ca. Người lao động cần lịch ổn định.',
+  }),
+  loc: (P, S) => ({
+    m: 'Tổng chi phí năm = tiền thuê và vận hành kho (cố định mỗi kho) + tiền chở hàng tới 26 khách.',
+    d: '26 khách với số chuyến mỗi tháng, 6 vị trí kho khả thi trong dữ liệu mẫu; tiền chở tỷ lệ với quãng đường nhân số chuyến.',
+    h: `Mở 4 kho theo đề xuất của 4 vùng: ${vn(S.habit.tot, 1)} ${P.unit} mỗi năm.`,
+    a: `Thử đủ 63 cách chọn kho, mỗi khách đi kho gần nhất, chọn cách tổng chi phí thấp nhất: ${S.best.set.length} kho, ${vn(S.best.tot, 1)} ${P.unit}.`,
+    q: 'Chỉ 26 khách và 6 vị trí trong một năm. Quyết định thật kéo dài 10 năm, phải thử với nhiều kịch bản nhu cầu, giá thuê và giá carbon.',
+  }),
+  alloc: (P, S) => S.mode === 'margin' ? ({
+    m: 'Lãi gộp tuần khi chia lượng hàng có hạn cho các khách.',
+    d: `${S.ent.length} khách trong dữ liệu mẫu: nhu cầu, lãi mỗi tấn, 3 khách có cam kết tối thiểu; hàng chỉ đủ khoảng 68% tổng nhu cầu.`,
+    h: `${capf(P.habit)}: lãi ${vq(S.Vh, 'triệu đồng')}, lỡ ${S.missH} cam kết.`,
+    a: `Giữ đủ cam kết trước, phần còn lại ưu tiên khách lãi cao: lãi ${vq(S.Vo, 'triệu đồng')}, lỡ ${S.missO} cam kết.`,
+    q: 'Lãi mỗi tấn theo từng khách phải tính đúng chi phí phục vụ (xem đề xuất lợi nhuận theo khách). Khách nhận ít hơn cần được giải thích.',
+  }) : ({
+    m: `Tổng ${AC(P)} để có đủ ${vn(S.Sup)} ${P.unit} ${AV(P)}.`,
+    d: `${S.ent.length} ${AW(P)} trong dữ liệu mẫu, mỗi nơi có năng lực và đơn giá (triệu đồng mỗi ${P.unit}); mỗi nơi tối đa 40%.`,
+    h: `${capf(P.habit)}: ${vq(S.Ch, 'triệu đồng')}.`,
+    a: `Dồn cho nơi rẻ nhất trước tới mức tối đa cho phép, rồi tới nơi rẻ kế tiếp: ${vq(S.Co, 'triệu đồng')}.`,
+    q: 'Giới hạn 40% mỗi nơi là quyết định về rủi ro, không phải của máy. Năng lực và đơn giá thật thay đổi theo mùa.',
+  }),
+  inv: (P, S) => ({
+    m: `Giá trị tồn kho bình quân của 5 ${SK(P)} trong 180 ngày mô phỏng, kèm tỷ lệ đáp ứng nhu cầu.`,
+    d: `Nhu cầu từng ngày của 5 ${SK(P)} (180 ngày, dữ liệu mẫu), thời gian chờ hàng 7 ngày, mỗi lần đặt đủ dùng 30 ngày.`,
+    h: `Luôn giữ thêm 14 ngày ${SD(P)} làm dự phòng, ${SK(P)} nào cũng vậy: tồn bình quân ${vq(S.H.avg, P.unit)}, đáp ứng ${vp(S.H.fill, 1)}.`,
+    a: `Dự phòng theo độ thất thường của từng ${SK(P)}, nhắm đáp ứng khoảng 97%: tồn bình quân ${vq(S.O.avg, P.unit)}, đáp ứng ${vp(S.O.fill, 1)}.`,
+    q: `Mức đáp ứng 97% là lựa chọn kinh doanh: một số ${SK(P)} sẽ thiếu nhiều hơn hôm nay, có chủ đích. Ai duyệt mức này?`,
+  }),
+  eoq: (P, S) => ({
+    m: 'Tổng chi phí đặt hàng và chi phí giữ hàng trong một năm của 6 loại vật tư.',
+    d: 'Nhu cầu năm, chi phí mỗi lần đặt hàng và chi phí giữ hàng của 6 vật tư trong dữ liệu mẫu.',
+    h: `Mua theo lô cố định quen dùng: ${vn(S.C0, 0)} ${P.unit}, ${vn(S.n0, 0)} lần đặt mỗi năm.`,
+    a: `Tính cỡ lô để chi phí đặt hàng và chi phí giữ hàng cân nhau (công thức lô kinh tế): ${vn(S.Cs, 0)} ${P.unit}, ${vn(S.ns, 0)} lần đặt.`,
+    q: 'Công thức giả định nhu cầu đều và chưa tính giảm giá khi mua lô lớn. Vật tư có giá theo bậc phải tính riêng.',
+  }),
+  load: (P, S) => ({
+    m: 'Tiền điện mỗi tháng của 8 thiết bị lớn.',
+    d: 'Giá điện 3 mức theo giờ, công suất và khung giờ được phép chạy của 8 thiết bị (dữ liệu mẫu).',
+    h: `Chạy theo lịch cố định buổi sáng: ${vn(S.cH, 0)} ${P.unit} mỗi tháng.`,
+    a: `Dời từng thiết bị sang giờ rẻ trong khung cho phép, không vượt công suất đỉnh: ${vn(S.cO, 0)} ${P.unit}.`,
+    q: 'Một số thiết bị không dời giờ được (dây chuyền liên tục, kho lạnh). Cần người vận hành xác nhận danh sách.',
+  }),
+  whale: (P, S) => ({
+    m: 'Số khách mà sau khi trừ chi phí phục vụ (giao hàng, xử lý đơn, chiết khấu) thì công ty bị lỗ.',
+    d: '60 khách trong dữ liệu mẫu: doanh thu, lãi gộp, số đơn và chi phí phục vụ của từng khách.',
+    h: 'Chỉ nhìn doanh thu và lãi gộp, nên không thấy khách nào lỗ: 0 khách.',
+    a: `Trừ chi phí phục vụ cho từng khách rồi xếp từ lãi nhiều đến lỗ nhiều: ${vn(Math.round(S.negShare * 60))} khách lỗ, tổng ${vq(S.negSum, P.unit)}.`,
+    q: 'Cách chia chi phí phục vụ cho từng khách quyết định ai “lỗ”. Đổi cách chia thì đổi kết quả; Ban Tài chính phải chốt cách chia trước.',
+  }),
+  curve: (P, S) => ({
+    m: 'Lãi mỗi tuần, lấy hôm nay bằng 100.',
+    d: '40 tuần giá bán và sản lượng trong dữ liệu mẫu; chi phí mỗi sản phẩm cố định.',
+    h: 'Giá theo bảng giá năm: lãi = 100.',
+    a: `Ước độ nhạy của sản lượng theo giá, rồi tìm giá lãi nhất trong biên độ ±${S.guard}% công ty cho phép: lãi = ${vn(S.prO / S.pr0 * 100, 1)}.`,
+    q: 'Độ nhạy đo trong 40 tuần bình thường. Đối thủ có thể phản ứng, khách có thể thấy bị đối xử không đều; cần biên độ do HĐQT duyệt.',
+  }),
+  sim: (P, S, fmt) => ({
+    m: `${P.out}: trung bình và trường hợp xấu qua 1.000 tình huống.`,
+    d: 'Giả định do Ban Tài chính ký cho từng phương án: mức trung bình, độ dao động, xác suất và tác động của sự cố. Hai phương án chịu chung các cú sốc thị trường để so cho công bằng.',
+    h: `${capf(P.A[0])}: trung bình ${fmt(S.sA.mean)}.`,
+    a: `${capf(P.B[0])}: trung bình ${fmt(S.sB.mean)}; tốt hơn ở ${vp(S.better, 0)} số tình huống.`,
+    q: 'Kết quả chỉ tốt bằng giả định đầu vào. Ai ký giả định thì chịu trách nhiệm cập nhật mỗi quý.',
+  }),
+  platform: () => ({
+    m: 'Số phiên bản khác nhau của cùng một con số khi các phòng báo cáo.',
+    d: '3 chỉ tiêu (doanh thu tháng, khách hàng hoạt động, giá trị tồn kho) do 4 phòng báo; con số chuẩn bằng 100.',
+    h: 'Mỗi phòng tự tính: 4 phiên bản, mất 3 ngày đối chiếu trước họp HĐQT.',
+    a: 'Một nguồn chung, mỗi chỉ tiêu một định nghĩa và một người chịu trách nhiệm: 1 phiên bản.',
+    q: 'Lợi ích gián tiếp, khó đo. Phải đo bằng khả năng thành công của các đề xuất khác dùng chung dữ liệu.',
+  }),
+};
+/* câu hỏi phản biện theo loại lợi ích */
+const QLEV = {
+  C: 'Chi phí giảm có bị đẩy sang khâu khác không, ví dụ ít người hơn nhưng giao trễ hơn? Đo cả chuỗi và chuẩn hoá theo sản lượng.',
+  R: 'Doanh thu tăng có phải nhờ AI, hay nhờ thị trường? Cần một nhóm đối chứng không dùng AI để so.',
+  W: 'Tiền giải phóng chỉ có một lần. Sau đó có giữ được mức tồn kho, công nợ mới không, hay lại phình ra?',
+  K: 'Tổn thất tránh được dựa vào giả định tần suất và mức thiệt hại. Ai xác nhận, và sau một năm đo lại thế nào?',
+};
+
+/* ===== HĐQT thẩm định từng đề xuất: [cơ chế ra tiền, cách làm giá trị lớn hơn, liên kết [số đề xuất, quan hệ]] ===== */
+const RV = {
+  1: ['Sai số giảm thì giữ ít hàng dự phòng hơn (tiền về một lần) và ít đứt hàng hơn (bán thêm).', 'Một dự báo, nhiều chỗ ra tiền: dùng chung cho tồn kho an toàn, kế hoạch sản xuất, dòng tiền và thuê người mùa cao điểm.', [[12, 'dùng dự báo này'], [109, 'dòng tiền dựa vào đây'], [79, 'thuê người theo dự báo'], [136, 'cần số liệu sạch']]],
+  2: ['Biết sớm nhu cầu đổi trong tuần thì bớt chạy gấp, bớt chở gấp và bớt đứt hàng ở điểm bán.', 'Chỉ đáng làm khi nhà máy và kho đổi được kế hoạch trong vài ngày; làm sau khi đã có dự báo tháng tốt (#1).', [[1, 'cần làm trước'], [49, 'lịch máy phải đổi theo'], [85, 'tuyến xe đổi theo']]],
+  3: ['Đặt đúng số lượng cho hàng mới thì bớt hàng tồn phải giảm giá và bớt mất doanh thu do thiếu hàng.', 'Kết hợp với mua theo nhiều đợt nhỏ: dự báo sai vẫn sửa kịp ở đợt sau.', [[15, 'giảm hàng tồn chậm'], [7, 'quyết giữ hay bỏ mặt hàng'], [1, 'chung cách dự báo']]],
+  4: ['Bỏ các đợt khuyến mãi lỗ thì lợi nhuận tăng ngay, không cần bán thêm.', 'Đo bằng nhóm đối chứng không khuyến mãi; dùng kết quả để thương lượng lại tiền hỗ trợ với nhà bán lẻ.', [[1, 'dự báo phải biết lịch khuyến mãi'], [72, 'chặn giảm giá ngoài chính sách'], [117, 'lãi thật theo khách']]],
+  5: ['Giữ lại khách sắp bỏ đi rẻ hơn nhiều so với tìm khách mới.', 'Chỉ giữ khách có lãi: lọc qua lợi nhuận theo khách trước khi tặng ưu đãi.', [[117, 'chỉ giữ khách có lãi'], [97, 'chăm sóc khách'], [103, 'gốc rễ khiến khách bỏ']]],
+  6: ['Mỗi đơn bán thêm một món đi kèm thì doanh thu tăng mà chi phí giao gần như không đổi.', 'Gợi ý món có biên lãi cao và còn hàng; nối với tồn kho để không gợi ý món đang thiếu.', [[12, 'không gợi ý món thiếu'], [117, 'ưu tiên món có lãi'], [5, 'cùng dữ liệu khách']]],
+  7: ['Bỏ mặt hàng bán kém thì kho, nhà máy và vốn được giải phóng, đổi khuôn ít hơn.', 'Làm trước các việc tồn kho và lịch máy: ít mặt hàng hơn thì mọi việc sau dễ hơn và rẻ hơn.', [[13, 'ít mặt hàng, dễ quản tồn'], [49, 'ít đổi khuôn'], [117, 'biết món nào có lãi']]],
+  8: ['Một con số kế hoạch chung thì bớt sản xuất thừa, bớt thiếu hàng và bớt tranh cãi giữa các phòng.', 'Đặt cược chiến lược: giá trị nằm ở cả hệ thống. Nên làm theo từng chặng, có cửa dừng, đo bằng sai lệch kế hoạch và tồn kho.', [[9, 'nối kế hoạch với tiền'], [1, 'cần dự báo tốt'], [136, 'cần số liệu chung'], [11, 'bỏ con số đoán quá tay']]],
+  9: ['Biết trước nhu cầu tiền thì vay đúng lúc, đúng mức, bớt lãi vay và bớt căng tiền mặt.', 'Gộp vào cuộc họp cân cung cầu hằng tháng: mỗi phương án sản lượng phải kèm số tiền cần vay.', [[8, 'cùng một kế hoạch'], [109, 'dòng tiền 13 tuần'], [47, 'lịch trả nhà cung cấp']]],
+  10: ['Khi thiếu hàng, chia theo lãi và cam kết thì giữ được khách quan trọng và lợi nhuận.', 'Viết luật chia trước khi thiếu hàng; HĐQT duyệt luật, máy chỉ áp dụng.', [[117, 'biết khách nào có lãi'], [70, 'hứa ngày giao đúng'], [23, 'biết trước sắp thiếu']]],
+  11: ['Bỏ phần đoán quá tay thì kho bớt phình, tiền bớt bị giam.', 'Gắn với thưởng: thưởng đội bán hàng theo độ chính xác dự báo, không chỉ theo doanh số.', [[1, 'dự báo sạch hơn'], [8, 'kế hoạch chung'], [12, 'bớt tồn dự phòng']]],
+  12: ['Dự phòng đúng mức cho từng món thì tiền nằm trong kho giảm mà khách vẫn đủ hàng.', 'Làm sau dự báo tốt (#1): dự báo càng chuẩn thì dự phòng càng nhỏ, tiền giải phóng càng lớn.', [[1, 'dự báo càng chuẩn càng lợi'], [13, 'nhóm hàng quyết mức phục vụ'], [17, 'điều chuyển trước khi mua']]],
+  13: ['Trông coi kỹ món đắt và thất thường, nới tay món rẻ và đều: ít công mà ít sai.', 'Bước đầu rẻ nhất của mọi việc tồn kho; dùng làm khung cho #12 và #15.', [[12, 'mức dự phòng theo nhóm'], [15, 'xử lý hàng chậm'], [7, 'bỏ món bán kém']]],
+  14: ['Mua mỗi lần đúng cỡ thì tổng chi phí đặt hàng và giữ hàng thấp nhất.', 'Áp dụng cho cả phụ tùng (#61) và vật tư gom chung (#33).', [[33, 'gom nhu cầu mua'], [61, 'phụ tùng'], [12, 'dự phòng đi kèm']]],
+  15: ['Bán bớt hàng chậm sớm thì thu tiền về và tránh lỗ lớn hơn sau này.', 'Chặn từ gốc: nối với dự báo hàng mới (#3) và thiên lệch dự báo (#11) để hàng chậm không sinh thêm.', [[16, 'dự phòng giảm giá'], [3, 'đặt đúng hàng mới'], [105, 'kênh bán lại']]],
+  16: ['Ghi nhận sớm khoản lỗ trên hàng tồn thì báo cáo không bất ngờ và quyết định xử lý hàng nhanh hơn.', 'Dùng chung danh sách lô rủi ro với #15 để vừa dự phòng vừa hành động bán bớt.', [[15, 'hành động bán bớt'], [124, 'cùng cách dự phòng'], [82, 'hàng cận hạn']]],
+  17: ['Lấy hàng thừa ở kho khác thay vì mua mới thì bớt chi tiền và bớt tồn thừa.', 'Đặt luật: mọi đơn mua phải qua bước kiểm tồn ở kho khác trước.', [[12, 'tồn dự phòng từng kho'], [44, 'chặn đơn mua thừa'], [85, 'ghép vào tuyến xe sẵn có']]],
+  18: ['Đặt kho đúng chỗ thì tiền thuê kho và tiền chở hàng giảm trong nhiều năm.', 'Đặt cược chiến lược: quyết định mười năm. Thử với nhiều kịch bản nhu cầu và giá carbon; làm trước khi ký hợp đồng thuê kho mới.', [[19, 'nhà máy nào làm gì'], [21, 'thuê hay tự vận hành'], [85, 'tuyến xe theo mạng lưới'], [150, 'giá carbon']]],
+  19: ['Mỗi nhà máy làm đúng thứ nó làm rẻ nhất thì giá thành và tiền chở giảm.', 'Làm cùng thiết kế mạng lưới kho (#18): kho và nhà máy phải quyết chung mới ra giá trị thật.', [[18, 'quyết chung với kho'], [49, 'lịch máy từng nhà máy'], [34, 'rủi ro tập trung']]],
+  20: ['Thuê ngoài phần vượt công suất thì không phải mua máy mới cho vài tháng cao điểm.', 'Hỏi thêm: thuê ngoài có làm mất năng lực cốt lõi không? Giữ lại công đoạn tạo khác biệt.', [[50, 'chọn đơn khi máy đầy'], [62, 'mua máy mới hay không'], [34, 'phụ thuộc đối tác']]],
+  21: ['Thuê kho theo mùa thì không trả tiền cho chỗ trống chín tháng mỗi năm.', 'Làm sau #18: biết mạng lưới kho đúng rồi mới quyết kho nào tự vận hành.', [[18, 'mạng lưới kho'], [79, 'người theo mùa'], [84, 'thử trên kho số']]],
+  22: ['Một phần nguồn trong nước thì bớt hàng nằm trên biển và bớt thiệt hại khi cảng tắc.', 'Đặt cùng tồn chiến lược (#25) và hai nguồn (#34): ba việc cùng một bài toán rủi ro nguồn cung.', [[25, 'tồn chiến lược'], [34, 'hai nguồn'], [23, 'cảnh báo gián đoạn']]],
+  23: ['Biết trước 2 đến 3 tuần thì kịp đổi nguồn, đổi tuyến, tránh dừng nhà máy.', 'Chỉ có giá trị khi có sẵn phương án ứng phó: nối với mô phỏng kịch bản (#24).', [[24, 'phương án ứng phó'], [41, 'nhà cung cấp cấp 2'], [10, 'chia hàng khi thiếu']]],
+  24: ['Có sẵn phương án cho tình huống xấu thì thiệt hại khi khủng hoảng nhỏ hơn.', 'Dùng kết quả để quyết bảo hiểm (#26) và tồn chiến lược (#25), không để báo cáo nằm trong ngăn kéo.', [[26, 'mức bảo hiểm'], [25, 'tồn chiến lược'], [23, 'tín hiệu sớm']]],
+  25: ['Giữ thêm tồn có chủ đích thì tránh được thiệt hại lớn khi đứt nguồn; đổi lại tốn tiền giữ hàng.', 'Đặt mức tồn theo giá trị bị đe doạ, xem lại mỗi quý; bỏ khi đã có nguồn thứ hai (#34).', [[34, 'nguồn thứ hai thay tồn'], [22, 'nguồn trong nước'], [24, 'kịch bản']]],
+  26: ['Mua bảo hiểm đúng mức thì không trả phí cho rủi ro đã tự chịu được.', 'Dùng mô phỏng (#24) làm căn cứ đàm phán phí với hãng bảo hiểm.', [[24, 'kịch bản tổn thất'], [25, 'tồn chiến lược'], [112, 'cùng cách quản rủi ro']]],
+  27: ['Thấy rõ tiền chi vào đâu thì mới biết chỗ nào đàm phán lại được.', 'Là nền móng của cả chặng mua hàng: làm trước #28, #31, #33, #44.', [[33, 'gom nhu cầu'], [44, 'chặn chi ngoài hợp đồng'], [137, 'mã nhà cung cấp sạch']]],
+  28: ['Có giá mục tiêu theo thị trường thì không trả giá cao khi nguyên liệu đã giảm.', 'Đưa công thức giá theo chỉ số vào hợp đồng khung để tự điều chỉnh, không phải đàm phán lại mỗi lần.', [[29, 'dự báo giá'], [31, 'giá thành chuẩn'], [36, 'đòi quyền lợi hợp đồng']]],
+  29: ['Mua đúng lúc giá thấp thì giá vốn giảm; sai thì mất, nên phải có giới hạn.', 'Đặt hạn mức: chỉ mua trước tối đa một phần nhu cầu; phần còn lại theo giá thị trường.', [[28, 'giá mục tiêu'], [112, 'rủi ro tỷ giá đi kèm'], [9, 'cần tiền để mua trước']]],
+  30: ['Tính cả chi phí lỗi và giao trễ thì nhà cung cấp rẻ nhất chưa chắc là rẻ nhất.', 'Dùng điểm tổng chi phí làm tiêu chí bắt buộc trong mọi lần đấu thầu.', [[32, 'chia đơn hàng'], [58, 'lỗi nguyên liệu'], [40, 'giao trễ']]],
+  31: ['Biết giá hợp lý thì đàm phán có căn cứ, bớt mua đắt.', 'Nhắm vào nhóm chi tiết chi nhiều nhất trước; dùng chung số liệu với #28.', [[28, 'giá theo chỉ số'], [27, 'biết chi vào đâu'], [63, 'giá thành nội bộ']]],
+  32: ['Chia đơn theo giá, năng lực và rủi ro thì tổng chi phí thấp mà không phụ thuộc một nơi.', 'Giới hạn tỷ trọng mỗi nhà cung cấp là quyết định của HĐQT; máy chỉ tối ưu trong giới hạn đó.', [[34, 'nguồn thứ hai'], [30, 'tổng chi phí'], [42, 'sức khoẻ nhà cung cấp']]],
+  33: ['Gom đơn các nhà máy thì mua được bậc giá tốt hơn.', 'Làm sau #27 (biết chi vào đâu) và #137 (mã vật tư thống nhất), nếu không sẽ gom nhầm.', [[27, 'biết chi vào đâu'], [137, 'mã thống nhất'], [37, 'chiết khấu sản lượng']]],
+  34: ['Có nguồn thứ hai thì nhà máy không dừng khi nguồn chính gặp sự cố.', 'Áp dụng cho vật tư mà nếu thiếu một tuần thì mất nhiều tiền nhất; không cần cho mọi vật tư.', [[25, 'thay cho tồn chiến lược'], [41, 'điểm nghẽn cấp 2'], [32, 'chia đơn hàng']]],
+  35: ['Rút thời gian xin và so báo giá thì người mua có thời gian đàm phán việc lớn.', 'Dùng thời gian tiết kiệm để làm #31 và #33, nơi tiền thật nằm.', [[38, 'đơn nhỏ lẻ'], [31, 'giá thành chuẩn'], [30, 'tổng chi phí']]],
+  36: ['Đòi đủ các khoản phạt và giảm giá đã có trong hợp đồng là tiền có sẵn, chỉ cần đòi.', 'Nối với kho điều khoản (#123) để mọi hợp đồng mới đều được theo dõi ngay từ ngày ký.', [[123, 'kho điều khoản'], [37, 'chiết khấu sản lượng'], [39, 'cam kết sản lượng']]],
+  37: ['Đòi đúng hạn khoản giảm giá khi mua đủ số lượng là tiền có sẵn.', 'Gộp chung với #36 và #39: một người phụ trách mọi quyền lợi theo hợp đồng.', [[36, 'quyền lợi hợp đồng'], [39, 'cam kết sản lượng'], [33, 'gom nhu cầu']]],
+  38: ['Trợ lý AI lo đơn nhỏ thì người mua dồn sức vào đơn lớn.', 'Đặt hạn mức tự động thấp lúc đầu, nâng dần khi tỷ lệ sai được đo thật.', [[35, 'xin báo giá'], [44, 'chặn chi ngoài hợp đồng'], [45, 'khớp ba chiều']]],
+  39: ['Biết sớm nguy cơ hụt cam kết thì tránh tiền phạt hoặc dồn đơn đúng chỗ.', 'Nối với kế hoạch mua (#32) để tự chia lại đơn khi sắp hụt.', [[32, 'chia đơn'], [36, 'quyền lợi hợp đồng'], [8, 'kế hoạch chung']]],
+  40: ['Biết sớm nhà cung cấp sắp giao trễ thì kịp đổi nguồn, tránh dừng máy.', 'Gộp với #41 và #42 thành một bảng theo dõi rủi ro nhà cung cấp duy nhất.', [[41, 'cấp 2, cấp 3'], [42, 'sức khoẻ tài chính'], [23, 'gián đoạn chuỗi']]],
+  41: ['Thấy điểm nghẽn ở nhà cung cấp cấp 2 thì không bị bất ngờ khi nhiều nhà cung cấp cùng dừng.', 'Bắt đầu với 20 vật tư quan trọng nhất; không cần lập bản đồ cho mọi thứ.', [[34, 'nguồn thứ hai'], [40, 'rủi ro nhà cung cấp'], [22, 'nguồn nhập khẩu']]],
+  42: ['Biết sớm nhà cung cấp khó khăn thì kịp hỗ trợ hoặc đổi nguồn.', 'Dùng chung với tài trợ chuỗi cung ứng (#48): nhà cung cấp tốt nhưng thiếu tiền có thể được ngân hàng trả sớm.', [[48, 'hỗ trợ bằng tài trợ'], [40, 'rủi ro giao hàng'], [34, 'nguồn thứ hai']]],
+  43: ['Tránh nhà cung cấp vi phạm môi trường thì tránh rủi ro mất khách và bị phạt.', 'Gộp với đo phát thải (#148) để một lần thu dữ liệu dùng cho cả hai.', [[148, 'đo phát thải'], [149, 'báo cáo bền vững'], [40, 'rủi ro nhà cung cấp']]],
+  44: ['Chặn chi tiêu ngoài hợp đồng giá tốt thì tiền tiết kiệm đã đàm phán mới thành tiền thật.', 'Làm sớm: việc rẻ, lời nhanh, và làm cho mọi hợp đồng đàm phán sau có giá trị.', [[27, 'biết chi vào đâu'], [46, 'kiểm hoá đơn'], [38, 'đơn nhỏ lẻ']]],
+  45: ['Khớp giấy tờ nhanh thì trả đúng hạn, không trả nhầm, kế toán bớt việc tay.', 'Làm chung với kiểm hoá đơn (#46): cùng dữ liệu, một lần làm hai việc.', [[46, 'kiểm hoá đơn'], [114, 'đóng sổ nhanh hơn'], [47, 'lịch trả tiền']]],
+  46: ['Chặn hoá đơn trùng hay chia nhỏ trước khi trả thì không mất tiền rồi mới đi đòi.', 'Mở rộng sang hoá đơn cước (#89) và chứng từ công tác (#125): cùng cách làm.', [[89, 'hoá đơn cước'], [125, 'chi phí công tác'], [45, 'khớp ba chiều']]],
+  47: ['Trả đúng lúc thì vừa được giảm giá trả sớm khi đáng, vừa giữ tiền khi cần.', 'Nối với dự báo dòng tiền (#109): tuần nào thiếu tiền thì máy tự dời khoản trả sớm.', [[109, 'dòng tiền'], [48, 'tài trợ chuỗi'], [42, 'nhà cung cấp yếu']]],
+  48: ['Ngân hàng trả sớm cho nhà cung cấp thì Vertex trả sau mà nhà cung cấp vẫn vui.', 'Hỏi kiểm toán trước về cách ghi sổ; ưu tiên nhà cung cấp nhỏ đang vay đắt.', [[47, 'lịch trả'], [42, 'nhà cung cấp yếu'], [109, 'dòng tiền']]],
+  49: ['Lịch chạy máy khéo hơn thì bớt dừng đổi khuôn, ra nhiều hàng hơn trên cùng máy.', 'Làm sau #7 (bớt mặt hàng) và #51 (biết máy dừng thật bao lâu) để lịch dựa trên số đúng.', [[51, 'biết máy dừng'], [7, 'ít mặt hàng'], [50, 'chọn đơn khi đầy']]],
+  50: ['Khi máy đầy, nhận đơn lãi nhiều nhất trên mỗi giờ máy thì lợi nhuận tăng mà không cần đầu tư.', 'Chia sẻ thứ tự ưu tiên với phòng bán hàng để họ không hứa đơn ít lãi lúc cao điểm.', [[70, 'hứa ngày giao'], [117, 'lãi theo khách'], [20, 'thuê ngoài phần vượt']]],
+  51: ['Biết ngay máy dừng thì sửa trong ca, ra thêm hàng mà không mua máy mới.', 'Dùng dữ liệu này cho bảo trì dự đoán (#60) và lịch sản xuất (#49).', [[60, 'bảo trì dự đoán'], [49, 'lịch sản xuất'], [62, 'sửa hay thay']]],
+  52: ['Số người đúng theo việc thì bớt tiền làm thêm và giờ chờ.', 'Báo lịch sớm cho công nhân; đổi lịch phút chót sẽ làm mất người giỏi.', [[49, 'lịch sản xuất'], [128, 'định biên'], [75, 'cùng cách xếp ca kho']]],
+  53: ['Bắt lỗi trên chuyền thì bớt hàng lỗi đến tay khách, bớt hàng trả về và bảo hành.', 'Dùng ảnh lỗi để tìm nguyên nhân (#54, #103), không chỉ để loại hàng.', [[54, 'nguyên nhân từ máy'], [103, 'khiếu nại khách'], [101, 'chi phí bảo hành']]],
+  54: ['Báo sớm mẻ có nguy cơ lỗi thì chỉnh máy kịp, bớt làm lại và bỏ đi.', 'Nối với tỷ lệ thu hồi (#55): cùng dữ liệu thông số máy, hai việc cùng tăng sản lượng tốt.', [[55, 'tỷ lệ thu hồi'], [53, 'camera soi lỗi'], [57, 'khoanh vùng lô']]],
+  55: ['Ra nhiều thành phẩm hơn trên cùng lượng nguyên liệu thì giá thành giảm trực tiếp.', 'Thử trên một chuyền trước, đo bằng sản lượng tốt trên mỗi tấn nguyên liệu.', [[54, 'mẻ lỗi'], [64, 'phối trộn nguyên liệu'], [63, 'chênh lệch giá thành']]],
+  56: ['Cắt khéo thì bớt đầu thừa, bớt mua nguyên liệu.', 'Áp dụng cho mọi công đoạn cắt; việc rẻ, lời nhanh, ít rủi ro.', [[59, 'bán phế liệu'], [14, 'lô mua vật tư'], [49, 'lịch sản xuất']]],
+  57: ['Thu hồi đúng lô thì thiệt hại khi có sự cố nhỏ hơn nhiều.', 'Giá trị chỉ đến khi có sự cố; tính như bảo hiểm. Làm cùng truy xuất nguyên liệu (#58).', [[58, 'kiểm nguyên liệu'], [53, 'camera lỗi'], [26, 'bảo hiểm']]],
+  58: ['Kiểm kỹ lô đáng ngờ thì bớt lỗi lọt vào sản xuất mà không tốn thêm người.', 'Gửi kết quả cho mua hàng (#30, #40) để chấm điểm nhà cung cấp.', [[30, 'tổng chi phí nhà cung cấp'], [40, 'rủi ro nhà cung cấp'], [57, 'khoanh vùng lô']]],
+  59: ['Phân loại và bán theo giá thị trường thì thu thêm tiền từ thứ đang bán rẻ.', 'Làm cùng #56: bớt phế liệu trước, bán phần còn lại cho đúng giá.', [[56, 'cắt ít phế liệu'], [105, 'bán lại hàng lỗi'], [148, 'phát thải']]],
+  60: ['Sửa trước khi hỏng thì bớt dừng máy giữa ca và bớt sửa lớn.', 'Bắt đầu với máy điểm nghẽn (máy mà dừng là cả chuyền dừng); dùng dữ liệu #51.', [[51, 'biết máy dừng'], [61, 'phụ tùng'], [62, 'sửa hay thay']]],
+  61: ['Giữ phụ tùng vừa đủ thì giải phóng tiền mà không làm máy chờ phụ tùng.', 'Làm sau #60: biết máy nào sắp hỏng thì giữ đúng phụ tùng cho máy đó.', [[60, 'bảo trì dự đoán'], [14, 'cỡ lô mua'], [13, 'nhóm hàng']]],
+  62: ['Thay máy đúng lúc thì tổng tiền sửa, tiền dừng máy và tiền mua máy thấp nhất.', 'Đưa vào kế hoạch vốn hằng năm để không dồn nhu cầu mua máy vào một năm.', [[60, 'bảo trì dự đoán'], [51, 'máy dừng'], [9, 'kế hoạch tiền']]],
+  63: ['Soi cả phần "tốt hơn kế hoạch" thì phát hiện nhà máy chạy vượt bán, tồn kho phình, tiền bị giam.', 'Đặt chênh lệch giá thành cạnh tồn kho và dòng tiền trong mọi cuộc họp tháng; thưởng theo kết quả cả chuỗi, không chỉ nhà máy.', [[115, 'chênh lệch ngân sách'], [8, 'kế hoạch chung'], [12, 'tồn kho'], [109, 'dòng tiền']]],
+  64: ['Đổi công thức theo giá nguyên liệu thì giá thành giảm mà chất lượng vẫn đạt.', 'Nối với dự báo giá nguyên liệu (#29) để mua trước nguyên liệu mà công thức sẽ cần.', [[29, 'dự báo giá'], [55, 'tỷ lệ thu hồi'], [58, 'kiểm nguyên liệu']]],
+  65: ['Dời việc tốn điện sang giờ rẻ thì tiền điện giảm mà không đổi sản lượng.', 'Áp dụng cho cả kho và sạc xe điện (#93).', [[93, 'xe điện'], [66, 'rò rỉ năng lượng'], [148, 'phát thải']]],
+  66: ['Bịt rò rỉ thì bớt tiền điện, hơi và nước ngay.', 'Việc nhỏ; gộp với #65 thành một chương trình năng lượng.', [[65, 'giờ điện rẻ'], [69, 'nước thải'], [148, 'phát thải']]],
+  67: ['Nhắc an toàn ngay lúc xảy ra thì bớt tai nạn, bớt dừng việc và chi phí liên quan.', 'Thoả thuận rõ với người lao động về cách dùng hình ảnh trước khi lắp.', [[68, 'báo cáo gần sự cố'], [134, 'nhạy cảm giám sát'], [147, 'che dữ liệu cá nhân']]],
+  68: ['Xử lý sớm các lần suýt tai nạn thì tránh tai nạn thật.', 'Làm trước #67: rẻ hơn, và tạo văn hoá báo cáo không sợ bị phạt.', [[67, 'camera an toàn'], [103, 'cùng cách tìm gốc rễ'], [120, 'kiểm soát nội bộ']]],
+  69: ['Phát hiện sớm vượt mức xả thải thì tránh bị phạt và dừng nhà máy.', 'Gộp dữ liệu vào báo cáo bền vững (#149).', [[149, 'báo cáo bền vững'], [66, 'rò rỉ nước'], [121, 'luật mới']]],
+  70: ['Hứa ngày giao đúng thì khách tin, bớt phạt giao trễ và bớt đơn bị huỷ.', 'Cần dữ liệu tồn kho và lịch máy đúng; làm sau #49 và #12.', [[49, 'lịch sản xuất'], [12, 'tồn kho'], [96, 'phạt giao trễ']]],
+  71: ['Giá theo thị trường thì lợi nhuận mỗi đơn tăng.', 'Đặt biên độ giá do HĐQT duyệt và theo dõi phản ứng của khách; rủi ro uy tín cao.', [[117, 'lãi theo khách'], [72, 'chặn giảm giá sai'], [4, 'khuyến mãi']]],
+  72: ['Chặn giảm giá ngoài chính sách thì giữ lại tiền đang bị cho đi không lý do.', 'Làm sớm: việc rẻ, lời nhanh; dùng dữ liệu để sửa chính sách giá (#71).', [[71, 'chính sách giá'], [117, 'lãi theo khách'], [119, 'gian lận']]],
+  73: ['Cho nợ đúng mức thì bớt nợ xấu mà vẫn giữ khách tốt.', 'Dùng chung điểm rủi ro với dự phòng nợ (#124) và đòi nợ (#110).', [[124, 'dự phòng nợ'], [110, 'đòi nợ'], [117, 'lãi theo khách']]],
+  74: ['Soạn hồ sơ thầu nhanh thì dự được nhiều thầu hơn với cùng số người.', 'Gắn với giá thành và lãi theo khách để không thắng thầu lỗ.', [[117, 'lãi theo khách'], [123, 'kho điều khoản'], [31, 'giá thành chuẩn']]],
+  75: ['Số người theo lượng hàng thì bớt giờ thừa trong kho.', 'Làm cùng #79 (thuê thời vụ) và #81 (lịch xe đến) vì cùng quyết định số người mỗi giờ.', [[79, 'thuê thời vụ'], [81, 'lịch xe đến'], [52, 'cùng cách xếp ca']]],
+  76: ['Để hàng bán chạy gần cửa thì người nhặt hàng đi ít hơn, xuất được nhiều đơn hơn.', 'Thử trên kho số (#84) trước khi sắp xếp lại kho thật.', [[84, 'kho số'], [77, 'đường nhặt hàng'], [13, 'nhóm hàng']]],
+  77: ['Gom đơn và đi đường ngắn thì cùng số người xử lý được nhiều đơn hơn.', 'Làm sau #76: vị trí hàng đúng thì đường đi ngắn hơn nữa.', [[76, 'vị trí hàng'], [75, 'ca kho'], [87, 'xếp xe']]],
+  78: ['Đếm liên tục thì không phải đóng kho kiểm kê và số trên sổ đúng hơn.', 'Đầu tư lớn: thử ở một kho giá trị cao trước khi lắp cho mọi kho.', [[80, 'hao hụt'], [12, 'tồn kho đúng'], [114, 'đóng sổ']]],
+  79: ['Thuê đúng số người thời vụ thì bớt tiền thuê thừa và bớt trễ đơn mùa cao điểm.', 'Dùng dự báo nhu cầu (#1) làm đầu vào, không làm riêng một mô hình.', [[1, 'dự báo nhu cầu'], [75, 'ca kho'], [128, 'định biên']]],
+  80: ['Phát hiện sớm hàng mất thì bớt thất thoát và răn đe.', 'Có quy trình điều tra công bằng trước khi bật cảnh báo.', [[78, 'đếm liên tục'], [119, 'gian lận'], [120, 'kiểm soát nội bộ']]],
+  81: ['Xe có giờ hẹn thì bớt chờ, bớt tiền phạt chờ và cửa kho dùng đều hơn.', 'Bắt buộc nhà vận tải đặt lịch; gắn với đấu thầu cước (#88).', [[88, 'đấu thầu cước'], [75, 'ca kho'], [86, 'chiều về']]],
+  82: ['Xuất hàng sắp hết hạn trước thì bớt hàng phải huỷ.', 'Nối với dự phòng giảm giá (#16) và bán lại (#105) cho lô không kịp bán.', [[16, 'dự phòng giảm giá'], [15, 'hàng chậm'], [105, 'bán lại']]],
+  83: ['Thùng vừa khít thì một xe chở nhiều hơn, bớt vật liệu bao bì.', 'Tính cả độ bền khi vận chuyển để không tăng hàng hỏng (#103).', [[87, 'xếp xe'], [103, 'hàng hỏng'], [148, 'phát thải']]],
+  84: ['Thử trên máy trước thì tránh sai lầm tốn kém khi sắp xếp lại kho thật.', 'Dùng cho mọi quyết định lớn về kho: #76, #21, #18.', [[76, 'vị trí hàng'], [21, 'thuê kho'], [18, 'mạng lưới kho']]],
+  85: ['Đường ngắn hơn thì bớt tiền xăng, tiền xe và giờ tài xế.', 'Làm cùng #86 và #87: tuyến, chiều về và xếp xe là một bài toán.', [[86, 'chiều về'], [87, 'xếp xe'], [92, 'tuyến ít khí thải']]],
+  86: ['Xe quay về có hàng thì chuyến về cũng ra tiền.', 'Mở cho cả hàng của đối tác ngoài khi xe còn trống.', [[85, 'tuyến giao'], [88, 'đấu thầu cước'], [81, 'lịch cửa kho']]],
+  87: ['Xếp khít thì bớt chuyến xe mỗi ngày.', 'Làm chung với #83 (thùng vừa khít): cả hai cùng tăng hàng trên mỗi xe.', [[83, 'thùng vừa khít'], [85, 'tuyến giao'], [77, 'gom đơn']]],
+  88: ['Chọn hãng xe theo giá và độ đúng hẹn thì tiền cước giảm mà không trễ hàng.', 'Đo cả chi phí giao trễ, không chỉ giá cước; giữ vài hãng dự phòng.', [[89, 'kiểm hoá đơn cước'], [96, 'phạt giao trễ'], [117, 'chi phí phục vụ khách']]],
+  89: ['Soát hoá đơn cước thì không trả tiền cho quãng đường không chạy.', 'Làm chung với kiểm hoá đơn (#46): cùng cách làm.', [[46, 'kiểm hoá đơn'], [88, 'đấu thầu cước'], [85, 'tuyến thật']]],
+  90: ['Lái xe tiết kiệm thì bớt tiền nhiên liệu và hao mòn xe.', 'Thoả thuận với tài xế: thưởng theo tiết kiệm, không phạt.', [[91, 'bảo dưỡng xe'], [92, 'khí thải'], [134, 'nhạy cảm giám sát']]],
+  91: ['Bảo dưỡng trước khi hỏng thì bớt xe nằm đường và sửa lớn.', 'Dùng chung cách làm với bảo trì máy nhà máy (#60).', [[60, 'cùng cách làm'], [90, 'cách lái'], [93, 'xe điện']]],
+  92: ['Cân cả khí thải thì chi phí carbon sau này thấp hơn.', 'Chỉ đáng làm khi đã có tuyến tối ưu (#85); thêm khí thải vào cùng bài toán.', [[85, 'tuyến giao'], [150, 'giá carbon'], [148, 'đo phát thải']]],
+  93: ['Chạy xe điện đúng tuyến thì tiền năng lượng và bảo dưỡng giảm.', 'Làm theo tuyến, không mua đồng loạt; nối với giờ sạc rẻ (#65).', [[65, 'giờ điện rẻ'], [150, 'giá carbon'], [85, 'tuyến giao']]],
+  94: ['Báo giờ đến chính xác thì bớt cuộc gọi tổng đài và khách hài lòng hơn.', 'Gộp vào trợ lý khách hàng (#97) để khách tự tra.', [[97, 'trợ lý khách hàng'], [85, 'tuyến giao'], [70, 'hứa ngày giao']]],
+  95: ['Khung giờ theo mật độ đơn thì xe chạy đầy hơn và có thể thu thêm phí giờ đông.', 'Thử ở một khu vực đông đơn trước; đo cả phản ứng của khách.', [[85, 'tuyến giao'], [117, 'chi phí phục vụ'], [94, 'giờ đến']]],
+  96: ['Kiểm đơn trước khi xe chạy thì tránh tiền phạt của chuỗi bán lẻ.', 'Dùng danh sách lỗi để sửa gốc ở kho (#77) và kế hoạch (#70).', [[70, 'hứa ngày giao'], [77, 'nhặt hàng'], [117, 'lãi theo khách']]],
+  97: ['Trợ lý AI trả lời câu lặp lại thì tổng đài bớt người hoặc phục vụ nhiều khách hơn.', 'Nối với giờ đến (#94) và trả hàng (#98) để khách tự xử lý trọn việc.', [[94, 'giờ đến'], [98, 'trả hàng'], [103, 'gốc rễ khiếu nại']]],
+  98: ['Duyệt trả hàng nhanh thì khách hài lòng và hàng sớm được bán lại.', 'Đặt chính sách rõ trước; nối với phát hiện gian lận (#101).', [[101, 'gian lận'], [99, 'phân loại hàng trả'], [97, 'trợ lý khách hàng']]],
+  99: ['Phân loại nhanh thì hàng trả về sớm được bán lại, ít mất giá.', 'Làm cùng #104 (chọn hàng tân trang): phân loại xong thì biết ngay món nào đáng sửa.', [[104, 'tân trang'], [105, 'bán lại'], [100, 'dự báo hàng trả']]],
+  100: ['Biết trước lượng hàng trả thì bố trí người và chỗ đúng, bớt tồn đọng.', 'Dùng chung với dự phòng hàng trả (#107): cùng một dự báo cho kho và kế toán.', [[107, 'dự phòng hàng trả'], [99, 'phân loại'], [79, 'người thời vụ']]],
+  101: ['Chặn bảo hành gian lận thì bớt tiền chi sai.', 'Nối với đòi nhà cung cấp (#102) để ca lỗi thật được đòi lại tiền.', [[102, 'đòi nhà cung cấp'], [98, 'duyệt trả hàng'], [119, 'gian lận']]],
+  102: ['Đòi nhà cung cấp trả tiền khi linh kiện lỗi thì chi phí bảo hành giảm.', 'Đưa điều khoản bồi hoàn vào mọi hợp đồng mới (#123).', [[123, 'kho điều khoản'], [101, 'bảo hành'], [58, 'kiểm nguyên liệu']]],
+  103: ['Sửa từ gốc thì bớt khiếu nại, bớt hàng trả và bớt chi phí lặp lại.', 'Mỗi tháng đưa 3 nguyên nhân lớn nhất vào họp điều hành, có người chịu trách nhiệm.', [[53, 'lỗi sản xuất'], [96, 'giao hàng'], [5, 'khách bỏ đi']]],
+  104: ['Sửa món đáng tiền trước thì thu về nhiều hơn với cùng giờ sửa.', 'Làm sau #99 (phân loại nhanh).', [[99, 'phân loại'], [105, 'bán lại'], [50, 'cùng cách chọn đơn']]],
+  105: ['Bán lại thay vì huỷ thì thu tiền từ hàng đã mất.', 'Cần kênh bán thứ cấp; thử với nhóm hàng giá trị cao trước.', [[104, 'tân trang'], [59, 'phế liệu'], [15, 'hàng chậm']]],
+  106: ['Đòi lại pallet thì bớt mua pallet mới mỗi năm.', 'Đưa phí giữ pallet vào hợp đồng với khách lớn.', [[117, 'chi phí phục vụ khách'], [86, 'chiều về chở pallet'], [123, 'điều khoản']]],
+  107: ['Dự phòng đúng thì báo cáo lợi nhuận không bị sửa lại về sau.', 'Dùng chung dự báo với #100.', [[100, 'dự báo hàng trả'], [124, 'dự phòng nợ'], [114, 'đóng sổ']]],
+  108: ['Xử lý nhanh khoản khách tự trừ thì công nợ không treo, tiền về sớm.', 'Nối với đối soát và đòi nợ (#113, #110).', [[110, 'đòi nợ'], [113, 'đối soát'], [98, 'trả hàng']]],
+  109: ['Dự báo tiền chính xác hơn thì vay ít hơn, giữ ít tiền chết hơn.', 'Dùng chung với lịch trả nhà cung cấp (#47) và đòi nợ (#110): ba việc cùng quản một dòng tiền.', [[47, 'lịch trả'], [110, 'đòi nợ'], [9, 'kế hoạch sản xuất']]],
+  110: ['Gọi đúng khách trước thì tiền về sớm hơn với cùng số người.', 'Dùng chung điểm rủi ro với hạn mức tín dụng (#73).', [[73, 'hạn mức tín dụng'], [124, 'dự phòng nợ'], [109, 'dòng tiền']]],
+  111: ['Ưu đãi đúng khách thì tiền về sớm mà không trả ưu đãi thừa.', 'So chi phí ưu đãi với lãi vay ngân hàng; chỉ mời khi rẻ hơn vay.', [[109, 'dòng tiền'], [110, 'đòi nợ'], [48, 'tài trợ chuỗi']]],
+  112: ['Phòng ngừa theo dòng tiền thật thì bớt lỗ tỷ giá mà không trả phí phòng ngừa thừa.', 'Cần dự báo dòng tiền ngoại tệ tốt (#109); HĐQT duyệt chính sách phòng ngừa.', [[109, 'dòng tiền'], [22, 'hàng nhập khẩu'], [29, 'giá nguyên liệu']]],
+  113: ['Dò sổ tự động thì kế toán bớt việc tay, sai sót lộ ra sớm.', 'Việc rẻ, lời nhanh; làm trước #114 vì đóng sổ cần đối soát xong.', [[114, 'đóng sổ'], [108, 'khoản khách trừ'], [119, 'gian lận']]],
+  114: ['Đóng sổ nhanh thì ban điều hành có số sớm hơn để quyết định.', 'Làm sau #113 và #116; đo bằng số ngày đóng sổ.', [[113, 'đối soát'], [116, 'hợp nhất'], [115, 'giải thích chênh lệch']]],
+  115: ['Có lời giải thích sớm thì xử lý chênh lệch khi còn kịp.', 'Giải thích cả chênh lệch có lợi, không chỉ bất lợi (xem #63).', [[63, 'chênh lệch giá thành'], [114, 'đóng sổ'], [8, 'kế hoạch chung']]],
+  116: ['Khớp giao dịch nội bộ tự động thì đóng sổ tập đoàn nhanh hơn.', 'Cần hệ thống tài khoản thống nhất (#137).', [[114, 'đóng sổ'], [137, 'dữ liệu chủ'], [118, 'chuyển giá']]],
+  117: ['Biết khách nào lỗ thì sửa giá, sửa cách phục vụ, hoặc thôi phục vụ.', 'Nền móng cho nhiều việc khác (#5, #50, #71, #88): làm sớm, dùng khắp nơi.', [[71, 'giá'], [88, 'cước giao'], [5, 'giữ khách'], [50, 'chọn đơn']]],
+  118: ['Hồ sơ thuế luôn sẵn thì bớt rủi ro bị phạt và bớt chi phí tư vấn cuối năm.', 'Chuyên gia thuế vẫn ký; máy chỉ gom và cập nhật.', [[116, 'giao dịch nội bộ'], [121, 'luật mới'], [123, 'điều khoản']]],
+  119: ['Phát hiện gian lận trong ngày thì mất ít tiền hơn.', 'Dùng chung cách làm với kiểm hoá đơn (#46) và bảng lương (#132).', [[46, 'hoá đơn'], [132, 'bảng lương'], [120, 'kiểm soát nội bộ']]],
+  120: ['Kiểm mọi giao dịch thì lỗi và gian lận lộ ra sớm, kiểm toán rẻ hơn.', 'Vai trò kiểm toán đổi từ kiểm mẫu sang xử lý ngoại lệ.', [[126, 'kiểm toán nội bộ'], [119, 'gian lận'], [146, 'kiểm AI']]],
+  121: ['Biết luật mới sớm thì kịp sửa quy trình, tránh bị phạt.', 'Luật sư kết luận; máy chỉ tóm tắt và giao việc.', [[118, 'thuế'], [69, 'môi trường'], [123, 'điều khoản']]],
+  122: ['Kiểm đối tác ngay khi tạo thì tránh giao dịch với bên bị cấm.', 'Áp dụng cho cả khách và nhà cung cấp; nối với #137.', [[137, 'dữ liệu chủ'], [40, 'nhà cung cấp'], [73, 'khách hàng']]],
+  123: ['Tìm điều khoản trong vài giây thì không bỏ lỡ quyền lợi và nghĩa vụ.', 'Nền móng cho #36, #102, #106: đòi quyền lợi cần biết điều khoản.', [[36, 'quyền lợi hợp đồng'], [102, 'bồi hoàn'], [106, 'phí pallet']]],
+  124: ['Dự phòng theo rủi ro thật thì báo cáo đúng và quyết cho nợ tốt hơn.', 'Dùng chung điểm rủi ro với #73 và #110.', [[73, 'hạn mức'], [110, 'đòi nợ'], [16, 'dự phòng tồn kho']]],
+  125: ['Soát mọi chứng từ thì bớt chi sai mà người làm ít hơn.', 'Cùng cách làm với #46; bật cho mọi loại chứng từ.', [[46, 'hoá đơn'], [119, 'gian lận'], [132, 'bảng lương']]],
+  126: ['Kiểm toán chỗ rủi ro cao thì cùng người mà bắt được nhiều vấn đề hơn.', 'Lấy tín hiệu từ #120 và #119.', [[120, 'kiểm soát liên tục'], [119, 'gian lận'], [146, 'rủi ro AI']]],
+  127: ['Giữ được người giỏi thì tránh chi phí tuyển và đào tạo người thay.', 'Rất nhạy cảm: chỉ dùng để quản lý hỏi thăm, không dùng để quyết định nhân sự.', [[133, 'phúc lợi'], [131, 'lộ trình học'], [147, 'dữ liệu cá nhân']]],
+  128: ['Định biên theo việc thật thì không trả lương cho chỗ thừa.', 'Có thể chỉ ra dư thừa: cần lộ trình nhân văn trước khi công bố.', [[52, 'ca nhà máy'], [75, 'ca kho'], [134, 'năng suất']]],
+  129: ['Trợ lý trả lời câu hỏi lặp lại thì phòng nhân sự làm việc khác.', 'Việc rẻ; dùng chung nền với kho tri thức (#144).', [[144, 'kho tri thức'], [135, 'nhân viên mới'], [131, 'lộ trình học']]],
+  130: ['Lọc hồ sơ nhanh thì tuyển nhanh hơn, ít mất ứng viên tốt.', 'Rủi ro thiên vị cao: phải kiểm định độc lập trước khi dùng.', [[146, 'kiểm AI'], [127, 'giữ người'], [135, 'nhân viên mới']]],
+  131: ['Học đúng thứ cần thì người làm được việc với AI nhanh hơn.', 'Điều kiện để 150 việc này thành công: không có người dùng được thì không ra tiền.', [[135, 'nhân viên mới'], [129, 'trợ lý nhân sự'], [138, 'hỏi dữ liệu']]],
+  132: ['Soát lương trước khi trả thì không chi sai rồi mới đòi.', 'Cùng cách làm với #46 và #125.', [[125, 'chứng từ'], [119, 'gian lận'], [46, 'hoá đơn']]],
+  133: ['Phúc lợi đúng thứ người dùng thì cùng tiền mà người lao động hài lòng hơn.', 'Hỏi ý kiến người lao động trước khi đổi.', [[127, 'giữ người'], [128, 'định biên'], [147, 'dữ liệu cá nhân']]],
+  134: ['Đo năng suất bằng số liệu thì thấy chỗ nghẽn thật.', 'Dùng để sửa quy trình, không dùng để giám sát từng người.', [[128, 'định biên'], [139, 'tự động hoá quy trình'], [52, 'ca nhà máy']]],
+  135: ['Người mới quen việc nhanh thì sớm làm ra tiền hơn.', 'Dùng chung nền với #144 và #129.', [[144, 'kho tri thức'], [129, 'trợ lý nhân sự'], [131, 'lộ trình học']]],
+  136: ['Một nguồn số liệu chung thì các đề xuất cần dữ liệu tốt dễ thành công hơn.', 'Tự nó chưa có lời; giá trị nằm ở việc nâng khả năng thành công của nhiều đề xuất khác. Xét như hạ tầng.', [[137, 'dữ liệu chủ'], [145, 'chất lượng dữ liệu'], [8, 'kế hoạch chung'], [1, 'dự báo']]],
+  137: ['Mỗi khách, mỗi mặt hàng một mã thì số liệu không bị đếm trùng.', 'Điều kiện cho #33, #116, #117: làm sớm.', [[136, 'nền tảng dữ liệu'], [33, 'gom nhu cầu'], [117, 'lãi theo khách']]],
+  138: ['Hỏi số bằng tiếng Việt thì quản lý có số ngay, bớt chờ báo cáo.', 'Chỉ đúng khi có định nghĩa chỉ tiêu chung (#136).', [[136, 'định nghĩa chung'], [145, 'chất lượng dữ liệu'], [131, 'người dùng']]],
+  139: ['Trợ lý AI chép dữ liệu thì bớt nhập tay và sai sót.', 'Ưu tiên quy trình nhập tay nhiều nhất; theo dõi khi hệ thống cũ đổi giao diện.', [[45, 'khớp ba chiều'], [113, 'đối soát'], [134, 'chỗ nghẽn']]],
+  140: ['Kỹ sư làm nhanh hơn thì các đề xuất khác được triển khai sớm hơn.', 'Tăng sức triển khai: có thể nâng giới hạn 12 việc mỗi đợt.', [[136, 'nền tảng'], [139, 'tự động hoá'], [146, 'kiểm AI']]],
+  141: ['Biết trước khi hệ thống sập thì bớt giờ dừng việc của cả công ty.', 'Ưu tiên hệ thống đặt hàng và kho.', [[142, 'an ninh'], [143, 'chi phí máy chủ'], [136, 'nền tảng']]],
+  142: ['Chặn xâm nhập sớm thì tránh mất dữ liệu và dừng việc.', 'Rủi ro thấp, thiệt hại tránh được lớn; làm cùng #147.', [[147, 'che dữ liệu'], [141, 'giám sát hệ thống'], [119, 'gian lận']]],
+  143: ['Tắt máy chủ rảnh thì hoá đơn máy chủ giảm ngay.', 'Việc rẻ, lời nhanh; tiền tiết kiệm có thể trả cho #136.', [[136, 'nền tảng'], [141, 'giám sát'], [140, 'trợ lý lập trình']]],
+  144: ['Tìm được câu trả lời trong vài giây thì bớt thời gian hỏi người cũ.', 'Nền chung cho #129, #135; cần dọn tài liệu cũ sai.', [[129, 'trợ lý nhân sự'], [135, 'nhân viên mới'], [123, 'điều khoản']]],
+  145: ['Bắt số sai trước khi lên báo cáo thì quyết định dựa trên số đúng.', 'Điều kiện cho mọi việc dùng dữ liệu; làm cùng #136.', [[136, 'nền tảng'], [138, 'hỏi dữ liệu'], [114, 'đóng sổ']]],
+  146: ['Theo dõi AI hằng tháng thì không để mô hình sai âm thầm làm mất tiền.', 'Bắt buộc cho mọi đề xuất rủi ro từ 3/5 trở lên.', [[130, 'tuyển dụng'], [71, 'định giá'], [120, 'kiểm soát']]],
+  147: ['Che thông tin nhạy cảm thì tránh bị phạt và mất uy tín.', 'Điều kiện trước khi đưa dữ liệu nhân sự, khách hàng vào AI.', [[142, 'an ninh'], [127, 'dữ liệu nhân sự'], [138, 'hỏi dữ liệu']]],
+  148: ['Đo khí thải thật thì biết chỗ giảm có lợi nhất và đáp ứng khách hàng, luật.', 'Dùng chung dữ liệu với #43 và #149.', [[43, 'nhà cung cấp'], [149, 'báo cáo'], [150, 'giá carbon']]],
+  149: ['Soạn báo cáo nhanh thì bớt công và giảm rủi ro báo cáo sai.', 'Số liệu phải kiểm chứng; lấy từ #148 và #69.', [[148, 'đo phát thải'], [69, 'nước thải'], [43, 'nhà cung cấp']]],
+  150: ['Tính chi phí khí thải khi đầu tư thì tránh dự án sẽ lỗ khi giá carbon tăng.', 'Áp dụng cho các quyết định lớn: #18 mạng lưới kho, #93 xe điện, #19 nhà máy.', [[18, 'mạng lưới kho'], [93, 'xe điện'], [19, 'nhà máy']]],
+};
+
 /* ===== bộ máy trang use case: đầu vào, xử lý, đầu ra; trước và sau; được và mất; Ban Tài chính; danh mục; nghị quyết ===== */
 (function () {
   'use strict';
@@ -2343,14 +2719,15 @@ Object.keys(ARCH).forEach(k => ['kpis', 'ba', 'outputs', 'inputs', 'twist', 'gat
     const long = String(h[3] || '').length > 16;
     $('#bMid').innerHTML = `<span class="arrowbig" aria-hidden="true">→</span><span class="delta ${done ? (h[4] !== false ? 'up' : 'dn') : 'q'}${done && long ? ' long' : ''}">${done ? esc(h[3] || 'đã đổi') : '?'}</span><span class="dsub">${done ? 'trên dữ liệu mẫu' : 'chưa chạy thử'}</span>`;
     $('#board').classList.toggle('open', done);
-    $('#tick').innerHTML = done ? (f.delay1 > 0 ? `Chạy thử trên dữ liệu mẫu để kiểm chứng cách làm. Mỗi tháng chậm triển khai làm giá trị ròng giảm khoảng <b>${money(f.delay1)}</b>.` : 'Chạy thử trên dữ liệu mẫu để kiểm chứng cách làm. Với đề xuất này, làm chậm không làm mất thêm giá trị.') : 'AI chạy trên dữ liệu mẫu ngay trong trang này, mất vài giây. Bạn sẽ thấy dữ liệu đi vào, AI xử lý, rồi kết quả chờ người duyệt.';
+    $('#tick').innerHTML = done ? (f.delay1 > 0 ? `Chạy thử trên dữ liệu mẫu để kiểm chứng cách làm. Mỗi tháng chậm triển khai làm giá trị ròng giảm khoảng <b>${money(f.delay1)}</b>, vì mọi khoản tiền về muộn một tháng (quy về hôm nay với lãi suất 12% một năm).` : 'Chạy thử trên dữ liệu mẫu để kiểm chứng cách làm. Với đề xuất này, làm chậm không làm mất thêm giá trị.') : 'AI chạy trên dữ liệu mẫu ngay trong trang này, mất vài giây. Bạn sẽ thấy dữ liệu đi vào, AI xử lý, rồi kết quả chờ người duyệt.';
     $('#bGo').textContent = done ? (SHOW ? 'Xem tận mắt: kéo để so' : 'Xem AI làm lại từng bước') : 'Cho AI làm thử ngay';
     if (anim && done) tween($('#bv1'), h[1], h[2]);
+    renderBasis(h); renderReview(h);
   }
 
   /* ---------- tiền và đề nghị ---------- */
   function renderAsk(f) {
-    $('#ask').innerHTML = `${esc(OW)} xin <b>${money(f.it.cap)}</b> để làm việc này bằng AI. Trang này trả lời ba câu hỏi HĐQT cần hỏi trước khi quyết.`;
+    $('#ask').innerHTML = `${esc(OW)} xin <b>${money(f.it.cap)}</b> để làm việc này bằng AI. Trang này trả lời ba câu hỏi HĐQT cần hỏi trước khi quyết, rồi thẩm định từng mắt xích.`;
   }
   function inPlan() {
     if (!PL || !PL.chosen) return null;
@@ -2398,6 +2775,52 @@ Object.keys(ARCH).forEach(k => ['kpis', 'ba', 'outputs', 'inputs', 'twist', 'gat
     document.querySelectorAll('#decide button').forEach(b => b.classList.toggle('isrec', b.dataset.d === r.d));
     $('#decide button[data-d="pilot"]').textContent = u.r > 3 ? 'Ngoại lệ rủi ro: thí điểm 90 ngày (biểu quyết riêng)' : PL && PL.chosen ? 'Thí điểm 90 ngày trước' : 'Thí điểm 90 ngày (ngoại lệ ngoài danh mục)';
     if (!st.userDecided) { st.decision = r.d; renderReso(f); }
+  }
+
+  /* ---------- con số này tính thế nào ---------- */
+  const SAMPLE_NOTE = 'Dữ liệu mẫu được tạo để minh hoạ cách làm, không phải số liệu của Vertex; số tiền trong bài chạy thử không cộng vào tiền ở mục 2. Mức cải thiện thật phải đo trên dữ liệu thật khi thí điểm.';
+  function basisOf() { return BASIS[P.a] ? BASIS[P.a](P, S, fmtArg || simFmt) : null; }
+  function renderBasis(h) {
+    const B = basisOf(), el = $('#basis'); if (!B) { el.innerHTML = ''; return; }
+    const done = st.phase === 'done', wasOpen = el.querySelector('details') ? el.querySelector('details').open : true;
+    const c = B.c || (/điểm/.test(h[3] || '') ? `${h[3]} nghĩa là thay đổi từ ${h[1]} thành ${h[2]}, tính bằng điểm phần trăm.` : '');
+    el.innerHTML = `<details${wasOpen ? ' open' : ''}><summary>Con số “${esc(lf(h[0]))}” tính thế nào?</summary>
+      <dl><div><dt>Đo cái gì</dt><dd>${esc(B.m)}</dd></div><div><dt>Trên dữ liệu nào</dt><dd>${esc(B.d)}</dd></div><div><dt>Hôm nay</dt><dd>${esc(B.h)}</dd></div><div><dt>Có AI</dt><dd>${done ? esc(B.a) : 'Bấm “Cho AI làm thử ngay” để xem kết quả.'}</dd></div>${done && c ? `<div><dt>Đọc kết quả</dt><dd>${esc(c)}</dd></div>` : ''}</dl>
+      <p class="bnote">${SAMPLE_NOTE}</p></details>`;
+  }
+  /* ---------- HĐQT thẩm định ---------- */
+  function renderReview(h) {
+    const R0 = RV[u.id], el = $('#review'); if (!R0) { el.innerHTML = ''; return; }
+    const f = fin(), it = f.it, done = st.phase === 'done', B = basisOf() || {}, r = recOf(f), G = A.gate(P, S);
+    const rev = f.C.rev, E5 = evalItem(u, ctxOf({ preset: st.preset, hz: 5 }), 0, 1, 0).E;
+    const chain = [
+      ['Chỉ số vận hành', `${capf(lf(h[0]))}: ${h[1]} → ${done ? h[2] : '?'}`, 'đo trên dữ liệu mẫu'],
+      ['Cơ chế ra tiền', R0[0], ''],
+      ['Tiền theo tờ trình', `${money(it.val)} mỗi năm${it.wc ? `, cộng ${money(it.wc)} thu về một lần` : ''}`, (it.val / rev * 100 >= 0.01 ? `bằng ${nf(it.val / rev * 100, 2)}%` : 'chưa tới 0,01%') + ' doanh thu mỗi năm'],
+      ['Ban Tài chính tính lại', `Giá trị ròng 3 năm ${money(f.E)}`, `đã trừ vốn, chi phí vận hành; khả năng thành công ${pct(it.p)}`],
+    ];
+    const qs = [B.q, u.id === ENABLER ? '' : QLEV[u.lev], `Cái giá: ${lf(u.trade)}. Ai chịu, và họ đã đồng ý chưa?`].filter(Boolean);
+    if (u.r >= 3) qs.push(`Rủi ro ${u.r}/5: phải thẩm định mô hình độc lập trước khi chạy thật.`);
+    if (u.f <= 2) qs.push(`Khó triển khai (${u.f}/5): chỉ giải ngân từng phần, sau khi thí điểm đạt.`);
+    const links = R0[2].filter(([id]) => UC[id - 1]);
+    const touched = [...new Set([u.s].concat(links.map(([id]) => UC[id - 1].s)))].sort((a, b) => a - b).map(k => STG[k].toLowerCase());
+    const boost = u.f <= 3 && u.id !== ENABLER ? `<p class="rvnote">Nếu nền tảng dữ liệu chung (<a href="${SLUGS[ENABLER - 1]}.html">#${ENABLER}</a>) chạy trước, khả năng thành công của đề xuất này tăng thêm khoảng ${nf(BOOSTP * 100, 0)} điểm.</p>` : '';
+    const stop = r.d === 'approve' ? `Sau thí điểm, nếu không đạt: ${lf(G)}, thì dừng và không giải ngân phần còn lại.`
+      : r.risk ? 'Chỉ xét như một ngoại lệ: thí điểm 90 ngày, vốn ngoài ngân sách danh mục, có phương án dừng.'
+      : f.E <= 0 ? `Xét lại khi giảm được vốn hoặc tiền về nhanh hơn. Nhìn xa 5 năm, giá trị ròng là ${money(E5)}${E5 > 0 ? ': có thể xét như một khoản đặt cược chiến lược, có cửa dừng rõ ràng.' : ', vẫn chưa đáng làm.'}`
+      : 'Xét lại khi có thêm ngân sách, hoặc khi một đề xuất đã chọn không đạt điều kiện giải ngân và trả lại vốn.';
+    el.innerHTML = `<div class="rvg">
+      <section class="rvc"><h3>Logic: con số có dẫn tới tiền không?</h3>
+        <ol class="chain">${chain.map(c => `<li><span>${c[0]}</span><b>${esc(c[1])}</b>${c[2] ? `<small>${esc(c[2])}</small>` : ''}</li>`).join('')}</ol>
+        <p class="rvnote"><b>Mắt xích cần chứng minh:</b> từ chỉ số trên dữ liệu mẫu sang tiền. Con số tiền là ước tính của người đề xuất; điều kiện giải ngân ở mục 3 chính là phép thử mắt xích này.</p></section>
+      <section class="rvc"><h3>Phản biện: HĐQT phải hỏi gì?</h3>
+        <ul class="qs">${qs.map(q => `<li>${esc(q)}</li>`).join('')}</ul></section>
+      <section class="rvc"><h3>Hệ thống: việc này chạm tới đâu?</h3>
+        <p class="rvnote">Chạm tới ${touched.length} khâu: ${touched.join(', ')}.</p>
+        <ul class="lk">${links.map(([id, lab]) => `<li><a href="${SLUGS[id - 1]}.html"><b>#${id}</b> ${esc(UC[id - 1].name)}</a><small>${esc(lab)}</small></li>`).join('')}</ul>${boost}</section>
+      <section class="rvc"><h3>Quyết định: làm sao để giá trị lớn hơn?</h3>
+        <dl class="rvd"><div><dt>Đề nghị</dt><dd>${esc(r.t)}</dd></div><div><dt>Làm lớn hơn</dt><dd>${esc(R0[1])}</dd></div><div><dt>${r.d === 'approve' ? 'Dừng khi' : 'Xét lại khi'}</dt><dd>${esc(stop)}</dd></div></dl></section>
+    </div>`;
   }
 
   /* ---------- kéo để so ---------- */
