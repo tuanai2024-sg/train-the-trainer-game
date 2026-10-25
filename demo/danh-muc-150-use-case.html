@@ -1186,7 +1186,7 @@ const UCSLUG = ["001-du-bao-nhu-cau-theo-mat-hang-va-kho","002-cam-nhan-nhu-cau-
   function renderHero() {
     renderFace();
     const P = PRESETS[st.preset], e = V.main.e, m = V.main.m;
-    $('#lede').innerHTML = `Vertex (mô phỏng) có doanh thu ${PRESETS[st.preset].label} mỗi năm. Các khối xin <b>${money(V.capAll)}</b> cho ${UC.length} đề xuất AI; ngân sách chỉ có <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Trang này trả lời ba câu hỏi bên dưới. Mỗi đề xuất có <a href="#sIndex">một trang chạy thử riêng</a>.`;
+    $('#lede').innerHTML = `Vertex (mô phỏng) có doanh thu ${PRESETS[st.preset].label} mỗi năm. Các khối xin <b>${money(V.capAll)}</b> cho ${UC.length} đề xuất AI; ngân sách chỉ có <b>${money(V.bud)}</b>, đủ cho khoảng ${pct(V.bud / V.capAll)} số vốn xin. Trang này trả lời ba câu hỏi bên dưới. Mỗi đề xuất có <a href="#sIndex">một trang chạy thử riêng</a>; cần bản dễ đọc hơn thì xem <a href="150-use-case-de-hieu.html">150 thẻ việc, không biểu đồ</a>.`;
     $('#scaleNote').textContent = `Ở quy mô này, mỗi đồng chi cho danh mục ${V.main.label} tạo ra ${nf(e.benefit / e.cost, 1)} đồng giá trị hiện tại (mỗi đề xuất tính ${st.hz} năm). Vốn tăng chậm hơn doanh thu nên doanh nghiệp càng lớn, tỷ suất càng cao.`;
     document.querySelectorAll('#scaleSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === st.preset)));
     const preP = [st.preset !== 's' ? `Thử ở quy mô doanh thu ${PRESETS[st.preset].label}` : '', stressed() ? `nếu chỉ đạt ${nf(st.R * 100, 0)}% kế hoạch và chậm ${st.delay} tháng` : ''].filter(Boolean).join(', '), pre = preP ? capf(preP) + ': ' : '';
