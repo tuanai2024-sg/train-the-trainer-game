@@ -386,7 +386,7 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
 .qrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 18px;margin-top:10px}
 .qrow .qh{margin-bottom:6px}.qrow .scale{margin:0 0 6px}
 .board .bk{margin-top:auto}
-.money{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(220px,.42fr);align-items:stretch;margin:0 0 26px}
+.money{margin:0 0 16px}
 .mt4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--chip);border-radius:16px}
 .mt{padding:14px 16px;min-width:0;display:flex;flex-direction:column;gap:3px}
 .mt4 .mt+.mt{border-left:1px solid color-mix(in srgb,var(--ink) 10%,transparent)}
@@ -404,8 +404,6 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16p
 .wfl2 b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .vfact{margin:0 0 8px;font-size:13px;font-weight:600;color:var(--muted)}
 .qrow .vfact{margin:0 0 6px}
-.guess{display:none!important}
-body.show .guess{display:grid!important}
 .art{margin:0 0 8px;line-height:1.55}
 .rmeta{margin-top:14px;font-size:13px;color:var(--muted)}
 .rsign{margin-top:12px;text-align:right;font-weight:700;line-height:1.5}
@@ -433,41 +431,185 @@ body.show .guess{display:grid!important}
 @media (max-width:420px){.mt4{grid-template-columns:minmax(0,1fr)}.mt4 .mt+.mt{border-left:0;border-top:1px solid color-mix(in srgb,var(--ink) 10%,transparent)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* con số này tính thế nào */
-.basis{margin:-4px 0 16px}
-.basis details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 16px}
-.basis summary{cursor:pointer;font-weight:700;font-size:14.5px;padding:12px 0;color:var(--ink);list-style-position:inside}
-.basis dl{display:grid;gap:8px;margin:0 0 10px}
-.basis dl div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:12px}
-.basis dt{font-size:13px;font-weight:700;color:var(--muted)}
-.basis dd{margin:0;font-size:14.5px;line-height:1.5;color:var(--ink)}
-.bnote{margin:0 0 12px;font-size:12.5px;color:var(--muted)}
-/* HĐQT thẩm định */
-.review{margin:0 0 18px}
-.rvg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.rvc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
-.rvc h3{font-size:15.5px;margin:0 0 10px;color:var(--ink)}
-.rvc .chain{list-style:none;margin:0;padding:0;display:grid;gap:0}
-.rvc .chain li{position:relative;padding:0 0 12px 22px;border-left:2px solid var(--line);margin-left:6px}
-.rvc .chain li:last-child{border-left-color:transparent;padding-bottom:4px}
-.rvc .chain li::before{content:"";position:absolute;left:-7px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--s1)}
-.rvc .chain span{display:block;font-size:12px;font-weight:700;color:var(--muted)}
-.rvc .chain b{display:block;font-size:14.5px;line-height:1.4;color:var(--ink);font-weight:600}
-.rvc .chain small{display:block;font-size:12.5px;color:var(--muted)}
-.rvnote{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--ink2)}
-.rvc .qs{margin:0;padding-left:18px;display:grid;gap:8px}
-.rvc .qs li{font-size:14px;line-height:1.5;color:var(--ink)}
-.rvc .lk{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
-.rvc .lk li{display:grid;gap:1px}
-.rvc .lk a{font-size:14px;font-weight:600;color:var(--s1);text-decoration:none}
-.rvc .lk a:hover{text-decoration:underline}
-.rvc .lk small{font-size:12.5px;color:var(--muted)}
-.rvd{display:grid;gap:10px;margin:0}
-.rvd div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px}
-.rvd dt{font-size:13px;font-weight:700;color:var(--muted)}
-.rvd dd{margin:0;font-size:14px;line-height:1.5;color:var(--ink)}
-@media (max-width:820px){.rvg{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:640px){.basis dl div,.rvd div{grid-template-columns:minmax(0,1fr);gap:2px}}
+/* ===== kể chuyện bằng dữ liệu: 5 cảnh ===== */
+.spbar{border-top:1px solid var(--line)}
+.spbar .in{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding-block:6px 7px}
+.spbar a{display:grid;gap:4px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;min-width:0}
+.spbar a i{display:block;height:3px;border-radius:2px;background:var(--grid)}
+.spbar a.on i{background:color-mix(in srgb,var(--s1) 55%,var(--grid))}
+.spbar a.cur i{background:var(--s1)}
+.spbar a.cur{color:var(--ink)}
+.spbar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spbar span b{font-weight:800}
+.spcur{display:none;grid-column:1/-1;font-size:12px;font-weight:700;color:var(--ink)}
+.hero{padding-block:26px 24px}
+.hero .ask{margin-bottom:22px}
+.spine{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;position:relative}
+.spine::before{content:"";position:absolute;left:15px;right:15px;top:15px;border-top:2px dashed var(--axis)}
+.sp{position:relative;min-width:0}
+.sp a{display:grid;gap:3px;padding:0 14px 0 0;text-decoration:none;color:inherit}
+.spn{position:relative;z-index:1;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;background:var(--surface);border:2px solid var(--axis);color:var(--muted);margin-bottom:6px}
+.sp.on .spn{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.sp.cur .spn{box-shadow:0 0 0 4px color-mix(in srgb,var(--s1) 30%,transparent)}
+.spq{font-size:13px;font-weight:700;color:var(--ink2);line-height:1.3}
+.spa{font-size:clamp(19px,2vw,25px);font-weight:800;letter-spacing:-.02em;line-height:1.15;color:var(--muted);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.sp.on .spa{color:var(--ink)}
+.sp:nth-child(2).on .spa{color:var(--s1)}
+.sp small{font-size:12px;color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sp a:hover .spq{color:var(--s1)}
+.herofoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 18px}
+.herofoot .chips{margin:0}
+.skip{font-size:13.5px;font-weight:700;text-underline-offset:3px}
+
+.scene{padding-block:52px 8px;scroll-margin-top:100px}
+.scene+.scene,.scene+#sAss{border-top:1px solid var(--line)}
+#sAss{scroll-margin-top:100px}
+.sch{margin-bottom:18px}
+.act{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:13.5px;font-weight:700;color:var(--muted)}
+.an{width:24px;height:24px;border-radius:7px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12.5px;font-weight:800}
+.sch h2{font-size:clamp(23px,2.9vw,34px);line-height:1.15;letter-spacing:-.022em;font-weight:800;margin:0 0 8px;max-width:30ch}
+.sch .sub{font-size:16.5px;line-height:1.5;color:var(--ink2);max-width:68ch;margin:0}
+.fig{margin:0}
+.fig figcaption{font-size:13px;font-weight:700;color:var(--ink2);margin:0 0 8px}
+.fnote{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.fnote:empty{display:none}
+
+.s1g{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;align-items:start}
+.kfact{display:grid;gap:12px;min-width:0}
+.kbig{border-left:4px solid var(--s2);padding:2px 0 2px 14px}
+.kbig span{display:block;font-size:13px;font-weight:700;color:var(--muted)}
+.kbig b{display:block;font-size:clamp(34px,4.4vw,54px);font-weight:800;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--ink);overflow-wrap:anywhere}
+.kfact dl{margin:0;display:grid;gap:10px}
+.kfact dt{font-size:12.5px;font-weight:700;color:var(--muted)}
+.kfact dd{margin:1px 0 0;font-size:14.5px;line-height:1.5;color:var(--ink)}
+.bnote{margin:0;font-size:12.5px;color:var(--muted)}
+
+.hook{margin:26px 0 8px;background:var(--navy);color:#fff;border-radius:16px;padding:20px 22px;display:grid;gap:12px}
+.hook:empty{display:none}
+.hq{margin:0;font-size:clamp(17px,1.7vw,20px);line-height:1.45;font-weight:600;max-width:64ch;color:#fff}
+.hq b{color:#fff;font-weight:800;border-bottom:2px solid color-mix(in srgb,var(--s2) 85%,#fff)}
+.hnext{justify-self:start;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#fff;text-decoration:none;border:1px solid color-mix(in srgb,#fff 40%,transparent);border-radius:999px;padding:6px 12px 6px 14px}
+.hnext:hover{background:color-mix(in srgb,#fff 12%,transparent)}
+.hnext svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hook .guess{margin:0;background:color-mix(in srgb,#fff 9%,transparent)}
+.hook .guess label,.hook .guess output{color:#fff}
+.hrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.hook .btn{background:#fff;color:var(--navy)}
+.hnote{font-size:13.5px;color:color-mix(in srgb,#fff 78%,transparent)}
+.gres{font-size:14px;color:var(--ink2);margin:-6px 0 12px}
+.gres:empty{display:none}
+.gres b{color:var(--ink)}
+.wcap2{font-size:13px;color:var(--muted);margin:8px 0 0}
+.s2g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:18px;margin-top:18px;align-items:start}
+.read h3,.cmpp h3{font-size:15px;margin:0 0 8px}
+.read p{font-size:14.5px;line-height:1.55;color:var(--ink);margin:0 0 10px}
+.read .twist{margin-top:4px}
+.cmpp .crow{grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) minmax(0,1.1fr) minmax(0,.8fr) 96px}
+.flowd{margin-top:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.flowd>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:14px 18px}
+.flowd>summary::-webkit-details-marker{display:none}
+.flowd>summary::before{content:"";width:8px;height:8px;border-right:2px solid var(--ink2);border-bottom:2px solid var(--ink2);transform:rotate(-45deg);align-self:center;transition:transform .2s}
+.flowd[open]>summary::before{transform:rotate(45deg)}
+.fs1{font-weight:800;font-size:15px}
+.fs2{font-size:13px;color:var(--muted)}
+.flowd .flow{padding:0 14px 14px}
+.demo10{margin:0;padding:0 18px 14px;font-size:13px;color:var(--ink2)}
+.demo10:empty{display:none}
+@media (min-width:1101px){.flowd .io.in1,.flowd .io.out1{position:static}}
+
+.fingrid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);margin-top:0}
+.chainp h3{font-size:15px;margin:0 0 12px}
+.chain{list-style:none;margin:0;padding:0;display:grid}
+.chain .cn{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface)}
+.chain .cn.ok{border-color:color-mix(in srgb,var(--s1) 45%,var(--line))}
+.chain .cn.weak{border:1.5px dashed var(--critText);background:color-mix(in srgb,var(--crit) 6%,var(--surface))}
+.chain .ck{display:block;font-size:12px;font-weight:700;color:var(--muted)}
+.chain .cn b{display:block;font-size:14.5px;line-height:1.4;font-weight:700;color:var(--ink)}
+.chain .cn small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.chain .cl{position:relative;height:30px;margin-left:22px;padding-left:16px;display:flex;align-items:center;border-left:2.5px solid color-mix(in srgb,var(--s1) 55%,var(--line))}
+.chain .cl span{font-size:12px;font-weight:700;color:var(--muted)}
+.chain .cl.weak{border-left:2.5px dashed var(--critText)}
+.chain .cl.weak span{color:var(--critText)}
+.ctest{margin:12px 0 0;font-size:13.5px;line-height:1.5;color:var(--ink2)}
+
+.s4g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px;align-items:stretch}
+.s4g .panel h3{font-size:15px;margin:0 0 10px}
+.qs{margin:0;padding-left:20px;display:grid;gap:8px}
+.qs li{font-size:14px;line-height:1.5;color:var(--ink)}
+.s4g ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:13.5px;color:var(--ink2)}
+.s4g ul b{color:var(--ink)}
+.treep{margin-top:16px}
+.treep h3{font-size:15px;margin:0 0 14px}
+.tree{display:flex;flex-direction:column;align-items:center}
+.troot{position:relative;background:var(--navy);color:#fff;border-radius:12px;padding:10px 16px;font-size:14.5px;font-weight:700;text-align:center;max-width:min(480px,100%)}
+.troot b{font-weight:800}
+.troot small{display:block;font-size:12px;font-weight:600;color:color-mix(in srgb,#fff 75%,transparent)}
+.troot::after{content:"";position:absolute;left:50%;bottom:-16px;height:16px;border-left:2px solid var(--axis)}
+.tkids{list-style:none;margin:32px 0 0;padding:0;width:100%;display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:12px;position:relative}
+.tkids::before{content:"";position:absolute;top:-16px;left:calc(100% / var(--n,4) / 2);right:calc(100% / var(--n,4) / 2);border-top:2px solid var(--axis)}
+.tkids li{position:relative;border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:3px;align-content:start;background:var(--surface);min-width:0}
+.tkids li::before{content:"";position:absolute;top:-17px;left:50%;height:16px;border-left:2px solid var(--axis)}
+.tkids a{font-size:14px;font-weight:700;color:var(--s1);text-decoration:none;line-height:1.35}
+.tkids a:hover{text-decoration:underline}
+.tkids small{font-size:12.5px;color:var(--ink2)}
+.tstg{font-size:11.5px;font-weight:700;color:var(--muted)}
+.tnote{margin:12px 0 0;font-size:13px;color:var(--ink2);text-align:center}
+
+.s5g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.dcard{border-top:3px solid var(--s1);padding-top:10px}
+.dcard.stop{border-top-color:var(--s2)}
+.dcard h3{font-size:15px;margin:0 0 6px}
+.dcard p{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink)}
+.decwrap{margin-top:24px}
+.decwrap>h3{font-size:16px;margin:0}
+.decide{margin:10px 0 12px}
+.resod>summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--s1);margin-bottom:10px}
+.tb.bw{fill:var(--other)}.tb.bb{fill:color-mix(in srgb,var(--s1) 32%,var(--surface))}.tb.br{fill:color-mix(in srgb,var(--s1) 62%,var(--surface))}.tb.bf{fill:var(--s1)}
+.sw.tb.bw{background:var(--other)}.sw.tb.bb{background:color-mix(in srgb,var(--s1) 32%,var(--surface))}.sw.tb.br{background:color-mix(in srgb,var(--s1) 62%,var(--surface))}.sw.tb.bf{background:var(--s1)}
+.sw.tgk{background:var(--s2);transform:rotate(45deg) scale(.8);border-radius:2px}
+.tk{stroke:var(--axis)}.tlead{stroke:var(--axis);stroke-width:1.2}
+.tgate{fill:var(--s2);stroke:var(--surface);stroke-width:2}
+.tev{stroke:var(--surface);stroke-width:2}.tev.now{fill:var(--ink)}.tev.go{fill:var(--s1)}.tev.cash{fill:var(--surface);stroke:var(--s1);stroke-width:3}.tev.pb{fill:var(--good)}
+.tll{margin-top:6px}
+.tlv{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line);display:grid;gap:10px}
+.tlv li{position:relative;display:grid;gap:1px;font-size:14px}
+.tlv li::before{content:"";position:absolute;left:-25px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--s1);border:2px solid var(--surface)}
+.tlv li.gate::before{background:var(--s2);border-radius:2px;transform:rotate(45deg)}
+.tlv li.now::before{background:var(--ink)}.tlv li.pb::before{background:var(--good)}.tlv li.cash::before{background:var(--surface);border:3px solid var(--s1)}
+.tlv b{font-size:12.5px;color:var(--muted)}
+.nextk{margin:30px 0 8px;border-radius:16px;padding:20px 22px;background:var(--hl);border-left:5px solid var(--s1);display:grid;gap:6px;justify-items:start}
+.nextk .nk0{margin:0;font-size:13px;font-weight:700;color:var(--ink2)}
+.nextk h3{margin:0;font-size:clamp(19px,2vw,24px);line-height:1.25}
+.nextk h3 a{color:var(--ink);text-decoration:none}
+.nextk h3 a:hover{text-decoration:underline}
+.nextk p{margin:0;font-size:15px;color:var(--ink2);max-width:64ch}
+.nextk .btn{margin-top:6px;text-decoration:none}
+.assd>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px}
+.assd>summary::-webkit-details-marker{display:none}
+.assd>summary::before{content:"";width:9px;height:9px;border-right:2px solid var(--ink2);border-bottom:2px solid var(--ink2);transform:rotate(-45deg);transition:transform .2s}
+.assd[open]>summary::before{transform:rotate(45deg)}
+.assd>summary h2{margin:0;font-size:clamp(18px,2vw,22px)}
+.assd[open]>summary{margin-bottom:16px}
+@media (max-width:980px){.s1g,.s2g,.s4g,.fingrid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){
+  .spine{grid-template-columns:minmax(0,1fr);gap:10px}
+  .spine::before{left:15px;right:auto;top:16px;bottom:16px;border-top:0;border-left:2px dashed var(--axis)}
+  .sp a{grid-template-columns:32px minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:0;padding:0}
+  .spn{grid-row:1/3;margin:0}
+  .spq{grid-column:2}.spa{grid-column:3;grid-row:1/3;text-align:right;font-size:20px;max-width:46vw}
+  .sp small{grid-column:2;-webkit-line-clamp:1}
+  .spbar a span{display:none}.spbar .spcur{display:block}
+  .spbar .in{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .s5g{grid-template-columns:minmax(0,1fr)}
+  .tkids{grid-template-columns:minmax(0,1fr);margin-top:20px;padding-left:18px;border-left:2px solid var(--axis);width:auto;align-self:stretch;margin-left:24px}
+  .tkids::before{display:none}
+  .tkids li::before{top:50%;left:-19px;width:18px;height:0;border-left:0;border-top:2px solid var(--axis)}
+  .troot{align-self:flex-start}
+  .troot::after{left:24px;bottom:-20px;height:20px}
+  .hook{padding:16px}
+  .cmpp .crow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+.wfli{fill:#fff;font-size:12px;font-weight:700}
 
 </style>
 </head>
@@ -475,135 +617,150 @@ body.show .guess{display:grid!important}
 <nav class="topnav" aria-label="Điều hướng đề xuất"><div class="in">
   <a href="../danh-muc-150-use-case.html">← Danh mục 150 đề xuất</a>
   <div class="navr"><a id="prev" href="#">‹ Trước</a><select id="jump" aria-label="Đi tới đề xuất"></select><a id="next" href="#">Sau ›</a></div>
-</div></nav>
+</div>
+<div class="spbar"><div class="in" id="spbar"></div></div>
+</nav>
 <header class="hero"><div class="in">
   <p class="doc" id="kick"></p>
   <h1 id="h1"></h1>
   <p class="ask" id="ask"></p>
-
-  <h2 class="qh"><span class="qn" aria-hidden="true">1</span>Công việc thay đổi thế nào?</h2>
-  <div class="board" id="board" aria-live="polite">
-    <div class="bside b0"><span class="btag">Hôm nay</span><p class="btxt" id="bBefTxt"></p><div class="bk" id="bKey0"></div></div>
-    <div class="bmid" id="bMid"></div>
-    <div class="bside b1"><span class="btag">Sau khi có AI</span><p class="btxt" id="bAftTxt"></p><div class="bk" id="bKey1"></div></div>
-  </div>
-  <div class="basis" id="basis"></div>
-  <div class="ctarow"><button type="button" class="btn big" id="bGo">Cho AI làm thử ngay</button><p class="tick" id="tick"></p></div>
-
-  <div class="qrow"><h2 class="qh"><span class="qn" aria-hidden="true">2</span>Bỏ ra bao nhiêu, thu về bao nhiêu?</h2>
-    <p class="vfact">Vertex (mô phỏng): doanh thu 10.000 tỷ đồng mỗi năm.</p></div>
-  <div class="money" id="money"></div>
-
-  <h2 class="qh"><span class="qn" aria-hidden="true">3</span>Nên quyết thế nào?</h2>
-  <div class="rec" id="rec"></div>
-  <div class="chips" id="chips"></div>
-
-  <h2 class="qh" id="hRev"><span class="qn" aria-hidden="true">4</span>HĐQT thẩm định: logic, phản biện, hệ thống, quyết định</h2>
-  <div class="review" id="review"></div>
+  <ol class="spine" id="spine" aria-label="Năm câu hỏi trước khi duyệt"></ol>
+  <div class="herofoot"><div class="chips" id="chips"></div><a class="skip" id="skip" href="#s5">Bận? Đọc ngay kết luận</a></div>
 </div></header>
 <main class="in">
-  <section id="sFlow" aria-labelledby="hFlow">
-    <div class="sh"><h2 id="hFlow">AI làm việc thế nào: đầu vào, xử lý, đầu ra</h2>
-      <p>Dữ liệu vào ở bên trái, AI xử lý ở giữa, kết quả chờ người duyệt ở bên phải. Đây là bài chạy thử trên dữ liệu mẫu để kiểm chứng cách làm; số tiền ở mục 2 lấy từ tờ trình và đã được Ban Tài chính tính lại. <span id="demo10"></span></p></div>
-    <p class="story" id="story" aria-live="polite"></p>
-    <div class="flow" id="flow">
-      <article class="io in1" id="cIn" aria-labelledby="tIn">
-        <header class="ioh"><span class="badge">1</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg><div><h3 id="tIn">Đầu vào</h3><span>Dữ liệu agent nhận</span></div></header>
-        <dl class="src"><div><dt>Nguồn</dt><dd id="inSrc"></dd></div><div><dt>Nhận</dt><dd id="inPull"></dd></div></dl>
-        <div class="tw"><table class="mini" id="inTbl"></table></div>
-        <p class="more" id="inMore"></p>
-        <ul class="checks" id="inChecks"></ul>
-      </article>
-      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 24"><path class="aline" d="M2 12H34"/><path class="ahead" d="M28 5l8 7-8 7"/></svg></div>
-      <article class="io pr1" id="cPr" aria-labelledby="tPr">
-        <header class="ioh"><span class="badge">2</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg><div><h3 id="tPr">Xử lý</h3><span id="agName"></span></div><span class="chip" id="agStatus"></span></header>
-        <ol class="pipe" id="steps"></ol>
-        <div class="legend" id="legend"></div>
-        <div class="box" id="stage"></div>
-        <div class="guess"><label for="gIn" id="gQ"></label><output id="gOut"></output><input type="range" id="gIn" style="grid-column:1/-1"><div class="gres" id="gRes" aria-live="polite"></div></div>
-        <div class="runrow"><button type="button" class="btn" id="bRun">Giao việc cho agent</button></div>
-        <div class="ctrl" id="ctrl" hidden><label for="ctrlIn" id="ctrlLab"></label><output id="ctrlOut"></output><input type="range" id="ctrlIn"></div>
-        <p class="twist" id="twist" hidden></p>
-        <details class="logd"><summary>Nhật ký agent</summary><div class="console" id="console"><div class="muted">Agent đang chờ việc.</div></div></details>
-      </article>
-      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 24"><path class="aline" d="M2 12H34"/><path class="ahead" d="M28 5l8 7-8 7"/></svg></div>
-      <article class="io out1" id="cOut" aria-labelledby="tOut">
-        <header class="ioh"><span class="badge">3</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 14l2.5 2.5L16 12"/></svg><div><h3 id="tOut">Đầu ra</h3><span>Kết quả để người duyệt</span></div></header>
-        <div class="okpis" id="kpis"></div>
-        <div class="outl"><h4 id="outTitle">Chưa có kết quả</h4><ul id="outList"><li class="muted">Giao việc cho agent ở bước 2.</li></ul></div>
-        <div class="hil" id="hil" hidden><p>Agent không tự đưa kết quả vào vận hành. Người phụ trách xem và ký.</p><button type="button" class="btn ok" id="bApprove">Duyệt kết quả</button></div>
-      </article>
+
+  <section class="scene" id="s1" aria-labelledby="t1">
+    <div class="sch"><p class="act"><span class="an">1</span>Hiện trạng</p><h2 id="t1"></h2><p class="sub" id="d1"></p></div>
+    <div class="s1g">
+      <figure class="panel fig"><figcaption id="c1"></figcaption><div class="box" id="today"></div></figure>
+      <div class="kfact" id="basis"></div>
+    </div>
+    <div class="hook" id="k1">
+      <p class="hq" id="k1t"></p>
+      <div class="guess"><label for="gIn" id="gQ"></label><output id="gOut"></output><input type="range" id="gIn" style="grid-column:1/-1"></div>
+      <div class="hrow"><button type="button" class="btn big" id="bGo">Cho AI làm thử</button><span class="hnote" id="k1n"></span></div>
     </div>
   </section>
 
-  <section id="sWipe" aria-labelledby="hWipe">
-    <div class="sh"><h2 id="hWipe">Xem tận mắt: kéo để so</h2><p id="wipeTxt">Cùng một bộ dữ liệu. Bên trái là cách làm hôm nay, bên phải là kết quả của AI. Kéo thanh ở giữa sang trái hoặc phải.</p></div>
+  <section class="scene" id="s2" aria-labelledby="t2">
+    <div class="sch"><p class="act"><span class="an">2</span>Có AI</p><h2 id="t2"></h2><p class="sub" id="d2"></p></div>
+    <div class="board" id="board" aria-live="polite">
+      <div class="bside b0"><span class="btag">Hôm nay</span><p class="btxt" id="bBefTxt"></p><div class="bk" id="bKey0"></div></div>
+      <div class="bmid" id="bMid"></div>
+      <div class="bside b1"><span class="btag">Có AI</span><p class="btxt" id="bAftTxt"></p><div class="bk" id="bKey1"></div></div>
+    </div>
+    <div class="gres" id="gRes" aria-live="polite"></div>
     <div class="wipe" id="wipe">
       <div class="wl" id="wAfter"></div>
       <div class="wl wtop" id="wBefore"></div>
       <div class="whandle" id="wHandle" aria-hidden="true"><span class="wt0">Hôm nay</span><span class="wknob">‹ ›</span><span class="wt1">Có AI</span></div>
       <input type="range" class="wr" id="wRange" min="0" max="100" value="100" aria-label="Kéo để so hôm nay và sau khi có AI">
-      <div class="wlock" id="wLock"><p>Phần “sau khi có AI” chưa mở.</p><button type="button" class="btn" id="bGo2">Cho AI làm thử</button></div>
+      <div class="wlock" id="wLock"><p>Phần “có AI” chưa mở.</p><button type="button" class="btn" id="bGo2">Cho AI làm thử</button></div>
     </div>
-    <div class="wcap"><div><span class="btag t0">Hôm nay</span><b id="wK0"></b></div><div class="wd" id="wD"></div><div><span class="btag t1">Có AI</span><b id="wK1"></b></div></div>
-  </section>
-
-  <section id="sBA" aria-labelledby="hBA">
-    <div class="sh"><h2 id="hBA">Từng chỉ số, hôm nay và sau khi có AI</h2><p>Đo trên dữ liệu mẫu của bài chạy thử ở trên.</p></div>
-    <div class="panel"><div class="cmpk"><span><i class="sw sq2"></i>Hôm nay</span><span><i class="sw sq1"></i>Sau khi có AI</span></div><div class="cmprows" id="cmp"></div></div>
-  </section>
-
-  <section id="sTrade" aria-labelledby="hTrade">
-    <div class="sh"><h2 id="hTrade">Được gì, mất gì</h2><p>Những thứ công ty nhận được và những thứ phải chấp nhận nếu làm.</p></div>
-    <div class="gl2"><div class="panel gainp"><h3>Được</h3><ul id="gain"></ul></div><div class="panel costp"><h3>Mất và phải chấp nhận</h3><ul id="cost"></ul></div></div>
-  </section>
-
-  <section id="sFin" aria-labelledby="hFin">
-    <div class="sh"><h2 id="hFin">Vì sao con số của Ban Tài chính nhỏ hơn tờ trình</h2><p id="finTxt"></p></div>
-    <div class="fingrid">
-      <div class="panel"><div class="legend"><span><i class="sw" style="background:var(--ink2)"></i>Con số</span><span><i class="sw sq1"></i>Cộng thêm</span><span><i class="sw sq2"></i>Trừ đi</span></div><div class="box" id="wf"></div></div>
-      <div class="froles">
-        <div><b>Khoá đường cơ sở trước khi làm</b>Con số “trước” được chốt và ký trước khi triển khai, để không ai sửa lại sau.</div>
-        <div><b>Tính cả khả năng thất bại</b>Không đề xuất nào chắc chắn thành công. Nếu dừng ở điểm kiểm tra giữa kỳ, công ty vẫn mất phần vốn đã chi đến lúc đó, thường từ một nửa đến hai phần ba.</div>
-        <div><b>Tính cả chi phí vận hành</b>AI tốn tiền mỗi tháng sau khi xây xong; tờ trình thường bỏ qua dòng này.</div>
-        <div><b>Đo mỗi quý, đối chiếu sổ cái</b>Giá trị chỉ được ghi nhận khi đối chiếu được với sổ cái, do Ban Tài chính đo chứ không phải người đề xuất.</div>
+    <p class="wcap2" id="wipeTxt">Cùng một bộ dữ liệu: bên trái là cách làm hôm nay, bên phải là kết quả của AI. Kéo thanh ở giữa để so.</p>
+    <div class="s2g">
+      <div class="read" id="read"></div>
+      <div class="panel cmpp"><h3>Mọi chỉ số đo trong bài chạy thử</h3><div class="cmpk"><span><i class="sw sq2"></i>Hôm nay</span><span><i class="sw sq1"></i>Có AI</span></div><div class="cmprows" id="cmp"></div></div>
+    </div>
+    <details class="flowd" id="flowd">
+      <summary><span class="fs1">Bên trong bài chạy thử</span><span class="fs2" id="flowSum"></span></summary>
+      <div class="flow" id="flow">
+        <article class="io in1" id="cIn" aria-labelledby="tIn">
+          <header class="ioh"><span class="badge">1</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg><div><h3 id="tIn">Đầu vào</h3><span>Dữ liệu agent nhận</span></div></header>
+          <dl class="src"><div><dt>Nguồn</dt><dd id="inSrc"></dd></div><div><dt>Nhận</dt><dd id="inPull"></dd></div></dl>
+          <div class="tw"><table class="mini" id="inTbl"></table></div>
+          <p class="more" id="inMore"></p>
+          <ul class="checks" id="inChecks"></ul>
+        </article>
+        <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 24"><path class="aline" d="M2 12H34"/><path class="ahead" d="M28 5l8 7-8 7"/></svg></div>
+        <article class="io pr1" id="cPr" aria-labelledby="tPr">
+          <header class="ioh"><span class="badge">2</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg><div><h3 id="tPr">Xử lý</h3><span id="agName"></span></div><span class="chip" id="agStatus"></span></header>
+          <ol class="pipe" id="steps"></ol>
+          <div class="legend" id="legend"></div>
+          <div class="box" id="stage"></div>
+          <div class="runrow"><button type="button" class="btn" id="bRun">Giao việc cho agent</button></div>
+          <div class="ctrl" id="ctrl" hidden><label for="ctrlIn" id="ctrlLab"></label><output id="ctrlOut"></output><input type="range" id="ctrlIn"></div>
+          <details class="logd"><summary>Nhật ký agent</summary><div class="console" id="console"><div class="muted">Agent đang chờ việc.</div></div></details>
+        </article>
+        <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 24"><path class="aline" d="M2 12H34"/><path class="ahead" d="M28 5l8 7-8 7"/></svg></div>
+        <article class="io out1" id="cOut" aria-labelledby="tOut">
+          <header class="ioh"><span class="badge">3</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 14l2.5 2.5L16 12"/></svg><div><h3 id="tOut">Đầu ra</h3><span>Kết quả để người duyệt</span></div></header>
+          <div class="okpis" id="kpis"></div>
+          <div class="outl"><h4 id="outTitle">Chưa có kết quả</h4><ul id="outList"><li class="muted">Giao việc cho agent ở bước 2.</li></ul></div>
+          <div class="hil" id="hil" hidden><p>Agent không tự đưa kết quả vào vận hành. Người phụ trách xem và ký.</p><button type="button" class="btn ok" id="bApprove">Duyệt kết quả</button></div>
+        </article>
       </div>
-    </div>
+      <p class="demo10" id="demo10"></p>
+    </details>
+    <div class="hook" id="k2"></div>
   </section>
 
-
-  <section id="sPort" aria-labelledby="hPort">
-    <div class="sh"><h2 id="hPort">So với 149 đề xuất khác</h2><p>Mỗi chấm là một đề xuất. Càng sang phải càng dễ thành công, càng lên cao càng nhiều tiền mỗi năm. Chấm xanh là đề xuất có trong phương án tối ưu khi chia ngân sách cho cả 150 đề xuất.</p></div>
-    <div class="portgrid"><div class="panel"><div class="box" id="pmap"></div></div><div class="facts" id="facts"></div></div>
+  <section class="scene" id="s3" aria-labelledby="t3">
+    <div class="sch"><p class="act"><span class="an">3</span>Thành tiền?</p><h2 id="t3"></h2><p class="sub" id="d3"></p></div>
+    <div class="money" id="money"></div>
+    <div class="fingrid">
+      <figure class="panel fig" id="wfp"><figcaption id="c3"></figcaption><div class="legend"><span><i class="sw" style="background:var(--ink2)"></i>Con số</span><span><i class="sw sq1"></i>Cộng thêm</span><span><i class="sw sq2"></i>Trừ đi</span></div><div class="box" id="wf"></div><p class="fnote" id="finnote"></p></figure>
+      <div class="panel chainp"><h3>Con số có dẫn tới tiền không?</h3><ol class="chain" id="chain"></ol><p class="ctest" id="ctest"></p></div>
+    </div>
+    <div class="hook" id="k3"></div>
   </section>
 
-  <section id="sReso" aria-labelledby="hReso">
-    <h2 id="hReso">HĐQT quyết</h2>
-    <div class="decide" id="decide" role="group" aria-label="Quyết định của HĐQT">
-      <button type="button" class="btn ghost" data-d="approve" aria-pressed="false">Duyệt theo đợt</button>
-      <button type="button" class="btn ghost" data-d="pilot" aria-pressed="false">Thí điểm 90 ngày (ngoại lệ)</button>
-      <button type="button" class="btn ghost" data-d="hold" aria-pressed="false">Chưa duyệt</button>
+  <section class="scene" id="s4" aria-labelledby="t4">
+    <div class="sch"><p class="act"><span class="an">4</span>Cuộc đua vốn</p><h2 id="t4"></h2><p class="sub" id="d4"></p></div>
+    <div class="portgrid">
+      <figure class="panel fig" id="pmp"><figcaption>Tiền thu về mỗi năm (đã tính rủi ro) theo khả năng thành công, 150 đề xuất</figcaption><div class="legend"><span><i class="sw dot1"></i>Được chọn khi chia 120 tỷ đồng</span><span><i class="sw o"></i>Không được chọn</span></div><div class="box" id="pmap"></div></figure>
+      <div class="facts" id="facts"></div>
     </div>
-    <div class="reso" id="reso"></div>
+    <div class="panel treep"><h3 id="treeH">Việc này chạm tới đâu</h3><div class="tree" id="tree"></div></div>
+    <div class="s4g">
+      <div class="panel"><h3>Ba câu HĐQT phải hỏi</h3><ol class="qs" id="qs"></ol></div>
+      <div class="panel gainp"><h3>Được</h3><ul id="gain"></ul></div>
+      <div class="panel costp"><h3>Mất và phải chấp nhận</h3><ul id="cost"></ul></div>
+    </div>
+    <div class="hook" id="k4"></div>
+  </section>
+
+  <section class="scene" id="s5" aria-labelledby="t5">
+    <div class="sch"><p class="act"><span class="an">5</span>Quyết định</p><h2 id="t5"></h2><p class="sub" id="d5"></p></div>
+    <figure class="panel fig" id="tlp"><figcaption id="c5"></figcaption><div class="box" id="tl"></div></figure>
+    <div class="s5g" id="dec"></div>
+    <div class="decwrap">
+      <h3>HĐQT quyết</h3>
+      <div class="decide" id="decide" role="group" aria-label="Quyết định của HĐQT">
+        <button type="button" class="btn ghost" data-d="approve" aria-pressed="false">Duyệt theo đợt</button>
+        <button type="button" class="btn ghost" data-d="pilot" aria-pressed="false">Thí điểm 90 ngày (ngoại lệ)</button>
+        <button type="button" class="btn ghost" data-d="hold" aria-pressed="false">Chưa duyệt</button>
+      </div>
+      <details class="resod" id="resod"><summary>Dự thảo nghị quyết</summary><div class="reso" id="reso"></div></details>
+    </div>
+    <div class="nextk" id="nextk"></div>
   </section>
 
   <section id="sAss" aria-labelledby="hAss">
-    <h2 id="hAss">Cách đọc các con số</h2>
+    <details class="assd"><summary><h2 id="hAss">Cách đọc các con số và giả định</h2></summary>
     <dl class="gloss">
       <div><dt>Giá trị ròng 3 năm</dt><dd>Tiền thu về trong 3 năm kể từ khi khởi động, gồm cả tiền giải phóng một lần từ tồn kho và công nợ, trừ vốn và chi phí vận hành, đã tính khả năng thất bại, quy về giá trị hôm nay. Dương là đáng làm. Đây không phải lợi nhuận kế toán; giới tài chính gọi là NPV.</dd></div>
       <div><dt>Khả năng thành công</dt><dd>Cứ 10 dự án như thế này thì bao nhiêu dự án đạt kết quả. 80% nghĩa là khoảng 8 trên 10. Ước tính theo độ dễ triển khai, mức rủi ro và thời gian ra tiền.</dd></div>
       <div><dt>Hoàn vốn</dt><dd>Tháng mà tổng tiền thu về, đã quy về giá trị hôm nay, bắt đầu vượt tổng tiền đã bỏ ra và không tụt lại nữa.</dd></div>
       <div><dt>Agent</dt><dd>Phần mềm AI tự làm một chuỗi việc: lấy dữ liệu, tính, tự kiểm tra, rồi chuyển người phụ trách duyệt. Không tự đưa kết quả vào vận hành.</dd></div>
     </dl>
+    <h3 class="assh">Bốn nguyên tắc của Ban Tài chính</h3>
+    <dl class="gloss">
+      <div><dt>Khoá đường cơ sở trước khi làm</dt><dd>Con số “trước” được chốt và ký trước khi triển khai, để không ai sửa lại sau.</dd></div>
+      <div><dt>Tính cả khả năng thất bại</dt><dd>Không đề xuất nào chắc chắn thành công. Nếu dừng ở điểm kiểm tra giữa kỳ, công ty vẫn mất phần vốn đã chi đến lúc đó, thường từ một nửa đến hai phần ba.</dd></div>
+      <div><dt>Tính cả chi phí vận hành</dt><dd>AI tốn tiền mỗi tháng sau khi xây xong; tờ trình thường bỏ qua dòng này.</dd></div>
+      <div><dt>Đo mỗi quý, đối chiếu sổ cái</dt><dd>Giá trị chỉ được ghi nhận khi đối chiếu được với sổ cái, do Ban Tài chính đo chứ không phải người đề xuất.</dd></div>
+    </dl>
     <h3 class="assh">Giả định</h3>
     <ul class="ass">
-      <li>Vertex là doanh nghiệp mô phỏng. Đề xuất, dữ liệu chạy thử, nghị quyết và mọi con số là giả định minh hoạ.</li>
-      <li>Dữ liệu chạy thử là dữ liệu mẫu sinh cố định cho từng đề xuất; thuật toán chạy thật ngay trên trình duyệt.</li>
+      <li>Vertex là doanh nghiệp mô phỏng, doanh thu 10.000 tỷ đồng mỗi năm. Đề xuất, dữ liệu chạy thử, nghị quyết và mọi con số là giả định minh hoạ.</li>
+      <li>Dữ liệu chạy thử là dữ liệu mẫu sinh cố định cho từng đề xuất; thuật toán chạy thật ngay trên trình duyệt. Số tiền trong bài chạy thử không cộng vào tiền ở cảnh 3.</li>
       <li>Tiền thu về là lợi nhuận hoạt động tăng thêm hoặc tổn thất tránh được mỗi năm khi chạy đủ, tăng dần trong 9 tháng đầu. Tiền giải phóng từ tồn kho, công nợ cũng về dần trong 9 tháng đó và được báo riêng; với các đề xuất này, giá trị mỗi năm chỉ gồm chi phí lưu kho, hao hụt và xoá sổ tránh được, không gồm lãi vay tiết kiệm.</li>
       <li>Khả năng thành công bằng 35% cộng 10% cho mỗi bậc dễ triển khai, trừ 3% cho mỗi bậc rủi ro trên 2, điều chỉnh theo thời gian ra tiền, trong khoảng 40 đến 95%.</li>
       <li>Vốn đã gồm dữ liệu, tích hợp, đào tạo và thay đổi cách làm; công ty càng lớn, vốn tăng chậm hơn doanh thu.</li>
-      <li>Quy về giá trị hôm nay với lãi suất 12% một năm. Mỗi đề xuất được tính 3 năm kể từ khi chính nó khởi động; đề xuất ở đợt sau vẫn được tính đủ 3 năm, chỉ bị chiết khấu vì tiền về muộn hơn. Cách tính đầy đủ ở trang danh mục 100 đề xuất.</li>
+      <li>Quy về giá trị hôm nay với lãi suất 12% một năm. Mỗi đề xuất được tính 3 năm kể từ khi chính nó khởi động; đề xuất ở đợt sau vẫn được tính đủ 3 năm, chỉ bị chiết khấu vì tiền về muộn hơn.</li>
     </ul>
+    </details>
   </section>
 </main>
 <footer><div class="in"><span>Trang mô phỏng phục vụ đào tạo, ERX Supply Chain Community.</span><a href="../danh-muc-150-use-case.html">Về danh mục 150 đề xuất</a></div></footer>
@@ -2595,24 +2752,27 @@ const RV = {
   150: ['Tính chi phí khí thải khi đầu tư thì tránh dự án sẽ lỗ khi giá carbon tăng.', 'Áp dụng cho các quyết định lớn: #18 mạng lưới kho, #93 xe điện, #19 nhà máy.', [[18, 'mạng lưới kho'], [93, 'xe điện'], [19, 'nhà máy']]],
 };
 
-/* ===== bộ máy trang use case: đầu vào, xử lý, đầu ra; trước và sau; được và mất; Ban Tài chính; danh mục; nghị quyết ===== */
+/* ===== bộ máy trang use case, kể theo 5 cảnh: hiện trạng, có AI, thành tiền, cuộc đua vốn, quyết định.
+   Mỗi cảnh: tiêu đề nói thẳng điều rút ra, một biểu đồ, ít chữ, và một câu hỏi mở dẫn sang cảnh sau.
+   Câu trả lời ở đầu trang mở dần khi người đọc tới cảnh tương ứng. ===== */
 (function () {
   'use strict';
   const $ = s => document.querySelector(s);
   const RM = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
   const u = UC[UCID - 1], P = CFG[UCID], A = ARCH[P.a];
   const SHOW = /trinh-?chieu/.test(location.hash);
-  const st = { preset: 's', phase: 'idle', step: -1, guessed: null, k: -1, decision: null, approved: false };
+  const st = { preset: 's', phase: 'idle', step: -1, guessed: null, touched: false, k: -1, decision: null, approved: false, seen: new Set([1]), cur: 1 };
   let S = A.init(P, rng(u.sd * 7919 + 13));
   const GH = 'https://tuanai2024-sg.github.io/train-the-trainer-game/demo/';
+  const HASH = SHOW ? '#trinh-chieu' : '';
 
   /* ---------- định dạng ---------- */
   const nf = (x, d) => new Intl.NumberFormat('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x);
   function money(x) {
     const Pp = PRESETS[st.preset], sg = x < -1e-9 ? '−' : '', a = Math.abs(x) >= 0.9995 && Math.abs(x) < 1 ? 1 : Math.abs(x);
-    if (a < 1e-9) return Pp.cur === 'USD' ? '0\u00a0USD' : '0\u00a0đồng';
-    if (Pp.cur === 'USD') { if (a >= 1e9) return sg + nf(a / 1e9, a >= 1e11 ? 0 : 1) + '\u00a0tỷ\u00a0USD'; if (a >= 1e6) return sg + nf(a / 1e6, 0) + '\u00a0triệu\u00a0USD'; return sg + nf(a / 1e3, 0) + '\u00a0nghìn\u00a0USD'; }
-    if (a >= 100) return sg + nf(a, 0) + '\u00a0tỷ\u00a0đồng'; if (a >= 1) return sg + nf(a, 1) + '\u00a0tỷ\u00a0đồng'; return sg + nf(a * 1000, 0) + '\u00a0triệu\u00a0đồng';
+    if (a < 1e-9) return Pp.cur === 'USD' ? '0 USD' : '0 đồng';
+    if (Pp.cur === 'USD') { if (a >= 1e9) return sg + nf(a / 1e9, a >= 1e11 ? 0 : 1) + ' tỷ USD'; if (a >= 1e6) return sg + nf(a / 1e6, 0) + ' triệu USD'; return sg + nf(a / 1e3, 0) + ' nghìn USD'; }
+    if (a >= 100) return sg + nf(a, 0) + ' tỷ đồng'; if (a >= 1) return sg + nf(a, 1) + ' tỷ đồng'; return sg + nf(a * 1000, 0) + ' triệu đồng';
   }
   const pct = (x, d = 0) => nf(x * 100, d) + '%';
   const failPct = p => nf(100 - Math.round(p * 100), 0) + '%';
@@ -2626,7 +2786,8 @@ const RV = {
     return PRESETS[st.preset].cur === 'USD' ? nf(x / 1e9, 1) : nf(x, Math.abs(x) < 10 ? 1 : 0);
   }
   const fmtArg = P.a === 'sim' ? simFmt : undefined;
-  const short = m => m.replace(/[\s\u00a0]tỷ[\s\u00a0]đồng/, '').replace(/[\s\u00a0]tỷ[\s\u00a0]USD/, '').replace(/[\s\u00a0]triệu[\s\u00a0]đồng/, ' tr').replace(/[\s\u00a0]triệu[\s\u00a0]USD/, ' tr USD');
+  const WORD = ['Không', 'Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu'];
+  const smooth = el => el && el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
 
   /* ---------- số liệu tài chính ---------- */
   function fin() {
@@ -2634,7 +2795,7 @@ const RV = {
     let B1 = 0, O = 0, Wh = 0; for (let k = 1; k <= H; k++) { if (k > it.t) { B1 += it.val / 12 * Math.min(1, (k - it.t) / RAMP); O += it.opex / 12; if (k <= it.t + RAMP) Wh += it.wc / RAMP; } }
     const Cf = it.cap * Math.ceil(it.t / 2) / it.t, A0 = 3 * it.val + it.wc, base = B1 + Wh - O - it.cap, und = it.p * base - (1 - it.p) * Cf;
     const E1 = evalItem(u, C, 0, 1, 1).E;
-    return { C, it, head: A0 - it.cap, steps: [['Tiền về chậm, sau ' + it.t + ' tháng', B1 + Wh - A0], ['Chi phí vận hành 3 năm', -O], [und - base > 0 ? 'Thất bại sớm thì bớt lỗ' : 'Khả năng thất bại ' + failPct(it.p), und - base], [it.E - und > 0 ? 'Quy về hôm nay, khoản lỗ nhỏ đi' : 'Quy về giá trị hôm nay', it.E - und]], E: it.E, pb: it.pbD, delay1: it.E - E1 };
+    return { C, it, head: A0 - it.cap, H0: r2(r2(3 * it.val + it.wc) - r2(it.cap)), steps: [['Tiền về chậm, sau ' + it.t + ' tháng', B1 + Wh - A0], ['Chi phí vận hành 3 năm', -O], [und - base > 0 ? 'Thất bại sớm thì bớt lỗ' : 'Khả năng thất bại ' + failPct(it.p), und - base], [it.E - und > 0 ? 'Quy về hôm nay, khoản lỗ nhỏ đi' : 'Quy về giá trị hôm nay', it.E - und]], E: it.E, pb: it.pbD, delay1: it.E - E1 };
   }
   function plan() {
     const ps = { preset: st.preset, budget: PRESETS[st.preset].b[2], appetite: 3, R: 1, delay: 0, hz: 3, locks: {}, cap: 12 };
@@ -2650,34 +2811,33 @@ const RV = {
     const ipE = io !== undefined ? evalItem(u, C, pbOf(u, po.off[io], platInfo(C, po.sel, po.off)), 1, po.off[io]).E : null;
     return { po, pi, items, rank, io, chosen: io !== undefined, inI, why, n: po.sel.length, bud: ps.budget / 1e4 * C.rev, ipE };
   }
+  let PL = plan();
+  const startOf = () => (PL && PL.chosen ? PL.po.off[PL.io] : 0);
+  const waveOf = () => startOf() / 6 + 1;
 
   /* ---------- khung tĩnh ---------- */
-  const OW = OWN[u.d], skeptic = u.d === 0 ? 'Trưởng kiểm toán nội bộ' : 'Giám đốc tài chính';
+  const OW = OWN[u.d];
   const AG = /^agent\b/i.test(u.name) ? u.name : 'Agent ' + lf(u.name);
   const RISKW = u.r <= 2 ? 'thấp' : u.r === 3 ? 'trung bình' : 'cao';
+  const SC = [[1, 'Hiện trạng', 'Hôm nay ra sao?'], [2, 'Có AI', 'AI làm được gì?'], [3, 'Thành tiền?', 'Có thành tiền không?'], [4, 'Cuộc đua vốn', `Hơn ${UC.length - 1} đề xuất khác?`], [5, 'Quyết định', 'HĐQT nên quyết gì?']];
   function staticTop() {
     document.title = u.name + ' | Đề xuất ' + UCID;
     $('#kick').innerHTML = `<b>Đề xuất ${UCID}/${UC.length}, khâu ${STG[u.s].toLowerCase()} › ${SUB[u.g].n.toLowerCase()}.</b> Vertex là doanh nghiệp mô phỏng; dữ liệu chạy thử là dữ liệu mẫu, nghị quyết là mô phỏng.`;
     $('#h1').textContent = u.name;
     $('#chips').innerHTML = [`Người chịu trách nhiệm: ${OW.toLowerCase()}`, `Loại lợi ích: ${lf(LEV[u.lev])}`, `Kỹ thuật: ${lf(TEC[u.tec])}`, `Dễ triển khai: ${u.f}/5`, `Rủi ro: ${RISKW} (${u.r}/5)`].map(s => `<span>${s}</span>`).join('');
     const prev = UCID > 1 ? SLUGS[UCID - 2] : null, next = UCID < UC.length ? SLUGS[UCID] : null;
-    $('#prev').href = prev ? prev + '.html' : '#'; $('#prev').style.visibility = prev ? 'visible' : 'hidden';
-    $('#next').href = next ? next + '.html' : '#'; $('#next').style.visibility = next ? 'visible' : 'hidden';
+    $('#prev').href = prev ? prev + '.html' + HASH : '#'; $('#prev').style.visibility = prev ? 'visible' : 'hidden';
+    $('#next').href = next ? next + '.html' + HASH : '#'; $('#next').style.visibility = next ? 'visible' : 'hidden';
     $('#jump').innerHTML = STG.map((sn, k) => `<optgroup label="${k + 1}. ${sn}">${UC.filter(x => x.s === k).map(x => `<option value="${SLUGS[x.id - 1]}"${x.id === UCID ? ' selected' : ''}>${x.id}. ${esc(x.name)}</option>`).join('')}</optgroup>`).join('');
-    $('#jump').addEventListener('change', e => { location.href = e.target.value + '.html'; });
+    $('#jump').addEventListener('change', e => { location.href = e.target.value + '.html' + HASH; });
     $('#agName').textContent = AG;
     $('#legend').innerHTML = A.legend(P, S);
+    $('#flowSum').textContent = `${AG}: lấy dữ liệu từ ${SRC[u.d]}, chạy thuật toán, tự kiểm tra, rồi chờ người duyệt`;
     if (DEMO10[UCID]) $('#demo10').innerHTML = `Đề xuất này có bản chạy thử chi tiết hơn: <a href="${GH + DEMO10[UCID]}" target="_blank" rel="noopener">mở bản chi tiết</a>.`;
   }
-  function renderMoney() {
-    const f = fin(), it = f.it;
-    renderFin(f); renderCompare(f); renderBalance(f); renderPort(); renderAsk(f); renderMoneyStrip(f); renderRec(f); renderReso(f); renderBoard(false); renderWipe();
-  }
 
-
-  /* ---------- bảng đối đầu trước và sau ---------- */
-  /* hai số tiền đặt cạnh nhau phải cùng đơn vị: 873 triệu đồng và 1,06 tỷ đồng thành 0,87 và 1,06 tỷ đồng */
-  const MU = /^([−-]?)([\d.]+(?:,\d+)?)[\s\u00a0](triệu|tỷ)[\s\u00a0]đồng(.*)$/;
+  /* ---------- con số chính (trước và sau) ---------- */
+  const MU = /^([−-]?)([\d.]+(?:,\d+)?)[\s ](triệu|tỷ)[\s ]đồng(.*)$/;
   const pv = s => { const m = String(s).match(MU); return m ? { sg: m[1], v: parseFloat(m[2].replace(/\./g, '').replace(',', '.')), u: m[3], rest: m[4] } : null; };
   function pairU(a, b) {
     const x = pv(a), y = pv(b); if (!x || !y || x.u === y.u) return [a, b];
@@ -2686,6 +2846,8 @@ const RV = {
   }
   const numTok = /[−-]?\d{1,3}(?:\.\d{3})*(?:,\d+)?/;
   const tokVal = t => parseFloat(t.replace('−', '-').replace(/\./g, '').replace(',', '.'));
+  const numOf = s => { const m = String(s).replace(/\s/g, ' ').replace(/(\d)\.(\d{3})/g, '$1$2').replace(/(\d)\.(\d{3})/g, '$1$2').replace(',', '.').match(/[−-]?\d+(\.\d+)?/); return m ? parseFloat(m[0].replace('−', '-')) : null; };
+  const unitOf = s => String(s).replace(/[−-]?[\d.,]+/g, '#').replace(/khoảng|dưới|trên|trước đó/g, '').replace(/\s+/g, ' ').trim();
   function headRow() {
     const rows = A.ba(P, S, fmtArg), i = P.a === 'loc' ? 3 : (P.a === 'whale' || P.a === 'anom' || (P.a === 'vision' && P.mode === 'grade')) ? 1 : 0;
     const h = rows[Math.min(i, rows.length - 1)].slice(); [h[1], h[2]] = pairU(h[1], h[2]);
@@ -2711,134 +2873,116 @@ const RV = {
     const step = now => { if (id !== tw) return; const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3), v = from + (to - from) * e; el.textContent = String(toStr).replace(numTok, (v < 0 ? '−' : '') + nf(Math.abs(v), dec)); if (k < 1) requestAnimationFrame(step); else el.textContent = toStr; };
     requestAnimationFrame(step);
   }
-  function renderBoard(anim) {
-    const f = fin(), it = f.it, h = headRow(), done = st.phase === 'done';
-    $('#bBefTxt').textContent = u.before + '.'; $('#bAftTxt').textContent = u.after + '.';
-    $('#bKey0').innerHTML = `<span class="bl">${esc(capf(h[0]))}</span><span class="bv">${esc(h[1])}</span>`;
-    $('#bKey1').innerHTML = `<span class="bl">${esc(capf(h[0]))}</span><span class="bv" id="bv1">${done ? esc(h[2]) : '?'}</span>`;
-    const long = String(h[3] || '').length > 16;
-    $('#bMid').innerHTML = `<span class="arrowbig" aria-hidden="true">→</span><span class="delta ${done ? (h[4] !== false ? 'up' : 'dn') : 'q'}${done && long ? ' long' : ''}">${done ? esc(h[3] || 'đã đổi') : '?'}</span><span class="dsub">${done ? 'trên dữ liệu mẫu' : 'chưa chạy thử'}</span>`;
-    $('#board').classList.toggle('open', done);
-    $('#tick').innerHTML = done ? (f.delay1 > 0 ? `Chạy thử trên dữ liệu mẫu để kiểm chứng cách làm. Mỗi tháng chậm triển khai làm giá trị ròng giảm khoảng <b>${money(f.delay1)}</b>, vì mọi khoản tiền về muộn một tháng (quy về hôm nay với lãi suất 12% một năm).` : 'Chạy thử trên dữ liệu mẫu để kiểm chứng cách làm. Với đề xuất này, làm chậm không làm mất thêm giá trị.') : 'AI chạy trên dữ liệu mẫu ngay trong trang này, mất vài giây. Bạn sẽ thấy dữ liệu đi vào, AI xử lý, rồi kết quả chờ người duyệt.';
-    $('#bGo').textContent = done ? (SHOW ? 'Xem tận mắt: kéo để so' : 'Xem AI làm lại từng bước') : 'Cho AI làm thử ngay';
-    if (anim && done) tween($('#bv1'), h[1], h[2]);
-    renderBasis(h); renderReview(h);
-  }
 
-  /* ---------- tiền và đề nghị ---------- */
-  function renderAsk(f) {
-    $('#ask').innerHTML = `${esc(OW)} xin <b>${money(f.it.cap)}</b> để làm việc này bằng AI. Trang này trả lời ba câu hỏi HĐQT cần hỏi trước khi quyết, rồi thẩm định từng mắt xích.`;
-  }
-  function inPlan() {
-    if (!PL || !PL.chosen) return null;
-    const C = ctxOf({ preset: st.preset, hz: 3 }), o = PL.po.off[PL.io], PI = platInfo(C, PL.po.sel, PL.po.off);
-    return { o, E: evalItem(u, C, pbOf(u, o, PI), 1, o).E };
-  }
-  function renderMoneyStrip(f) {
-    const it = f.it, neg = f.E < 0, ip = inPlan();
-    const T = [
-      ['Bỏ ra', money(it.cap), `một lần, cộng ${money(it.opex)} mỗi năm để vận hành`],
-      ['Thu về mỗi năm', money(it.val), `khi chạy đủ, nếu thành công; tiền bắt đầu về sau ${it.t} tháng${it.wc ? `; cộng ${money(it.wc)} tiền giải phóng một lần từ tồn kho, công nợ` : ''}`],
-      ['Khả năng thành công', pct(it.p), `ước tính theo độ dễ triển khai, thời gian ra tiền và mức rủi ro ${u.r}/5`],
-      ['Hoàn vốn', f.pb ? 'tháng ' + f.pb : 'chưa trong 3 năm', f.pb ? 'kể từ khi giải ngân, trên dòng tiền đã quy về hôm nay' : 'tiền thu về chưa bù được tiền bỏ ra'],
-    ];
-    const extra = [];
-    if (it.wc) extra.push(`trong đó ${money(it.Ew)} là tiền giải phóng một lần; không tính khoản này còn ${money(it.Eop)}`);
-    if (ip && ip.o > 0) extra.push(`theo lộ trình danh mục (khởi động tháng ${ip.o + 1}), giá trị ròng còn ${money(ip.E)} vì tiền về muộn hơn ${ip.o} tháng`);
-    $('#money').innerHTML = `<div class="mt4">${T.map(t => `<div class="mt"><span class="ml">${t[0]}</span><b class="mv">${t[1]}</b><span class="ms">${t[2]}</span></div>`).join('')}</div>
-      <div class="meq" aria-hidden="true">→</div>
-      <div class="mt mres${neg ? ' neg' : ''}"><span class="ml">Giá trị ròng 3 năm, nếu khởi động ngay</span><b class="mv">${money(f.E)}</b><span class="ms">tiền thu về trừ vốn và chi phí, đã tính khả năng thất bại, quy về giá trị hôm nay${extra.length ? '; ' + extra.join('; ') : ''}</span><a href="#sFin" class="mlink">${f.E > f.head ? 'Vì sao lớn hơn con số trên tờ trình?' : neg && f.head > 0 ? `Vì sao âm, khi tờ trình nói ${f2(r2(r2(3 * it.val + it.wc) - r2(it.cap)))} tỷ đồng?` : `Vì sao khác con số ${f2(r2(r2(3 * it.val + it.wc) - r2(it.cap)))} tỷ đồng trên tờ trình?`}</a></div>`;
-  }
+  /* ---------- đề nghị ---------- */
   const WIN = { agent: 3, tsp: 3, rank: 3, anom: 3, cls: 3, sim: 6, platform: 6, inv: 3, vision: 3, whale: 6, curve: 3, loc: 3, reg: 3, ts: 3, knap: 3, eoq: 3, load: 3, assign: 3, pack: 3, cover: 2, alloc: 3 };
-  const startOf = () => (PL && PL.chosen ? PL.po.off[PL.io] : 0);
   function recOf(f) {
     const it = f.it, s0 = startOf(), wave = s0 / 6 + 1;
     if (PL && PL.chosen) {
-      if (u.id === ENABLER) return { d: 'approve', t: 'Duyệt, làm nền móng ở Đợt 1', why: `Tự nó ${f.E < 0 ? 'lỗ ' + money(-f.E) : 'chỉ tạo ' + money(f.E)} trong 3 năm. Nhưng nó giúp các đề xuất cần dữ liệu tốt khởi động sau khi nó chạy dễ thành công hơn khoảng ${nf(BOOSTP * 100, 0)} điểm phần trăm, nên phương án tối ưu xếp nó vào đợt đầu.` };
+      if (u.id === ENABLER) return { d: 'approve', t: 'Duyệt, làm nền móng ở Đợt 1', s: 'Duyệt ngay', ss: 'làm nền móng, Đợt 1', why: `Tự nó ${f.E < 0 ? 'lỗ ' + money(-f.E) : 'chỉ tạo ' + money(f.E)} trong 3 năm. Nhưng nó giúp các đề xuất cần dữ liệu tốt khởi động sau khi nó chạy dễ thành công hơn khoảng ${nf(BOOSTP * 100, 0)} điểm phần trăm, nên phương án tối ưu xếp nó vào đợt đầu.` };
       const later = wave > 1 ? `; đội triển khai chỉ nhận được việc này từ tháng ${s0 + 1}, nên hôm nay chưa giải ngân` : '';
       const why = it.wc > 0 && it.Eop <= 0
         ? `Giá trị ròng ${money(f.E)} đến từ ${money(it.wc)} tiền giải phóng một lần từ tồn kho, công nợ; riêng phần vận hành ${it.Eop < 0 ? 'âm ' + money(-it.Eop) : 'gần bằng 0'}. Đáng làm như một dự án giải phóng tiền mặt (tiền giải phóng gấp khoảng ${nf(it.wc / it.cap, 0)} lần vốn), đo bằng số tiền thu về được${later}.`
         : `Giá trị ròng dương${it.wc > 0 && it.Ew > 0.5 * f.E ? ` (hơn một nửa là tiền giải phóng một lần ${money(it.Ew)})` : ''}, rủi ro ${RISKW}, khả năng thành công ${pct(it.p)}. Đề xuất nằm trong phương án tối ưu khi chia ${money(PL.bud)} cho cả ${UC.length} đề xuất${later}.`;
-      return { d: 'approve', t: wave === 1 ? 'Duyệt, giải ngân ngay (Đợt 1)' : `Duyệt, giải ngân từ tháng ${s0 + 1} (Đợt ${wave})`, why };
+      return { d: 'approve', t: wave === 1 ? 'Duyệt, giải ngân ngay (Đợt 1)' : `Duyệt, giải ngân từ tháng ${s0 + 1} (Đợt ${wave})`, s: wave === 1 ? 'Duyệt ngay' : `Duyệt, tháng ${s0 + 1}`, ss: `Đợt ${wave}`, why };
     }
-    if (u.id === ENABLER) { const dlt = PL && PL.po.altE != null ? PL.po.altE - PL.po.E : null; return { d: 'hold', t: 'Chưa làm ở vòng này', why: `Tự nó âm ${money(-f.E)} trong 3 năm. Nó cần ${f.it.t} tháng mới chạy, nên chỉ giúp được các đề xuất khởi động sau đó, và chỉ khi chính nó thành công (khả năng ${pct(f.it.p)}).${dlt != null ? ` Tính cả tác động đó, đưa nó vào danh mục làm giá trị ròng của cả danh mục ${dlt >= 0 ? 'tăng' : 'giảm'} ${money(Math.abs(dlt))}.` : ''} Nên xem lại ở kỳ xét duyệt sau.` }; }
-    if (u.r > 3) return { d: 'hold', t: 'Chưa duyệt: vượt mức rủi ro HĐQT chấp nhận', risk: true, why: `Rủi ro ${u.r}/5, cao hơn mức tối đa 3/5 HĐQT chấp nhận${f.E > 0 ? ', dù giá trị ròng dương' : ''}. Ban điều hành không đề nghị duyệt. Nếu HĐQT vẫn muốn thử, phải biểu quyết riêng một ngoại lệ: thí điểm 90 ngày, vốn ngoài ngân sách danh mục, có phương án dừng.` };
-    if (f.E <= 0) return { d: 'hold', t: 'Gác lại', why: `Trong 3 năm kể từ khi khởi động, tiền thu về chưa bù được tiền bỏ ra (âm ${money(-f.E)}).` };
-    return { d: 'hold', t: 'Chưa đưa vào danh mục: danh sách chờ', why: `Giá trị ròng dương, nhưng ${lf(PL.why.replace('Không: ', ''))}. Xếp vào danh sách chờ, xem lại khi có thêm ngân sách hoặc ở kỳ xét duyệt sau.` };
-  }
-  function renderRec(f) {
-    const r = recOf(f), G = A.gate(P, S);
-    $('#rec').innerHTML = `<div class="rv ${r.d}"><span class="rl">Đề nghị của Ban điều hành (mô phỏng)</span><b>${r.t}</b></div>
-      <dl class="rdl"><div><dt>Vì sao</dt><dd>${esc(r.why)}</dd></div>${r.d === 'hold' ? '' : `<div><dt>Điều kiện để giải ngân tiếp</dt><dd>${esc(capf(G))}, đo bằng số thật sau khi chạy.</dd></div>`}<div><dt>Cái giá phải chấp nhận</dt><dd>${esc(u.trade)}.</dd></div></dl>
-      <button type="button" class="linkbtn" id="bRec">Xem dự thảo nghị quyết</button>`;
-    $('#bRec').addEventListener('click', () => { st.decision = r.d; st.userDecided = false; renderReso(fin()); $('#sReso').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); });
-    document.querySelectorAll('#decide button').forEach(b => b.classList.toggle('isrec', b.dataset.d === r.d));
-    $('#decide button[data-d="pilot"]').textContent = u.r > 3 ? 'Ngoại lệ rủi ro: thí điểm 90 ngày (biểu quyết riêng)' : PL && PL.chosen ? 'Thí điểm 90 ngày trước' : 'Thí điểm 90 ngày (ngoại lệ ngoài danh mục)';
-    if (!st.userDecided) { st.decision = r.d; renderReso(f); }
+    if (u.id === ENABLER) { const dlt = PL && PL.po.altE != null ? PL.po.altE - PL.po.E : null; return { d: 'hold', t: 'Chưa làm ở vòng này', s: 'Chưa làm', ss: 'xem lại kỳ sau', why: `Tự nó âm ${money(-f.E)} trong 3 năm. Nó cần ${f.it.t} tháng mới chạy, nên chỉ giúp được các đề xuất khởi động sau đó, và chỉ khi chính nó thành công (khả năng ${pct(f.it.p)}).${dlt != null ? ` Tính cả tác động đó, đưa nó vào danh mục làm giá trị ròng của cả danh mục ${dlt >= 0 ? 'tăng' : 'giảm'} ${money(Math.abs(dlt))}.` : ''} Nên xem lại ở kỳ xét duyệt sau.` }; }
+    if (u.r > 3) return { d: 'hold', t: 'Chưa duyệt: vượt mức rủi ro HĐQT chấp nhận', s: 'Chưa duyệt', ss: `rủi ro ${u.r}/5`, risk: true, why: `Rủi ro ${u.r}/5, cao hơn mức tối đa 3/5 HĐQT chấp nhận${f.E > 0 ? ', dù giá trị ròng dương' : ''}. Ban điều hành không đề nghị duyệt. Nếu HĐQT vẫn muốn thử, phải biểu quyết riêng một ngoại lệ: thí điểm 90 ngày, vốn ngoài ngân sách danh mục, có phương án dừng.` };
+    if (f.E <= 0) return { d: 'hold', t: 'Gác lại', s: 'Gác lại', ss: 'âm trong 3 năm', why: `Trong 3 năm kể từ khi khởi động, tiền thu về chưa bù được tiền bỏ ra (âm ${money(-f.E)}).` };
+    return { d: 'hold', t: 'Chưa đưa vào danh mục: danh sách chờ', s: 'Danh sách chờ', ss: 'có lời, hết vốn', why: `Giá trị ròng dương, nhưng ${lf(PL.why.replace('Không: ', ''))}. Xếp vào danh sách chờ, xem lại khi có thêm ngân sách hoặc ở kỳ xét duyệt sau.` };
   }
 
-  /* ---------- con số này tính thế nào ---------- */
-  const SAMPLE_NOTE = 'Dữ liệu mẫu được tạo để minh hoạ cách làm, không phải số liệu của Vertex; số tiền trong bài chạy thử không cộng vào tiền ở mục 2. Mức cải thiện thật phải đo trên dữ liệu thật khi thí điểm.';
+  /* ---------- mở dần câu trả lời ---------- */
+  const rev = n => n === 1 || (st.seen.has(n) && (n !== 2 || st.phase === 'done'));
+  function spineAns(n) {
+    const h = headRow(), f = fin();
+    if (n === 1) return [h[1], lf(h[0])];
+    if (n === 2) return [h[2], h[3] || lf(h[0])];
+    if (n === 3) return [money(f.E), 'giá trị ròng 3 năm'];
+    if (n === 4) return [`${PL.rank}/${UC.length}`, PL.chosen ? `được chọn, Đợt ${waveOf()}` : 'không được chọn'];
+    const r = recOf(f); return [r.s, r.ss];
+  }
+  function renderSpine() {
+    $('#spine').innerHTML = SC.map(([n, act, q]) => { const on = rev(n), a = on ? spineAns(n) : null;
+      return `<li class="sp${on ? ' on' : ''}${st.cur === n ? ' cur' : ''}"><a href="#s${n}"><span class="spn">${n}</span><span class="spq">${q}</span><b class="spa">${on ? esc(a[0]) : '?'}</b><small>${on ? esc(a[1]) : ' '}</small></a></li>`; }).join('');
+    $('#spbar').innerHTML = SC.map(([n, act]) => `<a href="#s${n}" class="${rev(n) ? 'on' : ''}${st.cur === n ? ' cur' : ''}" aria-label="Cảnh ${n}: ${act}"><i></i><span><b>${n}</b> ${act}</span></a>`).join('') + `<span class="spcur">Cảnh ${st.cur}/5: ${SC[st.cur - 1][1]}</span>`;
+  }
+  /* tới cảnh n nghĩa là đã đi qua các cảnh trước nó */
+  function reveal(n) {
+    let changed = false, two = false;
+    for (let k = 2; k <= n; k++) if (!st.seen.has(k)) { st.seen.add(k); changed = true; if (k === 2) two = true; }
+    if (!changed) return;
+    if (two && st.phase === 'done') { renderText(); renderBoard(true); renderWipe(true); return; }
+    renderSpine();
+  }
+
+  /* ---------- đầu trang ---------- */
+  function renderAsk(f) {
+    const h = headRow();
+    $('#ask').innerHTML = `Hôm nay, ${esc(lf(h[0]))} là <b>${esc(h[1])}</b>. ${esc(OW)} xin <b>${money(f.it.cap)}</b> để AI thay đổi con số này. Trước khi duyệt, HĐQT cần năm câu trả lời.`;
+  }
+
+  /* ---------- cảnh 1: hiện trạng ---------- */
+  const SAMPLE_NOTE = 'Dữ liệu mẫu được tạo để minh hoạ cách làm, không phải số liệu của Vertex. Mức cải thiện thật phải đo trên dữ liệu thật khi thí điểm.';
   function basisOf() { return BASIS[P.a] ? BASIS[P.a](P, S, fmtArg || simFmt) : null; }
-  function renderBasis(h) {
-    const B = basisOf(), el = $('#basis'); if (!B) { el.innerHTML = ''; return; }
-    const done = st.phase === 'done', wasOpen = el.querySelector('details') ? el.querySelector('details').open : true;
-    const c = B.c || (/điểm/.test(h[3] || '') ? `${h[3]} nghĩa là thay đổi từ ${h[1]} thành ${h[2]}, tính bằng điểm phần trăm.` : '');
-    el.innerHTML = `<details${wasOpen ? ' open' : ''}><summary>Con số “${esc(lf(h[0]))}” tính thế nào?</summary>
-      <dl><div><dt>Đo cái gì</dt><dd>${esc(B.m)}</dd></div><div><dt>Trên dữ liệu nào</dt><dd>${esc(B.d)}</dd></div><div><dt>Hôm nay</dt><dd>${esc(B.h)}</dd></div><div><dt>Có AI</dt><dd>${done ? esc(B.a) : 'Bấm “Cho AI làm thử ngay” để xem kết quả.'}</dd></div>${done && c ? `<div><dt>Đọc kết quả</dt><dd>${esc(c)}</dd></div>` : ''}</dl>
-      <p class="bnote">${SAMPLE_NOTE}</p></details>`;
+  function renderS1() {
+    const h = headRow(), B = basisOf();
+    $("#t1").textContent = `Hôm nay, ${lf(h[0])}: ${h[1]}`;
+    $('#d1').textContent = u.before + '.';
+    $('#c1').textContent = 'Cách làm hôm nay, chạy trên dữ liệu mẫu';
+    $('#basis').innerHTML = `<div class="kbig"><span>${esc(capf(lf(h[0])))}</span><b>${esc(h[1])}</b></div>` + (B ? `<dl><div><dt>Đo cái gì</dt><dd>${esc(B.m)}</dd></div><div><dt>Trên dữ liệu nào</dt><dd>${esc(B.d)}</dd></div><div><dt>Hôm nay tính thế nào</dt><dd>${esc(B.h)}</dd></div></dl>` : '') + `<p class="bnote">${SAMPLE_NOTE}</p>`;
+    $('#k1t').textContent = 'Cùng bộ dữ liệu này, AI làm tốt hơn được bao nhiêu? Đoán trước, rồi xem.';
+    $('#k1n').textContent = SHOW ? '' : 'Hoặc kéo xuống: kết quả ở cảnh 2.';
   }
-  /* ---------- HĐQT thẩm định ---------- */
-  function renderReview(h) {
-    const R0 = RV[u.id], el = $('#review'); if (!R0) { el.innerHTML = ''; return; }
-    const f = fin(), it = f.it, done = st.phase === 'done', B = basisOf() || {}, r = recOf(f), G = A.gate(P, S);
-    const rev = f.C.rev, E5 = evalItem(u, ctxOf({ preset: st.preset, hz: 5 }), 0, 1, 0).E;
-    const chain = [
-      ['Chỉ số vận hành', `${capf(lf(h[0]))}: ${h[1]} → ${done ? h[2] : '?'}`, 'đo trên dữ liệu mẫu'],
-      ['Cơ chế ra tiền', R0[0], ''],
-      ['Tiền theo tờ trình', `${money(it.val)} mỗi năm${it.wc ? `, cộng ${money(it.wc)} thu về một lần` : ''}`, (it.val / rev * 100 >= 0.01 ? `bằng ${nf(it.val / rev * 100, 2)}%` : 'chưa tới 0,01%') + ' doanh thu mỗi năm'],
-      ['Ban Tài chính tính lại', `Giá trị ròng 3 năm ${money(f.E)}`, `đã trừ vốn, chi phí vận hành; khả năng thành công ${pct(it.p)}`],
-    ];
-    const qs = [B.q, u.id === ENABLER ? '' : QLEV[u.lev], `Cái giá: ${lf(u.trade)}. Ai chịu, và họ đã đồng ý chưa?`].filter(Boolean);
-    if (u.r >= 3) qs.push(`Rủi ro ${u.r}/5: phải thẩm định mô hình độc lập trước khi chạy thật.`);
-    if (u.f <= 2) qs.push(`Khó triển khai (${u.f}/5): chỉ giải ngân từng phần, sau khi thí điểm đạt.`);
-    const links = R0[2].filter(([id]) => UC[id - 1]);
-    const touched = [...new Set([u.s].concat(links.map(([id]) => UC[id - 1].s)))].sort((a, b) => a - b).map(k => STG[k].toLowerCase());
-    const boost = u.f <= 3 && u.id !== ENABLER ? `<p class="rvnote">Nếu nền tảng dữ liệu chung (<a href="${SLUGS[ENABLER - 1]}.html">#${ENABLER}</a>) chạy trước, khả năng thành công của đề xuất này tăng thêm khoảng ${nf(BOOSTP * 100, 0)} điểm.</p>` : '';
-    const stop = r.d === 'approve' ? `Sau thí điểm, nếu không đạt: ${lf(G)}, thì dừng và không giải ngân phần còn lại.`
-      : r.risk ? 'Chỉ xét như một ngoại lệ: thí điểm 90 ngày, vốn ngoài ngân sách danh mục, có phương án dừng.'
-      : f.E <= 0 ? `Xét lại khi giảm được vốn hoặc tiền về nhanh hơn. Nhìn xa 5 năm, giá trị ròng là ${money(E5)}${E5 > 0 ? ': có thể xét như một khoản đặt cược chiến lược, có cửa dừng rõ ràng.' : ', vẫn chưa đáng làm.'}`
-      : 'Xét lại khi có thêm ngân sách, hoặc khi một đề xuất đã chọn không đạt điều kiện giải ngân và trả lại vốn.';
-    el.innerHTML = `<div class="rvg">
-      <section class="rvc"><h3>Logic: con số có dẫn tới tiền không?</h3>
-        <ol class="chain">${chain.map(c => `<li><span>${c[0]}</span><b>${esc(c[1])}</b>${c[2] ? `<small>${esc(c[2])}</small>` : ''}</li>`).join('')}</ol>
-        <p class="rvnote"><b>Mắt xích cần chứng minh:</b> từ chỉ số trên dữ liệu mẫu sang tiền. Con số tiền là ước tính của người đề xuất; điều kiện giải ngân ở mục 3 chính là phép thử mắt xích này.</p></section>
-      <section class="rvc"><h3>Phản biện: HĐQT phải hỏi gì?</h3>
-        <ul class="qs">${qs.map(q => `<li>${esc(q)}</li>`).join('')}</ul></section>
-      <section class="rvc"><h3>Hệ thống: việc này chạm tới đâu?</h3>
-        <p class="rvnote">Chạm tới ${touched.length} khâu: ${touched.join(', ')}.</p>
-        <ul class="lk">${links.map(([id, lab]) => `<li><a href="${SLUGS[id - 1]}.html"><b>#${id}</b> ${esc(UC[id - 1].name)}</a><small>${esc(lab)}</small></li>`).join('')}</ul>${boost}</section>
-      <section class="rvc"><h3>Quyết định: làm sao để giá trị lớn hơn?</h3>
-        <dl class="rvd"><div><dt>Đề nghị</dt><dd>${esc(r.t)}</dd></div><div><dt>Làm lớn hơn</dt><dd>${esc(R0[1])}</dd></div><div><dt>${r.d === 'approve' ? 'Dừng khi' : 'Xét lại khi'}</dt><dd>${esc(stop)}</dd></div></dl></section>
-    </div>`;
+  function drawToday() {
+    const box = $('#today'), w = Math.max(280, Math.round(box.clientWidth)), h = Math.round(w < 520 ? Math.max(260, w * 0.78) : Math.min(340, Math.max(260, w * 0.55)));
+    box.innerHTML = '';
+    const g = E('svg', { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': 'Cách làm hôm nay trên dữ liệu mẫu' }, box);
+    A.draw(g, w, h, S, -1, P, fmtArg);
   }
 
-  /* ---------- kéo để so ---------- */
+  /* ---------- cảnh 2: có AI ---------- */
+  function renderBoard(anim) {
+    const h = headRow(), done = rev(2), B = basisOf() || {};
+    $('#t2').textContent = done ? `Có AI: ${h[1]} thành ${h[2]}${h[3] ? ' (' + h[3] + ')' : ''}` : 'Có AI, con số này thành bao nhiêu?';
+    $('#d2').textContent = `${AG} làm trên đúng bộ dữ liệu mẫu ở cảnh 1: lấy dữ liệu, chạy thuật toán, tự kiểm tra, rồi chờ người duyệt.`;
+    $('#bBefTxt').textContent = u.before + '.'; $('#bAftTxt').textContent = done ? u.after + '.' : (SHOW && st.phase !== 'done' ? 'Chưa chạy thử.' : 'Kết quả hiện khi bạn tới đây.');
+    $('#bKey0').innerHTML = `<span class="bl">${esc(capf(h[0]))}</span><span class="bv">${esc(h[1])}</span>`;
+    $('#bKey1').innerHTML = `<span class="bl">${esc(capf(h[0]))}</span><span class="bv" id="bv1">${done ? esc(anim ? h[1] : h[2]) : '?'}</span>`;
+    const long = String(h[3] || '').length > 16;
+    $('#bMid').innerHTML = `<span class="arrowbig" aria-hidden="true">→</span><span class="delta ${done ? (h[4] !== false ? 'up' : 'dn') : 'q'}${done && long ? ' long' : ''}">${done ? esc(h[3] || 'đã đổi') : '?'}</span><span class="dsub">${done ? 'trên dữ liệu mẫu' : 'chưa mở'}</span>`;
+    $('#board').classList.toggle('open', done);
+    if (anim && done) tween($('#bv1'), h[1], h[2]);
+    const c = B.c || (/điểm/.test(h[3] || '') ? `${h[3]} nghĩa là thay đổi từ ${h[1]} thành ${h[2]}, tính bằng điểm phần trăm.` : '');
+    $('#read').innerHTML = `<h3>AI làm thế nào</h3>` + (done ? `<p>${esc(B.a || u.after + '.')}</p>${c ? `<p><b>Đọc kết quả:</b> ${esc(c)}</p>` : ''}<p class="twist">${esc(A.twist(P, S, fmtArg))}</p>` : '<p class="muted">Mở khi AI chạy xong.</p>');
+    const G = A.guess(P, S), gv = +$('#gIn').value, near = Math.abs(gv - G.truth) <= Math.max(G.step * 2, Math.abs(G.truth) * 0.15), dp = G.step < 1 ? 1 : 0;
+    $('#gRes').innerHTML = done && st.touched ? `Bạn đoán <b>${nf(gv, dp)}${G.unit}</b>; AI đạt <b>${nf(G.truth, dp)}${G.unit}</b>. ${near ? 'Dự đoán của bạn khá sát.' : gv < G.truth ? 'AI làm tốt hơn bạn nghĩ.' : 'Dữ liệu không cho phép tốt đến mức bạn nghĩ.'}` : '';
+  }
   function setWipe(v) { $('#wBefore').style.clipPath = `inset(0 ${100 - v}% 0 0)`; $('#wHandle').style.left = v + '%'; }
   function renderWipe(sweep) {
-    const box = $('#wipe'), w = Math.max(280, Math.round(box.clientWidth)), hh = Math.round(w < 520 ? Math.max(290, w * 0.85) : Math.min(460, Math.max(320, w * 0.42))), done = st.phase === 'done';
+    const box = $('#wipe'), w = Math.max(280, Math.round(box.clientWidth)), hh = Math.round(w < 520 ? Math.max(290, w * 0.85) : Math.min(420, Math.max(300, w * 0.38))), done = rev(2);
     box.style.height = hh + 'px';
     const mk = (id, k, lab) => { const el = $(id); el.innerHTML = ''; const g = E('svg', { viewBox: `0 0 ${w} ${hh}`, width: w, height: hh, role: 'img', 'aria-label': lab }, el); A.draw(g, w, hh, S, k, P, fmtArg); };
-    mk('#wBefore', -1, 'Hôm nay: cách làm hiện tại'); mk('#wAfter', done ? S.F - 1 : -1, 'Sau khi có AI: kết quả của AI');
-    $('#wLock').hidden = done; $('#wRange').disabled = !done;
-    const h = headRow();
-    $('#wK0').textContent = h[1]; $('#wK1').textContent = done ? h[2] : '?';
-    $('#wD').innerHTML = done && h[3] ? `<span class="dl ${h[4] !== false ? 'up' : 'dn'}">${esc(h[3])}</span>` : '';
-    if (sweep && done && !RM) { const t0 = performance.now(); const step = now => { const k = Math.min(1, (now - t0) / 1400), v = 100 - 50 * (1 - Math.pow(1 - k, 3)); $('#wRange').value = v; setWipe(v); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
-    else { if (done && +$('#wRange').value === 100 && sweep) $('#wRange').value = 50; setWipe(+$('#wRange').value); }
+    mk('#wBefore', -1, 'Hôm nay: cách làm hiện tại'); mk('#wAfter', done ? S.F - 1 : -1, 'Có AI: kết quả của AI');
+    $('#wLock').hidden = done || !SHOW; $('#wRange').disabled = !done;
+    if (!done) { $('#wRange').value = 100; setWipe(100); return; }
+    if (sweep && !RM) { const t0 = performance.now(); const step = now => { const k = Math.min(1, (now - t0) / 1400), v = 100 - 50 * (1 - Math.pow(1 - k, 3)); $('#wRange').value = v; setWipe(v); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+    else { if (+$('#wRange').value === 100) $('#wRange').value = 50; setWipe(+$('#wRange').value); }
+  }
+  function renderCompare() {
+    const rows = [];
+    if (rev(2)) A.ba(P, S, fmtArg).forEach(r => { [r[1], r[2]] = pairU(r[1], r[2]); rows.push({ n: r[0], b: r[1], a: r[2], d: r[3] || '', good: r[4] !== false }); });
+    else rows.push({ note: 'Mở khi AI chạy xong.' });
+    $('#cmp').innerHTML = rows.map(r => {
+      if (r.note) return `<div class="crow"><div class="cn muted">${r.note}</div></div>`;
+      let bv, av; const x = numOf(r.b), y = numOf(r.a); if (x != null && y != null && unitOf(r.b) === unitOf(r.a)) { bv = x; av = y; }
+      const mx = bv != null ? Math.max(Math.abs(bv), Math.abs(av), 1e-9) : 0;
+      const bars = bv != null ? `<div class="cb"><span class="b0" style="width:${(Math.abs(bv) / mx * 100).toFixed(1)}%"></span><span class="b1" style="width:${(Math.abs(av) / mx * 100).toFixed(1)}%"></span></div>` : '<div class="cb nob"></div>';
+      return `<div class="crow"><div class="cn">${esc(r.n)}</div><div class="cv bf">${esc(r.b)}</div>${bars}<div class="cv af">${esc(r.a)}</div><div class="cd">${r.d ? `<span class="dl ${r.good ? 'up' : 'dn'}">${esc(r.d)}</span>` : ''}</div></div>`;
+    }).join('');
   }
 
-  /* ---------- đầu vào ---------- */
+  /* đầu vào, xử lý, đầu ra của bài chạy thử */
   function renderInput() {
     const I = A.inputs(P, S, fmtArg);
     $('#inSrc').textContent = SRC[u.d];
@@ -2849,8 +2993,6 @@ const RV = {
     const ok = st.step > 2 || st.phase === 'done';
     $('#inChecks').innerHTML = A.dq(P, S).map(c => `<li class="${ok ? 'ok' : ''}"><span class="ck">${ok ? '✓' : ''}</span>${esc(c)}</li>`).join('');
   }
-
-  /* ---------- xử lý ---------- */
   function W() { return Math.max(280, Math.round($('#stage').clientWidth)); }
   function draw() {
     const box = $('#stage'), w = W(), h = Math.round(w < 520 ? Math.max(290, w * 0.85) : Math.min(400, Math.max(300, w * 0.62)));
@@ -2862,7 +3004,7 @@ const RV = {
     const G = A.guess(P, S), gi = $('#gIn');
     $('#gQ').textContent = G.q; gi.min = G.min; gi.max = G.max; gi.step = G.step; if (st.guessed == null) gi.value = G.val;
     const out = () => { $('#gOut').textContent = nf(+gi.value, G.step < 1 ? 1 : 0) + G.unit; };
-    out(); gi.oninput = out;
+    out(); gi.oninput = () => { st.touched = true; out(); };
   }
   const STEPS = [['Nhận yêu cầu', 0], ['Lấy dữ liệu', 0], ['Kiểm dữ liệu', 0], ['Chạy thuật toán', 1], ['Tự kiểm tra', 1], ['Người duyệt', 2]];
   function steps(cur) {
@@ -2876,8 +3018,6 @@ const RV = {
   let t0 = 0;
   function log(html) { const d = document.createElement('div'), s = ((performance.now() - t0) / 1000).toFixed(1); d.innerHTML = `<span class="muted">${s}s</span> ${html}`; $('#console').appendChild(d); $('#console').scrollTop = 1e6; }
   const sleep = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
-
-  /* ---------- đầu ra ---------- */
   function renderOutput() {
     if (st.phase !== 'done') {
       $('#kpis').innerHTML = [1, 2, 3].map(() => '<div class="ok1"><div class="k">Chưa chạy</div><div class="v">—</div></div>').join('');
@@ -2888,76 +3028,36 @@ const RV = {
     const O = A.outputs(P, S, fmtArg);
     $('#outTitle').textContent = O.title; $('#outList').innerHTML = O.items.map(s => `<li>${esc(s)}</li>`).join('');
   }
-  function renderStory() {
-    const O = st.phase === 'done' ? A.outputs(P, S, fmtArg) : null;
-    $('#story').innerHTML = `<span class="sg s0"><b>Đầu vào</b>${esc(capf(A.pull(P, S)))}</span><span class="sa" aria-hidden="true">→</span><span class="sg s1"><b>Xử lý</b>${esc(AG)} chạy thuật toán, tự kiểm tra</span><span class="sa" aria-hidden="true">→</span><span class="sg s2"><b>Đầu ra</b>${O ? esc(O.title) : 'Kết quả chờ người duyệt'}</span>`;
-  }
-  function afterResult(first) {
-    renderOutput(); renderStory(); renderCompare(fin()); renderBalance(fin()); renderReso(fin()); renderRec(fin()); renderBoard(!!first); renderWipe(!!first);
-    const G = A.guess(P, S), gv = +$('#gIn').value, near = Math.abs(gv - G.truth) <= Math.max(G.step * 2, Math.abs(G.truth) * 0.15);
-    $('#gRes').innerHTML = SHOW && st.guessed != null ? `Kết quả: <b>${nf(G.truth, G.step < 1 ? 1 : 0)}${G.unit}</b>; bạn đoán ${nf(gv, G.step < 1 ? 1 : 0)}${G.unit}. ${near ? 'Dự đoán của bạn khá sát.' : gv < G.truth ? 'AI làm tốt hơn bạn dự đoán.' : 'Dữ liệu không cho phép tốt đến mức bạn dự đoán.'}` : '';
-    $('#twist').hidden = false; $('#twist').textContent = A.twist(P, S, fmtArg);
-    if (A.ctrl) {
-      const c = A.ctrl(P, S), el = $('#ctrlIn');
-      $('#ctrl').hidden = false; $('#ctrlLab').textContent = c.label;
-      if (!el.dataset.init) { el.min = c.min; el.max = c.max; el.step = c.step; el.value = c.val; el.dataset.init = '1'; el.addEventListener('input', () => { A.apply(P, S, +el.value); $('#ctrlOut').textContent = c.fmt(+el.value); draw(); afterResult(); }); }
-      $('#ctrlOut').textContent = c.fmt(+el.value);
-    }
-  }
-  async function run() {
-    if (st.phase === 'run') return;
-    st.phase = 'run'; st.guessed = +$('#gIn').value; $('#bRun').disabled = true; $('#console').innerHTML = ''; t0 = performance.now();
-    status('run', 'Đang làm'); steps(0); renderInput();
-    log(`<b>${OW}:</b> “${A.ask(P, S)}”`); await sleep(500);
-    steps(1); log(`Lấy dữ liệu từ <b>${SRC[u.d]}</b>: ${A.pull(P, S)}`); await sleep(550);
-    steps(2); renderInput(); await sleep(250); st.step = 3; renderInput(); A.dq(P, S).forEach(x => log(`<span class="okc">✓</span> ${x}`)); await sleep(450);
-    steps(3); log(`Gọi kỹ năng <b>${A.tool(P, S)}</b>`);
-    const F = S.F, dur = RM ? 0 : 1900;
-    await new Promise(res => { if (!dur) { st.k = F - 1; draw(); res(); return; } const start = performance.now(); const tick = now => { const k = Math.min(F - 1, Math.floor((now - start) / dur * F)); if (k !== st.k) { st.k = k; draw(); } if (now - start < dur) requestAnimationFrame(tick); else { st.k = F - 1; draw(); res(); } }; requestAnimationFrame(tick); });
-    steps(4); A.checks(P, S).forEach(c => log(`${c[1] ? '<span class="okc">✓</span>' : '<span class="bad">✗</span>'} ${c[0]}`)); await sleep(450);
-    st.phase = 'done'; steps(5); status('wait', 'Chờ người duyệt');
-    log(`Chuyển kết quả cho <b>${OW.toLowerCase()}</b> duyệt. ${CTRL[u.tec]}.`);
-    $('#hil').hidden = false; $('#bRun').textContent = 'Chạy lại'; $('#bRun').disabled = false;
-    afterResult(true);
-  }
-  function approve() { if (st.phase !== 'done' || st.approved) return; st.approved = true; steps(6); status('ok', 'Đã duyệt'); log(`<span class="okc">✓</span> <b>${OW}</b> đã duyệt kết quả. Ban Tài chính ghi nhận vào sổ đo giá trị.`); $('#bApprove').disabled = true; $('#bApprove').textContent = 'Đã duyệt'; }
 
-  /* ---------- trước và sau ---------- */
-  const numOf = s => { const m = String(s).replace(/\s/g, ' ').replace(/(\d)\.(\d{3})/g, '$1$2').replace(/(\d)\.(\d{3})/g, '$1$2').replace(',', '.').match(/[−-]?\d+(\.\d+)?/); return m ? parseFloat(m[0].replace('−', '-')) : null; };
-  const unitOf = s => String(s).replace(/[−-]?[\d.,]+/g, '#').replace(/khoảng|dưới|trên|trước đó/g, '').replace(/\s+/g, ' ').trim();
-  function renderCompare(f) {
-    const it = f.it, rows = [];
-    if (st.phase === 'done') A.ba(P, S, fmtArg).forEach(r => { [r[1], r[2]] = pairU(r[1], r[2]); rows.push({ n: r[0], b: r[1], a: r[2], d: r[3] || '', good: r[4] !== false, grp: 'Trên dữ liệu mẫu' }); });
-    else rows.push({ n: 'Chỉ số vận hành', b: '—', a: '—', d: '', good: true, grp: 'Trên dữ liệu mẫu', note: 'Bấm “Cho AI làm thử” ở đầu trang để thấy từng chỉ số.' });
-    let html = '', last = '';
-    rows.forEach(r => {
-      if (r.grp !== last) { html += `<div class="cgrp">${r.grp}</div>`; last = r.grp; }
-      if (r.note) { html += `<div class="crow"><div class="cn muted">${r.note}</div></div>`; return; }
-      let bv = r.bv, av = r.av;
-      if (bv == null) { const x = numOf(r.b), y = numOf(r.a); if (x != null && y != null && unitOf(r.b) === unitOf(r.a)) { bv = x; av = y; } }
-      const mx = bv != null ? Math.max(Math.abs(bv), Math.abs(av), 1e-9) : 0;
-      const bars = bv != null ? `<div class="cb"><span class="b0" style="width:${(Math.abs(bv) / mx * 100).toFixed(1)}%"></span><span class="b1" style="width:${(Math.abs(av) / mx * 100).toFixed(1)}%"></span></div>` : '<div class="cb nob"></div>';
-      html += `<div class="crow"><div class="cn">${esc(r.n)}</div><div class="cv bf">${esc(r.b)}</div>${bars}<div class="cv af">${esc(r.a)}</div><div class="cd">${r.d ? `<span class="dl ${r.good ? 'up' : 'dn'}">${esc(r.d)}</span>` : ''}</div></div>`;
-    });
-    $('#cmp').innerHTML = html;
-  }
-
-  /* ---------- được và mất ---------- */
-  function renderBalance(f) {
+  /* ---------- cảnh 3: thành tiền ---------- */
+  function renderMoneyStrip(f) {
     const it = f.it;
-    const k = st.phase === 'done' ? A.kpis(P, S, fmtArg)[0] : null;
-    $('#gain').innerHTML = [`${esc(u.after)}.`, `Thu về <b>${money(it.val)} mỗi năm</b> khi chạy đủ, nếu thành công.`, k ? `Trên dữ liệu mẫu: ${lf(k[0])} <b>${k[1]}</b> (${k[2]}).` : 'Bấm “Cho AI làm thử” để thấy kết quả trên dữ liệu mẫu.', `Con người vẫn giữ quyền quyết: ${lf(CTRL[u.tec])}.`].map(s => `<li>${s}</li>`).join('');
-    $('#cost').innerHTML = [`${esc(u.trade)}.`, `Chi phí vận hành <b>${money(it.opex)} mỗi năm</b> sau khi xây xong.`, `Khả năng thất bại <b>${failPct(it.p)}</b>; nếu dừng ở điểm kiểm tra giữa kỳ, vẫn mất khoảng ${money(it.cap * Math.ceil(it.t / 2) / it.t)}.`, `Tiền chỉ bắt đầu về sau <b>${it.t} tháng</b> và tăng dần trong 9 tháng.`, u.r >= 3 ? `Rủi ro ${RISKW} (${u.r}/5): phải có thẩm định độc lập trước khi chạy thật.` : `Rủi ro thấp (${u.r}/5): kiểm soát thông thường là đủ.`].map(s => `<li>${s}</li>`).join('');
+    const T = [
+      ['Bỏ ra', money(it.cap), `một lần, cộng ${money(it.opex)} mỗi năm vận hành`],
+      ['Thu về mỗi năm', money(it.val), `khi chạy đủ, tiền về từ tháng ${it.t + 1}${it.wc ? `; cộng ${money(it.wc)} giải phóng một lần` : ''}`],
+      ['Khả năng thành công', pct(it.p), `rủi ro ${u.r}/5 (${RISKW}), dễ triển khai ${u.f}/5`],
+      ['Hoàn vốn', f.pb ? 'tháng ' + f.pb : 'chưa trong 3 năm', f.pb ? 'kể từ khi giải ngân' : 'tiền về chưa bù tiền bỏ ra'],
+    ];
+    $('#money').innerHTML = `<div class="mt4">${T.map(t => `<div class="mt"><span class="ml">${t[0]}</span><b class="mv">${t[1]}</b><span class="ms">${t[2]}</span></div>`).join('')}</div>`;
   }
-
-  /* ---------- Ban Tài chính ---------- */
+  function renderS3(f) {
+    const H0 = f.H0, E0 = f.E;
+    $('#t3').textContent = E0 >= 0 ? (E0 <= H0 ? `Tờ trình hứa ${money(H0)}; Ban Tài chính công nhận ${money(E0)}` : `Ban Tài chính tính ra ${money(E0)}, cao hơn con số ${money(H0)} trên tờ trình`)
+      : (H0 > 0 ? `Tờ trình hứa ${money(H0)}; tính đủ, đề xuất này âm ${money(-E0)}` : `Ngay trên tờ trình đã chưa bù được vốn; tính đủ, âm ${money(-E0)}`);
+    $('#d3').textContent = 'Ban Tài chính tính tiếp những thứ tờ trình bỏ qua: tiền về chậm, chi phí vận hành, khả năng thất bại, và quy về giá trị hôm nay.';
+    $('#c3').textContent = 'Từ con số trên tờ trình tới giá trị ròng 3 năm, tỷ đồng';
+    const it = f.it, ip = PL && PL.chosen ? (() => { const C = ctxOf({ preset: st.preset, hz: 3 }), o = PL.po.off[PL.io]; return { o, E: evalItem(u, C, pbOf(u, o, platInfo(C, PL.po.sel, PL.po.off)), 1, o).E }; })() : null, extra = [];
+    if (it.wc) extra.push(`Trong ${money(f.E)} có ${money(it.Ew)} là tiền giải phóng một lần; không tính khoản này còn ${money(it.Eop)}.`);
+    if (ip && ip.o > 0) extra.push(`Theo lộ trình danh mục (khởi động tháng ${ip.o + 1}), giá trị ròng còn ${money(ip.E)} vì tiền về muộn hơn ${ip.o} tháng.`);
+    $('#finnote').textContent = extra.join(' ');
+  }
   function renderFin(f) {
     const box = $('#wf'), w = Math.max(300, Math.round(box.clientWidth)), narrow = w < 560, h = narrow ? 290 : 330;
-    const H0 = r2(r2(3 * f.it.val + f.it.wc) - r2(f.it.cap)), E0 = r2(f.E), st0 = f.steps.filter(s => Math.abs(s[1]) >= 0.005).map(s => [s[0], r2(s[1])]);
+    const H0 = f.H0, E0 = r2(f.E), st0 = f.steps.filter(s => Math.abs(s[1]) >= 0.005).map(s => [s[0], r2(s[1])]);
     { const raw = f.steps.filter(s => Math.abs(s[1]) >= 0.005), T = Math.round((E0 - H0) * 100), fl = raw.map(s => Math.floor(s[1] * 100 + 1e-9)), rem = raw.map((s, i) => s[1] * 100 - fl[i]); let k = T - fl.reduce((a, b) => a + b, 0); const ord = rem.map((r, i) => i).sort((a, b) => rem[b] - rem[a]);
       for (let n = 0; k > 0 && n < 50; n++, k--) fl[ord[n % ord.length]]++; for (let n = 0; k < 0 && n < 50; n++, k++) fl[ord[ord.length - 1 - (n % ord.length)]]--; raw.forEach((s, i) => { st0[i][1] = fl[i] / 100; }); }
     const bars = [['Tờ trình nói', H0, 'T']].concat(st0.map(s => [s[0], s[1], s[1] >= 0 ? 'P' : 'N'])).concat([['Giá trị ròng 3 năm', E0, 'T']]);
-    const lg = document.querySelector('#sFin .legend span:nth-child(2)'); if (lg) lg.hidden = !st0.some(s => s[1] > 0);
+    const lg = document.querySelector('#wfp .legend span:nth-child(2)'); if (lg) lg.hidden = !st0.some(s => s[1] > 0);
     let run = 0; const segs = bars.map(b => { if (b[2] === 'T') { const s = { lab: b[0], v: b[1], y0: 0, y1: b[1], t: 'T' }; run = b[1]; return s; } const s = { lab: b[0], v: b[1], y0: run, y1: run + b[1], t: b[2] }; run += b[1]; return s; });
     const lo = Math.min(0, ...segs.map(s => Math.min(s.y0, s.y1))), hi = Math.max(0, ...segs.map(s => Math.max(s.y0, s.y1))), dv = PRESETS[st.preset].cur === 'USD' ? 1e9 : 1;
     const sc = niceS(lo / dv, hi / dv, 5), m = { l: 50, r: 8, t: 24, b: narrow ? 30 : 54 }; box.innerHTML = '';
@@ -2972,24 +3072,141 @@ const RV = {
       lines.slice(0, 3).forEach((ln, j) => E('text', { x: x + bw * 0.36, y: h - m.b + 16 + j * 12, 'text-anchor': 'middle', class: 'wfc' }, g, ln));
     });
     if (narrow) { const ol = document.createElement('ol'); ol.className = 'wfl2'; ol.innerHTML = segs.map(s => `<li><span>${esc(s.lab)}</span><b>${(s.t !== 'T' && s.v > 0 ? '+' : '') + f2(s.v)} tỷ</b></li>`).join(''); box.appendChild(ol); }
-    $('#hFin').textContent = E0 > H0 ? 'Vì sao con số của Ban Tài chính khác tờ trình' : 'Vì sao con số của Ban Tài chính nhỏ hơn tờ trình';
-    $('#finTxt').innerHTML = `Tờ trình nói mỗi năm thu ${f2(f.it.val)} tỷ đồng, ba năm ${f2(r2(3 * f.it.val))} tỷ đồng${f.it.wc ? `, cộng ${f2(r2(f.it.wc))} tỷ đồng tiền giải phóng một lần từ tồn kho, công nợ` : ''}, trừ vốn ${f2(r2(f.it.cap))} tỷ đồng còn <b>${f2(H0)} tỷ đồng</b>. Ban Tài chính tính tiếp những thứ tờ trình bỏ qua: tiền về chậm, chi phí vận hành, khả năng thất bại, và quy về giá trị hôm nay. Kết quả: <b>${Math.abs(E0) < 0.005 ? 'gần như hoà vốn (' + money(f.E) + ')' : f2(E0) + ' tỷ đồng'}</b>${f.pb ? `, hoàn vốn ở tháng ${f.pb}` : ', chưa hoàn vốn trong 3 năm'}.`;
+  }
+  function renderChain() {
+    const R0 = RV[u.id], el = $('#chain'); if (!R0) { el.innerHTML = ''; return; }
+    const f = fin(), it = f.it, h = headRow(), rv = f.C.rev, G = A.gate(P, S);
+    const share = it.val / rv * 100 >= 0.01 ? `bằng ${nf(it.val / rv * 100, 2)}% doanh thu mỗi năm của Vertex` : 'chưa tới 0,01% doanh thu mỗi năm của Vertex';
+    const N = [
+      ['ok', 'Đo được trên dữ liệu mẫu', `${capf(lf(h[0]))}: ${h[1]} → ${rev(2) ? h[2] : '?'}`, ''],
+      ['', 'Cơ chế ra tiền', R0[0], ''],
+      ['weak', 'Tờ trình ước', `${money(it.val)} mỗi năm${it.wc ? `, cộng ${money(it.wc)} một lần` : ''}`, share],
+      ['ok', 'Ban Tài chính công nhận', `${money(f.E)} giá trị ròng 3 năm`, `đã trừ vốn và chi phí vận hành; khả năng thành công ${pct(it.p)}`],
+    ], L = [['ok', 'đã đo'], ['weak', 'mắt xích chưa chứng minh'], ['ok', 'tính lại đủ']];
+    el.innerHTML = N.map((n, i) => `<li class="cn ${n[0]}"><span class="ck">${n[1]}</span><b>${esc(n[2])}</b>${n[3] ? `<small>${esc(n[3])}</small>` : ''}</li>` + (i < 3 ? `<li class="cl ${L[i][0]}" aria-hidden="true"><span>${L[i][1]}</span></li>` : '')).join('');
+    $('#ctest').innerHTML = `<b>Phép thử mắt xích yếu:</b> ${esc(G)}. Đo bằng số thật sau khi chạy; không đạt thì dừng.`;
   }
 
-  /* ---------- danh mục ---------- */
-  let PL = null;
+  /* ---------- cảnh 4: cuộc đua vốn ---------- */
   function renderPort() {
     PL = plan();
     const box = $('#pmap'), w = Math.max(280, Math.round(box.clientWidth)), h = Math.round(Math.min(320, Math.max(240, w * 0.5))), m = { l: 46, r: 10, t: 22, b: 32 };
     box.innerHTML = '';
     const g = E('svg', { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': `Vị trí đề xuất này trên bản đồ ${UC.length} đề xuất` }, box), dv = PRESETS[st.preset].cur === 'USD' ? 1e9 : 1;
-    const sy = niceS(0, Math.max(...PL.items.map(x => x.evYr)) / dv * 1.05, 4), Y = axY(g, m, w, h, sy, `Tiền thu về mỗi năm, đã tính rủi ro, ${dv > 1 ? 'tỷ USD' : 'tỷ đồng'}`), X = axX(g, m, w, h, { lo: 45, hi: 100, t: [50, 60, 70, 80, 90, 100], d: 0 }, 'Khả năng thành công', t => t + '%');
+    const sy = niceS(0, Math.max(...PL.items.map(x => x.evYr)) / dv * 1.05, 4), Y = axY(g, m, w, h, sy, dv > 1 ? 'tỷ USD mỗi năm' : 'tỷ đồng mỗi năm'), X = axX(g, m, w, h, { lo: 45, hi: 100, t: [50, 60, 70, 80, 90, 100], d: 0 }, 'Khả năng thành công', t => t + '%');
     const chosen = new Set(PL.po.sel.map(i => UC[i].id));
     PL.items.forEach(x => { if (x.u.id === u.id) return; TT(E('circle', { cx: X(x.p * 100), cy: Y(x.evYr / dv), r: 4, class: chosen.has(x.u.id) ? 'pdot1' : 'pdot' }, g), `${x.u.id}. ${x.u.name}`); });
     const me = PL.items[u.id - 1], cx = X(me.p * 100), cy = Y(me.evYr / dv);
     E('circle', { cx, cy, r: 7, class: chosen.has(u.id) ? 'pdot1' : 'pdot' }, g); E('circle', { cx, cy, r: 11, class: 'pme' }, g);
     E('text', { x: cx + (cx > w * 0.7 ? -15 : 15), y: cy + 4, 'text-anchor': cx > w * 0.7 ? 'end' : 'start', class: 'alab' }, g, 'Đề xuất này');
-    $('#facts').innerHTML = `<div>Xếp hạng theo giá trị ròng 3 năm<b>${PL.rank}/${UC.length}</b></div><div>Phương án tối ưu có chọn không?<b>${PL.why}</b>phương án chọn ${PL.n} đề xuất, ngân sách ${money(PRESETS[st.preset].b[2] / 1e4 * ctxOf({ preset: st.preset, hz: 3 }).rev)}</div><div>Cách chọn quen thuộc (tờ trình hứa hẹn nhiều nhất)<b>${PL.inI ? 'Có chọn' : 'Không chọn'}</b>${PL.inI !== PL.chosen ? (PL.inI ? 'được chọn vì con số trên tờ trình lớn' : 'bị bỏ qua vì con số trên tờ trình nhỏ') : 'hai cách chọn giống nhau ở đề xuất này'}</div><div><a href="../danh-muc-100-use-case.html">Mở danh mục 100 đề xuất</a></div>`;
+  }
+  function renderS4(f) {
+    const r = recOf(f), s0 = startOf(), rk = `Xếp thứ ${PL.rank}/${UC.length}`;
+    $('#t4').textContent = PL.chosen ? (u.id === ENABLER ? 'Tự nó chưa có lời, nhưng phương án tối ưu vẫn xếp nó vào Đợt 1' : s0 === 0 ? `${rk} và được chọn ngay Đợt 1` : `${rk}, được chọn nhưng phải chờ tới tháng ${s0 + 1}`)
+      : u.id === ENABLER ? `${rk}: tự nó lỗ, nên chưa được chọn ở vòng này` : r.risk ? `${rk}, nhưng rủi ro ${u.r}/5 vượt mức HĐQT chấp nhận` : f.E <= 0 ? `${rk}: âm trong 3 năm nên không được chọn` : `${rk}, có lời nhưng hết vốn trước khi tới lượt`;
+    $('#d4').textContent = `Mỗi chấm là một đề xuất. Chấm xanh là ${PL.n} đề xuất được chọn khi chia ${money(PL.bud)} cho cả ${UC.length} đề xuất.`;
+    $('#facts').innerHTML = `<div>Xếp hạng theo giá trị ròng 3 năm<b>${PL.rank}/${UC.length}</b></div><div>Phương án tối ưu có chọn không?<b>${PL.why}</b>phương án chọn ${PL.n} đề xuất, ngân sách ${money(PL.bud)}</div><div>Cách chọn quen thuộc (tờ trình hứa hẹn nhiều nhất)<b>${PL.inI ? 'Có chọn' : 'Không chọn'}</b>${PL.inI !== PL.chosen ? (PL.inI ? 'được chọn vì con số trên tờ trình lớn' : 'bị bỏ qua vì con số trên tờ trình nhỏ') : 'hai cách chọn giống nhau ở đề xuất này'}</div><div><a href="../danh-muc-150-use-case.html">Mở danh mục ${UC.length} đề xuất</a></div>`;
+    /* cây liên kết */
+    const R0 = RV[u.id] || ['', '', []], links = R0[2].filter(([id]) => UC[id - 1]);
+    const touched = [...new Set([u.s].concat(links.map(([id]) => UC[id - 1].s)))].sort((a, b) => a - b).map(k => STG[k].toLowerCase());
+    $('#treeH').textContent = `Việc này chạm tới ${touched.length} khâu: ${touched.join(', ')}`;
+    const boost = u.f <= 3 && u.id !== ENABLER ? `<p class="tnote">Nếu nền tảng dữ liệu chung (<a href="${SLUGS[ENABLER - 1]}.html${HASH}">#${ENABLER}</a>) chạy trước, khả năng thành công của đề xuất này tăng thêm khoảng ${nf(BOOSTP * 100, 0)} điểm.</p>` : '';
+    $('#tree').innerHTML = `<div class="troot"><b>#${u.id}</b> ${esc(u.name)}<small>${esc(STG[u.s])}</small></div><ul class="tkids" style="--n:${links.length}">${links.map(([id, lab]) => `<li><a href="${SLUGS[id - 1]}.html${HASH}"><b>#${id}</b> ${esc(UC[id - 1].name)}</a><small>${esc(capf(lab))}</small><span class="tstg">${esc(STG[UC[id - 1].s])}</span></li>`).join('')}</ul>${boost}`;
+    /* câu hỏi phản biện */
+    const B = basisOf() || {}, qs = [B.q, u.id === ENABLER ? '' : QLEV[u.lev], `Cái giá: ${lf(u.trade)}. Ai chịu, và họ đã đồng ý chưa?`].filter(Boolean);
+    if (u.r >= 3) qs.push(`Rủi ro ${u.r}/5: ai thẩm định mô hình độc lập trước khi chạy thật?`);
+    if (u.f <= 2) qs.push(`Khó triển khai (${u.f}/5): giải ngân từng phần thế nào, sau khi thí điểm đạt?`);
+    $('#qs').innerHTML = qs.map(q => `<li>${esc(q)}</li>`).join('');
+    $('#qs').previousElementSibling.textContent = `${WORD[qs.length] || qs.length} câu HĐQT phải hỏi`;
+    renderBalance(f);
+  }
+  function renderBalance(f) {
+    const it = f.it, k = rev(2) ? A.kpis(P, S, fmtArg)[0] : null;
+    $('#gain').innerHTML = [k ? `Trên dữ liệu mẫu: ${lf(k[0])} <b>${k[1]}</b> (${k[2]}).` : `${esc(u.after)}.`, `Thu về <b>${money(it.val)} mỗi năm</b> khi chạy đủ, nếu thành công.`, `Con người vẫn giữ quyền quyết: ${lf(CTRL[u.tec])}.`].map(s => `<li>${s}</li>`).join('');
+    $('#cost').innerHTML = [`${esc(u.trade)}.`, `Chi phí vận hành <b>${money(it.opex)} mỗi năm</b> sau khi xây xong.`, `Khả năng thất bại <b>${failPct(it.p)}</b>; dừng ở kiểm tra giữa kỳ vẫn mất khoảng ${money(it.cap * Math.ceil(it.t / 2) / it.t)}.`, `Tiền chỉ bắt đầu về sau <b>${it.t} tháng</b>.`].map(s => `<li>${s}</li>`).join('');
+  }
+
+  /* ---------- cảnh 5: quyết định ---------- */
+  function stopOf(f, r) {
+    const G = A.gate(P, S), E5 = evalItem(u, ctxOf({ preset: st.preset, hz: 5 }), 0, 1, 0).E;
+    if (r.d === 'approve') return ['Dừng khi', `Sau thí điểm, nếu không đạt: ${lf(G)}, thì dừng và không giải ngân phần còn lại.`, E5];
+    if (r.risk) return ['Xét lại khi', 'Chỉ xét như một ngoại lệ: thí điểm 90 ngày, vốn ngoài ngân sách danh mục, có phương án dừng.', E5];
+    if (f.E <= 0) return ['Xét lại khi', `Giảm được vốn hoặc tiền về nhanh hơn. Nhìn xa 5 năm, giá trị ròng là ${money(E5)}${E5 > 0 ? ': có thể xét như một khoản đặt cược chiến lược, có cửa dừng rõ ràng.' : ', vẫn chưa đáng làm.'}`, E5];
+    return ['Xét lại khi', 'Có thêm ngân sách, hoặc một đề xuất đã chọn không đạt điều kiện giải ngân và trả lại vốn.', E5];
+  }
+  function renderS5(f) {
+    const r = recOf(f), R0 = RV[u.id] || ['', '', []], sp = stopOf(f, r);
+    $('#t5').textContent = `Đề nghị: ${r.t}`;
+    $('#d5').textContent = r.why;
+    $('#c5').textContent = r.d === 'approve' ? 'Lộ trình và các điểm dừng, tính theo tháng kể từ hôm nay' : 'Giá trị ròng nếu nhìn 3 năm và nhìn 5 năm';
+    $('#dec').innerHTML = `<div class="dcard"><h3>Làm sao để giá trị lớn hơn</h3><p>${esc(R0[1])}</p></div><div class="dcard stop"><h3>${sp[0]}</h3><p>${esc(sp[1])}</p></div>`;
+    document.querySelectorAll('#decide button').forEach(b => b.classList.toggle('isrec', b.dataset.d === r.d));
+    $('#decide button[data-d="pilot"]').textContent = u.r > 3 ? 'Ngoại lệ rủi ro: thí điểm 90 ngày (biểu quyết riêng)' : PL && PL.chosen ? 'Thí điểm 90 ngày trước' : 'Thí điểm 90 ngày (ngoại lệ ngoài danh mục)';
+    if (!st.userDecided) { st.decision = r.d; renderReso(f); }
+  }
+  function renderTL(f) {
+    const r = recOf(f), box = $('#tl'), w = Math.max(280, Math.round(box.clientWidth)); box.innerHTML = '';
+    if (r.d !== 'approve') { renderBars(f, r, box, w); return; }
+    const it = f.it, s0 = startOf(), half = Math.ceil(it.t / 2), win = WIN[P.a] || 3, pb = f.pb ? s0 + f.pb : null;
+    const ev = [[0, s0 ? 'Hôm nay' : 'Hôm nay: giải ngân', 'now', 'bây giờ'], s0 ? [s0, `Giải ngân, Đợt ${s0 / 6 + 1}`, 'go', `đầu tháng ${s0 + 1}`] : null, [s0 + half, 'Kiểm tra giữa kỳ', 'gate', `cuối tháng ${s0 + half}`], [s0 + it.t, 'Tiền bắt đầu về', 'cash', `từ tháng ${s0 + it.t + 1}`], [s0 + it.t + win, 'Kiểm tra sau chạy thật', 'gate', `cuối tháng ${s0 + it.t + win}`], pb ? [pb, 'Hoàn vốn', 'pb', `tháng ${pb}`] : null].filter(Boolean);
+    const bands = [s0 ? [0, s0, 'bw', 'Chờ tới lượt'] : null, [s0, s0 + it.t, 'bb', 'Xây và chạy thử'], [s0 + it.t, s0 + it.t + RAMP, 'br', 'Tiền tăng dần'], [s0 + it.t + RAMP, null, 'bf', 'Chạy đủ']].filter(Boolean);
+    const M = Math.min(60, Math.max(36, Math.ceil((Math.max(...ev.map(e => e[0])) + 3) / 6) * 6));
+    bands[bands.length - 1][1] = M;
+    if (w < 560) {
+      box.innerHTML = `<ol class="tlv">${ev.map(e => `<li class="${e[2]}"><b>${capf(e[3])}</b><span>${e[1]}${e[2] === 'gate' ? ': dừng nếu không đạt' : ''}</span></li>`).join('')}</ol>` + tlLegend(bands);
+      return;
+    }
+    const h = 226, m = { l: 18, r: 18 }, ax = 108, X = v => m.l + v / M * (w - m.l - m.r);
+    const g = E('svg', { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': 'Lộ trình giải ngân và các điểm dừng' }, box);
+    bands.forEach(b => TT(E('rect', { x: X(b[0]), y: ax - 6, width: Math.max(2, X(b[1]) - X(b[0])), height: 12, rx: 3, class: 'tb ' + b[2] }, g), `${b[3]}: tháng ${b[0]} đến ${b[1]}`));
+    for (let t = 0; t <= M; t += 6) { E('line', { x1: X(t), x2: X(t), y1: ax + 8, y2: ax + 13, class: 'tk' }, g); E('text', { x: X(t), y: ax + 26, 'text-anchor': 'middle', class: 'axt' }, g, t === 0 ? '0' : 'tháng ' + t); }
+    const rows = [[ax - 30, -1], [ax + 58, 1], [ax - 68, -1], [ax + 92, 1]], last = rows.map(() => -1e9), cw = 6.6;
+    ev.slice().sort((a, b) => a[0] - b[0]).forEach(e => {
+      const x = X(e[0]), lw = Math.max(e[1].length, e[3].length * 0.92) * cw; let ri = 0;
+      for (let i = 0; i < rows.length; i++) { if (x - lw / 2 > last[i] + 10) { ri = i; break; } ri = i; }
+      const [y, dir] = rows[ri], anc = x - lw / 2 < 4 ? 'start' : x + lw / 2 > w - 4 ? 'end' : 'middle', lx = anc === 'start' ? Math.max(2, x - 6) : anc === 'end' ? Math.min(w - 2, x + 6) : x;
+      last[ri] = anc === 'start' ? lx + lw : anc === 'end' ? lx : x + lw / 2;
+      E('line', { x1: x, x2: x, y1: ax + (dir < 0 ? -10 : 10), y2: dir < 0 ? y + 5 : y - 15, class: 'tlead' }, g);
+      E('text', { x: lx, y: dir < 0 ? y - 14 : y + 14, 'text-anchor': anc, class: 'tlab0' }, g, e[3]);
+      E('text', { x: lx, y: y, 'text-anchor': anc, class: 'tlab3' }, g, e[1]);
+      if (e[2] === 'gate') TT(E('path', { d: `M${x} ${ax - 9}l9 9-9 9-9-9z`, class: 'tgate' }, g), `${e[1]}: dừng nếu không đạt`);
+      else E('circle', { cx: x, cy: ax, r: e[2] === 'pb' ? 8 : 6.5, class: 'tev ' + e[2] }, g);
+    });
+    box.insertAdjacentHTML('beforeend', tlLegend(bands));
+  }
+  function tlLegend(bands) {
+    return `<div class="legend tll">${bands.map(b => `<span><i class="sw tb ${b[2]}"></i>${b[3]}</span>`).join('')}<span><i class="sw tgk"></i>Điểm dừng nếu không đạt</span></div>`;
+  }
+  function renderBars(f, r, box, w) {
+    const E3 = f.E, E5 = stopOf(f, r)[2], data = [['Nhìn 3 năm', E3], ['Nhìn 5 năm', E5]], h = 128, m = { l: 96, r: 120, t: 14, b: 26 };
+    const lo = Math.min(0, E3, E5), hi = Math.max(0, E3, E5), sc = niceS(lo, hi || 1, 4), X = v => m.l + (v - sc.lo) / (sc.hi - sc.lo) * (w - m.l - m.r);
+    const g = E('svg', { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': `Giá trị ròng 3 năm ${money(E3)}, 5 năm ${money(E5)}` }, box);
+    sc.t.forEach(t => { E('line', { x1: X(t), x2: X(t), y1: m.t - 4, y2: h - m.b, class: t === 0 ? 'zero' : 'gl' }, g); E('text', { x: X(t), y: h - 8, 'text-anchor': 'middle', class: 'axt' }, g, vn(t, sc.d)); });
+    data.forEach((d, i) => { const y = m.t + i * 44, x0 = X(Math.min(0, d[1])), x1 = X(Math.max(0, d[1]));
+      E('text', { x: m.l - 10, y: y + 19, 'text-anchor': 'end', class: 'rowlab' }, g, d[0]);
+      TT(E('rect', { x: x0, y: y + 4, width: Math.max(2, x1 - x0), height: 24, rx: 4, class: d[1] >= 0 ? 'bar1' : 'bar2' }, g), `${d[0]}: ${money(d[1])}`);
+      const lab = money(d[1]), inside = x1 - x0 > lab.length * 7 + 16;
+      E('text', inside ? { x: d[1] >= 0 ? x1 - 8 : x0 + 8, y: y + 21, 'text-anchor': d[1] >= 0 ? 'end' : 'start', class: 'wfli' } : { x: d[1] >= 0 ? x1 + 8 : x0 - 8, y: y + 21, 'text-anchor': d[1] >= 0 ? 'start' : 'end', class: 'wfl' }, g, lab); });
+    box.insertAdjacentHTML('beforeend', `<p class="fnote">Tỷ đồng, đã trừ vốn và chi phí vận hành, tính khả năng thất bại, quy về hôm nay. Dương là đáng làm.</p>`);
+  }
+  function renderNext() {
+    const nx = UC[UCID], el = $('#nextk');
+    if (!nx) { el.innerHTML = `<p class="nk0">Bạn đã đi hết ${UC.length} đề xuất</p><h3>${UC.length} đề xuất cùng tranh ${money(PL.bud)}. Chia thế nào để giá trị lớn nhất?</h3><a class="btn" href="../danh-muc-150-use-case.html">Mở danh mục ${UC.length} đề xuất</a>`; return; }
+    const cap2 = evalItem(nx, ctxOf({ preset: st.preset, hz: 3 }), 0, 1, 0).cap, newStage = nx.s !== u.s ? ` Bước sang khâu ${STG[nx.s].toLowerCase()}.` : '';
+    el.innerHTML = `<p class="nk0">Đề xuất tiếp theo, ${nx.id}/${UC.length}.${newStage}</p><h3><a href="${SLUGS[UCID]}.html${HASH}">${esc(nx.name)}</a></h3><p>Hôm nay: ${esc(lf(nx.before))}. ${esc(OWN[nx.d])} xin ${money(cap2)}. Có đáng không?</p><a class="btn" href="${SLUGS[UCID]}.html${HASH}">Mở đề xuất ${nx.id}</a>`;
+  }
+
+  /* ---------- câu hỏi mở cuối mỗi cảnh ---------- */
+  function hook(id, txt, n) { $(id).innerHTML = `<p class="hq">${txt}</p><a class="hnext" href="#s${n}">Cảnh ${n}: ${SC[n - 1][1]}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></a>`; }
+  function renderHooks() {
+    const f = fin(), r = recOf(f), s0 = startOf(), H0 = f.H0;
+    hook('#k2', `${rev(2) ? 'Kết quả này đo trên dữ liệu mẫu, chưa phải tiền thật của Vertex.' : 'Dù AI làm tốt đến đâu trên dữ liệu mẫu, đó vẫn chưa phải tiền thật của Vertex.'} ${H0 > 0 ? `Tờ trình hứa <b>${money(H0)}</b> sau 3 năm, đã trừ vốn.` : 'Ngay trên tờ trình, 3 năm thu về chưa bù được vốn.'} Ban Tài chính công nhận bao nhiêu?`, 3);
+    hook('#k3', `${f.E >= 0 ? `Dương <b>${money(f.E)}</b> sau 3 năm.` : `Âm <b>${money(-f.E)}</b> sau 3 năm.`}${f.delay1 > 0 && f.E > 0 ? ` Mỗi tháng chờ, mất thêm khoảng <b>${money(f.delay1)}</b>.` : ''} Nhưng ${UC.length - 1} đề xuất khác cũng xin vốn từ cùng ${money(PL.bud)}. Đề xuất này đứng ở đâu?`, 4);
+    const k4 = r.d === 'approve' ? `Được chọn${s0 ? `, nhưng chỉ khởi động được từ tháng ${s0 + 1}` : ''}. Nếu trên dữ liệu thật AI không làm được như bài chạy thử, HĐQT dừng ở đâu để không mất hết <b>${money(f.it.cap)}</b>?`
+      : r.risk ? 'Có thể có lời, nhưng rủi ro vượt mức cho phép. Có cách nào thử mà không phải đặt cược lớn?'
+      : f.E <= 0 ? 'Âm trong 3 năm. Gác hẳn, hay còn lý do chiến lược để giữ một cửa nhỏ? Nhìn xa hơn 3 năm thì sao?'
+      : 'Có lời nhưng hết vốn. Chờ đến bao giờ, và điều gì sẽ mở lại cửa?';
+    hook('#k4', k4, 5);
   }
 
   /* ---------- nghị quyết ---------- */
@@ -3024,28 +3241,72 @@ const RV = {
     box.innerHTML = head + `<p class="muted" style="margin:0 0 8px">Hội đồng quản trị Vertex (mô phỏng) quyết nghị:</p>${arts.map((a, i) => `<p class="art"><b>Điều ${i + 1}.</b> ${a}</p>`).join('')}<div class="rmeta">Số thành viên dự họp: …/… · Tán thành: …/… · Không tán thành: …/…</div><div class="rsign">TM. Hội đồng quản trị<br>Chủ tịch<br><span class="muted">(ký, ghi rõ họ tên)</span></div>` + (!st.userDecided ? '<div class="stamp draft">Dự thảo theo đề nghị của Ban điều hành, chưa biểu quyết</div>' : st.decision === 'hold' ? '<div class="stamp hold">HĐQT: chưa duyệt (mô phỏng)</div>' : `<div class="stamp">✓ HĐQT: ${st.decision === 'pilot' ? 'thí điểm 90 ngày' : 'duyệt theo đợt'} (mô phỏng)</div>`);
   }
 
-  /* ---------- trạng thái hoàn chỉnh khi mở trang ---------- */
+  /* ---------- vẽ lại toàn bộ ---------- */
+  function renderText() {
+    const f = fin();
+    renderAsk(f); renderS1(); renderBoard(false); renderCompare(); renderMoneyStrip(f); renderS3(f); renderChain(); renderS4(f); renderS5(f); renderHooks(); renderNext(); renderSpine();
+  }
+  function renderCharts() { const f = fin(); drawToday(); draw(); renderWipe(); renderFin(f); renderPort(); renderTL(f); }
+
+  /* ---------- chạy thử ---------- */
+  function afterResult(first) {
+    renderOutput(); renderText();
+    if (first) { renderWipe(true); }
+    if (A.ctrl) {
+      const c = A.ctrl(P, S), el = $('#ctrlIn');
+      $('#ctrl').hidden = false; $('#ctrlLab').textContent = c.label;
+      if (!el.dataset.init) { el.min = c.min; el.max = c.max; el.step = c.step; el.value = c.val; el.dataset.init = '1'; el.addEventListener('input', () => { A.apply(P, S, +el.value); $('#ctrlOut').textContent = c.fmt(+el.value); draw(); afterResult(); renderWipe(); }); }
+      $('#ctrlOut').textContent = c.fmt(+el.value);
+    }
+  }
+  async function run() {
+    if (st.phase === 'run') return;
+    st.phase = 'run'; st.guessed = +$('#gIn').value; $('#bRun').disabled = true; $('#console').innerHTML = ''; t0 = performance.now();
+    status('run', 'Đang làm'); steps(0); renderInput(); renderOutput(); renderText(); renderWipe();
+    log(`<b>${OW}:</b> “${A.ask(P, S)}”`); await sleep(500);
+    steps(1); log(`Lấy dữ liệu từ <b>${SRC[u.d]}</b>: ${A.pull(P, S)}`); await sleep(550);
+    steps(2); renderInput(); await sleep(250); st.step = 3; renderInput(); A.dq(P, S).forEach(x => log(`<span class="okc">✓</span> ${x}`)); await sleep(450);
+    steps(3); log(`Gọi kỹ năng <b>${A.tool(P, S)}</b>`);
+    const F = S.F, dur = RM ? 0 : 1900;
+    await new Promise(res => { if (!dur) { st.k = F - 1; draw(); res(); return; } const start = performance.now(); const tick = now => { const k = Math.min(F - 1, Math.floor((now - start) / dur * F)); if (k !== st.k) { st.k = k; draw(); } if (now - start < dur) requestAnimationFrame(tick); else { st.k = F - 1; draw(); res(); } }; requestAnimationFrame(tick); });
+    steps(4); A.checks(P, S).forEach(c => log(`${c[1] ? '<span class="okc">✓</span>' : '<span class="bad">✗</span>'} ${c[0]}`)); await sleep(450);
+    st.phase = 'done'; steps(5); status('wait', 'Chờ người duyệt');
+    log(`Chuyển kết quả cho <b>${OW.toLowerCase()}</b> duyệt. ${CTRL[u.tec]}.`);
+    $('#hil').hidden = false; $('#bRun').textContent = 'Chạy lại'; $('#bRun').disabled = false;
+    st.seen.delete(2); afterResult(false);
+    await sleep(900);
+    smooth($('#s2')); await sleep(RM ? 0 : 450); reveal(2);
+  }
+  function approve() { if (st.phase !== 'done' || st.approved) return; st.approved = true; steps(6); status('ok', 'Đã duyệt'); log(`<span class="okc">✓</span> <b>${OW}</b> đã duyệt kết quả. Ban Tài chính ghi nhận vào sổ đo giá trị.`); $('#bApprove').disabled = true; $('#bApprove').textContent = 'Đã duyệt'; }
   function instant() {
     st.phase = 'done'; st.k = S.F - 1; t0 = performance.now(); $('#console').innerHTML = '';
     log(`<b>${OW}:</b> “${A.ask(P, S)}”`); log(`Lấy dữ liệu từ <b>${SRC[u.d]}</b>: ${A.pull(P, S)}`); A.dq(P, S).forEach(x => log(`<span class="okc">✓</span> ${x}`));
     A.checks(P, S).forEach(c => log(`${c[1] ? '<span class="okc">✓</span>' : '<span class="bad">✗</span>'} ${c[0]}`)); log(`Chuyển kết quả cho <b>${OW.toLowerCase()}</b> duyệt. ${CTRL[u.tec]}.`);
-    steps(5); status('wait', 'Chờ người duyệt'); renderInput(); draw(); $('#hil').hidden = false; $('#bRun').textContent = 'Cho AI làm lại từ đầu'; $('#wRange').value = 50;
+    steps(5); status('wait', 'Chờ người duyệt'); renderInput(); draw(); $('#hil').hidden = false; $('#bRun').textContent = 'Cho AI làm lại từ đầu';
     afterResult(false);
   }
 
   /* ---------- khởi động và sự kiện ---------- */
-  staticTop(); steps(-1); status('', 'Chờ việc'); renderInput(); guessUI(); draw(); renderOutput(); renderStory(); renderMoney();
-  document.body.classList.toggle('show', SHOW); if (!SHOW) instant();
+  staticTop(); steps(-1); status('', 'Chờ việc'); renderInput(); guessUI(); renderOutput(); renderText(); renderCharts();
+  document.body.classList.toggle('show', SHOW); if (SHOW) $('#flowd').open = true; else instant();
   $('#bRun').addEventListener('click', () => { if (st.phase === 'done') { st.approved = false; $('#bApprove').disabled = false; $('#bApprove').textContent = 'Duyệt kết quả'; $('#hil').hidden = true; } st.k = -1; run(); });
   $('#bApprove').addEventListener('click', approve);
-  const go = () => { if (st.phase === 'done' && SHOW) { $('#sWipe').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); return; } $('#sFlow').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); setTimeout(() => { st.k = -1; run(); }, RM ? 0 : 500); };
+  const go = () => { $('#flowd').open = true; smooth($('#flowd')); setTimeout(() => { st.k = -1; if (st.phase === 'done') { st.approved = false; $('#bApprove').disabled = false; $('#bApprove').textContent = 'Duyệt kết quả'; $('#hil').hidden = true; } run(); }, RM ? 0 : 600); };
   $('#bGo').addEventListener('click', go); $('#bGo2').addEventListener('click', go);
   $('#wRange').addEventListener('input', e => setWipe(+e.target.value));
-  $('#decide').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.decision = b.dataset.d; st.userDecided = true; renderReso(fin()); });
-  let rt = 0; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { draw(); const f = fin(); renderFin(f); renderBalance(f); renderPort(); renderWipe(); }, 80); });
-  ['#stage', '#wf', '#pmap', '#wipe'].forEach(s => ro.observe($(s)));
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { draw(); const f = fin(); renderFin(f); renderBalance(f); renderPort(); });
-  window.__uc = { S: () => S, st, run, approve };
+  $('#decide').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.decision = b.dataset.d; st.userDecided = true; renderReso(fin()); $('#resod').open = true; });
+  $('#skip').addEventListener('click', () => { [2, 3, 4, 5].forEach(n => st.seen.add(n)); renderText(); renderWipe(); });
+  /* mở câu trả lời khi người đọc tới nơi; đánh dấu cảnh đang đọc */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) reveal(+e.target.dataset.rv); }), { threshold: 0.35 });
+    [['#board', 2], ['#wfp', 3], ['#pmp', 4], ['#tlp', 5]].forEach(([s, n]) => { const el = $(s); el.dataset.rv = n; io.observe(el); });
+    const io2 = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const n = +e.target.id.slice(1); if (n !== st.cur) { st.cur = n; if (n > 2) reveal(n - 1); renderSpine(); } } }), { rootMargin: '-35% 0px -60% 0px' });
+    ['#s1', '#s2', '#s3', '#s4', '#s5'].forEach(s => io2.observe($(s)));
+  } else { [2, 3, 4, 5].forEach(n => st.seen.add(n)); renderText(); }
+  let rt = 0; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(renderCharts, 80); });
+  ['#stage', '#wf', '#pmap', '#wipe', '#today', '#tl'].forEach(s => ro.observe($(s)));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderCharts);
+  window.__uc = { S: () => S, st, run, approve, reveal };
 })();
 
 </script>
